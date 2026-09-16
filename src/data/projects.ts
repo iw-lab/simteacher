@@ -660,4 +660,25 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/pongdang.webp',
     url: 'https://pongdang-fishing.pages.dev/',
   },
+  {
+    slug: 'baton',
+    name: '배트온 BatOn',
+    subject: '교과 통합',
+    category: '국어·통합',
+    tagline: '타석에 들어서기 전, 문제 하나',
+    description:
+      '«오늘의 투수»를 상대로 2이닝을 치거나 던지는 야구 게임입니다. 타석에 들어서기 전 4지선다 한 문제가 뜨는데, 맞히면 집중 게이지가 차고(다음 공의 구종·코스를 미리 알려 줍니다) 타구 위력이 오릅니다. 틀려도 잃는 것은 없습니다 — 문제를 하나도 못 풀어도 야구는 그대로 굴러가고, 학습은 «더 잘 치게» 할 뿐입니다. 점수는 서버가 입력 기록을 같은 시뮬레이터로 다시 돌려 계산합니다.',
+    features: [
+      '한 판 2분 남짓 · 타자 · 투수 · 혼합 3가지 역할',
+      '3~6학년 5과목 2,536문항(수학 1,320 · 영어 450 · 과학 290 · 국어 265 · 사회 211) — 한 판에 3문항',
+      '오답 페널티 0 · 정답은 집중 게이지(구종·코스 예고)와 타구 위력으로 돌아온다',
+      '도루와 견제 · 결과별 중계 컷 · 심판 음성 콜 14종',
+      '일일 랭킹은 역할별로 나뉜다(타자와 투수는 점수 척도가 다르다) · 하루 3회',
+      '계정 없음 · 자유 입력 이름 없음 · 랭킹 이름은 가운데 글자를 가려 저장',
+    ],
+    target: '초등 3~6학년',
+    tech: ['JavaScript', 'Three.js', 'Cloudflare Pages/Functions/D1'],
+    image: '/images/portfolio/baton.webp',
+    url: 'https://baton-8x7.pages.dev/',
+  },
 ];
