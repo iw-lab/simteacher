@@ -723,4 +723,25 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/teeshot.webp',
     url: 'https://teeshot-island.pages.dev/',
   },
+  {
+    slug: 'michyeonsang',
+    name: '미현상 未現像',
+    subject: '학습 방탈출',
+    category: '국어·통합',
+    tagline: '힌트를 사려면 교과 문제를 맞혀야 합니다',
+    description:
+      '1인칭 3D 방탈출 다섯 편입니다. 한 건물을 10년씩 거슬러 올라가며 1987 사진관·1997 헌책방·2007 비디오 대여점·2017 철거 현장을 지나고, 시즌 2 《밤차》는 새벽 3시 달리는 열차 안에서 시작합니다. 이번엔 뒤칸에도 갇힌 사람이 있어, 인터폰으로 서로가 본 것을 읽어 줘야 둘 다 나갈 수 있습니다. 풀어야 다음으로 가는 구조라 찍어 맞히기로는 못 넘어갑니다.',
+    features: [
+      '다섯 편 · 한 편에 방 3칸·자물쇠 12개 · 제한 60분(무제한 모드 있음)',
+      '힌트 3단계 — 1·2·3단계에 교과 문제 1·2·3문항을 맞혀야 열림(오답 페널티 0)',
+      '문제은행 132문항 · 6영역 각 22문항(수 패턴 · 공간·도형 추론 · 논리 추론 · 언어 추론 · 과학 · 역사·지리)',
+      '시즌 2는 «전달» — 내가 본 것 중에서 골라 읽어 주면 저쪽 자물쇠가 열린다. 자유 입력 채팅이 아니다',
+      '눈으로 본 것만으로 풀리게 했다 — 소리 단서에는 전부 화면 표시가 붙어 있다',
+      '계정·로그인 없음 · 외부 요청 0건(게이트가 매 배포마다 잰다) · 진행은 기기에만 저장',
+    ],
+    target: '초등 고학년~중학생',
+    tech: ['JavaScript', 'Three.js', 'Vercel'],
+    image: '/images/portfolio/michyeonsang.webp',
+    url: 'https://michyeonsang.vercel.app/',
+  },
 ];
