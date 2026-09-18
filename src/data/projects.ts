@@ -703,6 +703,27 @@ export const learningSites: LearningSite[] = [
     url: 'https://hwalbaram.pages.dev/',
   },
   {
+    slug: 'seolbong',
+    name: '설봉 러시 Seolbong Rush',
+    subject: '스포츠 게임',
+    category: '미술·놀이',
+    tagline: '한 산을 정상에서 베이스까지, 깃대 사이로 내리꽂는다',
+    description:
+      '브라우저에서 도는 3D 스키 다운힐입니다. 설봉산 정상에서 베이스까지 한 번에 내려오는데, 길에는 통과해야 할 깃대가 줄지어 서 있습니다. 빠를수록 점수가 붙고 깃대를 지날 때마다 배수가 오르지만, 눈은 실제로 미끄러워서 최고 속도로 가다 확 꺾으면 날이 걸려 그대로 넘어집니다 — 속도와 정확도를 같이 재는 구조입니다. 어디로 가야 하는지는 설면 화살표·깃대 위 빛기둥·화면 아래 방향 표시 세 가지로 알려 줍니다.',
+    features: [
+      '코스 6개(은빛 능선 ~ 얼음 폭포) · 경사 19.7° ~ 34.1° · 눈질 4종(다져진 눈 · 파우더 · 빙판 · 습설)',
+      '스키어 5종 — 외형이 아니라 물리 배율(항력 · 그립 · 조향 · 공중조향 · 밸런스)이 다릅니다',
+      '1인칭 · 3인칭 전환(V) · 주행 중에도 바뀝니다',
+      '실시간 점수 = 속도² × 배수 · 깃대 통과 +120 · 넘어지면 배수를 잃습니다',
+      '매일 같은 코스로 겨루는 랭킹 — 서버가 입력 로그를 그대로 다시 돌려 기록을 검증합니다',
+      '계정 없음 · 자유 입력 이름 없음 · 랭킹 이름은 세 글자 중 가운데를 가려 저장(김*수)',
+    ],
+    target: '초등 3~6학년(전연령)',
+    tech: ['JavaScript', 'Three.js', 'Cloudflare Pages/Workers/Durable Objects'],
+    image: '/images/portfolio/seolbong.webp',
+    url: 'https://seolbong-rush.pages.dev/',
+  },
+  {
     slug: 'pinthunder',
     name: '핀 천둥 Pin Thunder',
     subject: '수학',
