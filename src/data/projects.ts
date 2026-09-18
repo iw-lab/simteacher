@@ -682,6 +682,27 @@ export const learningSites: LearningSite[] = [
     url: 'https://baton-8x7.pages.dev/',
   },
   {
+    slug: 'hwalbaram',
+    name: '활바람 Hwalbaram',
+    subject: '체육·양궁',
+    category: '미술·놀이',
+    tagline: '바람을 읽고, 흔들림이 멎는 순간에 놓아라',
+    description:
+      '70 m 과녁을 향해 쏘는 풀 3D 양궁입니다. 누르면 활을 당기고, 끌어서 조준하고, 떼면 나갑니다 — 조작은 손가락 하나가 전부입니다. 어려운 것은 조작이 아니라 «언제 놓느냐»입니다. 당기고 있으면 조준점이 떨리는데, 1.2초쯤부터 3초까지가 가장 잔잔하고 그 뒤로는 팔이 지쳐 다시 흔들립니다. 거기에 바람이 얹힙니다: 측풍 1 m/s 는 정확히 과녁 한 칸을 밀고, 상승·하강 기류는 짧은 돌풍으로 따로 옵니다. 그래서 잘 쏘는 법이 «세게»가 아니라 «읽고 기다리기»가 됩니다. 교과 문제는 들어 있지 않습니다.',
+    features: [
+      '한 손가락 조작 — 누르기(당기기) · 끌기(조준) · 떼기(발사)',
+      '바람 세 성분을 따로 모델링 — 측풍 1 m/s = 한 칸 · 앞뒤바람은 낙차 · 상승기류는 돌풍으로',
+      '한 기기 둘이서 화살 교대 세트제(세트 승 2점 · 6점 선취) · AI 3단계 · 연습장',
+      '«오늘의 바람» — 날마다 같은 바람으로 12발, 일일 순위',
+      '경기장 3곳 · 업적 18 · 효과음과 배경음악 전부 자체 생성',
+      '계정 없음 · 순위 이름은 가운데 글자를 지운 뒤에만 저장(온전한 이름은 기기에도 안 남습니다)',
+    ],
+    target: '초등 3~6학년(전연령)',
+    tech: ['JavaScript', 'Three.js', 'Cloudflare Pages/Functions/D1'],
+    image: '/images/portfolio/hwalbaram.webp',
+    url: 'https://hwalbaram.pages.dev/',
+  },
+  {
     slug: 'pinthunder',
     name: '핀 천둥 Pin Thunder',
     subject: '수학',
