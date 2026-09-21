@@ -703,6 +703,27 @@ export const learningSites: LearningSite[] = [
     url: 'https://hwalbaram.pages.dev/',
   },
   {
+    slug: 'racket-rush',
+    name: '래킷 러시 Racket Rush',
+    subject: '수학',
+    category: '수학',
+    tagline: '9초짜리 포인트가 쌓여 한 판이 된다 — 쉬는 사이에 문제 하나',
+    description:
+      '브라우저에서 도는 2.5D 아케이드 테니스입니다. 공은 3차원으로 날고 스핀이 궤적을 휘게 하며, 치는 순간 누르고 있는 방향으로 코스가 갈립니다. 게임 중간의 «브레인 브레이크»에 문제가 한 개 뜨는데, 계산을 시키는 대신 «어느 쪽이 더 큰가 · 어디가 틀렸나 · 항상 참인 것은»처럼 종이 없이 판단하는 문제만 냅니다. 학년(1~6)과 학기를 교사가 고르고, 학습을 아예 꺼도 테니스는 그대로 돌아갑니다. 둘이 같은 방에 들어가면 온라인 대전도 됩니다.',
+    features: [
+      '수학 400문항 전부 «종이 없이 푸는» 판단·추론형 — 필산이 필요한 문항이 0건임을 게이트가 잽니다',
+      '학년 1~6 · 1/2학기 선택 — 12개 구간마다 30문항 이상, 최근에 낸 문제는 다음 판에서 뒤로 밀립니다',
+      '캐릭터 8명 · 슈퍼샷이 저마다 다릅니다(스탯 차이는 3%p, 정체성은 슈퍼샷이 짊어집니다)',
+      '온라인 2인 대전 — 서버가 판정하고, 내 조작은 기다리지 않고 즉시 반영됩니다',
+      '내 선수는 언제나 화면 아래 — 온라인에서 어느 자리를 받아도 같습니다',
+      '계정 없음 · 진행과 기록은 그 기기 브라우저에만 남습니다(온라인 대전 중에는 경기 중 위치·입력만 서버를 거칩니다)',
+    ],
+    target: '초등 1~6학년(전연령)',
+    tech: ['TypeScript', 'Phaser 3', 'Vite', 'Cloudflare Workers/Durable Objects'],
+    image: '/images/portfolio/racket-rush.webp',
+    url: 'https://racket-rush.vercel.app',
+  },
+  {
     slug: 'seolbong',
     name: '설봉 러시 Seolbong Rush',
     subject: '스포츠 게임',
