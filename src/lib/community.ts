@@ -21,7 +21,7 @@ import {
   where,
   type Unsubscribe,
 } from 'firebase/firestore'
-import { getDb, ensureUid } from './firebase'
+import { getDb, ensureUid, isOwnerSignedIn } from './firebase'
 
 // ── 방명록 ──────────────────────────────────────────────────────────────────
 
@@ -257,7 +257,17 @@ export interface Comment {
   nickname: string
   message: string
   createdAt: number | null
+  /** 무엇에 대한 답인가. 최상위면 null. 방명록 쪽지 id 또는 최상위 댓글 id. */
+  parentId: string | null
+  /** 주인(심쌤)이 단 답변인가. 규칙이 강제하므로 위조할 수 없다. */
+  isOwner: boolean
 }
+
+/**
+ * 방명록 답글이 쓰는 예약 slug. 🔴 **여기 한 곳에만 둔다** — 규칙(firestore.rules)과
+ * 짝이라, 주석으로만 적어 두면 갈린다. 규칙은 이 칸에 parentId 없는 글을 허용하지 않는다.
+ */
+export const GUESTBOOK_SLUG = 'guestbook'
 
 export const COMMENT_MAX = 1000
 export const COMMENT_NICK_MAX = 20
@@ -335,6 +345,9 @@ export function subscribeComments(
           nickname: String(v.nickname ?? ''),
           message: String(v.message ?? ''),
           createdAt: ts instanceof Timestamp ? ts.toMillis() : null,
+          parentId: typeof v.parentId === 'string' ? v.parentId : null,
+          // 🔴 truthy 검사 금지 — 반드시 === true. 배지는 신뢰 신호다.
+          isOwner: v.owner === true,
         }
       })
       onData(rows.reverse()) // 화면은 위에서 아래로 시간순
@@ -343,10 +356,56 @@ export function subscribeComments(
   )
 }
 
+/**
+ * 쪽지 하나에 달린 답글만 구독한다.
+ *
+ * 🔴 방명록 답글 전부를 `slug=='guestbook'` 한 칸으로 구독하면 안 된다 — 답글이 200 을 넘는
+ *    순간 **오래된 쪽지의 답글이 조용히 사라진다**(규칙의 list 상한 200 은 클라이언트가 못 늘린다).
+ *    8way 교차검증에서 4계열 전원이 같은 지적을 했다. 그래서 «부모별»로 나눠 구독하고,
+ *    쪽지의 답글은 **펼칠 때만** 읽는다(안 펼치면 읽기 0).
+ */
+export function subscribeReplies(
+  slug: string,
+  parentId: string,
+  onData: (rows: Comment[]) => void,
+  onError: (e: unknown) => void,
+  max = COMMENT_PAGE
+): Unsubscribe {
+  const q = query(
+    collection(getDb(), 'comments'),
+    where('slug', '==', slug),
+    where('parentId', '==', parentId),
+    orderBy('createdAt', 'asc'),
+    limit(max)
+  )
+  return onSnapshot(
+    q,
+    (snap) =>
+      onData(
+        snap.docs.map((d) => {
+          const v = d.data()
+          const ts = v.createdAt
+          return {
+            id: d.id,
+            slug: String(v.slug ?? ''),
+            nickname: String(v.nickname ?? ''),
+            message: String(v.message ?? ''),
+            createdAt: ts instanceof Timestamp ? ts.toMillis() : null,
+            parentId: typeof v.parentId === 'string' ? v.parentId : null,
+            isOwner: v.owner === true,
+          }
+        })
+      ),
+    onError
+  )
+}
+
 export async function postComment(input: {
   slug: string
   nickname: string
   message: string
+  /** 답글이면 부모 id — 최상위 댓글 id 또는 방명록 쪽지 id */
+  parentId?: string
 }): Promise<string> {
   const nickname = input.nickname.trim().slice(0, COMMENT_NICK_MAX)
   const message = input.message.trim().slice(0, COMMENT_MAX)
@@ -360,9 +419,18 @@ export async function postComment(input: {
   if (!/^[a-z0-9-]{1,100}$/.test(input.slug)) throw new Error('잘못된 글 주소입니다.')
   if (commentCooldownLeftMs() > 0) throw new Error('조금 전에 남기셨어요. 30초 뒤에 다시 시도해주세요.')
 
+  if (input.parentId !== undefined && !/^[A-Za-z0-9_-]{1,64}$/.test(input.parentId)) {
+    throw new Error('잘못된 답글 대상입니다.')
+  }
+  if (input.slug === GUESTBOOK_SLUG && !input.parentId) {
+    throw new Error('방명록 답글에는 대상 쪽지가 필요합니다.')
+  }
+
   const uid = await ensureUid()
   const db = getDb()
   // 문서 id 를 먼저 정해야 소유권 문서를 같은 id 로 만들 수 있다.
+  // 🔴 규칙이 `getAfter` 로 «같은 배치에 소유권 문서가 있는가»를 확인한다 — 둘은 반드시 함께 쓴다.
+  //    예전엔 댓글만 만들어 둘 수 있었고, 그런 댓글은 나중에 아무나 자기 것이라 주장해 지울 수 있었다.
   const ref = doc(collection(db, 'comments'))
   const batch = writeBatch(db)
   batch.set(ref, {
@@ -370,6 +438,10 @@ export async function postComment(input: {
     nickname, // 빈 문자열 그대로 — 화면에서 「익명」으로 그린다
     message,
     createdAt: serverTimestamp(),
+    // 🔴 키 자체를 조건부로 넣는다. `parentId: undefined` 는 Firestore 가 거부하고,
+    //    `owner: false` 는 규칙이 통째로 거절한다(owner 는 있거나 없거나 둘 중 하나).
+    ...(input.parentId ? { parentId: input.parentId } : {}),
+    ...(isOwnerSignedIn() ? { owner: true as const } : {}),
   })
   batch.set(doc(db, 'commentOwners', ref.id), { uid })
   await batch.commit()

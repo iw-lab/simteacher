@@ -1,8 +1,9 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { MessageCircle, Send, Trash2, Loader2 } from 'lucide-react'
+import { MessageCircle, Send, Trash2, Loader2, CornerDownRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { AuthorLine } from '@/components/community/AuthorLine'
 import {
   COMMENT_MAX,
   COMMENT_NICK_MAX,
@@ -51,6 +52,9 @@ export function Comments({ slug }: { slug: string }) {
   const [mine, setMine] = useState<string[]>([])
   const [cooldown, setCooldown] = useState(0)
   const taRef = useRef<HTMLTextAreaElement>(null)
+  // 답글 — 한 번에 한 곳만 연다(여러 칸이 동시에 열리면 어디에 쓰는지 헷갈린다)
+  const [replyTo, setReplyTo] = useState<string | null>(null)
+  const [replyText, setReplyText] = useState('')
 
   useEffect(() => {
     const un = subscribeComments(
@@ -98,6 +102,23 @@ export function Comments({ slug }: { slug: string }) {
     }
   }, [posting, slug, nickname, message])
 
+  const submitReply = useCallback(async (parentId: string) => {
+    if (posting) return
+    setPostError(null)
+    setPosting(true)
+    try {
+      await postComment({ slug, nickname, message: replyText, parentId })
+      setReplyText('')
+      setReplyTo(null)
+      setMine(myCommentIds())
+      setCooldown(commentCooldownLeftMs())
+    } catch (e) {
+      setPostError(e instanceof Error ? e.message : '남기지 못했어요. 잠시 뒤 다시 시도해주세요.')
+    } finally {
+      setPosting(false)
+    }
+  }, [posting, slug, nickname, replyText])
+
   const remove = useCallback(async (id: string) => {
     try {
       await deleteComment(id)
@@ -117,6 +138,19 @@ export function Comments({ slug }: { slug: string }) {
 
   const left = COMMENT_MAX - message.length
   const blocked = posting || cooldown > 0 || !message.trim()
+
+  // 🔴 한 번의 구독으로 댓글과 답글이 함께 온다(둘 다 같은 글 slug). 여기서 갈라 그린다.
+  //    부모가 이 목록에 없는 답글(부모가 지워졌거나 200 창 밖)은 **그리지 않는다** —
+  //    최상위로 올려 그리면 답글이 댓글인 척하게 된다.
+  const tops = rows.filter((r) => !r.parentId)
+  const topIds = new Set(tops.map((t) => t.id))
+  const byParent = new Map<string, typeof rows>()
+  for (const r of rows) {
+    if (!r.parentId || !topIds.has(r.parentId)) continue
+    const arr = byParent.get(r.parentId) ?? []
+    arr.push(r)
+    byParent.set(r.parentId, arr)
+  }
 
   return (
     <section className="mt-16 pt-10 border-t border-fg/10">
@@ -173,12 +207,10 @@ export function Comments({ slug }: { slug: string }) {
         <p className="text-sm text-muted-fg">아직 댓글이 없어요. 첫 번째로 남겨 보세요.</p>
       ) : (
         <ul className="space-y-4">
-          {rows.map((c) => (
+          {tops.map((c) => (
             <li key={c.id} className="glass rounded-xl p-4">
               <div className="flex items-baseline gap-2 mb-1">
-                <span className="font-semibold text-fg text-sm">
-                  {c.nickname || '익명'}
-                </span>
+                <AuthorLine nickname={c.nickname} isOwner={c.isOwner} />
                 <span className="text-xs text-muted-fg">{timeAgo(c.createdAt)}</span>
                 {mine.includes(c.id) && (
                   <button
@@ -194,6 +226,72 @@ export function Comments({ slug }: { slug: string }) {
               <p className="text-fg/90 text-[15px] leading-relaxed whitespace-pre-wrap break-words">
                 {c.message}
               </p>
+
+              {/* 답글 — 한 단만 접힌다. 답글에는 답글을 달 수 없다(규칙도 그렇게 강제한다). */}
+              <div className="mt-2">
+                <button
+                  onClick={() => {
+                    setReplyTo(replyTo === c.id ? null : c.id)
+                    setReplyText('')
+                  }}
+                  className="text-xs text-muted-fg hover:text-primary-400 transition-colors inline-flex items-center gap-1"
+                >
+                  <CornerDownRight className="w-3 h-3" />
+                  {replyTo === c.id ? '답글 접기' : '답글'}
+                </button>
+              </div>
+
+              {(byParent.get(c.id)?.length ?? 0) > 0 && (
+                <ul className="mt-3 space-y-3 border-l-2 border-fg/10 pl-3">
+                  {byParent.get(c.id)!.map((r) => (
+                    <li key={r.id}>
+                      <div className="flex items-baseline gap-2 mb-0.5">
+                        <AuthorLine nickname={r.nickname} isOwner={r.isOwner} />
+                        <span className="text-xs text-muted-fg">{timeAgo(r.createdAt)}</span>
+                        {mine.includes(r.id) && (
+                          <button
+                            onClick={() => remove(r.id)}
+                            className="ml-auto text-muted-fg hover:text-rose-500 transition-colors"
+                            aria-label="내 답글 삭제"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+                      <p className="text-fg/90 text-sm leading-relaxed whitespace-pre-wrap break-words">
+                        {r.message}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {replyTo === c.id && (
+                <div className="mt-3 border-l-2 border-primary-400/40 pl-3">
+                  <textarea
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value.slice(0, COMMENT_MAX))}
+                    placeholder="답글을 남겨 주세요."
+                    rows={3}
+                    maxLength={COMMENT_MAX}
+                    className="w-full px-3 py-2 rounded-lg bg-bg/60 border border-fg/15 text-fg placeholder:text-muted-fg/70 resize-y focus:outline-none focus:border-primary-400"
+                  />
+                  <div className="flex items-center justify-end mt-2">
+                    <Button
+                      onClick={() => submitReply(c.id)}
+                      disabled={posting || cooldown > 0 || !replyText.trim()}
+                      size="sm"
+                    >
+                      {posting ? (
+                        <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                      ) : (
+                        <Send className="w-4 h-4 mr-1" />
+                      )}
+                      {cooldown > 0 ? `${Math.ceil(cooldown / 1000)}초 뒤에` : '답글 남기기'}
+                    </Button>
+                  </div>
+                </div>
+              )}
             </li>
           ))}
         </ul>

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PenLine, Send, Trash2, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { NoteReplies } from './NoteReplies'
 import {
   MESSAGE_MAX,
   NICKNAME_MAX,
@@ -16,6 +17,7 @@ import {
   type GuestbookEntry,
   type NoteColor,
 } from '@/lib/community'
+import { isOwnerSignedIn, onAuthChange } from '@/lib/firebase'
 
 // 포스트잇 색 — 라이트/다크 모두에서 글자가 읽히는 조합만 골랐다.
 const COLOR_CLASS: Record<string, string> = {
@@ -59,6 +61,8 @@ export function Guestbook() {
   const [posting, setPosting] = useState(false)
   const [postError, setPostError] = useState<string | null>(null)
   const [uid, setUid] = useState<string | null>(null)
+  // 주인 로그인 상태 — 쪽지 쓰기를 막는 데만 쓴다(배지 권한은 규칙이 정한다)
+  const [ownerMode, setOwnerMode] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
 
   const honeypot = useRef('')
@@ -91,6 +95,18 @@ export function Guestbook() {
     myUid()
       .then(setUid)
       .catch(() => setUid(null))
+  }, [])
+
+  // 주인으로 로그인/로그아웃하면 uid 도 바뀐다 — 둘을 같이 다시 읽는다.
+  useEffect(() => {
+    const off = onAuthChange(() => {
+      setOwnerMode(isOwnerSignedIn())
+      myUid()
+        .then(setUid)
+        .catch(() => setUid(null))
+    })
+    setOwnerMode(isOwnerSignedIn())
+    return off
   }, [])
 
   const submit = useCallback(
@@ -147,6 +163,15 @@ export function Guestbook() {
           </span>
         </div>
 
+        {ownerMode ? (
+          /* 🔴 주인이 로그인한 채로 쪽지를 쓰면 안 된다. 방명록 문서는 uid 를 **공개로** 담기 때문에
+             그 순간 주인의 uid 가 드러나고, 주인이 익명으로 남긴 쪽지까지 대조로 전부 특정된다
+             (8way 교차검증 지적). 주인은 «답글»로만 말한다 — 답글은 uid 를 담지 않는다. */
+          <p className="rounded-xl border border-fg/15 bg-bg/40 p-4 text-sm text-muted-fg">
+            심쌤으로 로그인한 상태예요. 쪽지는 익명으로만 남길 수 있어서, 지금은 새 쪽지를 쓸 수
+            없습니다. 각 쪽지의 <b>답글</b>로 답해주세요.
+          </p>
+        ) : (
         <form onSubmit={submit} className="space-y-4">
           <input
             type="text"
@@ -214,6 +239,7 @@ export function Guestbook() {
             개인정보(연락처·학교명 등)는 적지 말아주세요.
           </p>
         </form>
+        )}
       </div>
 
       {/* 목록 */}
@@ -266,6 +292,7 @@ export function Guestbook() {
                     </button>
                   )}
                 </div>
+                <NoteReplies entryId={e.id} />
               </motion.div>
             ))}
           </AnimatePresence>
