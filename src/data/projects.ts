@@ -829,4 +829,25 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/michyeonsang.webp',
     url: 'https://michyeonsang.vercel.app/',
   },
+  {
+    slug: 'gongbunyang',
+    name: '공부냥',
+    subject: '수학',
+    category: '수학',
+    tagline: '문제를 풀어 모은 별로 내 3D 고양이를 손으로 돌본다 — 공부한 만큼 자란다',
+    description:
+      '브라우저에서 도는 3D 고양이 키우기입니다. 공부 한 판(수학 8문항)으로 별을 모으고, 그 별로 고양이를 손가락으로 빗기고·간식을 주고·놀아 주고·쓰다듬습니다. 빗질은 털이 자라는 방향(머리→꼬리)으로 쓸어야 게이지가 차고, 쓰다듬기는 얼굴·등은 좋아하지만 배·꼬리는 싫어하는 식으로 실제 고양이 돌봄을 손으로 배웁니다. 고양이는 «공부한 날 · 서로 다른 날 3번 연속 맞혀 내 것이 된 문제 · 유대 · 누적 정답률»이 함께 차야 자라서, 찍기만으로는 자라지 않습니다. 고양이·소품·동작 영상은 모두 Adobe Firefly 로 만들었고, 화면에는 «AI로 만든 고양이» 표식이 항상 붙어 있습니다.',
+    features: [
+      '3D 고양이 2마리 × 성장 3단계 × 자세 6가지 = 3D 모델 36개 + 방 소품 16개 · 동작 영상 52편(전부 Adobe Firefly 생성)',
+      '수학 문항 1,237개(학년·학기 선택) + 계산 입력형 자동 생성 · 객관식과 입력형을 섞어 출제',
+      '손으로 하는 돌봄 4가지 — 털 방향 빗질 · 간식 · 상자 뒤에 숨겼다 꺼내는 놀이 · 쓰다듬기 구역',
+      '성장 조건에 누적 정답률이 들어가 있어 시뮬레이션(봇 600회 × 120일)에서 무작위 찍기 봇의 2단계 도달률 0%',
+      '연속 공부 · 7일 출석 · 오늘의 부탁 · 무료 행운 캡슐(확률 상시 표시, 구매 0) — 보상은 그날 공부 한 판을 끝낸 뒤에만',
+      '개인정보 수집 0 — 계정·자유 입력 없이 기기에만 저장 · 설치 없이 링크로(PWA, 오프라인 지원)',
+    ],
+    target: '초등 2~6학년(학년·학기 선택)',
+    tech: ['JavaScript', 'Three.js', 'Adobe Firefly', 'Cloudflare Pages'],
+    image: '/images/portfolio/gongbunyang.webp',
+    url: 'https://gongbunyang.pages.dev/',
+  },
 ];
