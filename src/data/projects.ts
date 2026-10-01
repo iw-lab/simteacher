@@ -637,7 +637,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 3~6학년',
     tech: ['Three.js', 'JavaScript', 'Cloudflare Pages/KV'],
     image: '/images/portfolio/looppark.webp',
-    url: 'https://loop-park.pages.dev/',
+    url: 'https://loop-park-dyy.pages.dev/',
   },
   {
     slug: 'pongdang',
