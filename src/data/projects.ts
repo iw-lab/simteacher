@@ -892,4 +892,25 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/mulkko.webp',
     url: 'https://mulkko-a7z.pages.dev/',
   },
+  {
+    slug: 'dosi-tambang',
+    name: '도시 탐방대',
+    subject: '사회',
+    category: '국어·통합',
+    tagline: '진짜 서울을 하늘에서 보고 내려가 걷는다 — 58곳을 관찰하며 우리 도시를 배운다',
+    description:
+      '실제 지도·지형 자료로 만든 3D 서울을 하늘에서 내려다보고, 장소를 골라 내려가 거리를 걸으며 관찰하는 초등 사회 탐방 게임입니다. 방위표와 축척 막대로 길을 찾아가고, 장소마다 관찰 거리 세 곳과 숨은 까치를 찾고 탐구 질문을 풀어 카드를 모읍니다. 지하철을 타고 이동할 수 있고, 장(章)이 열릴 때마다 지형·교통·인구·기능 지도로 같은 서울을 다르게 봅니다.',
+    features: [
+      '서울 58곳 — 궁궐·시장·한강공원·산·업무 지구 등, 하늘 지도에서 찾아가 내려가면 그 자리의 실제 도로·건물·물길로 된 거리를 걷는다',
+      '탐구 질문 1,840문항 — 방위·거리·한강 남북·구 이름·장소의 기능을 지도에서 직접 확인해 푼다(정답 위치 쏠림 검사 통과)',
+      '사실 문구는 출처 원장으로 관리 — 확인된 사실 84건만 문제와 설명에 쓴다',
+      '3D 모델 63종은 Adobe Firefly 로 만들었다 · 바닥·외벽 질감도 Firefly',
+      '지형·교통·인구·기능 지도 레이어, 지하철 노선 타기, 사진 찍기, 탐방 수첩',
+      '계정·광고·결제 없음 · 진행은 이 기기 안에만 저장 · 한 번 가 본 곳은 인터넷 없이도 열린다',
+    ],
+    target: '초등 3~6학년',
+    tech: ['JavaScript', 'Three.js', 'Adobe Firefly', 'OpenStreetMap', 'Cloudflare Pages'],
+    image: '/images/portfolio/dosi-tambang.webp',
+    url: 'https://dosi-tambang-9wd.pages.dev/',
+  },
 ];
