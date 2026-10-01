@@ -850,4 +850,25 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/gongbunyang.webp',
     url: 'https://gongbunyang.pages.dev/',
   },
+  {
+    slug: 'schoolstars',
+    name: '스쿨 스타즈',
+    subject: '5과목 통합',
+    category: '국어·통합',
+    tagline: '최대 8명이 실시간으로 붙는 학교 대전 — 판이 끝나면 보너스 퀴즈로 보상이 커진다',
+    description:
+      '동아리 대표 캐릭터를 골라 운동장·급식실·학교 맵에서 겨루는 탑다운 3D 대전 게임입니다. 경기 중에는 문제가 하나도 나오지 않고, 판이 끝난 뒤 보너스 퀴즈를 풀면 그 판 보상이 최대 두 배가 됩니다(광고 보고 보상 받는 자리를 문제 풀이로 바꿨습니다). 퀴즈는 학년·학기·단원을 골라 그 범위에서만 나오고, 교실 방에서는 선생님이 과목·학년·학기·단원을 정합니다.',
+    features: [
+      '두 가지 모드 — 별 배달(4대4, 별을 우리 진영 상자에 넣기) · 방과후 서바이벌(8명 개인전) · 사람이 모자라면 🤖 표시가 붙은 봇이 채운다',
+      '캐릭터 8종(동아리 대표) — 3D 모델은 Adobe Firefly 로 만들었고, 공격마다 투사체 모양과 효과음이 다르다',
+      '보너스 퀴즈 3~6학년 5과목 7,535문항 · 학기별 212단원 — 단원표는 교육청 «성취기준·단원 연결표» 원문으로 맞췄다',
+      '교실 방 코드 — 방장이 모드·팀·과목·학년·학기·단원을 정하고 방 잠금·내보내기',
+      '서버 권위 실시간 대전 — 8명 동시 접속을 지연 500ms·패킷 손실 5% 조건에서 자동 시험으로 확인',
+      '자유 채팅 없음(정해진 이모트만) · 닉네임은 생성 조합만 · 계정·광고·결제 없음 · PC는 키보드만으로도 플레이',
+    ],
+    target: '초등 3~6학년',
+    tech: ['JavaScript', 'Three.js', 'Adobe Firefly', 'Cloudflare Pages/Durable Objects'],
+    image: '/images/portfolio/schoolstars.webp',
+    url: 'https://school-stars.pages.dev/',
+  },
 ];
