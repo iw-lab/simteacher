@@ -848,7 +848,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 2~6학년(학년·학기 선택)',
     tech: ['JavaScript', 'Three.js', 'Adobe Firefly', 'Cloudflare Pages'],
     image: '/images/portfolio/gongbunyang.webp',
-    url: 'https://gongbunyang.pages.dev/',
+    url: 'https://gongbunyang-bdd.pages.dev/',
   },
   {
     slug: 'schoolstars',
