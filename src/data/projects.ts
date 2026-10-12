@@ -287,6 +287,7 @@ export const learningSites: LearningSite[] = [
     description:
       "'알아가다'의 순우리말 '아라'와 '하루'를 합친 이름입니다. 학년·학기에 맞춘 하루치 학습 세트를 매일 자동으로 만들어, 아침 시간에 여러 과목을 조금씩 다룹니다.",
     features: [
+      '로그인 없이 바로 시작 · 기록은 이 기기에 저장',
       '학년·학기별 일일 세트 자동 생성',
       '수학 · 글쓰기 · 맞춤법 · 어휘 · 한자 · 영어 · 독해 등',
       '출제 이력 기반 중복 방지',
@@ -295,9 +296,9 @@ export const learningSites: LearningSite[] = [
     target: '초등 1~6학년',
     tech: ['Next.js', 'Cloudflare Pages', 'D1'],
     image: '/images/portfolio/araharu.webp',
-    // 2026-08-31 사용자 지시로 링크를 뺐다 — 쓰려면 회원가입이 필요해서
-    // 홈페이지에서 바로 눌러 들어가는 흐름과 맞지 않는다. 알찬 쪽 링크는 그대로 둔다.
-    urlNote: '회원가입 후 이용',
+    // 2026-10-13 리마스터: 로그인 없이 바로 쓰고 기록은 기기에 저장된다 → 링크를 다시 건다
+    // (2026-08-31 에 뺀 이유였던 «회원가입 필요»가 사라졌다).
+    url: 'https://araharu-ecp.pages.dev',
   },
   {
     slug: 'numeroquest',
