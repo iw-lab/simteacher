@@ -17,6 +17,7 @@ import Image from 'next/image'
 import { ExternalLink, Lock, Download } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { MathText } from '@/components/ui/MathText'
 import { learningSites, teacherTools } from '@/data/projects'
 
 const features = [
@@ -222,10 +223,10 @@ export default function PortfolioPage() {
 
                   <h3 className="text-xl font-bold text-fg">{tool.name}</h3>
                   <p className="mt-1 text-secondary-700 dark:text-secondary-300 font-medium text-[15px]">
-                    {tool.tagline}
+                    <MathText text={tool.tagline} />
                   </p>
                   <p className="mt-3 text-muted-fg text-[15px] leading-relaxed">
-                    {tool.description}
+                    <MathText text={tool.description} />
                   </p>
 
                   <ul className="mt-5 space-y-2">
@@ -235,7 +236,7 @@ export default function PortfolioPage() {
                           className="mt-2 mr-3 w-1.5 h-1.5 rounded-full bg-primary-500 shrink-0"
                           aria-hidden="true"
                         />
-                        {f}
+                        <MathText text={f} />
                       </li>
                     ))}
                   </ul>
@@ -334,10 +335,10 @@ export default function PortfolioPage() {
 
                   <h3 className="text-xl font-bold text-fg">{site.name}</h3>
                   <p className="mt-1 text-secondary-700 dark:text-secondary-300 font-medium text-[15px]">
-                    {site.tagline}
+                    <MathText text={site.tagline} />
                   </p>
                   <p className="mt-3 text-muted-fg text-[15px] leading-relaxed">
-                    {site.description}
+                    <MathText text={site.description} />
                   </p>
 
                   <ul className="mt-5 space-y-2">
@@ -350,7 +351,7 @@ export default function PortfolioPage() {
                           className="mt-2 mr-3 w-1.5 h-1.5 rounded-full bg-primary-500 shrink-0"
                           aria-hidden="true"
                         />
-                        {f}
+                        <MathText text={f} />
                       </li>
                     ))}
                   </ul>

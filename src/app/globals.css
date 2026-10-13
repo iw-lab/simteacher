@@ -212,3 +212,8 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--muted-foreground);
 }
+
+/* 분수 위아래 쌓기 — <MathText> (초등 교과서 표기) */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;margin:0 .12em;font-size:.9em;font-variant-numeric:tabular-nums}
+.frac-n{padding:0 .18em .06em;border-bottom:.09em solid currentColor}
+.frac-d{padding:.06em .18em 0}

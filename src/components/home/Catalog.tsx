@@ -1,5 +1,6 @@
 'use client'
 
+import { MathText } from '@/components/ui/MathText'
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -118,7 +119,7 @@ export function Catalog() {
 
                 <h3 className="text-lg font-bold text-fg">{site.name}</h3>
                 <p className="mt-1.5 text-[15px] text-muted-fg leading-relaxed">
-                  {site.tagline}
+                  <MathText text={site.tagline} />
                 </p>
 
                 {linked ? (
@@ -191,7 +192,7 @@ export function Catalog() {
 
                 <h3 className="text-lg font-bold text-fg">{tool.name}</h3>
                 <p className="mt-1.5 text-[15px] text-muted-fg leading-relaxed">
-                  {tool.tagline}
+                  <MathText text={tool.tagline} />
                 </p>
 
                 <div className="mt-auto pt-5 flex items-center gap-4 flex-wrap">
