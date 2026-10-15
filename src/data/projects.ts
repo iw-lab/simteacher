@@ -1026,4 +1026,26 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/bingle-step.webp',
     url: 'https://bingle-step.pages.dev/',
   },
+  {
+    slug: 'blocknuri',
+    name: '블록누리',
+    subject: '수학·영어',
+    category: '미술·놀이',
+    tagline: '블록 1,026종으로 친구들과 한 세계를 짓고, 작업실에서 나만의 블록·규칙을 만들어 나눈다',
+    description:
+      '블록을 캐고 쌓아 세계를 만드는 3D 샌드박스 게임입니다. 친구가 방 번호를 누르면 같은 세계에 들어와 함께 짓습니다. 창작 모드에서는 블록을 마음껏 꺼내 쓰고, 생존 모드에서는 재료를 캐서 도구를 만들며 살아남습니다. 작업실에서는 새 블록·아이템·몹·놀이 규칙을 블록 코딩으로 만들고, 시험 세계에서 돌려 본 뒤 여섯 자리 번호로 친구와 나눌 수 있습니다.',
+    features: [
+      '블록 1,026종 · 아이템 433종 · 동물·몹 96종 · 바이옴 64곳 · 차원 4곳 · 회로·기계 부품 54종',
+      '창작·생존 외에 따라짓기(90초 안에 똑같이) · 큰 짓기 · 규칙 비틀기 · 오늘의 씨앗 모드',
+      '여럿이 같이 — 방 번호로 들어와 한 세계에서 함께 짓는다(세계 판정은 서버가 한다)',
+      '작업실 — 블록·아이템·몹·규칙을 블록 코딩이나 코드로 만들고, 여섯 자리 번호로 나눈다(나누는 글자는 낱말 고르기라 자유 입력 칸이 없다)',
+      '동물·몹 3D 모델은 Adobe Firefly 로 만들고 직접 뼈대를 달아 걷기 동작을 만들었다',
+      '배포본에서 실제 마우스·키보드·터치 입력으로 139개 항목을 확인하는 시험을 통과(PC·휴대폰·세로 화면·저사양 흉내)',
+      '이용권은 수학·영어 문제를 풀어 받는다 · 계정·광고·결제 없음 · 이름은 만들어 주는 별명 · 학교 대항은 학교 합계만',
+    ],
+    target: '초등 1~6학년',
+    tech: ['TypeScript', 'Three.js', 'QuickJS', 'Adobe Firefly', 'Cloudflare Pages · Workers · Durable Objects'],
+    image: '/images/portfolio/blocknuri.webp',
+    url: 'https://blocknuri-2c1.pages.dev/',
+  },
 ];
