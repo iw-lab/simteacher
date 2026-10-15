@@ -1070,4 +1070,26 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/whileplay.webp',
     url: 'https://whileplay.pages.dev/',
   },
+  {
+    slug: 'starlight-heroes',
+    name: '별빛 용사단',
+    subject: '수학·영어·국어·과학·사회',
+    category: '국어·통합',
+    tagline: '문제를 풀어 별빛을 모아 다섯 직업 용사로 10개 지역 몬스터 100종과 싸우는 3D 모험 RPG',
+    description:
+      '마을과 사냥터를 오가며 퀘스트를 깨고 장비를 모으는 3D 모험 RPG입니다. 사냥터에 나가려면 별빛(쉬는 시간)이 필요하고, 별빛은 «지혜의 샘»에서 문제 10개 중 8개를 맞혀 10분씩 받습니다. 마을에서는 별빛이 줄지 않습니다. 틀린 문제는 며칠 간격으로 다시 나오고, 하루에 받을 수 있는 시간과 하루 놀 수 있는 시간에 상한이 있습니다.',
+    features: [
+      '지역 10 · 사냥터 30 · 마을 10 · 몬스터 100종(월드 보스 10) · 메인 퀘스트와 마을 의뢰 151개 + 날마다 현상금',
+      '직업 5개(수호기사·바람사수·성흔술사·정령지기·그림자칼) · Lv40 전직·Lv60 각성 · 만렙 80 · 장비 10단계·세트 10·보스 고유 전설 20',
+      '문제 약 5만 개(수학·영어·국어·과학·사회·도덕·한자·수수께끼, 3~6학년) — 고른 학년을 중심으로 정답률에 맞춰 난이도가 오르내리고, 은행을 다 돌기 전엔 같은 문제를 다시 내지 않는다',
+      '같은 마을·사냥터에 있는 친구의 영웅이 보이고 같이 사냥한다 — 채팅 없이 정해진 말풍선만 주고받는다',
+      '영웅·몬스터·마을 사람 188개는 Adobe Firefly 3D 모델이고, 영웅 동작은 Mixamo 모션을 직접 맞춰 붙였다(활 당기기·놓기 포함)',
+      '휴대폰·태블릿은 이동 스틱·공격 단추·스킬 단추, PC는 키보드 · 화면 크기 10종에서 HUD 겹침 0을 검사한다',
+      '계정·광고·결제 없음 · 진행은 그 기기에 저장 · 이름은 생성 닉네임',
+    ],
+    target: '초등 3~6학년',
+    tech: ['JavaScript', 'Three.js', 'Web Audio', 'Adobe Firefly', 'Mixamo', 'Cloudflare Pages · Workers · D1'],
+    image: '/images/portfolio/starlight-heroes.webp',
+    url: 'https://starlight-heroes.pages.dev/',
+  },
 ];
