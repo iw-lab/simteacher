@@ -1004,4 +1004,26 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/tinhelmet.webp',
     url: 'https://tinhelmet.pages.dev/',
   },
+  {
+    slug: 'bingle-step',
+    name: '빙글스텝',
+    subject: '음악',
+    category: '미술·놀이',
+    tagline: '두 친구가 색동 끈을 잡고 박자에 맞춰 빙글 돌며 징검돌을 건너는 원버튼 리듬 게임',
+    description:
+      '색동 끈을 마주 잡은 두 친구가 음악에 맞춰 번갈아 빙글 돌며 징검다리 길을 건너는 3D 리듬 게임입니다. 도는 친구가 다음 돌에 닿는 순간 화면 아무 곳이나 한 번 누르면 됩니다. 길이 꺾인 모양이 곧 박자라서, 곧은 길은 한 박·꺾인 길은 반 박처럼 눈으로 리듬을 미리 읽게 됩니다. 손 무늬 돌에서는 도는 방향이 바뀌고, 장구 돌에서는 두 배로 빨리 돕니다.',
+    features: [
+      '곡 33개 — 저작권이 끝난 전래·고전 선율 20곡을 직접 편곡하고, 13곡은 직접 만들었다 · 남의 녹음은 쓰지 않았다',
+      '빙글 여정 8고개 24길(꺾기·잔걸음·돌아서기·장단 변속·메아리·반딧불 길) + 25단계부터 끝없이 이어지는 단계',
+      '모드 10가지 — 빙글 여정 · 한 곡 골라 · 60초 메들리 · 끝없는 길 · 오늘의 길 · 변형 카드 · 큰 마당(전자칠판) · 메아리 대결 · 릴레이 마당(2~6명) · 둘이서 빙글(한 화면 대결)',
+      '버튼 하나 — 키보드·마우스·터치 어느 것이든 한 번 누르기 · 기기마다 다른 소리 지연을 맞추는 박자 맞추기',
+      '배포본에서 실제 키·터치 입력으로 모드 전부를 끝까지 하는 시험을 통과(PC·휴대폰·전자칠판 화면)',
+      '두 친구와 도깨비는 Adobe Firefly 3D 모델에 직접 뼈대를 달아 춤 동작을 만들었다',
+      '이용권은 음악·수학·영어 문제 5개 중 4개를 맞혀 받는다 · 계정·광고·결제 없음 · 학교 대항은 학교 합계만',
+    ],
+    target: '초등 1~6학년',
+    tech: ['JavaScript', 'Three.js', 'Web Audio', 'Adobe Firefly', 'Cloudflare Pages · Workers · Durable Objects'],
+    image: '/images/portfolio/bingle-step.webp',
+    url: 'https://bingle-step.pages.dev/',
+  },
 ];
