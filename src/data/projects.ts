@@ -1046,7 +1046,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 1~6학년',
     tech: ['TypeScript', 'Three.js', 'QuickJS', 'Adobe Firefly', 'Cloudflare Pages · Workers · Durable Objects'],
     image: '/images/portfolio/blocknuri.webp',
-    url: 'https://blocknuri-2c1.pages.dev/',
+    url: 'https://blocknuri-2xd.pages.dev/',
   },
   {
     slug: 'whileplay',
