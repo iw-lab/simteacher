@@ -181,7 +181,7 @@ export const learningSites: LearningSite[] = [
     target: '전 연령',
     tech: ['TypeScript', 'Canvas 2D', 'Vite'],
     image: '/images/portfolio/papersky.webp',
-    url: 'https://papersky.pages.dev/',
+    url: 'https://narae-teal.vercel.app/',
   },
   {
     slug: 'vocaworm',
