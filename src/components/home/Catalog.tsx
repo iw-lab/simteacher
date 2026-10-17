@@ -11,22 +11,73 @@ import { recordClick } from '@/lib/community'
 import {
   learningSites,
   teacherTools,
-  SITE_CATEGORIES,
-  type SiteCategory,
+  SITE_SUBJECTS,
+  SITE_KINDS,
+  type LearningSite,
+  type SiteTag,
 } from '@/data/projects'
 
-const FILTERS: ('전체' | SiteCategory)[] = ['전체', ...SITE_CATEGORIES]
+/** 과목 하나·종류 하나를 고르면 둘 다 붙은 사이트만(고르지 않은 줄은 통과) */
+function pick(list: LearningSite[], subject: SiteTag | '', kind: SiteTag | '') {
+  return list.filter(
+    (s) =>
+      (!subject || s.tags.includes(subject)) && (!kind || s.tags.includes(kind))
+  )
+}
+
+function ChipRow({
+  label,
+  allLabel,
+  options,
+  value,
+  onChange,
+  pool,
+}: {
+  label: string
+  allLabel: string
+  options: readonly SiteTag[]
+  value: SiteTag | ''
+  onChange: (v: SiteTag | '') => void
+  pool: LearningSite[]
+}) {
+  // 사이트가 0개인 칸은 숨긴다(눌러도 빈 화면 금지). 숫자는 «다른 줄에서 고른 것» 기준.
+  const counts = options
+    .map((o) => [o, pool.filter((s) => s.tags.includes(o)).length] as const)
+    .filter(([o, n]) => n > 0 || o === value)
+  const chip = (key: string, text: string, n: number, active: boolean, onClick: () => void) => (
+    <button
+      key={key}
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 border ${
+        active
+          ? 'border-primary-500/60 bg-primary-500/15 text-primary-700 dark:text-primary-200'
+          : 'border-line bg-card text-muted-fg hover:text-fg hover:border-primary-500/40'
+      }`}
+    >
+      {text}
+      <span className="ml-1.5 text-xs opacity-70">{n}</span>
+    </button>
+  )
+  return (
+    <div className="flex items-start gap-3" role="group" aria-label={`${label}로 고르기`}>
+      <span className="shrink-0 w-10 pt-2 text-sm font-bold text-muted-fg">{label}</span>
+      <div className="flex flex-wrap gap-2">
+        {chip('_all', allLabel, pool.length, !value, () => onChange(''))}
+        {counts.map(([o, n]) =>
+          chip(o, o, n, value === o, () => onChange(value === o ? '' : o))
+        )}
+      </div>
+    </div>
+  )
+}
 
 export function Catalog() {
-  const [filter, setFilter] = useState<'전체' | SiteCategory>('전체')
+  const [subject, setSubject] = useState<SiteTag | ''>('')
+  const [kind, setKind] = useState<SiteTag | ''>('')
 
-  const sites = useMemo(
-    () =>
-      filter === '전체'
-        ? learningSites
-        : learningSites.filter((s) => s.category === filter),
-    [filter]
-  )
+  const sites = useMemo(() => pick(learningSites, subject, kind), [subject, kind])
 
   return (
     <div className="space-y-24">
@@ -47,31 +98,24 @@ export function Catalog() {
           </p>
         </div>
 
-        {/* 과목 필터 */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {FILTERS.map((f) => {
-            const count =
-              f === '전체'
-                ? learningSites.length
-                : learningSites.filter((s) => s.category === f).length
-            const active = filter === f
-            return (
-              <button
-                key={f}
-                type="button"
-                onClick={() => setFilter(f)}
-                aria-pressed={active}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 border ${
-                  active
-                    ? 'border-primary-500/60 bg-primary-500/15 text-primary-700 dark:text-primary-200'
-                    : 'border-line bg-card text-muted-fg hover:text-fg hover:border-primary-500/40'
-                }`}
-              >
-                {f}
-                <span className="ml-1.5 text-xs opacity-70">{count}</span>
-              </button>
-            )
-          })}
+        {/* 카테고리 — 과목·종류 두 줄(킹수학처럼) */}
+        <div className="space-y-2.5 mb-8">
+          <ChipRow
+            label="과목"
+            allLabel="모든 과목"
+            options={SITE_SUBJECTS}
+            value={subject}
+            onChange={setSubject}
+            pool={pick(learningSites, '', kind)}
+          />
+          <ChipRow
+            label="종류"
+            allLabel="모든 종류"
+            options={SITE_KINDS}
+            value={kind}
+            onChange={setKind}
+            pool={pick(learningSites, subject, '')}
+          />
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
