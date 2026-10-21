@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:rules": "firebase emulators:exec --only firestore --project demo-rules 'vitest run tests/rules.test.ts'"
+    "test:rules": "firebase emulators:exec --only firestore --project demo-rules 'vitest run tests/rules.test.ts'",
+    "prebuild": "node tools/img-versions.mjs",
+    "postbuild": "node tools/img-versions.mjs --check"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

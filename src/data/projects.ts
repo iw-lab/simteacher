@@ -1,3 +1,4 @@
+import imageVersions from './imageVersions.json';
 // 학습 사이트 목록 — 모든 내용은 각 프로젝트 저장소(README/docs/소스)에서 확인된 사실만 기재.
 // 수치를 바꿀 땐 반드시 원본 저장소에서 근거를 재확인할 것.
 
@@ -1303,3 +1304,11 @@ export const learningSites: LearningSite[] = [
     url: 'https://gugu-guardians-2d.pages.dev/',
   },
 ];
+
+// 🔴 썸네일 주소 = 파일 + 내용 해시(tools/img-versions.mjs). 이미지가 1년 immutable 캐시라
+//    해시 없이 그림을 바꾸면 이미 본 폰은 옛 그림을 계속 본다(2026-10-21). postbuild 가 검사한다.
+const versions: Record<string, string> = imageVersions;
+for (const x of [...teacherTools, ...learningSites]) {
+  const v = versions[x.image];
+  if (v) x.image = `${x.image}?v=${v}`;
+}
