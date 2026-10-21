@@ -1,9 +1,9 @@
 import { SiteConfig, NavItem } from '@/types';
 
 export const siteConfig: SiteConfig = {
-  name: '선행 심선생',
+  name: '선행쌤',
   description:
-    '교실에서 14년, 코드로 만드는 새로운 교육 — 초등학교 교사이자 바이브코딩 개발자',
+    '초등 교사 심선생이 교실에서 쓰라고 만든 학습 사이트·게임·선생님 프로그램 모음',
   url: 'https://sunhaengssam.web.app',
   ogImage: '/images/og/og-default.png',
   links: {

@@ -7,12 +7,12 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://sunhaengssam.web.app'),
   title: {
-    default: '선행 심선생 | 교실에서 14년, 코드로 만드는 새로운 교육',
-    template: '%s | 선행 심선생',
+    default: '선행쌤 | 교실에서 쓰라고 만든 학습 사이트·게임 모음',
+    template: '%s | 선행쌤',
   },
   description:
-    '초등학교 교사이자 바이브코딩 개발자. 교실의 경험을 코드로 옮겨 학급 경제 SaaS 알찬을 만들고 운영합니다.',
-  keywords: ['초등 교사', '바이브코딩', '에듀테크', 'AI 교육', '알찬', '학급 경제'],
+    '선행쌤(선행 심선생)은 초등학교 교사가 교실에서 필요할 때마다 만든 학습 사이트·교과 게임·선생님용 프로그램 모음입니다.',
+  keywords: ['선행쌤', '선행샘', '선행 심선생', '심선생', '초등 학습 사이트', '교과 게임', '수업 도구', '초등 교사', '바이브코딩', '에듀테크'],
   authors: [{ name: '심선생' }],
   icons: {
     icon: [
@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ko_KR',
     url: 'https://sunhaengssam.web.app',
-    siteName: '선행 심선생',
-    title: '선행 심선생 | 교실에서 14년, 코드로 만드는 새로운 교육',
-    description: '초등학교 교사이자 바이브코딩 개발자의 기록',
+    siteName: '선행쌤',
+    title: '선행쌤 | 교실에서 쓰라고 만든 학습 사이트·게임 모음',
+    description: '초등 교사 심선생이 만든 학습 사이트·게임·선생님 프로그램 모음',
   },
 }
 

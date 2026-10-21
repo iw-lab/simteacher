@@ -9,7 +9,7 @@ export default function AboutPage() {
     { year: '2013.9', title: '교직 시작', description: '초등학교 교사로 첫 발을 내딛다' },
     { year: '2025', title: '바이브코딩 시작', description: 'AI와 함께 코드를 만들기 시작하다' },
     { year: '2026', title: '알찬 운영', description: '학급 경제 SaaS를 만들어 실제 학급에서 운영 중' },
-    { year: '현재', title: '선행 심선생', description: '먼저 배워서 나누는 교사 개발자로 성장 중' },
+    { year: '현재', title: '선행쌤', description: '교실에서 쓰라고 만든 것들을 한곳에 모아 나누는 중' },
   ]
 
   const skills = [
@@ -35,7 +35,7 @@ export default function AboutPage() {
         >
           <span className="text-primary-600 dark:text-primary-300 font-semibold">About Me</span>
           <h1 className="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight text-fg">
-            안녕하세요, <span className="gradient-text">선행 심선생</span>입니다
+            안녕하세요, 선행쌤을 만든 <span className="gradient-text">심선생</span>입니다
           </h1>
           <p className="mt-6 text-lg text-muted-fg max-w-2xl mx-auto">
             초등학교 교사이자 바이브코딩 개발자.
@@ -53,7 +53,7 @@ export default function AboutPage() {
           <div className="relative aspect-square rounded-3xl glass overflow-hidden">
             <Image
               src="/images/simsem-avatar-b.webp"
-              alt="선행 심선생 웹툰 캐릭터"
+              alt="심선생 웹툰 캐릭터"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"

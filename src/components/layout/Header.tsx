@@ -37,8 +37,10 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold gradient-text">선행</span>
-            <span className="text-xl font-medium text-fg/80">심선생</span>
+            <span className="text-2xl font-extrabold tracking-tight">
+              <span className="gradient-text">선행</span>
+              <span className="text-fg">쌤</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

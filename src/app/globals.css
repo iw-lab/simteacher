@@ -217,3 +217,7 @@ code {
 .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;margin:0 .12em;font-size:.9em;font-variant-numeric:tabular-nums}
 .frac-n{padding:0 .18em .06em;border-bottom:.09em solid currentColor}
 .frac-d{padding:.06em .18em 0}
+
+/* 옆으로 미는 칩 줄 — 막대는 숨기고 밀기는 그대로 */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

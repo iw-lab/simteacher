@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, Download, ExternalLink, Lock } from 'lucide-react'
+import { ArrowRight, Download, ExternalLink, Lock, Search, X } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { recordClick } from '@/lib/community'
 import {
@@ -23,6 +23,14 @@ function pick(list: LearningSite[], subject: SiteTag | '', kind: SiteTag | '') {
     (s) =>
       (!subject || s.tags.includes(subject)) && (!kind || s.tags.includes(kind))
   )
+}
+
+/** 이름·한 줄 소개·과목에서 찾기(띄어쓰기·대소문자 무시) — 55개를 눈으로 훑지 않게 */
+const norm = (t: string) => t.toLowerCase().replace(/\s+/g, '')
+function find(list: LearningSite[], q: string) {
+  const k = norm(q)
+  if (!k) return list
+  return list.filter((s) => norm(`${s.name}${s.tagline}${s.subject}${s.tags.join('')}`).includes(k))
 }
 
 function ChipRow({
@@ -50,7 +58,7 @@ function ChipRow({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 border ${
+      className={`shrink-0 whitespace-nowrap px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200 border ${
         active
           ? 'border-primary-500/60 bg-primary-500/15 text-primary-700 dark:text-primary-200'
           : 'border-line bg-card text-muted-fg hover:text-fg hover:border-primary-500/40'
@@ -63,7 +71,8 @@ function ChipRow({
   return (
     <div className="flex items-start gap-3" role="group" aria-label={`${label}로 고르기`}>
       <span className="shrink-0 w-10 pt-2 text-sm font-bold text-muted-fg">{label}</span>
-      <div className="flex flex-wrap gap-2">
+      {/* 폰에선 한 줄을 옆으로 밀어 본다 — 칩이 아홉 줄로 접혀 카드가 화면 밖으로 밀렸다(2026-10-21) */}
+      <div className="flex gap-2 overflow-x-auto no-scrollbar -mr-4 pr-4 sm:mr-0 sm:pr-0 sm:flex-wrap sm:overflow-visible">
         {chip('_all', allLabel, pool.length, !value, () => onChange(''))}
         {counts.map(([o, n]) =>
           chip(o, o, n, value === o, () => onChange(value === o ? '' : o))
@@ -76,8 +85,10 @@ function ChipRow({
 export function Catalog() {
   const [subject, setSubject] = useState<SiteTag | ''>('')
   const [kind, setKind] = useState<SiteTag | ''>('')
+  const [q, setQ] = useState('')
 
-  const sites = useMemo(() => pick(learningSites, subject, kind), [subject, kind])
+  const pool = useMemo(() => find(learningSites, q), [q])
+  const sites = useMemo(() => pick(pool, subject, kind), [pool, subject, kind])
 
   return (
     <div className="space-y-24">
@@ -98,6 +109,28 @@ export function Catalog() {
           </p>
         </div>
 
+        <label className="relative block mb-4 max-w-md">
+          <span className="sr-only">사이트 찾기</span>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg" aria-hidden />
+          <input
+            type="search"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="이름이나 과목으로 찾기 (예: 구구단, 한국사)"
+            className="w-full h-12 pl-11 pr-11 rounded-2xl border border-line bg-card text-[15px] text-fg placeholder:text-muted-fg focus:outline-none focus:border-primary-500/60"
+          />
+          {q && (
+            <button
+              type="button"
+              onClick={() => setQ('')}
+              aria-label="찾기 지우기"
+              className="absolute right-1 top-1/2 -translate-y-1/2 w-10 h-10 inline-flex items-center justify-center text-muted-fg hover:text-fg"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </label>
+
         {/* 카테고리 — 과목·종류 두 줄(킹수학처럼) */}
         <div className="space-y-2.5 mb-8">
           <ChipRow
@@ -106,7 +139,7 @@ export function Catalog() {
             options={SITE_SUBJECTS}
             value={subject}
             onChange={setSubject}
-            pool={pick(learningSites, '', kind)}
+            pool={pick(pool, '', kind)}
           />
           <ChipRow
             label="종류"
@@ -114,11 +147,25 @@ export function Catalog() {
             options={SITE_KINDS}
             value={kind}
             onChange={setKind}
-            pool={pick(learningSites, subject, '')}
+            pool={pick(pool, subject, '')}
           />
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sites.length === 0 && (
+          <p className="py-16 text-center text-muted-fg">
+            찾는 사이트가 없어요.{' '}
+            <button
+              type="button"
+              onClick={() => { setQ(''); setSubject(''); setKind('') }}
+              className="font-semibold text-primary-600 dark:text-primary-300 hover:underline"
+            >
+              모두 보기
+            </button>
+          </p>
+        )}
+
+        {/* 폰은 두 칸 — 한 칸씩이면 55장이 29,000px 로 늘어났다(2026-10-21 실측) */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {sites.map((site, i) => {
             // 🔴 링크가 없는 사이트가 생겼다(2026-08-31 아라하루). 예전엔 전부 url 이 있어서
             //    `<motion.a href={site.url}>` 로 고정이었는데, url 이 undefined 면
@@ -141,7 +188,7 @@ export function Catalog() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: Math.min(i, 8) * 0.04 }}
-              className={`group glass rounded-3xl overflow-hidden flex flex-col transition-all duration-200 ${
+              className={`group glass rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col transition-all duration-200 ${
                 linked ? 'hover:border-primary-500/60 hover:-translate-y-1' : ''
               }`}
             >
@@ -150,29 +197,29 @@ export function Catalog() {
                   src={site.image}
                   alt={`${site.name} 화면`}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 1024px) 50vw, 33vw"
                   className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-300"
                 />
               </div>
 
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-center gap-2 mb-3">
+              <div className="p-3 sm:p-6 flex flex-col flex-1">
+                <div className="flex items-center gap-2 mb-2 sm:mb-3 min-w-0">
                   <Badge variant="primary">{site.subject}</Badge>
-                  <Badge variant="outline">{site.target}</Badge>
+                  <span className="hidden sm:inline-flex"><Badge variant="outline">{site.target}</Badge></span>
                 </div>
 
-                <h3 className="text-lg font-bold text-fg">{site.name}</h3>
-                <p className="mt-1.5 text-[15px] text-muted-fg leading-relaxed">
+                <h3 className="text-[15px] sm:text-lg font-bold text-fg leading-snug">{site.name}</h3>
+                <p className="mt-1 sm:mt-1.5 text-[13px] sm:text-[15px] text-muted-fg leading-relaxed line-clamp-2 sm:line-clamp-none">
                   <MathText text={site.tagline} />
                 </p>
 
                 {linked ? (
-                  <span className="mt-auto pt-5 inline-flex items-center text-sm font-semibold text-primary-600 dark:text-primary-300">
+                  <span className="mt-auto pt-5 hidden sm:inline-flex items-center text-sm font-semibold text-primary-600 dark:text-primary-300">
                     사이트 열기
                     <ExternalLink className="ml-1.5 w-4 h-4" />
                   </span>
                 ) : (
-                  <span className="mt-auto pt-5 inline-flex items-center text-sm text-muted-fg">
+                  <span className="mt-auto pt-3 sm:pt-5 inline-flex items-center text-xs sm:text-sm text-muted-fg">
                     <Lock className="mr-1.5 w-3.5 h-3.5" />
                     {site.urlNote ?? '학급 운영 중'}
                   </span>

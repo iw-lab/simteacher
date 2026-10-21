@@ -13,13 +13,15 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <span className="text-2xl font-bold gradient-text">선행</span>
-              <span className="text-xl font-medium text-fg/80">심선생</span>
+              <span className="text-2xl font-extrabold tracking-tight">
+                <span className="gradient-text">선행</span>
+                <span className="text-fg">쌤</span>
+              </span>
             </Link>
             <p className="text-muted-fg mb-4 max-w-md leading-relaxed">
-              교실에서 14년, 코드로 만드는 새로운 교육.
+              교실에서 쓰라고 만든 학습 사이트·게임·선생님 프로그램 모음.
               <br />
-              초등학교 교사이자 바이브코딩 개발자의 기록입니다.
+              만든 사람: 초등교사 심선생
             </p>
             {/* Social Links */}
             <div className="flex space-x-4">
@@ -110,7 +112,7 @@ export function Footer() {
           <div className="flex flex-col items-center gap-3">
             <VisitCounter />
             <p className="text-center text-muted-fg text-sm">
-              © {currentYear} 선행 심선생. All rights reserved.
+              © {currentYear} 선행쌤. All rights reserved.
             </p>
           </div>
         </div>
