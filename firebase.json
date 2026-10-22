@@ -33,16 +33,18 @@
     {
       "target": "old",
       "public": "redirect-old",
-      "ignore": ["**/.*"],
+      "ignore": [
+        "**/.*"
+      ],
       "redirects": [
         {
           "source": "/",
-          "destination": "https://sunhaengssam.web.app",
+          "destination": "https://ssamzip.com",
           "type": 301
         },
         {
           "source": "/:path*",
-          "destination": "https://sunhaengssam.web.app/:path*",
+          "destination": "https://ssamzip.com/:path*",
           "type": 301
         }
       ]

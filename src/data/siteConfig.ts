@@ -4,7 +4,7 @@ export const siteConfig: SiteConfig = {
   name: '선행쌤',
   description:
     '초등 교사 심선생이 교실에서 쓰라고 만든 학습 사이트·게임·선생님 프로그램 모음',
-  url: 'https://sunhaengssam.web.app',
+  url: 'https://ssamzip.com',
   ogImage: '/images/og/og-default.png',
   links: {
     github: 'https://github.com/iw-lab',
