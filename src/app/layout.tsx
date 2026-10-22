@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   keywords: ['선행쌤', '선행샘', '선행 심선생', '심선생', '초등 학습 사이트', '교과 게임', '수업 도구', '초등 교사', '바이브코딩', '에듀테크'],
   authors: [{ name: '심선생' }],
   alternates: { canonical: './' },
+  verification: { other: { 'naver-site-verification': 'e4235028c5908547841febe095942fa789e71bb0' } },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
