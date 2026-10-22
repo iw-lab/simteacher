@@ -1,0 +1,6 @@
+#DaumWebMasterTool:fafe146ae5a5965b82888247d838cde739771923cf5132a2872f84d1aa939a11:RXqVBM7XE5wroppTXsoV6g==
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://ssamzip.com/sitemap.xml
