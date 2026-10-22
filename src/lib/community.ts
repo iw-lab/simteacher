@@ -179,12 +179,6 @@ export async function fetchVisitCounts(): Promise<VisitCounts> {
 
 // ── 인기 클릭 ───────────────────────────────────────────────────────────────
 
-export interface PopularItem {
-  slug: string
-  name: string
-  count: number
-}
-
 /** 카드 클릭 1회 기록. 실패해도 사용자 흐름을 막지 않는다(링크는 그대로 열린다). */
 export function recordClick(slug: string, rawName: string): void {
   // 규칙이 name 60자를 넘기면 거절한다 — 여기서 미리 자른다.
@@ -203,38 +197,15 @@ export function recordClick(slug: string, rawName: string): void {
   })
 }
 
-/**
- * 오늘의 인기 Top N. 오늘 데이터가 아직 얼마 없으면(이른 아침) 전체 인기로 넘어간다.
- * 반환값의 scope 로 어느 쪽인지 알려주니, 화면 제목도 그에 맞춰 바뀌어야 한다.
- */
-export async function fetchPopular(
-  n = 5
-): Promise<{ scope: 'today' | 'all'; items: PopularItem[] }> {
-  const db = getDb()
-  const toItems = (
-    docs: { data: () => Record<string, unknown> }[]
-  ): PopularItem[] =>
-    docs.map((d) => ({
-      slug: String(d.data().slug ?? ''),
-      name: String(d.data().name ?? ''),
-      count: Number(d.data().count ?? 0),
-    }))
-
-  const todaySnap = await getDocs(
-    query(
-      collection(db, 'clicksDaily'),
-      where('date', '==', todayKey()),
-      orderBy('count', 'desc'),
-      limit(n)
-    )
-  )
-  const today = toItems(todaySnap.docs)
-  if (today.length >= 3) return { scope: 'today', items: today }
-
-  const allSnap = await getDocs(
-    query(collection(db, 'clicks'), orderBy('count', 'desc'), limit(n))
-  )
-  return { scope: 'all', items: toItems(allSnap.docs) }
+/** 전체 누적 클릭 수 — slug → 수. 홈 맨 위 인기 순위가 1등부터 마지막까지 세운다(사이트 60개 안팎이라 한 번에 읽는다). */
+export async function fetchClickCounts(): Promise<Record<string, number>> {
+  const snap = await getDocs(collection(getDb(), 'clicks'))
+  const out: Record<string, number> = {}
+  for (const d of snap.docs) {
+    const v = d.data()
+    out[String(v.slug ?? d.id)] = Number(v.count ?? 0)
+  }
+  return out
 }
 
 // ── 글별 댓글 ───────────────────────────────────────────────────────────────

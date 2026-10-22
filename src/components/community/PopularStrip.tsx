@@ -1,63 +1,116 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Flame } from 'lucide-react'
-import { fetchPopular, recordClick, type PopularItem } from '@/lib/community'
+import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
+import { ChevronLeft, ChevronRight, Flame } from 'lucide-react'
+import { fetchClickCounts, recordClick } from '@/lib/community'
+import { rankByClicks } from '@/lib/ranking'
 import { learningSites, teacherTools } from '@/data/projects'
 
-// slug → 열 링크. 인기 목록의 slug 는 카탈로그에서 온 것이므로 여기서 되찾을 수 있다.
-const URL_BY_SLUG: Record<string, string | undefined> = Object.fromEntries(
-  [...learningSites, ...teacherTools].map((s) => [s.slug, s.url])
-)
+const ALL = [...learningSites, ...teacherTools]
 
-/** 맨 위 "오늘의 인기" 띠. 데이터가 없으면 아예 렌더하지 않아 빈 칸이 생기지 않는다. */
+/** 맨 위 인기 순위 — 누적 클릭 1등부터 마지막까지 썸네일 카드를 가로로 민다(넓은 화면 5장씩).
+ *  집계를 못 읽으면 순위를 지어낼 수 없으니 아예 숨긴다. */
 export function PopularStrip() {
-  const [scope, setScope] = useState<'today' | 'all'>('today')
-  const [items, setItems] = useState<PopularItem[]>([])
+  const [counts, setCounts] = useState<Record<string, number> | null>(null)
+  const [failed, setFailed] = useState(false)
+  const rail = useRef<HTMLOListElement>(null)
 
   useEffect(() => {
     let alive = true
-    fetchPopular(5)
-      .then((r) => {
-        if (!alive) return
-        setScope(r.scope)
-        setItems(r.items.filter((i) => URL_BY_SLUG[i.slug]))
-      })
-      .catch(() => {
-        /* 인덱스 준비 전이거나 네트워크 문제 — 조용히 숨긴다 */
-      })
+    fetchClickCounts()
+      .then((c) => alive && setCounts(c))
+      .catch(() => alive && setFailed(true))
     return () => {
       alive = false
     }
   }, [])
 
-  if (items.length === 0) return null
+  if (failed) return null
+  const ranked = counts ? rankByClicks(ALL, counts) : []
+
+  // 한 번에 보이는 너비만큼(5장) 넘긴다
+  const page = (dir: 1 | -1) => {
+    const el = rail.current
+    if (el) el.scrollBy({ left: dir * el.clientWidth, behavior: 'smooth' })
+  }
 
   return (
-    <div className="glass rounded-2xl px-5 py-3.5 mb-8 flex flex-wrap items-center gap-x-4 gap-y-2">
-      <span className="inline-flex items-center gap-1.5 text-sm font-bold text-fg shrink-0">
-        <Flame className="w-4 h-4 text-orange-500" />
-        {scope === 'today' ? '오늘의 인기' : '많이 찾은 사이트'}
-      </span>
-      <ol className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        {items.map((item, i) => (
-          <li key={item.slug} className="flex items-center gap-1.5 text-sm">
-            <span className="text-xs font-bold text-primary-600 dark:text-primary-300 tabular-nums">
-              {i + 1}
-            </span>
-            <a
-              href={URL_BY_SLUG[item.slug]}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => recordClick(item.slug, item.name)}
-              className="text-muted-fg hover:text-fg transition-colors"
-            >
-              {item.name}
-            </a>
-            <span className="text-xs text-muted-fg/60 tabular-nums">{item.count}</span>
+    <section aria-labelledby="popular-title" className="mb-10">
+      <div className="flex items-end justify-between gap-3 mb-3">
+        <h2 id="popular-title" className="inline-flex items-center gap-1.5 text-lg md:text-xl font-extrabold text-fg">
+          <Flame className="w-5 h-5 text-orange-500" />
+          인기 순위
+          <span className="ml-1 text-sm font-medium text-muted-fg">{ALL.length}곳 전체</span>
+        </h2>
+        <div className="hidden md:flex gap-2">
+          <button type="button" onClick={() => page(-1)} aria-label="앞 순위 보기" className="w-11 h-11 rounded-full border border-line bg-card inline-flex items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button type="button" onClick={() => page(1)} aria-label="다음 순위 보기" className="w-11 h-11 rounded-full border border-line bg-card inline-flex items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40">
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+
+      {/* 카드 너비 = (줄 너비 − 사이 4칸) / 5. 폰은 2장 반이 보여 옆으로 밀 수 있음을 알린다 */}
+      <ol
+        ref={rail}
+        data-testid="popular-rail"
+        className="flex gap-3 md:gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 pb-1"
+      >
+        {(counts ? ranked : Array.from({ length: 5 }, () => null)).map((site, i) => (
+          <li
+            key={site?.slug ?? `skeleton-${i}`}
+            className="snap-start shrink-0 basis-[40%] sm:basis-[calc((100%-2*0.75rem)/3)] md:basis-[calc((100%-4*1rem)/5)]"
+          >
+            {site ? (
+              <a
+                href={site.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={site.url ? () => recordClick(site.slug, site.name) : undefined}
+                aria-disabled={!site.url}
+                className="group block glass rounded-2xl overflow-hidden hover:border-primary-500/60 transition-colors"
+              >
+                <div className="relative aspect-[8/5] bg-muted overflow-hidden border-b border-line">
+                  <Image
+                    src={site.image}
+                    alt={`${site.name} 화면`}
+                    fill
+                    sizes="(max-width: 640px) 40vw, (max-width: 768px) 33vw, 20vw"
+                    className="object-cover object-top group-hover:scale-[1.04] transition-transform duration-300"
+                  />
+                  <span
+                    className={`absolute top-1.5 left-1.5 min-w-7 h-7 px-1.5 rounded-full inline-flex items-center justify-center text-sm font-extrabold tabular-nums shadow ${
+                      site.rank === 1
+                        ? 'bg-amber-400 text-amber-950'
+                        : site.rank === 2
+                          ? 'bg-slate-300 text-slate-900'
+                          : site.rank === 3
+                            ? 'bg-orange-400 text-orange-950'
+                            : 'bg-black/60 text-white'
+                    }`}
+                  >
+                    {site.rank}
+                  </span>
+                </div>
+                <div className="px-2.5 py-2">
+                  <p className="text-[13px] sm:text-sm font-bold text-fg leading-snug line-clamp-1">{site.name}</p>
+                  <p className="mt-0.5 text-xs text-muted-fg tabular-nums">
+                    {site.count > 0 ? `${site.count.toLocaleString()}번 열림` : '아직 기록 없음'}
+                  </p>
+                </div>
+              </a>
+            ) : (
+              <div className="glass rounded-2xl overflow-hidden" aria-hidden>
+                <div className="aspect-[8/5] bg-muted animate-pulse" />
+                <div className="h-[52px]" />
+              </div>
+            )}
           </li>
         ))}
       </ol>
-    </div>
+    </section>
   )
 }

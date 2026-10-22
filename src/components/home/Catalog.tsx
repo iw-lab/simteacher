@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Download, ExternalLink, Lock, Search, X } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { recordClick } from '@/lib/community'
+import { newestFirst } from '@/lib/ranking'
 import {
   learningSites,
   teacherTools,
@@ -87,7 +88,8 @@ export function Catalog() {
   const [kind, setKind] = useState<SiteTag | ''>('')
   const [q, setQ] = useState('')
 
-  const pool = useMemo(() => find(learningSites, q), [q])
+  // 새로 올린 곳이 맨 앞 — 위 인기 순위와 짝(2026-10-23 사용자)
+  const pool = useMemo(() => find(newestFirst(learningSites), q), [q])
   const sites = useMemo(() => pick(pool, subject, kind), [pool, subject, kind])
 
   return (
@@ -105,7 +107,7 @@ export function Catalog() {
             </h2>
           </div>
           <p className="text-sm text-muted-fg">
-            카드를 누르면 새 창에서 바로 열립니다
+            새로 올린 순서 · 카드를 누르면 새 창에서 열립니다
           </p>
         </div>
 
@@ -206,6 +208,9 @@ export function Catalog() {
                 <div className="flex items-center gap-2 mb-2 sm:mb-3 min-w-0">
                   <Badge variant="primary">{site.subject}</Badge>
                   <span className="hidden sm:inline-flex"><Badge variant="outline">{site.target}</Badge></span>
+                  <time dateTime={site.added} className="ml-auto shrink-0 text-xs text-muted-fg tabular-nums">
+                    {Number(site.added.slice(5, 7))}.{Number(site.added.slice(8, 10))} 올림
+                  </time>
                 </div>
 
                 <h3 className="text-[15px] sm:text-lg font-bold text-fg leading-snug">{site.name}</h3>

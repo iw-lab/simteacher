@@ -15,6 +15,8 @@ export type SiteTag = (typeof SITE_SUBJECTS)[number] | (typeof SITE_KINDS)[numbe
 
 export interface LearningSite {
   slug: string;
+  /** 올린 때(KST, 'YYYY-MM-DDTHH:mm') — 홈 목록이 새로 올린 순서로 선다. 처음 값은 git 에서 slug 가 처음 들어온 커밋 시각 */
+  added: string;
   name: string;
   subject: string;
   category: SiteCategory;
@@ -117,6 +119,7 @@ export const teacherTools: TeacherTool[] = [
 export const learningSites: LearningSite[] = [
   {
     slug: 'koreahis',
+    added: '2026-09-07T09:21',
     name: '한국사 문제은행',
     subject: '한국사',
     category: '국어·통합',
@@ -138,6 +141,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'beaton',
+    added: '2026-09-02T08:50',
     name: '비트:온 BEAT:ON',
     subject: '음악',
     category: '미술·놀이',
@@ -158,6 +162,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'arton',
+    added: '2026-07-22T15:55',
     name: '아트온 ArtON',
     subject: '미술',
     category: '미술·놀이',
@@ -178,6 +183,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'papersky',
+    added: '2026-07-25T16:29',
     name: '종이하늘',
     subject: '논리 퍼즐',
     category: '미술·놀이',
@@ -198,6 +204,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'vocaworm',
+    added: '2026-07-22T15:55',
     name: '보카웜 디펜스',
     subject: '영어 단어',
     category: '영어',
@@ -218,6 +225,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'echotale',
+    added: '2026-07-22T15:55',
     name: '에코테일 EchoTale',
     subject: '영어 읽기',
     category: '영어',
@@ -238,6 +246,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'seulgisem',
+    added: '2026-07-22T15:55',
     name: '슬기셈',
     subject: '수학',
     category: '수학',
@@ -258,6 +267,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'mathcastle',
+    added: '2026-07-25T16:29',
     name: '수학 성 수호자',
     subject: '수학',
     category: '수학',
@@ -278,6 +288,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'gugu',
+    added: '2026-08-03T13:17',
     name: '구구성 수호대',
     subject: '수학 연산',
     category: '수학',
@@ -298,6 +309,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'araharu',
+    added: '2026-07-22T15:55',
     name: '아라하루',
     subject: '아침 학습',
     category: '국어·통합',
@@ -321,6 +333,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'numeroquest',
+    added: '2026-08-28T16:18',
     name: '칸채움',
     subject: '스도쿠',
     category: '수학',
@@ -341,6 +354,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'typingverse',
+    added: '2026-08-28T16:18',
     name: '타이핑버스 TypingVerse',
     subject: '타자',
     category: '국어·통합',
@@ -361,6 +375,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'iwpick',
+    added: '2026-09-02T08:50',
     name: '뽑기ON',
     subject: '교실 추첨',
     category: '미술·놀이',
@@ -382,6 +397,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'numrush',
+    added: '2026-09-02T08:50',
     name: '넘버러시 NumRush',
     subject: '수 감각',
     category: '수학',
@@ -402,6 +418,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'spanland',
+    added: '2026-09-02T08:50',
     name: '한뼘 땅따먹기 SpanLand',
     subject: '측정·넓이',
     category: '수학',
@@ -422,6 +439,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'yutdash',
+    added: '2026-09-02T08:50',
     name: '한달음 윷놀이 YutDash',
     subject: '확률·자료',
     category: '수학',
@@ -442,6 +460,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'chromafall',
+    added: '2026-08-28T16:18',
     name: '딱1 로켓',
     subject: '분수·소수·백분율 덧셈',
     category: '수학',
@@ -462,6 +481,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'keywordschool',
+    added: '2026-08-28T16:18',
     name: '열쇠말 학교',
     subject: '학습 방탈출',
     category: '국어·통합',
@@ -482,6 +502,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'kongkong',
+    added: '2026-08-28T16:18',
     name: '콩콩배구',
     subject: '캐주얼 게임',
     category: '미술·놀이',
@@ -502,6 +523,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'reloadarena',
+    added: '2026-08-30T15:04',
     name: '리로드 아레나 Reload Arena',
     subject: '교과 대항전',
     category: '국어·통합',
@@ -523,6 +545,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'oreudap',
+    added: '2026-09-05T19:18',
     name: '오르답 Oreudap',
     subject: '구구단 · 영단어',
     category: '수학',
@@ -545,6 +568,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'hopsquad',
+    added: '2026-09-09T12:17',
     name: '폴짝 원정대',
     subject: '교과 통합',
     category: '국어·통합',
@@ -567,6 +591,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'ttobagi',
+    added: '2026-09-14T09:57',
     name: '또박이',
     subject: '국어·영어',
     category: '국어·통합',
@@ -590,6 +615,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'prism-pop',
+    added: '2026-09-14T11:52',
     name: '프리즘 팝',
     subject: '교과 통합',
     category: '국어·통합',
@@ -613,6 +639,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'skyguard',
+    added: '2026-09-02T08:50',
     name: '하늘수비대 SkyGuard',
     subject: '교과 통합',
     category: '국어·통합',
@@ -635,6 +662,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'pilhan',
+    added: '2026-09-02T08:50',
     name: '필한 筆漢',
     subject: '한자 급수',
     category: '국어·통합',
@@ -656,6 +684,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'looppark',
+    added: '2026-09-06T22:01',
     name: '루프 파크 Loop Park',
     subject: '학년별 수학',
     category: '수학',
@@ -678,6 +707,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'pongdang',
+    added: '2026-09-09T11:00',
     name: '퐁당 낚시터',
     subject: '교과 통합',
     category: '국어·통합',
@@ -700,6 +730,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'baton',
+    added: '2026-09-17T08:45',
     name: '배트온 BatOn',
     subject: '교과 통합',
     category: '국어·통합',
@@ -722,6 +753,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'hwalbaram',
+    added: '2026-09-18T10:13',
     name: '활바람 Hwalbaram',
     subject: '체육·양궁',
     category: '미술·놀이',
@@ -744,6 +776,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'golden-whistle',
+    added: '2026-09-22T09:46',
     name: '골든 휘슬 Golden Whistle',
     subject: '수학',
     category: '수학',
@@ -767,6 +800,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'racket-rush',
+    added: '2026-09-22T08:39',
     name: '래킷 러시 Racket Rush',
     subject: '수학',
     category: '수학',
@@ -789,6 +823,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'seolbong',
+    added: '2026-09-18T10:33',
     name: '설봉 러시 Seolbong Rush',
     subject: '스포츠 게임',
     category: '미술·놀이',
@@ -811,6 +846,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'pinthunder',
+    added: '2026-09-17T09:37',
     name: '핀 천둥 Pin Thunder',
     subject: '수학',
     category: '수학',
@@ -833,6 +869,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'teeshot',
+    added: '2026-09-17T09:37',
     name: '티샷 아일랜드 TeeShot Island',
     subject: '교과 통합',
     category: '수학',
@@ -855,6 +892,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'michyeonsang',
+    added: '2026-09-17T11:42',
     name: '미현상 未現像',
     subject: '학습 방탈출',
     category: '국어·통합',
@@ -877,6 +915,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'gongbunyang',
+    added: '2026-10-01T09:04',
     name: '공부냥',
     subject: '수학',
     category: '수학',
@@ -899,6 +938,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'schoolstars',
+    added: '2026-10-01T09:24',
     name: '스쿨 스타즈',
     subject: '5과목 통합',
     category: '국어·통합',
@@ -921,6 +961,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'mulkko',
+    added: '2026-10-01T09:45',
     name: '물꼬',
     subject: '수학·과학·사회 통합',
     category: '국어·통합',
@@ -943,6 +984,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'dosi-tambang',
+    added: '2026-10-01T12:18',
     name: '도시 탐방대',
     subject: '사회',
     category: '국어·통합',
@@ -966,6 +1008,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'kongkong-song-road',
+    added: '2026-10-08T21:57',
     name: '콩콩 노래길',
     subject: '수학 · 영단어',
     category: '수학',
@@ -989,6 +1032,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'artquest',
+    added: '2026-10-14T12:34',
     name: '명화 탐험대',
     subject: '미술',
     category: '미술·놀이',
@@ -1012,6 +1056,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'whirlwood',
+    added: '2026-10-15T07:52',
     name: '휘휘! 숲속 오케스트라',
     subject: '음악',
     category: '미술·놀이',
@@ -1036,6 +1081,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'tinhelmet',
+    added: '2026-10-15T15:17',
     name: '철모특공대',
     subject: '수학·영어·음악',
     category: '미술·놀이',
@@ -1059,6 +1105,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'bingle-step',
+    added: '2026-10-15T22:20',
     name: '빙글스텝',
     subject: '음악',
     category: '미술·놀이',
@@ -1082,6 +1129,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'blocknuri',
+    added: '2026-10-15T22:35',
     name: '블록누리',
     subject: '수학·영어',
     category: '미술·놀이',
@@ -1105,6 +1153,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'whileplay',
+    added: '2026-10-15T22:37',
     name: '와일플레이 코드스쿨',
     subject: '정보·코딩',
     category: '국어·통합',
@@ -1128,6 +1177,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'starlight-heroes',
+    added: '2026-10-15T22:38',
     name: '별빛 용사단',
     subject: '수학·영어·국어·과학·사회',
     category: '국어·통합',
@@ -1151,6 +1201,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'tajawangguk',
+    added: '2026-10-17T17:11',
     name: '타자왕국 키우기',
     subject: '타자',
     category: '국어·통합',
@@ -1173,6 +1224,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'kkeutjinhwa',
+    added: '2026-10-18T10:27',
     name: '끝까지 진화',
     subject: '5과목 통합',
     category: '국어·통합',
@@ -1195,6 +1247,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'gongbu-snack',
+    added: '2026-10-18T10:42',
     name: '공부냥 간식가게',
     subject: '수학',
     category: '수학',
@@ -1217,6 +1270,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'dokdo-log',
+    added: '2026-10-18T17:22',
     name: '독도 탐사 일지',
     subject: '사회',
     category: '국어·통합',
@@ -1239,6 +1293,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'dokkaebi-road',
+    added: '2026-10-18T21:24',
     name: '도깨비 장터길',
     subject: '5과목 통합',
     category: '국어·통합',
@@ -1262,6 +1317,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'hobakbul',
+    added: '2026-10-20T19:32',
     name: '호박불 마을',
     subject: '4과목 통합',
     category: '국어·통합',
@@ -1285,6 +1341,7 @@ export const learningSites: LearningSite[] = [
   },
   {
     slug: 'gugu-2d',
+    added: '2026-10-20T21:09',
     name: '구구성 수호대 2D 오리지널',
     subject: '수학 연산',
     category: '수학',
