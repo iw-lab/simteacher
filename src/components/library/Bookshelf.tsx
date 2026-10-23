@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react'
-import { isForKids } from '../../lib/kids-shelf'
+import { curriculumLabel, curriculumOf, isForKids, orderShelf } from '../../lib/kids-shelf'
 import { fetchBookClicks, recordBookClick } from '../../lib/community'
 import { rankBooks } from '../../lib/ranking'
 
@@ -35,9 +35,12 @@ export function groupBySeries(works: Work[]): { title: string; works: Work[] }[]
     if (!m.has(k)) m.set(k, { title, works: [] })
     m.get(k)!.works.push(w)
   }
-  // 시리즈 안은 권 순서(slug 의 번호)대로 — 1단원이 맨 앞
-  for (const g of m.values()) g.works.sort((a, b) => a.slug.localeCompare(b.slug, undefined, { numeric: true }))
-  return [...m.values()]
+  // 시리즈 안은 단원 순(단원 태그가 없으면 slug 의 번호) — 1단원이 맨 앞
+  const unit = (w: Work) => curriculumOf(w.tags).unit ?? Infinity
+  for (const g of m.values())
+    g.works.sort((a, b) => unit(a) - unit(b) || a.slug.localeCompare(b.slug, undefined, { numeric: true }))
+  // 교과 학습만화 묶음이 학년→과목 순으로 먼저(2026-10-23 장부 F)
+  return orderShelf([...m.values()])
 }
 
 export async function fetchWorks(): Promise<Work[]> {
@@ -73,7 +76,7 @@ export function WorkCard({ w, clicks }: { w: Work; clicks?: number }) {
           />
         )}
         <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 text-white text-xs font-semibold">
-          {KIND_LABEL[w.kind]}
+          {curriculumLabel(w.tags) || KIND_LABEL[w.kind]}
         </span>
       </div>
       <div className="px-3 py-2.5">
