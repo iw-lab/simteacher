@@ -70,3 +70,13 @@ export function songsNewestFirst<T extends { id: string }>(songs: T[], added: Re
     .sort((a, b) => (added[b.s.id] ?? '').localeCompare(added[a.s.id] ?? '') || a.i - b.i)
     .map((x) => x.s)
 }
+
+/** 곡 담기/빼기 — 담으면 맨 뒤에 붙는다 */
+export function toggleId(ids: string[], id: string): string[] {
+  return ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]
+}
+
+/** 다음 곡 자리 — 줄 끝에서 처음으로 돌아간다(그 목록만 계속 반복) */
+export function nextIndex(len: number, i: number, dir: 1 | -1): number {
+  return len === 0 ? -1 : (i + dir + len) % len
+}

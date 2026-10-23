@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, FileText, Flame, Music, Pause, Play, Search, Shuffle, SkipBack, SkipForward, X } from 'lucide-react'
+import { Check, ChevronLeft, ChevronRight, FileText, Flame, ListMusic, ListPlus, Music, Pause, Play, Repeat, Repeat1, Search, Shuffle, SkipBack, SkipForward, Trash2, X } from 'lucide-react'
 import { fetchSongPlays, recordSongPlay } from '@/lib/community'
-import { rankSongs, songsNewestFirst } from '@/lib/ranking'
+import { nextIndex, rankSongs, songsNewestFirst, toggleId } from '@/lib/ranking'
 
 /** 곡 목록·음원은 배포된 비트:온에서 방문 때 읽는다 — 비트:온에 곡을 올리면 여기에도 저절로 뜬다. */
 export const BEATON = 'https://beaton-evo.pages.dev'
@@ -24,6 +24,25 @@ const mmss = (sec: number) => `${Math.floor(sec / 60)}:${String(Math.floor(sec %
 /** 섞어 듣기 — 렌더 밖 함수로 둔다(렌더 중 Math.random 금지 규칙) */
 const pickRandom = <T,>(a: T[]): T => a[Math.floor(Math.random() * a.length)]
 const norm = (t: string) => t.toLowerCase().replace(/\s+/g, '')
+
+/** 내 플레이리스트 — 이 브라우저에만 남는다(계정 없음 · 서버로 안 보낸다). 담은 순서 그대로. */
+const MINE_KEY = 'simteacher:music:mine'
+function loadMine(): string[] {
+  try {
+    const v = JSON.parse(window.localStorage.getItem(MINE_KEY) ?? '[]') as unknown
+    return Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []
+  } catch {
+    return []
+  }
+}
+function saveMine(ids: string[]) {
+  try {
+    window.localStorage.setItem(MINE_KEY, JSON.stringify(ids))
+  } catch {
+    /* 저장이 막힌 브라우저 — 이번 방문 동안만 유지된다 */
+  }
+}
+
 
 function Lyrics({ text }: { text: string }) {
   return (
@@ -48,7 +67,11 @@ export function MusicRoom() {
   const [songs, setSongs] = useState<Song[] | null>(null)
   const [lyrics, setLyrics] = useState<Record<string, string>>({})
   const [failed, setFailed] = useState(false)
-  const [onlyLyrics, setOnlyLyrics] = useState(true)
+  // 보는 묶음 — 가사 있는 노래 / 전체 / 내 플레이리스트
+  const [view, setView] = useState<'lyrics' | 'all' | 'mine'>('lyrics')
+  const [mine, setMine] = useState<string[]>([])
+  // 반복 — 'all' = 듣던 목록 전체를 계속 돈다 · 'one' = 한 곡만
+  const [repeat, setRepeat] = useState<'all' | 'one'>('all')
   const [genre, setGenre] = useState('')
   const [q, setQ] = useState('')
   const [cur, setCur] = useState<Song | null>(null)
@@ -62,6 +85,14 @@ export function MusicRoom() {
   const [plays, setPlays] = useState<{ recent: Record<string, number>; total: Record<string, number> } | null>(null)
   const audio = useRef<HTMLAudioElement>(null)
   const rail = useRef<HTMLOListElement>(null)
+  // 지금 재생 중인 줄 — 곡을 누른 그때의 목록에 묶는다. 보는 칸을 바꿔도 플레이리스트 반복이 다른 곡으로 새지 않게.
+  const queue = useRef<'mine' | Song[]>([])
+  const toggleMine = (id: string) =>
+    setMine((m) => {
+      const next = toggleId(m, id)
+      saveMine(next)
+      return next
+    })
 
   useEffect(() => {
     let alive = true
@@ -74,6 +105,8 @@ export function MusicRoom() {
         if (!alive) return
         setLyrics(ly)
         setAdded(ad)
+        // 담아 둔 곡은 목록이 온 뒤에 읽는다(정적 빌드 화면과 첫 그림이 어긋나지 않게)
+        setMine(loadMine())
         // 아래 목록 = 올린 순서(최근이 앞) — 2026-10-23 사용자 «홈처럼 위는 인기 순위, 아래는 올린 순서»
         setSongs(songsNewestFirst(idx.songs, ad))
       })
@@ -87,9 +120,13 @@ export function MusicRoom() {
   }, [])
 
   const lyricCount = songs ? songs.filter((s) => lyrics[s.id]).length : 0
+  const mineSongs = useMemo(() => {
+    const by = new Map((songs ?? []).map((s) => [s.id, s]))
+    return mine.map((id) => by.get(id)).filter((s): s is Song => !!s)
+  }, [songs, mine])
   const pool = useMemo(
-    () => (songs ?? []).filter((s) => !onlyLyrics || lyrics[s.id]),
-    [songs, lyrics, onlyLyrics]
+    () => (view === 'mine' ? mineSongs : (songs ?? []).filter((s) => view === 'all' || lyrics[s.id])),
+    [songs, lyrics, view, mineSongs]
   )
   const genres = useMemo(() => {
     const m = new Map<string, number>()
@@ -105,9 +142,10 @@ export function MusicRoom() {
     )
   }, [pool, genre, q, lyrics])
 
-  const play = (s: Song) => {
+  const play = (s: Song, from?: 'mine' | Song[]) => {
     const el = audio.current
     if (!el) return
+    if (from) queue.current = from
     if (cur?.id === s.id) {
       if (el.paused) void el.play()
       else el.pause()
@@ -119,11 +157,22 @@ export function MusicRoom() {
     void el.play()
     void recordSongPlay(s.id)
   }
-  const step = (dir: 1 | -1) => {
-    if (list.length === 0) return
-    if (shuffle) return play(pickRandom(list))
-    const i = cur ? list.findIndex((s) => s.id === cur.id) : -1
-    play(list[(i + dir + list.length) % list.length])
+  const step = (dir: 1 | -1, ended = false) => {
+    const q = queue.current === 'mine' ? mineSongs : queue.current.length ? queue.current : list
+    if (q.length === 0) return
+    const i = cur ? q.findIndex((s) => s.id === cur.id) : -1
+    // 한 곡 반복은 곡이 끝났을 때만 — 다음/이전 단추는 옮겨 간다
+    if (ended && repeat === 'one' && cur && audio.current) {
+      audio.current.currentTime = 0
+      void audio.current.play()
+      return
+    }
+    if (shuffle && q.length > 1) {
+      let n = pickRandom(q)
+      while (n.id === cur?.id) n = pickRandom(q)
+      return play(n)
+    }
+    play(q[nextIndex(q.length, i, dir)])
   }
 
   if (failed) {
@@ -137,25 +186,29 @@ export function MusicRoom() {
   return (
     <div className="pb-40">
       <div className="flex flex-wrap items-center gap-2 mb-3">
-        {[
-          [true, `가사 있는 노래 ${lyricCount}`],
-          [false, `전체 ${songs?.length ?? 0}`],
-        ].map(([v, label]) => (
+        {(
+          [
+            ['lyrics', `가사 있는 노래 ${lyricCount}`],
+            ['all', `전체 ${songs?.length ?? 0}`],
+            ['mine', `내 플레이리스트 ${mineSongs.length}`],
+          ] as const
+        ).map(([v, label]) => (
           <button
-            key={String(v)}
+            key={v}
             type="button"
-            aria-pressed={onlyLyrics === v}
+            aria-pressed={view === v}
             onClick={() => {
-              setOnlyLyrics(v as boolean)
+              setView(v)
               setGenre('')
             }}
-            className={`h-11 px-4 rounded-full text-sm font-semibold border transition-colors ${
-              onlyLyrics === v
+            className={`h-11 px-4 rounded-full text-sm font-semibold border transition-colors inline-flex items-center gap-1.5 ${
+              view === v
                 ? 'border-primary-500/60 bg-primary-500/15 text-primary-700 dark:text-primary-200'
                 : 'border-line bg-card text-muted-fg hover:text-fg'
             }`}
           >
-            {label as string}
+            {v === 'mine' && <ListMusic className="w-4 h-4" />}
+            {label}
           </button>
         ))}
         <label className="relative ml-auto w-full sm:w-80">
@@ -192,7 +245,7 @@ export function MusicRoom() {
 
       {!songs && <p className="py-16 text-center text-muted-fg">노래를 불러오는 중…</p>}
 
-      {ranked.length > 0 && !genre && !q && (
+      {ranked.length > 0 && view !== 'mine' && !genre && !q && (
         <section aria-labelledby="song-popular" className="mb-8">
           <div className="flex items-end justify-between gap-3 mb-3">
             <h2 id="song-popular" className="inline-flex items-center gap-1.5 text-lg md:text-xl font-extrabold text-fg">
@@ -225,7 +278,7 @@ export function MusicRoom() {
                 <li key={s.id} className="snap-start shrink-0 basis-[44%] sm:basis-[calc((100%-2*0.75rem)/3)] lg:basis-[calc((100%-4*0.75rem)/5)]">
                   <button
                     type="button"
-                    onClick={() => play(s)}
+                    onClick={() => play(s, ranked)}
                     aria-label={`${s.rank}위 ${s.title} ${on && playing ? '멈춤' : '듣기'}`}
                     className={`relative w-full h-full p-4 rounded-2xl border text-left text-white overflow-hidden transition-colors ${
                       on ? 'border-primary-500/80' : 'border-line hover:border-primary-500/40'
@@ -247,19 +300,41 @@ export function MusicRoom() {
         </section>
       )}
 
-      {songs && !genre && !q && <h2 className="mb-3 text-lg md:text-xl font-extrabold text-fg">올린 순서 <span className="ml-1 text-sm font-medium text-muted-fg">새 노래가 맨 앞</span></h2>}
+      {songs && view === 'mine' && (
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <h2 className="text-lg md:text-xl font-extrabold text-fg">
+            내 플레이리스트 <span className="ml-1 text-sm font-medium text-muted-fg">담은 순서대로 · 끝나면 처음부터 다시</span>
+          </h2>
+          {mineSongs.length > 0 && (
+            <button
+              type="button"
+              onClick={() => play(mineSongs[0], 'mine')}
+              className="ml-auto h-11 px-4 rounded-full bg-primary-500 text-white text-sm font-semibold inline-flex items-center gap-1.5"
+            >
+              <Play className="w-4 h-4" /> 처음부터 듣기
+            </button>
+          )}
+        </div>
+      )}
+      {songs && view === 'mine' && mineSongs.length === 0 && (
+        <p className="py-12 text-center text-muted-fg">
+          아직 담은 노래가 없어요. 「가사 있는 노래」나 「전체」에서 노래 옆 <ListPlus className="inline w-4 h-4 align-[-2px]" /> 단추를 눌러 담아 보세요.
+        </p>
+      )}
+      {songs && view !== 'mine' && !genre && !q && <h2 className="mb-3 text-lg md:text-xl font-extrabold text-fg">올린 순서 <span className="ml-1 text-sm font-medium text-muted-fg">새 노래가 맨 앞</span></h2>}
 
       <div className="grid lg:grid-cols-[minmax(0,1fr)_380px] gap-6 items-start">
         <ol data-testid="song-list" className="grid sm:grid-cols-2 2xl:grid-cols-3 gap-3">
           {list.map((s) => {
             const on = cur?.id === s.id
+            const inMine = mine.includes(s.id)
             return (
-              <li key={s.id}>
+              <li key={s.id} className="relative">
                 <button
                   type="button"
-                  onClick={() => play(s)}
+                  onClick={() => play(s, view === 'mine' ? 'mine' : list)}
                   aria-label={`${s.title} ${on && playing ? '멈춤' : '듣기'}`}
-                  className={`w-full flex items-center gap-3 p-2.5 rounded-2xl border text-left transition-colors ${
+                  className={`w-full flex items-center gap-3 p-2.5 pr-14 rounded-2xl border text-left transition-colors ${
                     on ? 'border-primary-500/60 bg-primary-500/10' : 'border-line bg-card hover:border-primary-500/40'
                   }`}
                 >
@@ -278,6 +353,19 @@ export function MusicRoom() {
                       {lyrics[s.id] ? ' · 가사' : ' · 연주곡'}
                     </span>
                   </span>
+                </button>
+                {/* 담기/빼기 — 재생 단추 안에 단추를 넣을 수 없어 옆에 겹쳐 둔다 */}
+                <button
+                  type="button"
+                  onClick={() => toggleMine(s.id)}
+                  aria-pressed={inMine}
+                  aria-label={view === 'mine' ? `${s.title} 플레이리스트에서 빼기` : inMine ? `${s.title} 플레이리스트에서 빼기` : `${s.title} 플레이리스트에 담기`}
+                  title={view === 'mine' ? '빼기' : inMine ? '담음 — 누르면 빼기' : '내 플레이리스트에 담기'}
+                  className={`absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 inline-flex items-center justify-center rounded-full transition-colors ${
+                    inMine && view !== 'mine' ? 'text-primary-500 bg-primary-500/10' : 'text-muted-fg hover:text-fg hover:bg-primary-500/10'
+                  }`}
+                >
+                  {view === 'mine' ? <Trash2 className="w-5 h-5" /> : inMine ? <Check className="w-5 h-5" /> : <ListPlus className="w-5 h-5" />}
                 </button>
               </li>
             )
@@ -359,6 +447,15 @@ export function MusicRoom() {
             </span>
             <button
               type="button"
+              onClick={() => setRepeat((r) => (r === 'all' ? 'one' : 'all'))}
+              aria-label={repeat === 'one' ? '한 곡 반복 중 — 누르면 목록 반복' : '목록 반복 중 — 누르면 한 곡 반복'}
+              title={repeat === 'one' ? '한 곡 반복' : '목록 반복'}
+              className={`w-11 h-11 inline-flex items-center justify-center rounded-full ${repeat === 'one' ? 'text-primary-500 bg-primary-500/10' : 'text-muted-fg'}`}
+            >
+              {repeat === 'one' ? <Repeat1 className="w-5 h-5" /> : <Repeat className="w-5 h-5" />}
+            </button>
+            <button
+              type="button"
               onClick={() => setShuffle((v) => !v)}
               aria-pressed={shuffle}
               aria-label="섞어 듣기"
@@ -397,7 +494,7 @@ export function MusicRoom() {
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onTimeUpdate={(e) => setT(e.currentTarget.currentTime)}
-        onEnded={() => step(1)}
+        onEnded={() => step(1, true)}
       />
     </div>
   )

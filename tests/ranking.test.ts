@@ -107,3 +107,18 @@ describe('음악감상실 순위', () => {
     expect(songsNewestFirst(songs, added).map((s) => s.id)).toEqual(['b', 'c', 'a', 'd'])
   })
 })
+
+describe('내 플레이리스트', () => {
+  it('담으면 맨 뒤에 붙고 다시 누르면 빠진다', async () => {
+    const { toggleId } = await import('../src/lib/ranking')
+    expect(toggleId(['a'], 'b')).toEqual(['a', 'b'])
+    expect(toggleId(['a', 'b', 'c'], 'b')).toEqual(['a', 'c'])
+  })
+  it('마지막 곡 다음은 첫 곡 — 그 목록만 계속 돈다', async () => {
+    const { nextIndex } = await import('../src/lib/ranking')
+    expect(nextIndex(3, 2, 1)).toBe(0)
+    expect(nextIndex(3, 0, -1)).toBe(2)
+    expect(nextIndex(3, -1, 1)).toBe(0)
+    expect(nextIndex(0, 0, 1)).toBe(-1)
+  })
+})
