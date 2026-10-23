@@ -42,7 +42,7 @@ export function groupBySeries(works: Work[]): { title: string; works: Work[] }[]
 
 export async function fetchWorks(): Promise<Work[]> {
   const r = await fetch(`${LIBRARY}/api/public/works`)
-  if (!r.ok) throw new Error(`서재 ${r.status}`)
+  if (!r.ok) throw new Error(`학습만화 ${r.status}`)
   return ((await r.json()) as { works: Work[] }).works
 }
 
@@ -185,7 +185,7 @@ export function Bookshelf() {
   if (failed) {
     return (
       <p className="py-16 text-center text-muted-fg">
-        서재를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.
+        학습만화를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.
       </p>
     )
   }

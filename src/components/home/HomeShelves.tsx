@@ -26,10 +26,10 @@ export function HomeShelves() {
           <div className="flex items-end justify-between gap-3 mb-3">
             <h2 id="home-shelf" className="inline-flex items-center gap-1.5 text-lg md:text-xl font-extrabold text-fg">
               <BookOpen className="w-5 h-5 text-primary-500" />
-              서재 — 아이들 책
+              학습만화 — 새로 나온 책
             </h2>
             <Link href="/library" className="inline-flex items-center text-sm font-semibold text-muted-fg hover:text-fg">
-              서재 전체 <ArrowRight className="ml-1 w-4 h-4" />
+              학습만화 전체 <ArrowRight className="ml-1 w-4 h-4" />
             </Link>
           </div>
           <div className="flex gap-3 md:gap-4 overflow-x-auto no-scrollbar snap-x -mx-4 px-4 sm:mx-0 sm:px-0 pb-1">

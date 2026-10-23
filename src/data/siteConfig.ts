@@ -24,7 +24,7 @@ export const profile = {
 
 export const navigation: NavItem[] = [
   { label: '게임·사이트', href: '/' },
-  { label: '서재', href: '/library' },
+  { label: '학습만화', href: '/library' },
   { label: '음악감상실', href: '/music' },
   { label: '소개', href: '/about' },
   { label: '포트폴리오', href: '/portfolio' },
