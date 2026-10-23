@@ -52,7 +52,7 @@ export default function AboutPage() {
         >
           <div className="relative aspect-square rounded-3xl glass overflow-hidden">
             <Image
-              src="/images/simsem-avatar-c.webp"
+              src="/images/simsem-avatar-c-crop.webp"
               alt="심선생 웹툰 캐릭터"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
