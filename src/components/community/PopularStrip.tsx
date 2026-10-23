@@ -15,8 +15,8 @@ export const AUTO_ADVANCE_MS = 3500
 const RESUME_AFTER_MS = 8000
 
 /** 맨 위 인기 순위 — 최근 48시간 조회수 1등부터 마지막까지 썸네일 카드를 가로로 민다.
- *  한 번에 폰 3 · 태블릿 4~6 · 넓은 화면 8~10장(2026-10-23 «7~10개 정도 한번에»).
- *  AUTO_ADVANCE_MS 마다 한 칸씩 다음 순위로 넘기고, 끝에 닿으면 1등으로 돌아간다.
+ *  한 번에 폰 3 · 태블릿 4~5 · 넓은 화면 7장(2026-10-23 «글자 깨진다 7개로 줄이고 7개 한번에 넘어가게»).
+ *  AUTO_ADVANCE_MS 마다 보이는 장수만큼(한 화면) 다음 순위로 넘기고, 끝에 닿으면 1등으로 돌아간다.
  *  마우스를 올리거나 손으로 밀면 잠시 멈춘다. 집계를 못 읽으면 순위를 지어낼 수 없으니 아예 숨긴다. */
 export function PopularStrip() {
   const [counts, setCounts] = useState<Record<string, number> | null>(null)
@@ -40,20 +40,18 @@ export function PopularStrip() {
     }
   }, [])
 
-  // 자동 넘김 — 한 칸(카드 하나 + 사이)씩. 화면이 숨었거나 마우스가 올라가 있거나 방금 손댔으면 건너뛴다
+  // 자동 넘김 — 한 화면(보이는 장수)씩. 화면이 숨었거나 마우스가 올라가 있거나 방금 손댔으면 건너뛴다
   useEffect(() => {
     if (!counts) return
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     const id = window.setInterval(() => {
       const el = rail.current
       if (!el || document.hidden || hover.current || Date.now() < hold.current) return
-      const first = el.firstElementChild as HTMLElement | null
-      if (!first) return
       const gap = parseFloat(getComputedStyle(el).columnGap) || 0
       const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4
       const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth'
       if (atEnd) el.scrollTo({ left: 0, behavior })
-      else el.scrollBy({ left: first.offsetWidth + gap, behavior })
+      else el.scrollBy({ left: el.clientWidth + gap, behavior })
     }, AUTO_ADVANCE_MS)
     return () => window.clearInterval(id)
   }, [counts])
@@ -70,7 +68,7 @@ export function PopularStrip() {
   const page = (dir: 1 | -1) => {
     pause()
     const el = rail.current
-    if (el) el.scrollBy({ left: dir * el.clientWidth, behavior: 'smooth' })
+    if (el) el.scrollBy({ left: dir * (el.clientWidth + (parseFloat(getComputedStyle(el).columnGap) || 0)), behavior: 'smooth' })
   }
 
   return (
@@ -104,10 +102,10 @@ export function PopularStrip() {
         onFocus={pause}
         className="flex gap-2 md:gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 pb-1"
       >
-        {(counts ? ranked : Array.from({ length: 10 }, () => null)).map((site, i) => (
+        {(counts ? ranked : Array.from({ length: 7 }, () => null)).map((site, i) => (
           <li
             key={site?.slug ?? `skeleton-${i}`}
-            className="snap-start shrink-0 basis-[30%] sm:basis-[calc((100%-3*0.5rem)/4)] md:basis-[calc((100%-5*0.75rem)/6)] lg:basis-[calc((100%-7*0.75rem)/8)] xl:basis-[calc((100%-9*0.75rem)/10)]"
+            className="snap-start shrink-0 basis-[30%] sm:basis-[calc((100%-3*0.5rem)/4)] md:basis-[calc((100%-4*0.75rem)/5)] lg:basis-[calc((100%-6*0.75rem)/7)]"
           >
             {site ? (
               <a
@@ -123,7 +121,7 @@ export function PopularStrip() {
                     src={site.image}
                     alt={`${site.name} 화면`}
                     fill
-                    sizes="(max-width: 640px) 30vw, (max-width: 768px) 25vw, (max-width: 1024px) 17vw, 12vw"
+                    sizes="(max-width: 640px) 30vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 14vw"
                     className="object-cover object-top group-hover:scale-[1.04] transition-transform duration-300"
                   />
                   <span
@@ -141,7 +139,7 @@ export function PopularStrip() {
                   </span>
                 </div>
                 <div className="px-2 py-1.5">
-                  <p className="text-xs sm:text-[13px] font-bold text-fg leading-snug line-clamp-1">{site.name}</p>
+                  <p className="text-[13px] sm:text-sm font-bold text-fg leading-snug line-clamp-1">{site.name}</p>
                   <p className="mt-0.5 text-xs text-muted-fg tabular-nums line-clamp-1">
                     {site.count > 0 ? `48시간 ${site.count.toLocaleString()}번` : '48시간 기록 없음'}
                   </p>
