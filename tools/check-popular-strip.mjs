@@ -4,6 +4,7 @@
 //   ② 가만히 두면 간격마다 «한 화면(7장)씩» 넘어간다 — 넘어간 뒤 첫 카드가 8등
 //   ③ 마우스를 올려 두면 멈춘다
 //   ④ 끝에서 1등으로 돌아갈 때 되감지 않는다(중간 위치를 지나지 않고 바로 0) — «다시 뒤감기 말고 1번부터 시작»
+//   ⑤ 아래 카드(학습 게임·선생님 프로그램) 하나하나 밑에 «누적 N번» 조회수가 있다 — 2026-10-23 «모든 카드 밑에 누적 조회수»
 // 쓰기: node tools/check-popular-strip.mjs <주소>   (종료코드 0 통과 · 1 실패)
 import { createRequire } from 'node:module'
 import os from 'node:os'
@@ -33,6 +34,16 @@ for (const [w, lo, hi] of [[390, 3, 3], [1280, 7, 7], [1600, 7, 7]]) {
     if (cw < 140) fails.push(`① ${w}px 카드 너비 ${Math.round(cw)}px (글자가 깨진다 · ≥140)`)
   }
   if (w === 1280) {
+    await p.waitForSelector('#learning-sites [data-views]', { timeout: 15000 }).catch(() => {})
+    const v = await p.evaluate(() => {
+      const learn = [...document.querySelectorAll('#learning-sites a[target=_blank]')].filter((a) => a.querySelector('img'))
+      const tools = [...document.querySelectorAll('#teacher-tools .glass')]
+      const miss = [...learn, ...tools].filter((c) => !/누적 [\d,]+번/.test(c.querySelector('[data-views]')?.textContent || ''))
+      return { cards: learn.length + tools.length, miss: miss.length, ex: miss[0]?.querySelector('h3')?.textContent || '' }
+    })
+    console.log(`⑤ 카드 ${v.cards}장 중 조회수 없는 카드 ${v.miss}장`)
+    if (!v.cards) fails.push('⑤ 아래 카드를 못 찾았다')
+    else if (v.miss) fails.push(`⑤ 누적 조회수가 없는 카드 ${v.miss}장(예: ${v.ex})`)
     const ms = Number(await p.$eval('[data-testid=popular-rail]', (el) => el.dataset.autoMs || 0))
     const x0 = await p.$eval('[data-testid=popular-rail]', (el) => el.scrollLeft)
     // 첫 넘김이 시작되는 순간을 잡고(간격 안에 두 번 넘어가는 것을 세지 않도록) 부드럽게 멈출 때까지 기다린다

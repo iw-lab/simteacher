@@ -225,6 +225,14 @@ export async function fetchTotalCounts(): Promise<Record<string, number>> {
   return out
 }
 
+/** 누적 조회수는 한 번만 읽어 위 인기 순위와 아래 카드들이 같이 쓴다 — 같은 화면에서 clicks 를 두 번 읽지 않게(서버비).
+ *  실패하면 다음 호출에서 다시 읽는다. */
+let totalsOnce: Promise<Record<string, number>> | null = null
+export function fetchTotalCountsOnce(): Promise<Record<string, number>> {
+  if (!totalsOnce) totalsOnce = fetchTotalCounts().catch((e) => { totalsOnce = null; throw e })
+  return totalsOnce
+}
+
 // ── 글별 댓글 ───────────────────────────────────────────────────────────────
 // 방명록과 같은 계약에서 출발하되, 교차검증에서 잡힌 세 가지를 고쳤다.
 //

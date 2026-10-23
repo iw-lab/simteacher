@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react'
-import { fetchRecentCounts, fetchTotalCounts, recordClick } from '@/lib/community'
+import { fetchRecentCounts, fetchTotalCountsOnce, recordClick } from '@/lib/community'
 import { rankByClicks } from '@/lib/ranking'
 import { learningSites, teacherTools } from '@/data/projects'
 
@@ -32,7 +32,7 @@ export function PopularStrip() {
       .then((c) => alive && setCounts(c))
       .catch(() => alive && setFailed(true))
     // 누적은 곁들이는 숫자 — 못 읽어도 순위는 그대로 보인다
-    fetchTotalCounts()
+    fetchTotalCountsOnce()
       .then((t) => alive && setTotals(t))
       .catch(() => {})
     return () => {

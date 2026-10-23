@@ -1,13 +1,13 @@
 'use client'
 
 import { MathText } from '@/components/ui/MathText'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, Download, ExternalLink, Lock, Search, X } from 'lucide-react'
+import { ArrowRight, Download, ExternalLink, Eye, Lock, Search, X } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
-import { recordClick } from '@/lib/community'
+import { fetchTotalCountsOnce, recordClick } from '@/lib/community'
 import { newestFirst } from '@/lib/ranking'
 import {
   learningSites,
@@ -17,6 +17,17 @@ import {
   type LearningSite,
   type SiteTag,
 } from '@/data/projects'
+
+/** 카드 밑 누적 조회수(2026-10-23 «모든 카드 밑에 누적 조회수 적어줘») — 못 읽었으면 아무것도 안 그린다 */
+function Views({ n, className = '' }: { n: number | undefined; className?: string }) {
+  if (n === undefined) return null
+  return (
+    <span data-views className={`inline-flex items-center gap-1 text-xs text-muted-fg tabular-nums ${className}`}>
+      <Eye className="w-3.5 h-3.5" aria-hidden />
+      누적 {n.toLocaleString()}번
+    </span>
+  )
+}
 
 /** 과목 하나·종류 하나를 고르면 둘 다 붙은 사이트만(고르지 않은 줄은 통과) */
 function pick(list: LearningSite[], subject: SiteTag | '', kind: SiteTag | '') {
@@ -87,6 +98,17 @@ export function Catalog() {
   const [subject, setSubject] = useState<SiteTag | ''>('')
   const [kind, setKind] = useState<SiteTag | ''>('')
   const [q, setQ] = useState('')
+  const [totals, setTotals] = useState<Record<string, number> | null>(null)
+  useEffect(() => {
+    let alive = true
+    fetchTotalCountsOnce()
+      .then((t) => alive && setTotals(t))
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [])
+  const views = (slug: string) => (totals ? totals[slug] ?? 0 : undefined)
 
   // 새로 올린 곳이 맨 앞 — 위 인기 순위와 짝(2026-10-23 사용자)
   const pool = useMemo(() => find(newestFirst(learningSites), q), [q])
@@ -219,10 +241,13 @@ export function Catalog() {
                 </p>
 
                 {linked ? (
-                  <span className="mt-auto pt-5 hidden sm:inline-flex items-center text-sm font-semibold text-primary-600 dark:text-primary-300">
-                    사이트 열기
-                    <ExternalLink className="ml-1.5 w-4 h-4" />
-                  </span>
+                  <div className="mt-auto pt-3 sm:pt-5 flex items-center justify-between gap-2">
+                    <Views n={views(site.slug)} />
+                    <span className="hidden sm:inline-flex items-center text-sm font-semibold text-primary-600 dark:text-primary-300">
+                      사이트 열기
+                      <ExternalLink className="ml-1.5 w-4 h-4" />
+                    </span>
+                  </div>
                 ) : (
                   <span className="mt-auto pt-3 sm:pt-5 inline-flex items-center text-xs sm:text-sm text-muted-fg">
                     <Lock className="mr-1.5 w-3.5 h-3.5" />
@@ -291,6 +316,7 @@ export function Catalog() {
                   <MathText text={tool.tagline} />
                 </p>
 
+                <Views n={views(tool.slug)} className="mt-3" />
                 <div className="mt-auto pt-5 flex items-center gap-4 flex-wrap">
                   <a
                     href={tool.url}
