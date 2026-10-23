@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { isForKids } from '../../lib/kids-shelf'
 
 /** 이수서재 공개 목록 — 서재에 책을 올리면 여기에도 저절로 뜬다(2026-10-23). 읽기는 이수서재에서. */
 export const LIBRARY = 'https://iwlibrary.simssijjang.workers.dev'
@@ -21,20 +22,6 @@ export interface Work {
 }
 
 export const KIND_LABEL: Record<Work['kind'], string> = { comic: '학습만화', novel: '소설', book: '책' }
-
-export type Audience = '초등' | '중학생 이상' | '어른'
-export const AUDIENCE_LABEL: Record<Audience, string> = {
-  초등: '아이들',
-  '중학생 이상': '중학생 이상',
-  어른: '선생님·부모님',
-}
-
-/** 태그가 없던 옛 응답이면 보수적으로: 만화=초등, 그 밖=어른 */
-export function audienceOf(w: Work): Audience {
-  const t = w.tags?.find((x) => x.startsWith('대상:'))?.slice(3)
-  if (t === '초등' || t === '중학생 이상' || t === '어른') return t
-  return w.kind === 'comic' ? '초등' : '어른'
-}
 
 /** 같은 시리즈끼리 묶는다(시리즈 없는 작품은 종류별 한 묶음). 순서는 목록에 처음 나온 순. */
 export function groupBySeries(works: Work[]): { title: string; works: Work[] }[] {
@@ -90,7 +77,6 @@ export function WorkCard({ w }: { w: Work }) {
 export function Bookshelf() {
   const [works, setWorks] = useState<Work[] | null>(null)
   const [failed, setFailed] = useState(false)
-  const [aud, setAud] = useState<Audience>('초등')
 
   useEffect(() => {
     let alive = true
@@ -102,11 +88,8 @@ export function Bookshelf() {
     }
   }, [])
 
-  const groups = useMemo(
-    () => groupBySeries((works ?? []).filter((w) => audienceOf(w) === aud)),
-    [works, aud]
-  )
-  const count = (a: Audience) => (works ?? []).filter((w) => audienceOf(w) === a).length
+  // 아이들이 쓰는 곳이라 아동용만 — 청소년·어른 책은 이수서재에만 있다
+  const groups = useMemo(() => groupBySeries((works ?? []).filter(isForKids)), [works])
 
   if (failed) {
     return (
@@ -121,31 +104,6 @@ export function Bookshelf() {
 
   return (
     <div className="pb-16">
-      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2 mb-2" role="group" aria-label="누가 읽는 책인지 고르기">
-        {(['초등', '중학생 이상', '어른'] as const).map((a) => (
-          <button
-            key={a}
-            type="button"
-            aria-pressed={aud === a}
-            onClick={() => setAud(a)}
-            className={`shrink-0 h-11 px-4 rounded-full text-sm font-semibold border transition-colors ${
-              aud === a
-                ? 'border-primary-500/60 bg-primary-500/15 text-primary-700 dark:text-primary-200'
-                : 'border-line bg-card text-muted-fg hover:text-fg'
-            }`}
-          >
-            {AUDIENCE_LABEL[a]}
-            <span className="ml-1.5 text-xs opacity-70">{count(a)}</span>
-          </button>
-        ))}
-      </div>
-      {aud !== '초등' && (
-        <p className="mb-4 text-sm text-muted-fg">
-          {aud === '어른'
-            ? '선생님과 부모님을 위한 책이에요. 아이들 책은 «아이들» 칸에 있어요.'
-            : '전쟁 장면 등이 나오는 소설이라 중학생 이상에게 권해요.'}
-        </p>
-      )}
       {!works && <p className="py-16 text-center text-muted-fg">책을 불러오는 중…</p>}
       <div data-testid="shelf" className="space-y-8 mt-4">
         {groups.map((g) => (
@@ -161,6 +119,15 @@ export function Bookshelf() {
           </section>
         ))}
       </div>
+      {works && (
+        <p className="mt-10 text-center text-sm text-muted-fg">
+          청소년·어른을 위한 소설과 책은{' '}
+          <a href={LIBRARY} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary-600 dark:text-primary-300 hover:underline">
+            이수서재
+          </a>
+          에 있어요.
+        </p>
+      )}
     </div>
   )
 }

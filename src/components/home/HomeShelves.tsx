@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, Music } from 'lucide-react'
-import { audienceOf, fetchWorks, WorkCard, type Work } from '@/components/library/Bookshelf'
+import { fetchWorks, WorkCard, type Work } from '@/components/library/Bookshelf'
+import { isForKids } from '@/lib/kids-shelf'
 
 /** 홈 아래 — 서재 새 책 한 줄 + 음악감상실 입구. 서재를 못 읽으면 그 줄만 숨긴다. */
 export function HomeShelves() {
@@ -11,7 +12,7 @@ export function HomeShelves() {
   useEffect(() => {
     let alive = true
     fetchWorks()
-      .then((w) => alive && setWorks(w.filter((x) => audienceOf(x) === '초등').slice(0, 8)))
+      .then((w) => alive && setWorks(w.filter(isForKids).slice(0, 8)))
       .catch(() => {})
     return () => {
       alive = false
