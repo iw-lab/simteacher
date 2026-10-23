@@ -19,6 +19,7 @@ import {
   GUESTBOOK_SLUG,
   commentCooldownLeftMs,
   deleteComment,
+  hasReplies,
   myCommentIds,
   postComment,
   subscribeReplies,
@@ -40,6 +41,21 @@ function timeAgo(ms: number | null): string {
 
 export function NoteReplies({ entryId }: { entryId: string }) {
   const [open, setOpen] = useState(false)
+  /** 답글 쓰는 칸 — 답글이 있어 저절로 펼친 쪽지는 목록만 보이고 칸은 접어 둔다 */
+  const [writing, setWriting] = useState(false)
+
+  // 답글이 달린 쪽지는 처음부터 펼친다 — 선생님 답이 «답글» 단추 뒤에 숨어 아무도 못 봤다(2026-10-23)
+  useEffect(() => {
+    let alive = true
+    hasReplies(GUESTBOOK_SLUG, entryId)
+      .then((yes) => {
+        if (alive && yes) setOpen(true)
+      })
+      .catch((e) => console.error('[replies:has]', e))
+    return () => {
+      alive = false
+    }
+  }, [entryId])
   const [rows, setRows] = useState<Comment[]>([])
   const [loading, setLoading] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
@@ -64,7 +80,7 @@ export function NoteReplies({ entryId }: { entryId: string }) {
         console.error('[replies]', e)
         setLoadError('답글을 불러오지 못했어요.')
         setLoading(false)
-      }
+      },
     )
     return () => un()
   }, [open, entryId])
@@ -82,7 +98,12 @@ export function NoteReplies({ entryId }: { entryId: string }) {
     setError(null)
     setPosting(true)
     try {
-      await postComment({ slug: GUESTBOOK_SLUG, nickname, message: text, parentId: entryId })
+      await postComment({
+        slug: GUESTBOOK_SLUG,
+        nickname,
+        message: text,
+        parentId: entryId,
+      })
       setText('')
       setMine(myCommentIds())
       setCooldown(commentCooldownLeftMs())
@@ -98,8 +119,7 @@ export function NoteReplies({ entryId }: { entryId: string }) {
       await deleteComment(id)
       setMine(myCommentIds())
     } catch (e) {
-      const denied =
-        typeof e === 'object' && e !== null && (e as { code?: string }).code === 'permission-denied'
+      const denied = typeof e === 'object' && e !== null && (e as { code?: string }).code === 'permission-denied'
       setError(denied ? '본인이 쓴 답글만 지울 수 있어요.' : '삭제하지 못했어요.')
     }
   }, [])
@@ -108,7 +128,10 @@ export function NoteReplies({ entryId }: { entryId: string }) {
     return (
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true)
+          setWriting(true)
+        }}
         className="mt-3 inline-flex items-center gap-1 text-xs text-muted-fg hover:text-primary-500 transition-colors"
       >
         <CornerDownRight className="w-3 h-3" aria-hidden />
@@ -128,7 +151,7 @@ export function NoteReplies({ entryId }: { entryId: string }) {
         <p className="text-xs text-muted-fg">{loadError}</p>
       ) : (
         rows.length > 0 && (
-          <ul className="space-y-2 mb-3">
+          <ul data-testid="note-replies" className="space-y-2 mb-3">
             {rows.map((r) => (
               <li key={r.id}>
                 <div className="flex items-baseline gap-2">
@@ -145,54 +168,69 @@ export function NoteReplies({ entryId }: { entryId: string }) {
                     </button>
                   )}
                 </div>
-                <p className="text-sm leading-relaxed text-fg/90 whitespace-pre-wrap break-words">
-                  {r.message}
-                </p>
+                <p className="text-sm leading-relaxed text-fg/90 whitespace-pre-wrap break-words">{r.message}</p>
               </li>
             ))}
           </ul>
         )
       )}
 
-      <input
-        type="text"
-        value={nickname}
-        onChange={(e) => setNickname(e.target.value.slice(0, COMMENT_NICK_MAX))}
-        placeholder="이름 (선택 · 비우면 익명)"
-        maxLength={COMMENT_NICK_MAX}
-        className="w-full mb-2 px-2 py-1.5 rounded-lg bg-bg/60 border border-fg/15 text-sm text-fg placeholder:text-muted-fg/70 focus:outline-none focus:border-primary-400"
-      />
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value.slice(0, COMMENT_MAX))}
-        placeholder="답글을 남겨 주세요."
-        rows={2}
-        maxLength={COMMENT_MAX}
-        className="w-full px-2 py-1.5 rounded-lg bg-bg/60 border border-fg/15 text-sm text-fg placeholder:text-muted-fg/70 resize-y focus:outline-none focus:border-primary-400"
-      />
-      {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
-      <div className="mt-2 flex items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setOpen(false)}
-          className="text-xs text-muted-fg hover:text-fg transition-colors"
-        >
-          접기
-        </button>
-        <Button
-          size="sm"
-          className="ml-auto"
-          onClick={submit}
-          disabled={posting || cooldown > 0 || !text.trim()}
-        >
-          {posting ? (
-            <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" aria-hidden />
-          ) : (
-            <Send className="w-3.5 h-3.5 mr-1" aria-hidden />
-          )}
-          {cooldown > 0 ? `${Math.ceil(cooldown / 1000)}초 뒤에` : '답글'}
-        </Button>
-      </div>
+      {!writing ? (
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setWriting(true)}
+            className="inline-flex items-center gap-1 text-xs text-muted-fg hover:text-primary-500 transition-colors"
+          >
+            <CornerDownRight className="w-3 h-3" aria-hidden />
+            답글 쓰기
+          </button>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="text-xs text-muted-fg hover:text-fg transition-colors"
+          >
+            접기
+          </button>
+        </div>
+      ) : (
+        <>
+          <input
+            type="text"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value.slice(0, COMMENT_NICK_MAX))}
+            placeholder="이름 (선택 · 비우면 익명)"
+            maxLength={COMMENT_NICK_MAX}
+            className="w-full mb-2 px-2 py-1.5 rounded-lg bg-bg/60 border border-fg/15 text-sm text-fg placeholder:text-muted-fg/70 focus:outline-none focus:border-primary-400"
+          />
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value.slice(0, COMMENT_MAX))}
+            placeholder="답글을 남겨 주세요."
+            rows={2}
+            maxLength={COMMENT_MAX}
+            className="w-full px-2 py-1.5 rounded-lg bg-bg/60 border border-fg/15 text-sm text-fg placeholder:text-muted-fg/70 resize-y focus:outline-none focus:border-primary-400"
+          />
+          {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
+          <div className="mt-2 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="text-xs text-muted-fg hover:text-fg transition-colors"
+            >
+              접기
+            </button>
+            <Button size="sm" className="ml-auto" onClick={submit} disabled={posting || cooldown > 0 || !text.trim()}>
+              {posting ? (
+                <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" aria-hidden />
+              ) : (
+                <Send className="w-3.5 h-3.5 mr-1" aria-hidden />
+              )}
+              {cooldown > 0 ? `${Math.ceil(cooldown / 1000)}초 뒤에` : '답글'}
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   )
 }

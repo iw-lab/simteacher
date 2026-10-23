@@ -396,6 +396,23 @@ export function subscribeReplies(
   )
 }
 
+/**
+ * 쪽지에 답글이 하나라도 있는가 — 있으면 처음부터 펼쳐 둔다(2026-10-23 «문의에 내가 댓글을 달면 기본 펼치기»).
+ * 쪽지마다 1건만 읽는다(limit 1). 답글 전체를 slug 한 칸으로 읽지 않는 이유는 subscribeReplies 위 주석과 같다.
+ */
+export async function hasReplies(slug: string, parentId: string): Promise<boolean> {
+  const snap = await getDocs(
+    query(
+      collection(getDb(), 'comments'),
+      where('slug', '==', slug),
+      where('parentId', '==', parentId),
+      orderBy('createdAt', 'asc'),
+      limit(1)
+    )
+  )
+  return !snap.empty
+}
+
 export async function postComment(input: {
   slug: string
   nickname: string

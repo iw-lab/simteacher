@@ -4,6 +4,7 @@
 //   ② 가만히 두면 간격마다 «한 화면(7장)씩» 넘어간다 — 넘어간 뒤 첫 카드가 8등
 //   ③ 마우스를 올려 두면 멈춘다
 //   ④ 끝에서 1등으로 돌아갈 때 되감지 않는다(중간 위치를 지나지 않고 바로 0) — «다시 뒤감기 말고 1번부터 시작»
+//   ⑥ 넘기기 단추 «‹» 는 1등 카드 왼쪽 가운데, «›» 는 7등 카드 오른쪽 가운데 — 2026-10-23 «그게 더 직관적이야»
 //   ⑤ 아래 카드(학습 게임·선생님 프로그램) 하나하나 밑에 «누적 N번» 조회수가 있다 — 2026-10-23 «모든 카드 밑에 누적 조회수»
 // 쓰기: node tools/check-popular-strip.mjs <주소>   (종료코드 0 통과 · 1 실패)
 import { createRequire } from 'node:module'
@@ -34,6 +35,19 @@ for (const [w, lo, hi] of [[390, 3, 3], [1280, 7, 7], [1600, 7, 7]]) {
     if (cw < 140) fails.push(`① ${w}px 카드 너비 ${Math.round(cw)}px (글자가 깨진다 · ≥140)`)
   }
   if (w === 1280) {
+    const a = await p.evaluate(() => {
+      const rail = document.querySelector('[data-testid=popular-rail]').getBoundingClientRect()
+      const plain = (r) => r && { left: r.left, right: r.right, top: r.top, width: r.width, height: r.height }
+      const box = (id) => plain(document.querySelector(`[data-testid=${id}]`)?.getBoundingClientRect())
+      const prev = box('popular-prev'), next = box('popular-next')
+      const cards = [...document.querySelectorAll('[data-testid=popular-rail] > li')].map((li) => plain(li.getBoundingClientRect()))
+      return { rail: { top: rail.top, bottom: rail.bottom, mid: (rail.top + rail.bottom) / 2 }, prev, next, first: cards[0], seventh: cards[6] }
+    })
+    const ok = (b, side) => b && b.width > 0 && Math.abs(b.top + b.height / 2 - a.rail.mid) < 12 &&
+      (side === 'L' ? b.left + b.width / 2 <= a.first.left + 4 : b.left + b.width / 2 >= a.seventh.right - 4)
+    console.log(`⑥ ‹ ${a.prev ? Math.round(a.prev.left) : '없음'} · › ${a.next ? Math.round(a.next.left) : '없음'} · 줄 가운데 ${Math.round(a.rail.mid)}`)
+    if (!ok(a.prev, 'L')) fails.push('⑥ «‹» 단추가 1등 카드 왼쪽 가운데에 없다')
+    if (!ok(a.next, 'R')) fails.push('⑥ «›» 단추가 7등 카드 오른쪽 가운데에 없다')
     await p.waitForSelector('#learning-sites [data-views]', { timeout: 15000 }).catch(() => {})
     const v = await p.evaluate(() => {
       const learn = [...document.querySelectorAll('#learning-sites a[target=_blank]')].filter((a) => a.querySelector('img'))

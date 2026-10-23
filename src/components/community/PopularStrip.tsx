@@ -90,16 +90,16 @@ export function PopularStrip() {
           인기 순위
           <span className="ml-1 text-sm font-medium text-muted-fg">최근 48시간 · {ALL.length}곳 전체{grand > 0 && ` · 총 누적 ${grand.toLocaleString()}번`}</span>
         </h2>
-        <div className="hidden md:flex gap-2">
-          <button type="button" onClick={() => page(-1)} aria-label="앞 순위 보기" className="w-11 h-11 rounded-full border border-line bg-card inline-flex items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40">
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button type="button" onClick={() => page(1)} aria-label="다음 순위 보기" className="w-11 h-11 rounded-full border border-line bg-card inline-flex items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40">
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
       </div>
 
+      {/* 넘기기 단추 = 1등 왼쪽 가운데 «‹» · 7등 오른쪽 가운데 «›» — 제목 옆보다 눈에 바로 걸린다(2026-10-23 사용자) */}
+      <div className="relative">
+      <button type="button" onClick={() => page(-1)} data-testid="popular-prev" aria-label="앞 순위 보기" className="hidden md:inline-flex absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-line bg-card shadow-md items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40">
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button type="button" onClick={() => page(1)} data-testid="popular-next" aria-label="다음 순위 보기" className="hidden md:inline-flex absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-line bg-card shadow-md items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40">
+        <ChevronRight className="w-5 h-5" />
+      </button>
       {/* 카드 너비 = (줄 너비 − 사이 N−1칸) / N. 폰은 3장 조금 넘게 보여 옆으로 밀 수 있음을 알린다 */}
       <ol
         ref={rail}
@@ -168,6 +168,7 @@ export function PopularStrip() {
           </li>
         ))}
       </ol>
+      </div>
     </section>
   )
 }
