@@ -167,7 +167,7 @@ export function Catalog() {
         )}
 
         {/* 폰은 두 칸 — 한 칸씩이면 55장이 29,000px 로 늘어났다(2026-10-21 실측) */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-5">
           {sites.map((site, i) => {
             // 🔴 링크가 없는 사이트가 생겼다(2026-08-31 아라하루). 예전엔 전부 url 이 있어서
             //    `<motion.a href={site.url}>` 로 고정이었는데, url 이 undefined 면
@@ -199,7 +199,7 @@ export function Catalog() {
                   src={site.image}
                   alt={`${site.name} 화면`}
                   fill
-                  sizes="(max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
                   className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-300"
                 />
               </div>
@@ -261,7 +261,7 @@ export function Catalog() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {/* 카드 전체를 <a> 로 감싸지 않는다 — 설치본과 웹판이 둘 다 있는 도구
               (우리 반 투표함)에서 링크를 중첩할 수 없어 웹판으로 들어갈 길이
               막혔다(2026-09-02). 이제 링크는 카드 아래에 나란히 둔다. */}
