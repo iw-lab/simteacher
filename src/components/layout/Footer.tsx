@@ -1,4 +1,3 @@
-import { VisitCounter } from '@/components/community/VisitCounter'
 import Link from 'next/link'
 import { Github, Mail } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
@@ -110,7 +109,6 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t border-line">
           <div className="flex flex-col items-center gap-3">
-            <VisitCounter />
             <p className="text-center text-muted-fg text-sm">
               © {currentYear} 선행쌤. All rights reserved.
             </p>

@@ -10,7 +10,7 @@
     "test:rules": "firebase emulators:exec --only firestore --project demo-rules 'vitest run tests/rules.test.ts'",
     "prebuild": "node tools/sync-lyrics.mjs && node tools/img-versions.mjs",
     "postbuild": "node tools/img-versions.mjs --check",
-    "test:unit": "vitest run tests/ranking.test.ts tests/kids-shelf.test.ts"
+    "test:unit": "vitest run tests/ranking.test.ts tests/kids-shelf.test.ts tests/visit-counter-top.test.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { Menu, X, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { navigation } from '@/data/siteConfig'
+import { VisitCounter } from '@/components/community/VisitCounter'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -68,6 +69,9 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center space-x-2">
+            {/* 방문자 수 — 상단에 둔다(2026-10-23 «총 방문자와 오늘 방문자 수를 상단으로») */}
+            <VisitCounter compact />
+
             {/* Theme Toggle */}
             {mounted && (
               <button
