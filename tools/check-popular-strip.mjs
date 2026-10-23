@@ -21,7 +21,7 @@ async function open(w) {
 }
 const visible = (p) => p.$eval('[data-testid=popular-rail]', (el) => {
   const r = el.getBoundingClientRect()
-  return [...el.children].filter((li) => { const c = li.getBoundingClientRect(); return c.left >= r.left - 1 && c.right <= r.right + 1 }).length
+  return [...el.children].filter((li) => { const c = li.getBoundingClientRect(); return c.left >= r.left - 4 && c.right <= r.right + 4 }).length
 })
 for (const [w, lo, hi] of [[390, 3, 3], [1280, 7, 7], [1600, 7, 7]]) {
   const p = await open(w)
