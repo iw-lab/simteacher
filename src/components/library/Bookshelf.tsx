@@ -43,10 +43,15 @@ export async function fetchWorks(): Promise<Work[]> {
   return ((await r.json()) as { works: Work[] }).works
 }
 
+/** 표지를 누르면 작품 소개를 거치지 않고 1화(소설은 1장) 읽기 화면으로 바로 간다(2026-10-23 사용자 «그 화로 바로»). */
+export function readUrl(w: Work): string {
+  return w.kind === 'comic' ? `${w.url}/1` : `${w.url}/chapters/1`
+}
+
 export function WorkCard({ w }: { w: Work }) {
   return (
     <a
-      href={w.url}
+      href={readUrl(w)}
       target="_blank"
       rel="noopener noreferrer"
       className="group block glass rounded-2xl overflow-hidden hover:border-primary-500/60 hover:-translate-y-1 transition-all"
@@ -88,16 +93,13 @@ export function Bookshelf() {
     }
   }, [])
 
-  // 아이들이 쓰는 곳이라 아동용만 — 청소년·어른 책은 이수서재에만 있다
+  // 아이들이 쓰는 곳이라 아동용만 — 청소년·어른 책은 여기 싣지도 안내하지도 않는다(2026-10-23 사용자 «일반인용 책이랑 있어서 부담»)
   const groups = useMemo(() => groupBySeries((works ?? []).filter(isForKids)), [works])
 
   if (failed) {
     return (
       <p className="py-16 text-center text-muted-fg">
-        서재를 불러오지 못했어요.{' '}
-        <a href={LIBRARY} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary-600 dark:text-primary-300 hover:underline">
-          이수서재에서 바로 보기
-        </a>
+        서재를 불러오지 못했어요. 잠시 뒤 다시 열어 주세요.
       </p>
     )
   }
@@ -119,15 +121,6 @@ export function Bookshelf() {
           </section>
         ))}
       </div>
-      {works && (
-        <p className="mt-10 text-center text-sm text-muted-fg">
-          청소년·어른을 위한 소설과 책은{' '}
-          <a href={LIBRARY} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary-600 dark:text-primary-300 hover:underline">
-            이수서재
-          </a>
-          에 있어요.
-        </p>
-      )}
     </div>
   )
 }

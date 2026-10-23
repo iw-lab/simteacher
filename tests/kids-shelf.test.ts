@@ -15,3 +15,12 @@ describe('isForKids — 선행쌤 서재는 아동용만', () => {
     expect(isForKids({ tags: null })).toBe(false)
   })
 })
+
+describe('readUrl — 표지는 읽기 화면으로 바로', () => {
+  it('만화는 1화, 소설·책은 1장', async () => {
+    const { readUrl } = await import('../src/components/library/Bookshelf')
+    const w = { slug: 's', title: '', subtitle: '', cover: null, url: 'https://x/works/s', series: null, units: 1, publishedAt: 0 }
+    expect(readUrl({ ...w, kind: 'comic' })).toBe('https://x/works/s/1')
+    expect(readUrl({ ...w, kind: 'novel' })).toBe('https://x/works/s/chapters/1')
+  })
+})

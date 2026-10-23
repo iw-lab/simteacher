@@ -16,7 +16,7 @@ export default function LibraryPage() {
               <span className="gradient-text">서재</span>
             </h1>
             <p className="mt-1 text-sm text-muted-fg">
-              아이들을 위해 직접 만든 학습만화예요. 표지를 누르면 «이수서재»에서 로그인 없이 읽을 수 있어요.
+              아이들을 위해 직접 만든 학습만화예요. 표지를 누르면 바로 읽을 수 있어요.
             </p>
           </div>
         </div>
