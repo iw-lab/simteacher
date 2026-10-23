@@ -14,12 +14,11 @@ export default function Home() {
       </div>
 
       <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10">
-        <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-          <h1 className="text-base md:text-lg font-bold text-fg">
-            교실에서 쓰라고 만든 학습 게임·사이트와 선생님 프로그램 — 눌러서 바로 쓰세요
-          </h1>
-          <Link href="/about" className="text-sm text-muted-fg hover:text-fg hover:underline">
-            만든 사람: 전북 초등교사 선행쌤 →
+        {/* 글씨 최소·한 줄(2026-10-23 사용자 «첫화면 글씨좀 최소화 · 최대한 한줄로») */}
+        <div className="mb-4 flex items-baseline justify-between gap-3 whitespace-nowrap">
+          <h1 className="min-w-0 truncate text-base md:text-lg font-bold text-fg">교실에서 바로 쓰는 학습 게임</h1>
+          <Link href="/about" className="shrink-0 text-sm text-muted-fg hover:text-fg hover:underline">
+            만든 사람 →
           </Link>
         </div>
         <PopularStrip />

@@ -85,10 +85,10 @@ export function PopularStrip() {
   return (
     <section aria-labelledby="popular-title" className="mb-10">
       <div className="flex items-end justify-between gap-3 mb-3">
-        <h2 id="popular-title" className="inline-flex items-center gap-1.5 text-lg md:text-xl font-extrabold text-fg">
+        <h2 id="popular-title" className="inline-flex items-center gap-1.5 whitespace-nowrap text-lg md:text-xl font-extrabold text-fg">
           <Flame className="w-5 h-5 text-orange-500" />
           인기 순위
-          <span className="ml-1 text-sm font-medium text-muted-fg">최근 48시간 · {ALL.length}곳 전체{grand > 0 && ` · 총 누적 ${grand.toLocaleString()}번`}</span>
+          <span className="ml-1 text-sm font-medium text-muted-fg">48시간{grand > 0 && ` · 누적 ${grand.toLocaleString()}`}</span>
         </h2>
       </div>
 

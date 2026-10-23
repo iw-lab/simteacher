@@ -118,20 +118,10 @@ export function Catalog() {
     <div className="space-y-24">
       {/* ── 학습 사이트 ───────────────────────────────── */}
       <section id="learning-sites" className="scroll-mt-24">
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
-          <div>
-            <span className="text-primary-600 dark:text-primary-300 font-semibold">
-              Learning Games
-            </span>
-            <h2 className="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight text-fg">
-              아이들이 쓰는 <span className="gradient-text">학습 게임·사이트</span>{' '}
-              {learningSites.length}개
-            </h2>
-          </div>
-          <p className="text-sm text-muted-fg">
-            새로 올린 순서 · 카드를 누르면 새 창에서 열립니다
-          </p>
-        </div>
+        <h2 className="mb-4 whitespace-nowrap text-xl md:text-3xl font-extrabold tracking-tight text-fg">
+          <span className="gradient-text">학습 게임·사이트</span> {learningSites.length}개
+          <span className="ml-2 text-sm font-medium text-muted-fg">새로 올린 순</span>
+        </h2>
 
         <label className="relative block mb-4 max-w-md">
           <span className="sr-only">게임·사이트 찾기</span>
