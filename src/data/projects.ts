@@ -1243,7 +1243,8 @@ export const learningSites: LearningSite[] = [
     target: '초등 3~6학년',
     tech: ['JavaScript', 'Three.js', 'Cloudflare Pages · Workers · Durable Objects · D1'],
     image: '/images/portfolio/kkeutjinhwa.webp',
-    url: 'https://kkeutjinhwa.pages.dev/',
+    // 학교 망이 kkeutjinhwa.pages.dev 를 막아 선행쌤 도메인 아래 길로 연다(2026-10-23 · tools/sync-games.mjs)
+    url: 'https://ssamzip.com/jinhwa/',
   },
   {
     slug: 'gongbu-snack',

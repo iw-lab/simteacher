@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test:rules": "firebase emulators:exec --only firestore --project demo-rules 'vitest run tests/rules.test.ts'",
-    "prebuild": "node tools/sync-lyrics.mjs && node tools/img-versions.mjs",
+    "prebuild": "node tools/sync-lyrics.mjs && node tools/sync-games.mjs && node tools/img-versions.mjs",
     "postbuild": "node tools/img-versions.mjs --check",
     "test:unit": "vitest run tests/ranking.test.ts tests/kids-shelf.test.ts tests/visit-counter-top.test.ts"
   },
