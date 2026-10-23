@@ -34,7 +34,13 @@ for (const [w, lo, hi] of [[390, 3, 3], [1280, 7, 7], [1600, 7, 7]]) {
   if (w === 1280) {
     const ms = Number(await p.$eval('[data-testid=popular-rail]', (el) => el.dataset.autoMs || 0))
     const x0 = await p.$eval('[data-testid=popular-rail]', (el) => el.scrollLeft)
-    await wait((ms || 4000) + 1500)
+    // 첫 넘김이 시작되는 순간을 잡고(간격 안에 두 번 넘어가는 것을 세지 않도록) 부드럽게 멈출 때까지 기다린다
+    const t0 = Date.now()
+    while (Date.now() - t0 < (ms || 4000) + 1500) {
+      if (Math.abs((await p.$eval('[data-testid=popular-rail]', (el) => el.scrollLeft)) - x0) > 4) break
+      await wait(100)
+    }
+    await wait(1200)
     const x1 = await p.$eval('[data-testid=popular-rail]', (el) => el.scrollLeft)
     const firstRank = await p.$eval('[data-testid=popular-rail]', (el) => {
       const r = el.getBoundingClientRect()
