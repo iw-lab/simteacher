@@ -3,6 +3,7 @@
 //   ① 넓은 화면(1280·1600)에 카드가 한 번에 7장 온전히 보인다 · 폰(390)은 3장 · 카드 이름이 잘리지 않을 만큼 넓다(≥140px)
 //   ② 가만히 두면 간격마다 «한 화면(7장)씩» 넘어간다 — 넘어간 뒤 첫 카드가 8등
 //   ③ 마우스를 올려 두면 멈춘다
+//   ④ 끝에서 1등으로 돌아갈 때 되감지 않는다(중간 위치를 지나지 않고 바로 0) — «다시 뒤감기 말고 1번부터 시작»
 // 쓰기: node tools/check-popular-strip.mjs <주소>   (종료코드 0 통과 · 1 실패)
 import { createRequire } from 'node:module'
 import os from 'node:os'
@@ -59,6 +60,19 @@ for (const [w, lo, hi] of [[390, 3, 3], [1280, 7, 7], [1600, 7, 7]]) {
     const h1 = await p.$eval('[data-testid=popular-rail]', (el) => el.scrollLeft)
     console.log(`③ 마우스 올림 · scrollLeft ${h0} → ${h1}`)
     if (h1 !== h0) fails.push('③ 마우스를 올려 둬도 넘어간다')
+    await p.mouse.move(0, 0)
+    // 맨 끝으로 보내 두고 다음 넘김 동안 위치를 30ms 마다 찍는다
+    const trace = await p.$eval('[data-testid=popular-rail]', (el, ms) => new Promise((res) => {
+      el.style.scrollBehavior = 'auto'; el.scrollLeft = el.scrollWidth; el.style.scrollBehavior = ''
+      const max = el.scrollLeft, xs = []
+      const id = setInterval(() => { xs.push(Math.round(el.scrollLeft)) }, 30)
+      setTimeout(() => { clearInterval(id); res({ max, xs }) }, ms + 600)
+    }), ms || 4000)
+    const mid = trace.xs.filter((x) => x > 4 && x < trace.max - 4)
+    const back = trace.xs.some((x) => x <= 4)
+    console.log(`④ 끝(${trace.max}) → ${back ? 0 : '안 돌아옴'} · 중간 위치 ${mid.length}번`)
+    if (mid.length) fails.push(`④ 1등으로 되감는다(중간 위치 ${mid.length}번 지남)`)
+    else if (!back) fails.push('④ 끝에서 1등으로 돌아가지 않는다')
   }
   await p.close()
 }

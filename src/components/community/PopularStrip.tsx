@@ -50,7 +50,18 @@ export function PopularStrip() {
       const gap = parseFloat(getComputedStyle(el).columnGap) || 0
       const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4
       const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth'
-      if (atEnd) el.scrollTo({ left: 0, behavior })
+      if (atEnd) {
+        // 끝 → 1등은 되감지 않고 «처음부터 다시»: 살짝 흐려졌다가 1등에서 다시 나타난다
+        // (2026-10-23 «다시 뒤감기 말고 다시 1번부터 시작으로»). 줄의 scroll-smooth 가 되감기를 만들므로 잠깐 끈다
+        el.style.transition = 'opacity 200ms'
+        el.style.opacity = '0'
+        window.setTimeout(() => {
+          el.style.scrollBehavior = 'auto'
+          el.scrollLeft = 0
+          el.style.scrollBehavior = ''
+          el.style.opacity = '1'
+        }, 200)
+      }
       else el.scrollBy({ left: el.clientWidth + gap, behavior })
     }, AUTO_ADVANCE_MS)
     return () => window.clearInterval(id)
