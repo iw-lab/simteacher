@@ -73,3 +73,21 @@ describe('음악감상실', () => {
     for (const [id, t] of Object.entries(ly)) expect(t.split('\n').filter((l) => l.trim() && !/^\s*\[.*\]\s*$/.test(l)).length, id).toBeGreaterThanOrEqual(2)
   })
 })
+
+describe('서재 묶기', () => {
+  const w = (slug: string, kind: 'comic' | 'novel' | 'book', series: string | null, tags?: string[]) => ({
+    slug, kind, series, tags, title: slug, subtitle: '', cover: null, url: '', units: 1, publishedAt: 0,
+  })
+  it('대상 태그를 읽고, 없으면 만화=초등·그 밖=어른', async () => {
+    const { audienceOf } = await import('../src/components/library/Bookshelf')
+    expect(audienceOf(w('a', 'novel', null, ['대상:중학생 이상']))).toBe('중학생 이상')
+    expect(audienceOf(w('b', 'comic', null))).toBe('초등')
+    expect(audienceOf(w('c', 'book', null))).toBe('어른')
+  })
+  it('시리즈별로 묶고 시리즈 안은 권 순서', async () => {
+    const { groupBySeries } = await import('../src/components/library/Bookshelf')
+    const g = groupBySeries([w('m-06', 'comic', '수학'), w('s-01', 'comic', '사회'), w('m-01', 'comic', '수학'), w('x', 'comic', null)])
+    expect(g.map((x) => x.title)).toEqual(['수학', '사회', '학습만화'])
+    expect(g[0].works.map((x) => x.slug)).toEqual(['m-01', 'm-06'])
+  })
+})

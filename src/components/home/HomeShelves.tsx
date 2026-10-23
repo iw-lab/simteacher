@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, Music } from 'lucide-react'
-import { fetchWorks, WorkCard, type Work } from '@/components/library/Bookshelf'
+import { audienceOf, fetchWorks, WorkCard, type Work } from '@/components/library/Bookshelf'
 
 /** 홈 아래 — 서재 새 책 한 줄 + 음악감상실 입구. 서재를 못 읽으면 그 줄만 숨긴다. */
 export function HomeShelves() {
@@ -11,7 +11,7 @@ export function HomeShelves() {
   useEffect(() => {
     let alive = true
     fetchWorks()
-      .then((w) => alive && setWorks(w.slice(0, 8)))
+      .then((w) => alive && setWorks(w.filter((x) => audienceOf(x) === '초등').slice(0, 8)))
       .catch(() => {})
     return () => {
       alive = false
@@ -25,7 +25,7 @@ export function HomeShelves() {
           <div className="flex items-end justify-between gap-3 mb-3">
             <h2 id="home-shelf" className="inline-flex items-center gap-1.5 text-lg md:text-xl font-extrabold text-fg">
               <BookOpen className="w-5 h-5 text-primary-500" />
-              서재 — 새로 올린 책
+              서재 — 아이들 책
             </h2>
             <Link href="/library" className="inline-flex items-center text-sm font-semibold text-muted-fg hover:text-fg">
               서재 전체 <ArrowRight className="ml-1 w-4 h-4" />
