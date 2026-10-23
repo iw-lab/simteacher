@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { PopularStrip } from '@/components/community/PopularStrip'
 import { Catalog } from '@/components/home/Catalog'
+import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
 
 // 첫 화면은 곧바로 쓰는 곳 — 만든 사람 소개는 한 줄 링크로만(2026-10-23 사용자 «빼거나 훨씬 축소 · 바로 쓸 수 있게»)
@@ -23,6 +24,7 @@ export default function Home() {
         </div>
         <PopularStrip />
         <Catalog />
+        <HomeShelves />
       </div>
 
       <CTASection />

@@ -59,3 +59,17 @@ describe('최근 48시간', () => {
     expect(c).toEqual({ a: 8 })
   })
 })
+
+describe('음악감상실', () => {
+  it('가사 있는 노래가 먼저, 순서는 그대로', async () => {
+    const { lyricFirst } = await import('../src/components/music/MusicRoom')
+    const s = (id: string) => ({ id, title: id, genre: 'g', duration: 1, audio: 'a' })
+    expect(lyricFirst([s('a'), s('b'), s('c'), s('d')], { b: 'x', d: 'y' }).map((x) => x.id)).toEqual(['b', 'd', 'a', 'c'])
+  })
+  it('가사 사본이 있고 노래마다 부르는 줄이 있다', async () => {
+    const fs = await import('node:fs')
+    const ly = JSON.parse(fs.readFileSync('public/music/lyrics.json', 'utf8')) as Record<string, string>
+    expect(Object.keys(ly).length).toBeGreaterThan(150)
+    for (const [id, t] of Object.entries(ly)) expect(t.split('\n').filter((l) => l.trim() && !/^\s*\[.*\]\s*$/.test(l)).length, id).toBeGreaterThanOrEqual(2)
+  })
+})

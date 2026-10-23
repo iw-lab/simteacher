@@ -23,7 +23,9 @@ export const profile = {
 };
 
 export const navigation: NavItem[] = [
-  { label: '홈', href: '/' },
+  { label: '게임·사이트', href: '/' },
+  { label: '서재', href: '/library' },
+  { label: '음악감상실', href: '/music' },
   { label: '소개', href: '/about' },
   { label: '포트폴리오', href: '/portfolio' },
   { label: '블로그', href: '/blog' },
