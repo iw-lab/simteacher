@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react'
-import { fetchRecentCounts, recordClick } from '@/lib/community'
+import { fetchRecentCounts, fetchTotalCounts, recordClick } from '@/lib/community'
 import { rankByClicks } from '@/lib/ranking'
 import { learningSites, teacherTools } from '@/data/projects'
 
@@ -13,6 +13,7 @@ const ALL = [...learningSites, ...teacherTools]
  *  집계를 못 읽으면 순위를 지어낼 수 없으니 아예 숨긴다. */
 export function PopularStrip() {
   const [counts, setCounts] = useState<Record<string, number> | null>(null)
+  const [totals, setTotals] = useState<Record<string, number>>({})
   const [failed, setFailed] = useState(false)
   const rail = useRef<HTMLOListElement>(null)
 
@@ -21,6 +22,10 @@ export function PopularStrip() {
     fetchRecentCounts()
       .then((c) => alive && setCounts(c))
       .catch(() => alive && setFailed(true))
+    // 누적은 곁들이는 숫자 — 못 읽어도 순위는 그대로 보인다
+    fetchTotalCounts()
+      .then((t) => alive && setTotals(t))
+      .catch(() => {})
     return () => {
       alive = false
     }
@@ -28,6 +33,7 @@ export function PopularStrip() {
 
   if (failed) return null
   const ranked = counts ? rankByClicks(ALL, counts) : []
+  const grand = ALL.reduce((n, s) => n + (totals[s.slug] ?? 0), 0)
 
   // 한 번에 보이는 너비만큼(5장) 넘긴다
   const page = (dir: 1 | -1) => {
@@ -41,7 +47,7 @@ export function PopularStrip() {
         <h2 id="popular-title" className="inline-flex items-center gap-1.5 text-lg md:text-xl font-extrabold text-fg">
           <Flame className="w-5 h-5 text-orange-500" />
           인기 순위
-          <span className="ml-1 text-sm font-medium text-muted-fg">최근 48시간 · {ALL.length}곳 전체</span>
+          <span className="ml-1 text-sm font-medium text-muted-fg">최근 48시간 · {ALL.length}곳 전체{grand > 0 && ` · 총 누적 ${grand.toLocaleString()}번`}</span>
         </h2>
         <div className="hidden md:flex gap-2">
           <button type="button" onClick={() => page(-1)} aria-label="앞 순위 보기" className="w-11 h-11 rounded-full border border-line bg-card inline-flex items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40">
@@ -98,14 +104,17 @@ export function PopularStrip() {
                 <div className="px-2.5 py-2">
                   <p className="text-[13px] sm:text-sm font-bold text-fg leading-snug line-clamp-1">{site.name}</p>
                   <p className="mt-0.5 text-xs text-muted-fg tabular-nums">
-                    {site.count > 0 ? `${site.count.toLocaleString()}번 열림` : '48시간 기록 없음'}
+                    {site.count > 0 ? `48시간 ${site.count.toLocaleString()}번` : '48시간 기록 없음'}
+                  </p>
+                  <p className="text-xs text-muted-fg/80 tabular-nums">
+                    누적 {(totals[site.slug] ?? 0).toLocaleString()}번
                   </p>
                 </div>
               </a>
             ) : (
               <div className="glass rounded-2xl overflow-hidden" aria-hidden>
                 <div className="aspect-[8/5] bg-muted animate-pulse" />
-                <div className="h-[52px]" />
+                <div className="h-[68px]" />
               </div>
             )}
           </li>

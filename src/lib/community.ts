@@ -214,6 +214,17 @@ export async function fetchRecentCounts(now = Date.now()): Promise<Record<string
   )
 }
 
+/** 전체 누적 클릭 수 — slug → 수(인기 순위 카드에 48시간 수와 함께 보인다). */
+export async function fetchTotalCounts(): Promise<Record<string, number>> {
+  const snap = await getDocs(collection(getDb(), 'clicks'))
+  const out: Record<string, number> = {}
+  for (const d of snap.docs) {
+    const v = d.data()
+    out[String(v.slug ?? d.id)] = Number(v.count ?? 0)
+  }
+  return out
+}
+
 // ── 글별 댓글 ───────────────────────────────────────────────────────────────
 // 방명록과 같은 계약에서 출발하되, 교차검증에서 잡힌 세 가지를 고쳤다.
 //
