@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { PopularStrip } from '@/components/community/PopularStrip'
+import { LiveRooms } from '@/components/community/LiveRooms'
 import { Catalog } from '@/components/home/Catalog'
 import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
@@ -21,9 +22,17 @@ export default function Home() {
             만든 사람 →
           </Link>
         </div>
-        <PopularStrip />
-        <Catalog />
-        <HomeShelves />
+        {/* 지금 열린 온라인 방 = 넓은 화면은 오른쪽 칸(스크롤을 따라 내려옴) · 좁은 화면은 인기 순위 바로 밑 */}
+        <div className="grid grid-cols-1 [grid-template-areas:'rank'_'rooms'_'rest'] xl:grid-cols-[minmax(0,1fr)_300px] xl:[grid-template-areas:'rank_rooms'_'rest_rooms'] xl:gap-x-6">
+          <div className="[grid-area:rank] min-w-0">
+            <PopularStrip />
+          </div>
+          <LiveRooms className="[grid-area:rooms] mb-8 xl:mb-0 xl:self-start xl:sticky xl:top-24" />
+          <div className="[grid-area:rest] min-w-0">
+            <Catalog />
+            <HomeShelves />
+          </div>
+        </div>
       </div>
 
       <CTASection />
