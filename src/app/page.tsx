@@ -22,8 +22,8 @@ export default function Home() {
             만든 사람 →
           </Link>
         </div>
-        {/* 지금 열린 온라인 방 = 넓은 화면은 오른쪽 칸(스크롤을 따라 내려옴) · 좁은 화면은 인기 순위 바로 밑 */}
-        <div className="grid grid-cols-1 [grid-template-areas:'rank'_'rooms'_'rest'] xl:grid-cols-[minmax(0,1fr)_300px] xl:[grid-template-areas:'rank_rooms'_'rest_rooms'] xl:gap-x-6">
+        {/* 지금 열린 온라인 방 = 넓은 화면은 인기 순위 밑 오른쪽 칸(스크롤을 따라 내려옴 · 순위 줄 7장 폭은 그대로) · 좁은 화면은 인기 순위 바로 밑 */}
+        <div className="grid grid-cols-1 [grid-template-areas:'rank'_'rooms'_'rest'] xl:grid-cols-[minmax(0,1fr)_300px] xl:[grid-template-areas:'rank_rank'_'rest_rooms'] xl:gap-x-6">
           <div className="[grid-area:rank] min-w-0">
             <PopularStrip />
           </div>
