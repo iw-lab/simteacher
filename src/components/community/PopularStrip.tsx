@@ -9,13 +9,22 @@ import { learningSites, teacherTools } from '@/data/projects'
 
 const ALL = [...learningSites, ...teacherTools]
 
-/** 맨 위 인기 순위 — 최근 48시간 조회수 1등부터 마지막까지 썸네일 카드를 가로로 민다(넓은 화면 5장씩).
- *  집계를 못 읽으면 순위를 지어낼 수 없으니 아예 숨긴다. */
+/** 자동으로 다음 순위로 넘기는 간격(ms) — 2026-10-23 «자동으로 다음 순위로 넘어가게 · 일정 간격 두고» */
+export const AUTO_ADVANCE_MS = 3500
+/** 손으로 만진 뒤 자동 넘김을 쉬는 시간(ms) */
+const RESUME_AFTER_MS = 8000
+
+/** 맨 위 인기 순위 — 최근 48시간 조회수 1등부터 마지막까지 썸네일 카드를 가로로 민다.
+ *  한 번에 폰 3 · 태블릿 4~6 · 넓은 화면 8~10장(2026-10-23 «7~10개 정도 한번에»).
+ *  AUTO_ADVANCE_MS 마다 한 칸씩 다음 순위로 넘기고, 끝에 닿으면 1등으로 돌아간다.
+ *  마우스를 올리거나 손으로 밀면 잠시 멈춘다. 집계를 못 읽으면 순위를 지어낼 수 없으니 아예 숨긴다. */
 export function PopularStrip() {
   const [counts, setCounts] = useState<Record<string, number> | null>(null)
   const [totals, setTotals] = useState<Record<string, number>>({})
   const [failed, setFailed] = useState(false)
   const rail = useRef<HTMLOListElement>(null)
+  const hold = useRef(0) // 이 시각(ms)까지 자동 넘김을 쉰다
+  const hover = useRef(false)
 
   useEffect(() => {
     let alive = true
@@ -31,12 +40,35 @@ export function PopularStrip() {
     }
   }, [])
 
+  // 자동 넘김 — 한 칸(카드 하나 + 사이)씩. 화면이 숨었거나 마우스가 올라가 있거나 방금 손댔으면 건너뛴다
+  useEffect(() => {
+    if (!counts) return
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    const id = window.setInterval(() => {
+      const el = rail.current
+      if (!el || document.hidden || hover.current || Date.now() < hold.current) return
+      const first = el.firstElementChild as HTMLElement | null
+      if (!first) return
+      const gap = parseFloat(getComputedStyle(el).columnGap) || 0
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4
+      const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth'
+      if (atEnd) el.scrollTo({ left: 0, behavior })
+      else el.scrollBy({ left: first.offsetWidth + gap, behavior })
+    }, AUTO_ADVANCE_MS)
+    return () => window.clearInterval(id)
+  }, [counts])
+
+  const pause = () => {
+    hold.current = Date.now() + RESUME_AFTER_MS
+  }
+
   if (failed) return null
   const ranked = counts ? rankByClicks(ALL, counts) : []
   const grand = ALL.reduce((n, s) => n + (totals[s.slug] ?? 0), 0)
 
-  // 한 번에 보이는 너비만큼(5장) 넘긴다
+  // 한 번에 보이는 너비만큼 넘긴다
   const page = (dir: 1 | -1) => {
+    pause()
     const el = rail.current
     if (el) el.scrollBy({ left: dir * el.clientWidth, behavior: 'smooth' })
   }
@@ -59,16 +91,23 @@ export function PopularStrip() {
         </div>
       </div>
 
-      {/* 카드 너비 = (줄 너비 − 사이 4칸) / 5. 폰은 2장 반이 보여 옆으로 밀 수 있음을 알린다 */}
+      {/* 카드 너비 = (줄 너비 − 사이 N−1칸) / N. 폰은 3장 조금 넘게 보여 옆으로 밀 수 있음을 알린다 */}
       <ol
         ref={rail}
         data-testid="popular-rail"
-        className="flex gap-3 md:gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 pb-1"
+        data-auto-ms={AUTO_ADVANCE_MS}
+        // 폰에서 누르면 mouseenter 가 남아 영영 멈춘다 → 진짜 마우스만 «올려 둠»으로 친다
+        onPointerEnter={(e) => e.pointerType === 'mouse' && (hover.current = true)}
+        onPointerLeave={() => (hover.current = false)}
+        onTouchStart={pause}
+        onWheel={pause}
+        onFocus={pause}
+        className="flex gap-2 md:gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 pb-1"
       >
-        {(counts ? ranked : Array.from({ length: 5 }, () => null)).map((site, i) => (
+        {(counts ? ranked : Array.from({ length: 10 }, () => null)).map((site, i) => (
           <li
             key={site?.slug ?? `skeleton-${i}`}
-            className="snap-start shrink-0 basis-[40%] sm:basis-[calc((100%-2*0.75rem)/3)] md:basis-[calc((100%-4*1rem)/5)]"
+            className="snap-start shrink-0 basis-[30%] sm:basis-[calc((100%-3*0.5rem)/4)] md:basis-[calc((100%-5*0.75rem)/6)] lg:basis-[calc((100%-7*0.75rem)/8)] xl:basis-[calc((100%-9*0.75rem)/10)]"
           >
             {site ? (
               <a
@@ -84,11 +123,11 @@ export function PopularStrip() {
                     src={site.image}
                     alt={`${site.name} 화면`}
                     fill
-                    sizes="(max-width: 640px) 40vw, (max-width: 768px) 33vw, 20vw"
+                    sizes="(max-width: 640px) 30vw, (max-width: 768px) 25vw, (max-width: 1024px) 17vw, 12vw"
                     className="object-cover object-top group-hover:scale-[1.04] transition-transform duration-300"
                   />
                   <span
-                    className={`absolute top-1.5 left-1.5 min-w-7 h-7 px-1.5 rounded-full inline-flex items-center justify-center text-sm font-extrabold tabular-nums shadow ${
+                    className={`absolute top-1 left-1 min-w-6 h-6 px-1 rounded-full inline-flex items-center justify-center text-xs font-extrabold tabular-nums shadow ${
                       site.rank === 1
                         ? 'bg-amber-400 text-amber-950'
                         : site.rank === 2
@@ -101,12 +140,12 @@ export function PopularStrip() {
                     {site.rank}
                   </span>
                 </div>
-                <div className="px-2.5 py-2">
-                  <p className="text-[13px] sm:text-sm font-bold text-fg leading-snug line-clamp-1">{site.name}</p>
-                  <p className="mt-0.5 text-xs text-muted-fg tabular-nums">
+                <div className="px-2 py-1.5">
+                  <p className="text-xs sm:text-[13px] font-bold text-fg leading-snug line-clamp-1">{site.name}</p>
+                  <p className="mt-0.5 text-xs text-muted-fg tabular-nums line-clamp-1">
                     {site.count > 0 ? `48시간 ${site.count.toLocaleString()}번` : '48시간 기록 없음'}
                   </p>
-                  <p className="text-xs text-muted-fg/80 tabular-nums">
+                  <p className="text-xs text-muted-fg/80 tabular-nums line-clamp-1">
                     누적 {(totals[site.slug] ?? 0).toLocaleString()}번
                   </p>
                 </div>
@@ -114,7 +153,7 @@ export function PopularStrip() {
             ) : (
               <div className="glass rounded-2xl overflow-hidden" aria-hidden>
                 <div className="aspect-[8/5] bg-muted animate-pulse" />
-                <div className="h-[68px]" />
+                <div className="h-[60px]" />
               </div>
             )}
           </li>
