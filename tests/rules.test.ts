@@ -163,3 +163,19 @@ describe('음악감상실 재생 수 규칙', () => {
     await assertFails(setDoc(doc(db, 'songPlaysDaily', '20261023__x'), { date: '20261023', id: 'x', count: 1, extra: 1 }))
   })
 })
+
+describe('서재 책 클릭 수 규칙', () => {
+  const anon = () => env.unauthenticatedContext().firestore()
+  it('처음은 1, 다음부터 +1 만 · 큰 수·이름 불일치·삭제는 거부', async () => {
+    const db = anon()
+    await assertSucceeds(setDoc(doc(db, 'bookClicks', 'gwahak-1'), { id: 'gwahak-1', count: 1 }))
+    await assertSucceeds(setDoc(doc(db, 'bookClicks', 'gwahak-1'), { id: 'gwahak-1', count: 2 }))
+    await assertFails(setDoc(doc(db, 'bookClicks', 'gwahak-1'), { id: 'gwahak-1', count: 9 }))
+    await assertFails(setDoc(doc(db, 'bookClicks', 'x'), { id: 'x', count: 500 }))
+    await assertFails(setDoc(doc(db, 'bookClicks', 'y'), { id: 'z', count: 1 }))
+    await assertFails(deleteDoc(doc(db, 'bookClicks', 'gwahak-1')))
+    await assertSucceeds(setDoc(doc(db, 'bookClicksDaily', '20261023__gwahak-1'), { date: '20261023', id: 'gwahak-1', count: 1 }))
+    await assertFails(setDoc(doc(db, 'bookClicksDaily', '20261023__gwahak-1'), { date: '20261023', id: 'gwahak-1', count: 40 }))
+    await assertFails(setDoc(doc(db, 'bookClicksDaily', '20261023__a'), { date: '20261023', id: 'b', count: 1 }))
+  })
+})

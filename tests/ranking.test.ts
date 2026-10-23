@@ -116,3 +116,13 @@ describe('내 플레이리스트', () => {
     expect(nextIndex(0, 0, 1)).toBe(-1)
   })
 })
+
+describe('서재 인기 순위', () => {
+  it('48시간 많은 순 · 같으면 누적 · 같으면 새 책 · 0번인 책도 맨 뒤까지 전부', async () => {
+    const { rankBooks } = await import('../src/lib/ranking')
+    const b = [{ slug: 'a', publishedAt: 1 }, { slug: 'b', publishedAt: 3 }, { slug: 'c', publishedAt: 2 }, { slug: 'd', publishedAt: 4 }]
+    const r = rankBooks(b, { a: 2, c: 2 }, { a: 5, c: 9 })
+    expect(r.map((x) => x.slug)).toEqual(['c', 'a', 'd', 'b'])
+    expect(r.map((x) => x.rank)).toEqual([1, 2, 3, 4])
+  })
+})

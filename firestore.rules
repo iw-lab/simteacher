@@ -159,6 +159,35 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // 서재 책 클릭 수 — songPlays 와 같은 계약(+1 씩만 · 삭제 금지 · list 상한). id = 이수서재 작품 slug.
+    match /bookClicks/{bookId} {
+      allow get: if true;
+      allow list: if request.query.limit <= 500;
+      allow create: if request.resource.data.keys().hasOnly(['id', 'count'])
+        && request.resource.data.id == bookId
+        && bookId.matches('^[a-z0-9-]{1,60}$')
+        && request.resource.data.count == 1;
+      allow update: if request.resource.data.keys().hasOnly(['id', 'count'])
+        && request.resource.data.id == resource.data.id
+        && request.resource.data.count == resource.data.count + 1;
+      allow delete: if false;
+    }
+
+    match /bookClicksDaily/{dailyId} {
+      allow get: if true;
+      allow list: if request.query.limit <= 1500;
+      allow create: if request.resource.data.keys().hasOnly(['date', 'id', 'count'])
+        && request.resource.data.date is string && request.resource.data.date.matches('^[0-9]{8}$')
+        && request.resource.data.id is string && request.resource.data.id.matches('^[a-z0-9-]{1,60}$')
+        && dailyId == request.resource.data.date + '__' + request.resource.data.id
+        && request.resource.data.count == 1;
+      allow update: if request.resource.data.keys().hasOnly(['date', 'id', 'count'])
+        && request.resource.data.date == resource.data.date
+        && request.resource.data.id == resource.data.id
+        && request.resource.data.count == resource.data.count + 1;
+      allow delete: if false;
+    }
+
     // Clicks — 어떤 카드가 눌렸는지. 전체 누적과 날짜별을 따로 쌓는다.
     match /clicks/{slug} {
       allow read: if true;

@@ -537,13 +537,17 @@ export async function recordSongPlay(id: string): Promise<void> {
   }
 }
 
-/** 곡별 재생 수 — 최근 48시간(홈 인기 순위와 같은 창)과 전체 누적 */
-export async function fetchSongPlays(now = Date.now()): Promise<{ recent: Record<string, number>; total: Record<string, number> }> {
+/** 「누적 컬렉션 + 날짜별 컬렉션」 쌍에서 최근 48시간(홈 인기 순위와 같은 창)과 전체 누적을 읽는다 — 문서 필드는 date·id·count. */
+async function fetchWindowCounts(
+  totalColl: string,
+  dailyColl: string,
+  now: number
+): Promise<{ recent: Record<string, number>; total: Record<string, number> }> {
   const db = getDb()
   const win = window48(now)
   const [daily, all] = await Promise.all([
-    getDocs(query(collection(db, 'songPlaysDaily'), where('date', 'in', win.map((w) => w.day)), limit(1500))),
-    getDocs(query(collection(db, 'songPlays'), limit(500))),
+    getDocs(query(collection(db, dailyColl), where('date', 'in', win.map((w) => w.day)), limit(1500))),
+    getDocs(query(collection(db, totalColl), limit(500))),
   ])
   const recent = sumWindow(
     daily.docs.map((d) => {
@@ -555,4 +559,31 @@ export async function fetchSongPlays(now = Date.now()): Promise<{ recent: Record
   const total: Record<string, number> = {}
   for (const d of all.docs) total[d.id] = Number(d.data().count ?? 0)
   return { recent, total }
+}
+
+/** 곡별 재생 수 — 최근 48시간과 전체 누적 */
+export function fetchSongPlays(now = Date.now()) {
+  return fetchWindowCounts('songPlays', 'songPlaysDaily', now)
+}
+
+// ── 서재 책 클릭 수 ─────────────────────────────────────────────────────────
+// 홈 카드 클릭(recordClick)과 같은 셈법 — 누를 때마다 1(하루 1번으로 줄이지 않는다). 홈 clicks 와는 컬렉션을 나눈다
+// (홈 인기 순위가 clicks 를 통째로 읽어서, 책 수만큼 홈 읽기가 늘어난다).
+
+/** 책 표지 클릭 1회 기록. 실패해도 책은 그대로 열린다. */
+export function recordBookClick(slug: string): void {
+  if (!/^[a-z0-9-]{1,60}$/.test(slug)) return
+  const day = todayKey()
+  const db = getDb()
+  void Promise.all([
+    setDoc(doc(db, 'bookClicksDaily', `${day}__${slug}`), { date: day, id: slug, count: increment(1) }, { merge: true }),
+    setDoc(doc(db, 'bookClicks', slug), { id: slug, count: increment(1) }, { merge: true }),
+  ]).catch(() => {
+    /* 통계 실패는 조용히 무시 */
+  })
+}
+
+/** 책별 클릭 수 — 최근 48시간과 전체 누적 */
+export function fetchBookClicks(now = Date.now()) {
+  return fetchWindowCounts('bookClicks', 'bookClicksDaily', now)
 }

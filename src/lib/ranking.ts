@@ -80,3 +80,16 @@ export function toggleId(ids: string[], id: string): string[] {
 export function nextIndex(len: number, i: number, dir: 1 | -1): number {
   return len === 0 ? -1 : (i + dir + len) % len
 }
+
+/** 서재 인기 순위 — 홈과 같이 1등부터 마지막까지 전부 세운다(0번인 책도 맨 뒤에).
+ *  최근 48시간 클릭, 같으면 누적, 그래도 같으면 새로 올린 책이 앞. */
+export function rankBooks<T extends { slug: string; publishedAt?: number | null }>(
+  books: T[],
+  recent: Record<string, number>,
+  total: Record<string, number>
+): (T & { rank: number; recent: number; total: number })[] {
+  return books
+    .map((b) => ({ ...b, recent: recent[b.slug] ?? 0, total: total[b.slug] ?? 0 }))
+    .sort((a, b) => b.recent - a.recent || b.total - a.total || (b.publishedAt ?? 0) - (a.publishedAt ?? 0))
+    .map((b, i) => ({ ...b, rank: i + 1 }))
+}
