@@ -7,12 +7,12 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://ssamzip.com'),
   title: {
-    default: '선행쌤 | 교실에서 쓰라고 만든 학습 사이트·게임 모음',
+    default: '선행쌤 | 교실에서 쓰라고 만든 학습 게임·사이트 모음',
     template: '%s | 선행쌤',
   },
   description:
-    '선행쌤(선행샘·선행 심선생)은 초등학교 교사가 교실에서 필요할 때마다 만든 학습 사이트·교과 게임·선생님용 프로그램 모음입니다.',
-  keywords: ['선행쌤', '선행샘', '선행 심선생', '심선생', '초등 학습 사이트', '교과 게임', '수업 도구', '초등 교사', '바이브코딩', '에듀테크'],
+    '선행쌤(선행샘·선행 심선생)은 초등학교 교사가 교실에서 필요할 때마다 만든 학습 게임·학습 사이트·선생님용 프로그램 모음입니다.',
+  keywords: ['선행쌤', '선행샘', '선행 심선생', '심선생', '초등 학습 게임', '교과 게임', '초등 학습 사이트', '수업 도구', '초등 교사', '바이브코딩', '에듀테크'],
   authors: [{ name: '심선생' }],
   alternates: { canonical: './' },
   verification: { other: { 'naver-site-verification': 'e4235028c5908547841febe095942fa789e71bb0' } },
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     url: 'https://ssamzip.com',
     siteName: '선행쌤',
-    title: '선행쌤 | 교실에서 쓰라고 만든 학습 사이트·게임 모음',
-    description: '초등 교사 심선생이 만든 학습 사이트·게임·선생님 프로그램 모음',
+    title: '선행쌤 | 교실에서 쓰라고 만든 학습 게임·사이트 모음',
+    description: '초등 교사 심선생이 만든 학습 게임·사이트·선생님 프로그램 모음',
   },
 }
 

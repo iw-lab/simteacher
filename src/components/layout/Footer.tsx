@@ -19,7 +19,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-muted-fg mb-4 max-w-md leading-relaxed">
-              선행쌤(선행샘) — 교실에서 쓰라고 만든 학습 사이트·게임·선생님 프로그램 모음.
+              선행쌤(선행샘) — 교실에서 쓰라고 만든 학습 게임·사이트·선생님 프로그램 모음.
               <br />
               만든 사람: 초등교사 심선생
             </p>

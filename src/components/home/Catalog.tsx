@@ -99,10 +99,10 @@ export function Catalog() {
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
             <span className="text-primary-600 dark:text-primary-300 font-semibold">
-              Learning Sites
+              Learning Games
             </span>
             <h2 className="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight text-fg">
-              아이들이 쓰는 <span className="gradient-text">학습 사이트</span>{' '}
+              아이들이 쓰는 <span className="gradient-text">학습 게임·사이트</span>{' '}
               {learningSites.length}개
             </h2>
           </div>
@@ -112,7 +112,7 @@ export function Catalog() {
         </div>
 
         <label className="relative block mb-4 max-w-md">
-          <span className="sr-only">사이트 찾기</span>
+          <span className="sr-only">게임·사이트 찾기</span>
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg" aria-hidden />
           <input
             type="search"
@@ -155,7 +155,7 @@ export function Catalog() {
 
         {sites.length === 0 && (
           <p className="py-16 text-center text-muted-fg">
-            찾는 사이트가 없어요.{' '}
+            찾는 게임·사이트가 없어요.{' '}
             <button
               type="button"
               onClick={() => { setQ(''); setSubject(''); setKind('') }}
@@ -240,7 +240,7 @@ export function Catalog() {
             href="/portfolio"
             className="inline-flex items-center text-sm font-semibold text-muted-fg hover:text-fg transition-colors"
           >
-            각 사이트를 왜, 어떻게 만들었는지 자세히 보기
+            각 게임·사이트를 왜, 어떻게 만들었는지 자세히 보기
             <ArrowRight className="ml-1.5 w-4 h-4" />
           </Link>
         </div>
@@ -335,12 +335,12 @@ export function Catalog() {
           </div>
 
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-fg">
-            <span className="gradient-text">알찬</span> — 위 학습 사이트들이
+            <span className="gradient-text">알찬</span> — 위 학습 게임·사이트가
             모여 있는 곳
           </h2>
           <p className="mt-4 text-muted-fg leading-relaxed max-w-3xl">
             아이들이 월급을 받고, 세금을 내고, 주식과 부동산에 투자하고, 재판까지
-            경험하는 교실 속 경제 세계입니다. 위의 학습 사이트는 알찬 메뉴에서
+            경험하는 교실 속 경제 세계입니다. 위의 학습 게임·사이트는 알찬 메뉴에서
             바로 들어가 쓸 수 있게 붙여 두었습니다.
           </p>
           <p className="mt-3 text-sm text-muted-fg">
