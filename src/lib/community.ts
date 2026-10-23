@@ -505,3 +505,54 @@ export async function fetchAllPostViews(): Promise<Record<string, number>> {
   })
   return out
 }
+
+// ── 음악감상실 재생 수 ──────────────────────────────────────────────────────
+// 같은 브라우저는 같은 곡을 하루 한 번만 센다(글 조회수와 같은 근사치) — 반복 재생·이어 듣기로 순위가 부풀지 않게.
+
+const PLAY_KEY = 'simteacher:played'
+
+/** 곡 재생 1회 기록. 실패해도 재생은 그대로 된다. 표시는 쓰기가 성공한 뒤에 한다. */
+export async function recordSongPlay(id: string): Promise<void> {
+  if (!/^[a-z0-9-]{1,60}$/.test(id)) return
+  const day = todayKey()
+  let seen: Record<string, string> = {}
+  try {
+    seen = JSON.parse(window.localStorage.getItem(PLAY_KEY) ?? '{}') as Record<string, string>
+  } catch {
+    return // 저장소가 막힌 브라우저는 중복을 못 막으니 세지 않는다
+  }
+  if (seen[id] === day) return
+  const db = getDb()
+  try {
+    await Promise.all([
+      setDoc(doc(db, 'songPlaysDaily', `${day}__${id}`), { date: day, id, count: increment(1) }, { merge: true }),
+      setDoc(doc(db, 'songPlays', id), { id, count: increment(1) }, { merge: true }),
+    ])
+    // 오늘 것만 남겨 저장소가 곡 수만큼 끝없이 자라지 않게
+    const next: Record<string, string> = { [id]: day }
+    for (const [k, v] of Object.entries(seen)) if (v === day) next[k] = v
+    window.localStorage.setItem(PLAY_KEY, JSON.stringify(next))
+  } catch {
+    /* 집계 실패는 조용히 무시 */
+  }
+}
+
+/** 곡별 재생 수 — 최근 48시간(홈 인기 순위와 같은 창)과 전체 누적 */
+export async function fetchSongPlays(now = Date.now()): Promise<{ recent: Record<string, number>; total: Record<string, number> }> {
+  const db = getDb()
+  const win = window48(now)
+  const [daily, all] = await Promise.all([
+    getDocs(query(collection(db, 'songPlaysDaily'), where('date', 'in', win.map((w) => w.day)), limit(1500))),
+    getDocs(query(collection(db, 'songPlays'), limit(500))),
+  ])
+  const recent = sumWindow(
+    daily.docs.map((d) => {
+      const v = d.data()
+      return { date: String(v.date ?? ''), slug: String(v.id ?? ''), count: Number(v.count ?? 0) }
+    }),
+    win
+  )
+  const total: Record<string, number> = {}
+  for (const d of all.docs) total[d.id] = Number(d.data().count ?? 0)
+  return { recent, total }
+}

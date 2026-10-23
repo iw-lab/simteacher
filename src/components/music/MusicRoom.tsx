@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { FileText, Music, Pause, Play, Search, Shuffle, SkipBack, SkipForward, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, FileText, Flame, Music, Pause, Play, Search, Shuffle, SkipBack, SkipForward, X } from 'lucide-react'
+import { fetchSongPlays, recordSongPlay } from '@/lib/community'
+import { rankSongs, songsNewestFirst } from '@/lib/ranking'
 
 /** 곡 목록·음원은 배포된 비트:온에서 방문 때 읽는다 — 비트:온에 곡을 올리면 여기에도 저절로 뜬다. */
 export const BEATON = 'https://beaton-evo.pages.dev'
@@ -17,10 +19,6 @@ export interface Song {
   orig?: string
 }
 
-/** 가사 있는 노래가 먼저, 그 안에서는 비트:온 목록 순서 그대로 */
-export function lyricFirst(songs: Song[], lyrics: Record<string, string>): Song[] {
-  return [...songs.filter((s) => lyrics[s.id]), ...songs.filter((s) => !lyrics[s.id])]
-}
 
 const mmss = (sec: number) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`
 /** 섞어 듣기 — 렌더 밖 함수로 둔다(렌더 중 Math.random 금지 규칙) */
@@ -59,20 +57,30 @@ export function MusicRoom() {
   // 폰에선 가사 칸이 긴 목록 아래로 밀려 안 보인다 — 재생줄의 «가사» 단추로 아래에서 올라오는 판으로 연다
   const [sheet, setSheet] = useState(false)
   const [t, setT] = useState(0)
+  const [added, setAdded] = useState<Record<string, string>>({})
+  // 재생 수 — 못 읽으면 순위 줄만 숨기고 목록은 그대로
+  const [plays, setPlays] = useState<{ recent: Record<string, number>; total: Record<string, number> } | null>(null)
   const audio = useRef<HTMLAudioElement>(null)
+  const rail = useRef<HTMLOListElement>(null)
 
   useEffect(() => {
     let alive = true
     Promise.all([
       fetch(`${BEATON}/songs/index.json`).then((r) => r.json() as Promise<{ songs: Song[] }>),
       fetch('/music/lyrics.json').then((r) => (r.ok ? (r.json() as Promise<Record<string, string>>) : {})),
+      fetch('/music/added.json').then((r) => (r.ok ? (r.json() as Promise<Record<string, string>>) : {})).catch(() => ({})),
     ])
-      .then(([idx, ly]) => {
+      .then(([idx, ly, ad]) => {
         if (!alive) return
         setLyrics(ly)
-        setSongs(lyricFirst(idx.songs, ly))
+        setAdded(ad)
+        // 아래 목록 = 올린 순서(최근이 앞) — 2026-10-23 사용자 «홈처럼 위는 인기 순위, 아래는 올린 순서»
+        setSongs(songsNewestFirst(idx.songs, ad))
       })
       .catch(() => alive && setFailed(true))
+    fetchSongPlays()
+      .then((p) => alive && setPlays(p))
+      .catch(() => {})
     return () => {
       alive = false
     }
@@ -88,6 +96,8 @@ export function MusicRoom() {
     for (const s of pool) m.set(s.genre, (m.get(s.genre) ?? 0) + 1)
     return [...m].sort((a, b) => b[1] - a[1])
   }, [pool])
+  // 인기 순위 — 지금 보는 묶음(가사 있는 노래/전체) 안에서, 한 번이라도 재생된 곡만
+  const ranked = useMemo(() => (plays ? rankSongs(pool, plays.recent, plays.total, added) : []), [plays, pool, added])
   const list = useMemo(() => {
     const k = norm(q)
     return pool.filter(
@@ -107,6 +117,7 @@ export function MusicRoom() {
     setT(0)
     el.src = `${BEATON}/songs/${s.id}/${s.audio}`
     void el.play()
+    void recordSongPlay(s.id)
   }
   const step = (dir: 1 | -1) => {
     if (list.length === 0) return
@@ -180,6 +191,63 @@ export function MusicRoom() {
       </div>
 
       {!songs && <p className="py-16 text-center text-muted-fg">노래를 불러오는 중…</p>}
+
+      {ranked.length > 0 && !genre && !q && (
+        <section aria-labelledby="song-popular" className="mb-8">
+          <div className="flex items-end justify-between gap-3 mb-3">
+            <h2 id="song-popular" className="inline-flex items-center gap-1.5 text-lg md:text-xl font-extrabold text-fg">
+              <Flame className="w-5 h-5 text-orange-500" />
+              인기 순위
+              <span className="ml-1 text-sm font-medium text-muted-fg">최근 48시간 많이 들은 곡</span>
+            </h2>
+            <div className="hidden md:flex gap-2">
+              {([-1, 1] as const).map((d) => (
+                <button
+                  key={d}
+                  type="button"
+                  onClick={() => rail.current?.scrollBy({ left: d * rail.current.clientWidth, behavior: 'smooth' })}
+                  aria-label={d < 0 ? '앞 순위 보기' : '다음 순위 보기'}
+                  className="w-11 h-11 rounded-full border border-line bg-card inline-flex items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40"
+                >
+                  {d < 0 ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                </button>
+              ))}
+            </div>
+          </div>
+          <ol
+            ref={rail}
+            data-testid="song-popular-rail"
+            className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0 pb-1"
+          >
+            {ranked.map((s) => {
+              const on = cur?.id === s.id
+              return (
+                <li key={s.id} className="snap-start shrink-0 basis-[44%] sm:basis-[calc((100%-2*0.75rem)/3)] lg:basis-[calc((100%-4*0.75rem)/5)]">
+                  <button
+                    type="button"
+                    onClick={() => play(s)}
+                    aria-label={`${s.rank}위 ${s.title} ${on && playing ? '멈춤' : '듣기'}`}
+                    className={`relative w-full h-full p-4 rounded-2xl border text-left text-white overflow-hidden transition-colors ${
+                      on ? 'border-primary-500/80' : 'border-line hover:border-primary-500/40'
+                    }`}
+                    style={{ background: `radial-gradient(circle at 25% 20%, ${s.glow ?? '#7c3aed'}, ${s.bg?.[0] ?? '#111'} 75%)` }}
+                  >
+                    <span className="block text-3xl font-black tabular-nums leading-none opacity-90">{s.rank}</span>
+                    <span className="mt-3 block font-bold truncate">{s.title}</span>
+                    <span className="block text-xs text-white/70 truncate">{s.genre}</span>
+                    <span className="mt-2 flex items-center justify-between text-xs text-white/80">
+                      <span className="tabular-nums">48시간 {s.recent.toLocaleString()}번 · 누적 {s.total.toLocaleString()}번</span>
+                      {on && playing ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                    </span>
+                  </button>
+                </li>
+              )
+            })}
+          </ol>
+        </section>
+      )}
+
+      {songs && !genre && !q && <h2 className="mb-3 text-lg md:text-xl font-extrabold text-fg">올린 순서 <span className="ml-1 text-sm font-medium text-muted-fg">새 노래가 맨 앞</span></h2>}
 
       <div className="grid lg:grid-cols-[minmax(0,1fr)_380px] gap-6 items-start">
         <ol data-testid="song-list" className="grid sm:grid-cols-2 2xl:grid-cols-3 gap-3">

@@ -47,3 +47,26 @@ export function sumWindow(
   for (const s in out) out[s] = Math.round(out[s])
   return out
 }
+
+/** 음악감상실 인기 순위 — 최근 48시간 재생 수, 같으면 누적, 그래도 같으면 새로 올린 곡이 앞.
+ *  한 번도 재생 안 된 곡은 순위에 넣지 않는다(0회끼리 줄 세우면 순위가 아니라 목록이다). */
+export function rankSongs<T extends { id: string }>(
+  songs: T[],
+  recent: Record<string, number>,
+  total: Record<string, number>,
+  added: Record<string, string>
+): (T & { rank: number; recent: number; total: number })[] {
+  return songs
+    .map((s) => ({ ...s, recent: recent[s.id] ?? 0, total: total[s.id] ?? 0 }))
+    .filter((s) => s.recent > 0 || s.total > 0)
+    .sort((a, b) => b.recent - a.recent || b.total - a.total || (added[b.id] ?? '').localeCompare(added[a.id] ?? ''))
+    .map((s, i) => ({ ...s, rank: i + 1 }))
+}
+
+/** 곡을 올린 순서(가장 최근이 맨 앞) — 올린 때를 모르는 곡은 맨 뒤, 그 안에서는 원래 순서 */
+export function songsNewestFirst<T extends { id: string }>(songs: T[], added: Record<string, string>): T[] {
+  return songs
+    .map((s, i) => ({ s, i }))
+    .sort((a, b) => (added[b.s.id] ?? '').localeCompare(added[a.s.id] ?? '') || a.i - b.i)
+    .map((x) => x.s)
+}

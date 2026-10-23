@@ -128,6 +128,37 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // 음악감상실 재생 수 — clicks/clicksDaily 와 같은 계약(+1 씩만 · 삭제 금지)이되 컬렉션을 나눈다.
+    // 홈 인기 순위가 clicks 를 통째로 읽으므로 곡 247개를 섞으면 홈 방문마다 그만큼 더 읽는다.
+    // 곡 id 는 비트:온 폴더 이름(소문자·숫자·하이픈). list 는 상한을 건다(통째 스캔 방지).
+    match /songPlays/{songId} {
+      allow get: if true;
+      allow list: if request.query.limit <= 500;
+      allow create: if request.resource.data.keys().hasOnly(['id', 'count'])
+        && request.resource.data.id == songId
+        && songId.matches('^[a-z0-9-]{1,60}$')
+        && request.resource.data.count == 1;
+      allow update: if request.resource.data.keys().hasOnly(['id', 'count'])
+        && request.resource.data.id == resource.data.id
+        && request.resource.data.count == resource.data.count + 1;
+      allow delete: if false;
+    }
+
+    match /songPlaysDaily/{dailyId} {
+      allow get: if true;
+      allow list: if request.query.limit <= 1500;
+      allow create: if request.resource.data.keys().hasOnly(['date', 'id', 'count'])
+        && request.resource.data.date is string && request.resource.data.date.matches('^[0-9]{8}$')
+        && request.resource.data.id is string && request.resource.data.id.matches('^[a-z0-9-]{1,60}$')
+        && dailyId == request.resource.data.date + '__' + request.resource.data.id
+        && request.resource.data.count == 1;
+      allow update: if request.resource.data.keys().hasOnly(['date', 'id', 'count'])
+        && request.resource.data.date == resource.data.date
+        && request.resource.data.id == resource.data.id
+        && request.resource.data.count == resource.data.count + 1;
+      allow delete: if false;
+    }
+
     // Clicks — 어떤 카드가 눌렸는지. 전체 누적과 날짜별을 따로 쌓는다.
     match /clicks/{slug} {
       allow read: if true;

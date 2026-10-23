@@ -2,7 +2,7 @@
  * 홈 맨 위 인기 순위·아래 새로 올린 순서 — 2026-10-23 사용자 «인기 순서대로 1등부터 마지막 순위까지 · 아래는 새로 올린 순서대로».
  */
 import { describe, expect, it } from 'vitest'
-import { newestFirst, rankByClicks, sumWindow, window48 } from '../src/lib/ranking'
+import { newestFirst, rankByClicks, rankSongs, songsNewestFirst, sumWindow, window48 } from '../src/lib/ranking'
 import { learningSites, teacherTools } from '../src/data/projects'
 
 describe('인기 순위', () => {
@@ -61,10 +61,11 @@ describe('최근 48시간', () => {
 })
 
 describe('음악감상실', () => {
-  it('가사 있는 노래가 먼저, 순서는 그대로', async () => {
-    const { lyricFirst } = await import('../src/components/music/MusicRoom')
-    const s = (id: string) => ({ id, title: id, genre: 'g', duration: 1, audio: 'a' })
-    expect(lyricFirst([s('a'), s('b'), s('c'), s('d')], { b: 'x', d: 'y' }).map((x) => x.id)).toEqual(['b', 'd', 'a', 'c'])
+  it('올린 때 사본이 있고 곡마다 날짜가 있다', async () => {
+    const fs = await import('node:fs')
+    const ad = JSON.parse(fs.readFileSync('public/music/added.json', 'utf8')) as Record<string, string>
+    expect(Object.keys(ad).length).toBeGreaterThan(150)
+    for (const [id, t] of Object.entries(ad)) expect(t, id).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/)
   })
   it('가사 사본이 있고 노래마다 부르는 줄이 있다', async () => {
     const fs = await import('node:fs')
@@ -89,5 +90,20 @@ describe('서재 묶기', () => {
     const g = groupBySeries([w('m-06', 'comic', '수학'), w('s-01', 'comic', '사회'), w('m-01', 'comic', '수학'), w('x', 'comic', null)])
     expect(g.map((x) => x.title)).toEqual(['수학', '사회', '학습만화'])
     expect(g[0].works.map((x) => x.slug)).toEqual(['m-01', 'm-06'])
+  })
+})
+
+describe('음악감상실 순위', () => {
+  const songs = [{ id: 'a' }, { id: 'b' }, { id: 'c' }, { id: 'd' }]
+  const added = { a: '2026-09-01T00:00', b: '2026-10-11T00:00', c: '2026-10-10T00:00' }
+  it('48시간 재생 많은 순 · 같으면 누적 · 그래도 같으면 새 곡 · 0회는 빠진다', () => {
+    const r = rankSongs(songs, { a: 5, c: 2, b: 2 }, { a: 9, b: 3, c: 7 }, added)
+    expect(r.map((s) => s.id)).toEqual(['a', 'c', 'b'])
+    expect(r.map((s) => s.rank)).toEqual([1, 2, 3])
+    expect(rankSongs(songs, {}, { d: 1, b: 1 }, added).map((s) => s.id)).toEqual(['b', 'd'])
+    expect(rankSongs(songs, {}, {}, added)).toEqual([])
+  })
+  it('아래 목록은 올린 순서 — 최근이 앞, 모르는 곡은 맨 뒤', () => {
+    expect(songsNewestFirst(songs, added).map((s) => s.id)).toEqual(['b', 'c', 'a', 'd'])
   })
 })

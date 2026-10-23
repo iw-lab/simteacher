@@ -134,3 +134,32 @@ describe('삭제 규칙', () => {
     await assertFails(setDoc(doc(a, 'comments', 'd3'), { slug: 'hello-world', nickname: '', message: '바꿔치기', createdAt: serverTimestamp() }))
   })
 })
+
+describe('음악감상실 재생 수 규칙', () => {
+  const anon = () => env.unauthenticatedContext().firestore()
+
+  it('처음 재생은 1로 만들고, 다음부터는 +1 만 된다', async () => {
+    const db = anon()
+    await assertSucceeds(setDoc(doc(db, 'songPlays', 'abcrocket'), { id: 'abcrocket', count: 1 }))
+    await assertSucceeds(setDoc(doc(db, 'songPlays', 'abcrocket'), { id: 'abcrocket', count: 2 }))
+    await assertFails(setDoc(doc(db, 'songPlays', 'abcrocket'), { id: 'abcrocket', count: 100 }))
+  })
+
+  it('🔴 처음부터 큰 수로 만들 수 없다 · 문서 이름과 id 가 달라도 안 된다 · 지울 수 없다', async () => {
+    const db = anon()
+    await assertFails(setDoc(doc(db, 'songPlays', 'yeouya'), { id: 'yeouya', count: 999 }))
+    await assertFails(setDoc(doc(db, 'songPlays', 'yeouya'), { id: 'abcrocket', count: 1 }))
+    await assertFails(setDoc(doc(db, 'songPlays', 'Bad_ID'), { id: 'Bad_ID', count: 1 }))
+    await assertSucceeds(setDoc(doc(db, 'songPlays', 'yeouya'), { id: 'yeouya', count: 1 }))
+    await assertFails(deleteDoc(doc(db, 'songPlays', 'yeouya')))
+  })
+
+  it('날짜별 문서는 «날짜__id» 이름에 +1 만', async () => {
+    const db = anon()
+    await assertSucceeds(setDoc(doc(db, 'songPlaysDaily', '20261023__abcrocket'), { date: '20261023', id: 'abcrocket', count: 1 }))
+    await assertSucceeds(setDoc(doc(db, 'songPlaysDaily', '20261023__abcrocket'), { date: '20261023', id: 'abcrocket', count: 2 }))
+    await assertFails(setDoc(doc(db, 'songPlaysDaily', '20261023__abcrocket'), { date: '20261023', id: 'abcrocket', count: 50 }))
+    await assertFails(setDoc(doc(db, 'songPlaysDaily', '20261023__yeouya'), { date: '20261023', id: 'abcrocket', count: 1 }))
+    await assertFails(setDoc(doc(db, 'songPlaysDaily', '20261023__x'), { date: '20261023', id: 'x', count: 1, extra: 1 }))
+  })
+})
