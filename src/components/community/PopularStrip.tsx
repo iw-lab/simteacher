@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react'
-import { fetchClickCounts, recordClick } from '@/lib/community'
+import { fetchRecentCounts, recordClick } from '@/lib/community'
 import { rankByClicks } from '@/lib/ranking'
 import { learningSites, teacherTools } from '@/data/projects'
 
 const ALL = [...learningSites, ...teacherTools]
 
-/** 맨 위 인기 순위 — 누적 클릭 1등부터 마지막까지 썸네일 카드를 가로로 민다(넓은 화면 5장씩).
+/** 맨 위 인기 순위 — 최근 48시간 조회수 1등부터 마지막까지 썸네일 카드를 가로로 민다(넓은 화면 5장씩).
  *  집계를 못 읽으면 순위를 지어낼 수 없으니 아예 숨긴다. */
 export function PopularStrip() {
   const [counts, setCounts] = useState<Record<string, number> | null>(null)
@@ -18,7 +18,7 @@ export function PopularStrip() {
 
   useEffect(() => {
     let alive = true
-    fetchClickCounts()
+    fetchRecentCounts()
       .then((c) => alive && setCounts(c))
       .catch(() => alive && setFailed(true))
     return () => {
@@ -41,7 +41,7 @@ export function PopularStrip() {
         <h2 id="popular-title" className="inline-flex items-center gap-1.5 text-lg md:text-xl font-extrabold text-fg">
           <Flame className="w-5 h-5 text-orange-500" />
           인기 순위
-          <span className="ml-1 text-sm font-medium text-muted-fg">{ALL.length}곳 전체</span>
+          <span className="ml-1 text-sm font-medium text-muted-fg">최근 48시간 · {ALL.length}곳 전체</span>
         </h2>
         <div className="hidden md:flex gap-2">
           <button type="button" onClick={() => page(-1)} aria-label="앞 순위 보기" className="w-11 h-11 rounded-full border border-line bg-card inline-flex items-center justify-center text-muted-fg hover:text-fg hover:border-primary-500/40">
@@ -98,7 +98,7 @@ export function PopularStrip() {
                 <div className="px-2.5 py-2">
                   <p className="text-[13px] sm:text-sm font-bold text-fg leading-snug line-clamp-1">{site.name}</p>
                   <p className="mt-0.5 text-xs text-muted-fg tabular-nums">
-                    {site.count > 0 ? `${site.count.toLocaleString()}번 열림` : '아직 기록 없음'}
+                    {site.count > 0 ? `${site.count.toLocaleString()}번 열림` : '48시간 기록 없음'}
                   </p>
                 </div>
               </a>

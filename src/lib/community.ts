@@ -22,6 +22,7 @@ import {
   type Unsubscribe,
 } from 'firebase/firestore'
 import { getDb, ensureUid, isOwnerSignedIn } from './firebase'
+import { sumWindow, window48 } from './ranking'
 
 // ── 방명록 ──────────────────────────────────────────────────────────────────
 
@@ -197,15 +198,20 @@ export function recordClick(slug: string, rawName: string): void {
   })
 }
 
-/** 전체 누적 클릭 수 — slug → 수. 홈 맨 위 인기 순위가 1등부터 마지막까지 세운다(사이트 60개 안팎이라 한 번에 읽는다). */
-export async function fetchClickCounts(): Promise<Record<string, number>> {
-  const snap = await getDocs(collection(getDb(), 'clicks'))
-  const out: Record<string, number> = {}
-  for (const d of snap.docs) {
-    const v = d.data()
-    out[String(v.slug ?? d.id)] = Number(v.count ?? 0)
-  }
-  return out
+/** 최근 48시간 조회수 — slug → 수. 홈 맨 위 인기 순위가 1등부터 마지막까지 세운다(2026-10-23 사용자 «최근 48시간 기준»).
+ *  날짜별 문서(clicksDaily)를 오늘·어제·그제 사흘치 읽어 창에 걸친 만큼만 더한다(window48). */
+export async function fetchRecentCounts(now = Date.now()): Promise<Record<string, number>> {
+  const win = window48(now)
+  const snap = await getDocs(
+    query(collection(getDb(), 'clicksDaily'), where('date', 'in', win.map((w) => w.day)))
+  )
+  return sumWindow(
+    snap.docs.map((d) => {
+      const v = d.data()
+      return { date: String(v.date ?? ''), slug: String(v.slug ?? ''), count: Number(v.count ?? 0) }
+    }),
+    win
+  )
 }
 
 // ── 글별 댓글 ───────────────────────────────────────────────────────────────

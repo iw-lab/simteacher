@@ -2,7 +2,7 @@
  * 홈 맨 위 인기 순위·아래 새로 올린 순서 — 2026-10-23 사용자 «인기 순서대로 1등부터 마지막 순위까지 · 아래는 새로 올린 순서대로».
  */
 import { describe, expect, it } from 'vitest'
-import { newestFirst, rankByClicks } from '../src/lib/ranking'
+import { newestFirst, rankByClicks, sumWindow, window48 } from '../src/lib/ranking'
 import { learningSites, teacherTools } from '../src/data/projects'
 
 describe('인기 순위', () => {
@@ -32,5 +32,30 @@ describe('새로 올린 순서', () => {
     for (let i = 1; i < n.length; i++) expect(n[i - 1].added >= n[i].added).toBe(true)
     expect(n[0].slug).toBe('gugu-2d')
     expect(n.at(-1)!.added.startsWith('2026-07-22')).toBe(true)
+  })
+})
+
+describe('최근 48시간', () => {
+  // 2026-10-23 06:00 KST = 2026-10-22T21:00Z
+  const now = Date.parse('2026-10-22T21:00:00Z')
+  it('오늘·어제 전부, 그제는 창에 걸친 18시간 몫', () => {
+    expect(window48(now)).toEqual([
+      { day: '20261023', weight: 1 },
+      { day: '20261022', weight: 1 },
+      { day: '20261021', weight: 0.75 },
+    ])
+  })
+  it('창 밖 날짜(사흘 전·누적)는 안 센다', () => {
+    const c = sumWindow(
+      [
+        { date: '20261023', slug: 'a', count: 2 },
+        { date: '20261022', slug: 'a', count: 3 },
+        { date: '20261021', slug: 'a', count: 4 },
+        { date: '20261020', slug: 'a', count: 100 },
+        { date: '20261020', slug: 'b', count: 100 },
+      ],
+      window48(now)
+    )
+    expect(c).toEqual({ a: 8 })
   })
 })
