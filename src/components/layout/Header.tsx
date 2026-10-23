@@ -31,7 +31,7 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass shadow-lg' : 'bg-transparent'
+        isMenuOpen ? 'bg-card shadow-lg' : isScrolled ? 'glass shadow-lg' : 'bg-transparent'
       }`}
     >
       <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10">
@@ -100,7 +100,7 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-line glass rounded-b-2xl">
+          <div className="md:hidden py-4 border-t border-line bg-card rounded-b-2xl">
             <nav className="flex flex-col space-y-1">
               {navigation.map((item) => {
                 const isActive =

@@ -30,7 +30,7 @@ describe('새로 올린 순서', () => {
   it('가장 최근이 맨 앞', () => {
     const n = newestFirst(learningSites)
     for (let i = 1; i < n.length; i++) expect(n[i - 1].added >= n[i].added).toBe(true)
-    expect(n[0].slug).toBe('gugu-2d')
+    expect(n[0].added).toBe(learningSites.map((s) => s.added).sort().at(-1)) // 새로 등재할 때마다 slug 를 고치지 않게
     expect(n.at(-1)!.added.startsWith('2026-07-22')).toBe(true)
   })
 })
