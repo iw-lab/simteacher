@@ -25,6 +25,14 @@ describe('게임 ↔ 수업 도구 나누기', () => {
     expect(isToolOnly({ tags: ['수학', TOOL_TAG] })).toBe(true) // 과목만 있고 다른 «종류»가 없으면 도구뿐
     expect(isToolOnly({ tags: [TOOL_TAG, '퍼즐'] })).toBe(false)
   })
+  it('연습·만들기뿐인 수업 도구는 게임 쪽에서 빠진다(중복 제거 2026-10-24) · 학교 대항 게임은 양쪽', () => {
+    const games = gameSites(learningSites).map((s) => s.slug)
+    for (const slug of ['ttobagi', 'pilhan', 'seulgisem', 'araharu', 'echotale']) expect(games).not.toContain(slug)
+    for (const slug of ['manjijak', 'tajawangguk']) expect(games).toContain(slug)
+    expect(isToolOnly({ tags: ['국어', '공부·연습', TOOL_TAG] })).toBe(true)
+    expect(isToolOnly({ tags: ['정보', '만들기', TOOL_TAG] })).toBe(true)
+    expect(isToolOnly({ tags: ['국어', '공부·연습'] })).toBe(false) // 수업 도구 꼬리표 없는 연습 사이트는 게임 쪽 그대로
+  })
   it('홈 종류 칩에 «수업 도구»가 없다 · 과목 칩에 «계기교육»이 없다', () => {
     expect(GAME_KINDS).not.toContain(TOOL_TAG)
     expect(GAME_SUBJECTS).not.toContain(OCCASION_TAG)

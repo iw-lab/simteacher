@@ -7,11 +7,14 @@ import { SITE_KINDS, SITE_SUBJECTS, type LearningSite } from '../data/projects'
 
 export const TOOL_TAG = '수업 도구'
 export const OCCASION_TAG = '계기교육'
-const OTHER_KINDS = new Set<string>(SITE_KINDS.filter((k) => k !== TOOL_TAG))
+// 게임 쪽에도 서게 하는 «게임 종류». 공부·연습·만들기는 게임이 아니다 — 수업 도구 꼬리표가 붙으면 도구 쪽에만
+// (2026-10-24 사용자 «게임과 수업 도구는 중복 제거하는 게 낫나» → 연습·만들기 도구 8곳을 게임 쪽에서 뺐다).
+const NOT_GAME_KINDS = new Set<string>([TOOL_TAG, '공부·연습', '만들기'])
+const OTHER_KINDS = new Set<string>(SITE_KINDS.filter((k) => !NOT_GAME_KINDS.has(k)))
 
 export const isOccasion = (s: Pick<LearningSite, 'tags'>) => s.tags.includes(OCCASION_TAG)
 export const isClassTool = (s: Pick<LearningSite, 'tags'>) => s.tags.includes(TOOL_TAG) || isOccasion(s)
-/** 게임 쪽에 안 서는 곳 — 계기교육 · 종류가 «수업 도구» 하나뿐(예: 뽑기ON) */
+/** 게임 쪽에 안 서는 곳 — 계기교육 · 게임 종류 꼬리표가 없는 수업 도구(뽑기ON·또박이·코드스쿨 등) */
 export const isToolOnly = (s: Pick<LearningSite, 'tags'>) =>
   isOccasion(s) || (s.tags.includes(TOOL_TAG) && !s.tags.some((t) => OTHER_KINDS.has(t)))
 export const gameSites = <T extends Pick<LearningSite, 'tags'>>(list: T[]) => list.filter((s) => !isToolOnly(s))
