@@ -27,7 +27,8 @@ describe('게임 ↔ 수업 도구 나누기', () => {
   })
   it('연습·만들기뿐인 수업 도구는 게임 쪽에서 빠진다(중복 제거 2026-10-24) · 학교 대항 게임은 양쪽', () => {
     const games = gameSites(learningSites).map((s) => s.slug)
-    for (const slug of ['ttobagi', 'pilhan', 'seulgisem', 'araharu', 'echotale']) expect(games).not.toContain(slug)
+    for (const slug of ['ttobagi', 'pilhan', 'seulgisem', 'araharu', 'echotale', 'mathstep']) expect(games).not.toContain(slug)
+    expect(classToolSites(learningSites).map((s) => s.slug)).toContain('mathstep') // 2026-10-24 «매쓰스텝도 수업도구에도»
     for (const slug of ['manjijak', 'tajawangguk']) expect(games).toContain(slug)
     expect(isToolOnly({ tags: ['국어', '공부·연습', TOOL_TAG] })).toBe(true)
     expect(isToolOnly({ tags: ['정보', '만들기', TOOL_TAG] })).toBe(true)
