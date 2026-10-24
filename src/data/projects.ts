@@ -229,7 +229,7 @@ export const learningSites: LearningSite[] = [
     name: '에코테일 EchoTale',
     subject: '영어 읽기',
     category: '영어',
-    tags: ['영어', '공부·연습'],
+    tags: ['영어', '공부·연습', '수업 도구'],
     tagline: 'AI가 읽어주는 단계별 영어 그림책',
     description:
       '읽고(Read) · 듣고(Hear) · 따라 하고(Echo) · 말하는(Speak) 셰도잉 루프로 영어 그림책을 읽습니다. 교사의 발음 부담 없이, 아이가 자기 수준을 골라 계정 없이 바로 시작할 수 있습니다.',
