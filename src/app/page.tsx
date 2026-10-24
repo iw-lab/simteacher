@@ -4,6 +4,7 @@ import { LiveRooms } from '@/components/community/LiveRooms'
 import { Catalog } from '@/components/home/Catalog'
 import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
+import { SectionTabs } from '@/components/home/SectionTabs'
 
 // 구글에 «이 사이트 대표 = 홈»을 알린다(사이트 이름 선행쌤) — 포트폴리오가 대표로 뜨던 일(2026-10-24)
 const SITE_LD = {
@@ -26,8 +27,11 @@ export default function Home() {
 
       <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* 글씨 최소·한 줄(2026-10-23 사용자 «첫화면 글씨좀 최소화 · 최대한 한줄로») */}
-        <div className="mb-4 flex items-baseline justify-between gap-3 whitespace-nowrap">
-          <h1 className="min-w-0 truncate text-base md:text-lg font-bold text-fg">교실에서 바로 쓰는 학습 게임</h1>
+        {/* 게임 | 수업 도구 두 갈래(2026-10-24) — 폰에선 제목 글씨를 숨기고(검색엔진에는 남긴다) 갈래 단추만 */}
+        <div className="mb-4 flex items-center gap-3 whitespace-nowrap">
+          <SectionTabs active="games" />
+          <h1 className="sr-only md:not-sr-only min-w-0 truncate text-base md:text-lg font-bold text-fg">교실에서 바로 쓰는 학습 게임</h1>
+          <span className="flex-1" aria-hidden />
           <Link href="/about" className="shrink-0 text-sm text-muted-fg hover:text-fg hover:underline">
             만든 사람 →
           </Link>

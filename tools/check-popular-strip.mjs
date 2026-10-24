@@ -51,7 +51,7 @@ for (const [w, lo, hi] of [[390, 3, 3], [1280, 7, 7], [1600, 7, 7]]) {
     await p.waitForSelector('#learning-sites [data-views]', { timeout: 15000 }).catch(() => {})
     const v = await p.evaluate(() => {
       const learn = [...document.querySelectorAll('#learning-sites a[target=_blank]')].filter((a) => a.querySelector('img'))
-      const tools = [...document.querySelectorAll('#teacher-tools .glass')]
+      const tools = [] // 선생님 책상 프로그램은 /tools 로 갔다(2026-10-24) — 그쪽은 check-tools-split 이 본다
       const miss = [...learn, ...tools].filter((c) => !/누적 [\d,]+번/.test(c.querySelector('[data-views]')?.textContent || ''))
       return { cards: learn.length + tools.length, miss: miss.length, ex: miss[0]?.querySelector('h3')?.textContent || '' }
     })

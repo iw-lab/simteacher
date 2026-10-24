@@ -1,33 +1,22 @@
 'use client'
 
-import { MathText } from '@/components/ui/MathText'
 import { useEffect, useMemo, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { ArrowRight, Download, ExternalLink, Eye, Lock, Search, X } from 'lucide-react'
+import { ArrowRight, Lock, Search, X } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
-import { fetchTotalCountsOnce, recordClick } from '@/lib/community'
+import { fetchTotalCountsOnce } from '@/lib/community'
 import { newestFirst } from '@/lib/ranking'
+import { gameSites, GAME_KINDS } from '@/lib/catalog'
+import { SiteCard } from '@/components/home/Cards'
 import {
   learningSites,
-  teacherTools,
   SITE_SUBJECTS,
-  SITE_KINDS,
   type LearningSite,
   type SiteTag,
 } from '@/data/projects'
 
-/** 카드 밑 누적 조회수(2026-10-23 «모든 카드 밑에 누적 조회수 적어줘») — 못 읽었으면 아무것도 안 그린다 */
-function Views({ n, className = '' }: { n: number | undefined; className?: string }) {
-  if (n === undefined) return null
-  return (
-    <span data-views className={`inline-flex items-center gap-1 text-xs text-muted-fg tabular-nums ${className}`}>
-      <Eye className="w-3.5 h-3.5" aria-hidden />
-      누적 {n.toLocaleString()}번
-    </span>
-  )
-}
+// 게임 쪽 목록 — 도구뿐인 곳(뽑기ON 등)과 선생님 책상 프로그램은 /tools 로 갔다(2026-10-24)
+const GAMES = gameSites(learningSites)
 
 /** 과목 하나·종류 하나를 고르면 둘 다 붙은 사이트만(고르지 않은 줄은 통과) */
 function pick(list: LearningSite[], subject: SiteTag | '', kind: SiteTag | '') {
@@ -111,7 +100,7 @@ export function Catalog() {
   const views = (slug: string) => (totals ? totals[slug] ?? 0 : undefined)
 
   // 새로 올린 곳이 맨 앞 — 위 인기 순위와 짝(2026-10-23 사용자)
-  const pool = useMemo(() => find(newestFirst(learningSites), q), [q])
+  const pool = useMemo(() => find(newestFirst(GAMES), q), [q])
   const sites = useMemo(() => pick(pool, subject, kind), [pool, subject, kind])
 
   return (
@@ -119,7 +108,7 @@ export function Catalog() {
       {/* ── 학습 사이트 ───────────────────────────────── */}
       <section id="learning-sites" className="scroll-mt-24">
         <h2 className="mb-4 whitespace-nowrap text-xl md:text-3xl font-extrabold tracking-tight text-fg">
-          <span className="gradient-text">학습 게임·사이트</span> {learningSites.length}개
+          <span className="gradient-text">학습 게임·사이트</span> {GAMES.length}개
           <span className="ml-2 text-sm font-medium text-muted-fg">새로 올린 순</span>
         </h2>
 
@@ -158,7 +147,7 @@ export function Catalog() {
           <ChipRow
             label="종류"
             allLabel="모든 종류"
-            options={SITE_KINDS}
+            options={GAME_KINDS}
             value={kind}
             onChange={setKind}
             pool={pick(pool, subject, '')}
@@ -180,74 +169,9 @@ export function Catalog() {
 
         {/* 폰은 두 칸 — 한 칸씩이면 55장이 29,000px 로 늘어났다(2026-10-21 실측) */}
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-5">
-          {sites.map((site, i) => {
-            // 🔴 링크가 없는 사이트가 생겼다(2026-08-31 아라하루). 예전엔 전부 url 이 있어서
-            //    `<motion.a href={site.url}>` 로 고정이었는데, url 이 undefined 면
-            //    **href 없는 <a>** 가 된다 — 링크처럼 보이는데 눌러도 아무 일도 안 일어난다.
-            //    그래서 링크가 없으면 아예 <div> 로 렌더한다(클릭 집계도 안 한다).
-            const linked = Boolean(site.url)
-            const Card = linked ? motion.a : motion.div
-            const linkProps = linked
-              ? {
-                  href: site.url,
-                  target: '_blank',
-                  rel: 'noopener noreferrer',
-                  onClick: () => recordClick(site.slug, site.name),
-                }
-              : {}
-            return (
-            <Card
-              key={site.slug}
-              {...linkProps}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: Math.min(i, 8) * 0.04 }}
-              className={`group glass rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col transition-all duration-200 ${
-                linked ? 'hover:border-primary-500/60 hover:-translate-y-1' : ''
-              }`}
-            >
-              <div className="relative aspect-[8/5] bg-muted overflow-hidden border-b border-line">
-                <Image
-                  src={site.image}
-                  alt={`${site.name} 화면`}
-                  fill
-                  sizes="(max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
-                  className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-300"
-                />
-              </div>
-
-              <div className="p-3 sm:p-6 flex flex-col flex-1">
-                <div className="flex items-center gap-2 mb-2 sm:mb-3 min-w-0">
-                  <Badge variant="primary">{site.subject}</Badge>
-                  <span className="hidden sm:inline-flex"><Badge variant="outline">{site.target}</Badge></span>
-                  <time dateTime={site.added} className="ml-auto shrink-0 text-xs text-muted-fg tabular-nums">
-                    {Number(site.added.slice(5, 7))}.{Number(site.added.slice(8, 10))} 올림
-                  </time>
-                </div>
-
-                <h3 className="text-[15px] sm:text-lg font-bold text-fg leading-snug">{site.name}</h3>
-                <p className="mt-1 sm:mt-1.5 text-[13px] sm:text-[15px] text-muted-fg leading-relaxed line-clamp-2 sm:line-clamp-none">
-                  <MathText text={site.tagline} />
-                </p>
-
-                {linked ? (
-                  <div className="mt-auto pt-3 sm:pt-5 flex items-center justify-between gap-2">
-                    <Views n={views(site.slug)} />
-                    <span className="hidden sm:inline-flex items-center text-sm font-semibold text-primary-600 dark:text-primary-300">
-                      사이트 열기
-                      <ExternalLink className="ml-1.5 w-4 h-4" />
-                    </span>
-                  </div>
-                ) : (
-                  <span className="mt-auto pt-3 sm:pt-5 inline-flex items-center text-xs sm:text-sm text-muted-fg">
-                    <Lock className="mr-1.5 w-3.5 h-3.5" />
-                    {site.urlNote ?? '학급 운영 중'}
-                  </span>
-                )}
-              </div>
-            </Card>
-            )
-          })}
+          {sites.map((site, i) => (
+            <SiteCard key={site.slug} site={site} i={i} views={views(site.slug)} />
+          ))}
         </div>
 
         <div className="mt-8 text-center">
@@ -261,81 +185,22 @@ export function Catalog() {
         </div>
       </section>
 
-      {/* ── 선생님을 위한 프로그램 ─────────────────────── */}
-      <section id="teacher-tools" className="scroll-mt-24">
-        <div className="mb-8">
-          <span className="text-primary-600 dark:text-primary-300 font-semibold">
-            For Teachers
+      {/* ── 수업 도구는 따로 칸(/tools) — 선생님 책상 프로그램도 그쪽으로 갔다(2026-10-24) ── */}
+      <section id="class-tools-link" className="scroll-mt-24">
+        <Link
+          href="/tools/"
+          className="glass rounded-3xl p-6 md:p-8 flex items-center justify-between gap-4 hover:border-primary-500/60 transition-colors"
+        >
+          <span>
+            <span className="block text-xl md:text-2xl font-extrabold tracking-tight text-fg">
+              <span className="gradient-text">수업 도구</span>는 따로 모았어요
+            </span>
+            <span className="mt-1 block text-sm md:text-[15px] text-muted-fg">
+              뽑기·투표·미술·수학 교구, 그리고 선생님 책상 프로그램
+            </span>
           </span>
-          <h2 className="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight text-fg">
-            <span className="gradient-text">선생님</span>을 위한 프로그램
-          </h2>
-          <p className="mt-3 text-muted-fg max-w-2xl">
-            아이들 것만 만들다 보니 정작 교사인 제가 쓸 게 없더군요. 제 책상에서
-            쓰려고 만들어 무료로 나눕니다.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-          {/* 카드 전체를 <a> 로 감싸지 않는다 — 설치본과 웹판이 둘 다 있는 도구
-              (우리 반 투표함)에서 링크를 중첩할 수 없어 웹판으로 들어갈 길이
-              막혔다(2026-09-02). 이제 링크는 카드 아래에 나란히 둔다. */}
-          {teacherTools.map((tool) => (
-            <div
-              key={tool.slug}
-              className="group glass rounded-3xl overflow-hidden flex flex-col hover:border-primary-500/60 hover:-translate-y-1 transition-all duration-200"
-            >
-              <div className="relative aspect-[8/5] bg-muted overflow-hidden border-b border-line">
-                <Image
-                  src={tool.image}
-                  alt={`${tool.name} 화면`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-300"
-                />
-              </div>
-
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge variant="secondary">{tool.platform}</Badge>
-                  <Badge variant="outline">무료</Badge>
-                </div>
-
-                <h3 className="text-lg font-bold text-fg">{tool.name}</h3>
-                <p className="mt-1.5 text-[15px] text-muted-fg leading-relaxed">
-                  <MathText text={tool.tagline} />
-                </p>
-
-                <Views n={views(tool.slug)} className="mt-3" />
-                <div className="mt-auto pt-5 flex items-center gap-4 flex-wrap">
-                  <a
-                    href={tool.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => recordClick(tool.slug, tool.name)}
-                    className="inline-flex items-center text-sm font-semibold text-primary-600 dark:text-primary-300 hover:underline"
-                  >
-                    <Download className="mr-1.5 w-4 h-4" />
-                    {tool.urlLabel}
-                  </a>
-
-                  {tool.altUrl && (
-                    <a
-                      href={tool.altUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => recordClick(tool.slug, tool.name)}
-                      className="inline-flex items-center text-sm font-semibold text-muted-fg hover:text-fg hover:underline"
-                    >
-                      {tool.altLabel}
-                      <ExternalLink className="ml-1.5 w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+          <ArrowRight className="shrink-0 w-6 h-6 text-primary-600 dark:text-primary-300" />
+        </Link>
       </section>
 
       {/* ── 알찬 ──────────────────────────────────────── */}
