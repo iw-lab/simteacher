@@ -23,9 +23,9 @@ export function SectionTabs({ active }: { active: 'games' | 'tools' }) {
     </Link>
   )
   return (
-    <nav aria-label="게임과 수업 도구" className="inline-flex items-center gap-1 p-1 rounded-full bg-card border border-line">
+    <nav aria-label="게임과 보조 도구" className="inline-flex items-center gap-1 p-1 rounded-full bg-card border border-line">
       {tab('games', '/', '게임', GAME_COUNT)}
-      {tab('tools', '/tools/', '수업 도구', TOOL_COUNT)}
+      {tab('tools', '/tools/', '보조 도구', TOOL_COUNT)}
     </nav>
   )
 }

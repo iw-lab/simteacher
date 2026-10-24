@@ -32,7 +32,7 @@ export function ToolsBoard() {
     <div className="space-y-14">
       <section id="class-tools" className="scroll-mt-24">
         <h2 className="mb-1 text-xl md:text-2xl font-extrabold tracking-tight text-fg">
-          수업에 바로 띄우기 <span className="text-base font-semibold text-muted-fg tabular-nums">{SITES.length}</span>
+          교실에 바로 띄우기 <span className="text-base font-semibold text-muted-fg tabular-nums">{SITES.length}</span>
         </h2>
         <p className="mb-5 text-sm text-muted-fg">설치 없이 전자칠판·교실 화면에서 바로 열어요.</p>
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-5">
@@ -49,7 +49,7 @@ export function ToolsBoard() {
           <h2 className="mb-1 text-xl md:text-2xl font-extrabold tracking-tight text-fg">
             계기교육 <span className="text-base font-semibold text-muted-fg tabular-nums">{occasions.length}</span>
           </h2>
-          <p className="mb-5 text-sm text-muted-fg">그날 그 주제로 한 시간 수업할 때.</p>
+          <p className="mb-5 text-sm text-muted-fg">그날 그 주제로 함께 이야기 나눌 때.</p>
           <div className="grid grid-cols-2 xl:grid-cols-1 gap-3 sm:gap-5">
             {occasions.map((site, i) => (
               <SiteCard key={site.slug} site={site} i={i} views={views(site.slug)} />

@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import { SectionTabs } from '@/components/home/SectionTabs'
 import { ToolsBoard } from '@/components/tools/ToolsBoard'
+import { UseNotice } from '@/components/ui/UseNotice'
 
 export const metadata: Metadata = {
-  title: '수업 도구',
-  description: '교실 추첨·투표·미술·수학 교구 등 초등 수업에 바로 쓰는 무료 도구와 선생님 책상 프로그램',
+  title: '교실 보조 도구',
+  description: '교실 추첨·투표·미술·수학 교구 등 쉬는 시간·자투리 시간에 쓰는 무료 교실 보조 도구와 선생님 책상 프로그램',
 }
 
-// 수업 도구 — 게임 옆 정식 갈래(2026-10-24 사용자 «수업도구는 게임 사이트 옆으로 정식 종목으로 빼자»)
+// 교실 보조 도구(옛 «수업 도구») — 게임 옆 정식 갈래(2026-10-24 사용자 «수업도구는 게임 사이트 옆으로 정식 종목으로 빼자»)
 export default function ToolsPage() {
   return (
     <div className="relative min-h-screen pt-20 md:pt-24 pb-16 overflow-hidden">
@@ -16,9 +17,10 @@ export default function ToolsPage() {
       </div>
       <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-base md:text-lg font-bold text-fg">수업에 바로 쓰는 도구</h1>
+          <h1 className="text-base md:text-lg font-bold text-fg">교실에서 쓰는 보조 도구</h1>
           <SectionTabs active="tools" />
         </div>
+        <UseNotice className="mb-6 max-w-3xl" />
         <ToolsBoard />
       </div>
     </div>
