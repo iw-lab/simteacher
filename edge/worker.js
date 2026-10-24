@@ -5,12 +5,15 @@
 // 새 게임 = edge/games.json 한 줄. 🔒 tools/check-edge-games.mjs(빌드 뒤 · 목록과 sitemap·out/ 충돌 검사)
 import GAMES from './games.json'
 
-const WWW = /^www\./
 
 export default {
   async fetch(req, env) {
     const url = new URL(req.url)
-    if (WWW.test(url.hostname)) { url.hostname = url.hostname.replace(WWW, ''); return Response.redirect(url.toString(), 301) }
+    // www·http·workers.dev 는 전부 https://ssamzip.com 한 주소로 — 구글이 같은 페이지를 여러 주소로 보지 않게
+    if (url.hostname !== 'localhost' && (url.protocol === 'http:' || url.hostname !== 'ssamzip.com')) {
+      url.protocol = 'https:'; url.hostname = 'ssamzip.com'; url.port = ''
+      return Response.redirect(url.toString(), 301)
+    }
     const m = url.pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/)
     const origin = m && GAMES[m[1]]
     if (origin) {
