@@ -23,3 +23,5 @@ export const classToolSites = <T extends Pick<LearningSite, 'tags'>>(list: T[]) 
 export const GAME_KINDS = SITE_KINDS.filter((k) => k !== TOOL_TAG)
 /** 홈 «과목» 칩 — 계기교육도 옮겼으니 뺀다 */
 export const GAME_SUBJECTS = SITE_SUBJECTS.filter((k) => k !== OCCASION_TAG)
+/** 홈 맨 위 인기 순위 = 게임·수업 도구 통합(2026-10-24 사용자 «인기 순위는 그대로 통합으로») — 게임 쪽에서 뺀 도구도 순위엔 선다 */
+export const rankingSites = <T extends Pick<LearningSite, 'tags'>>(list: T[]) => list

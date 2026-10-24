@@ -3,7 +3,7 @@
  * 잡는 것: 어느 쪽에도 안 서는 사이트(사라짐) · 게임 쪽에 남은 «도구뿐인» 곳 · 도구 쪽에서 빠진 꼬리표 사이트.
  */
 import { describe, expect, it } from 'vitest'
-import { classToolSites, gameSites, isToolOnly, GAME_KINDS, GAME_SUBJECTS, OCCASION_TAG, TOOL_TAG } from '../src/lib/catalog'
+import { classToolSites, gameSites, isToolOnly, rankingSites, GAME_KINDS, GAME_SUBJECTS, OCCASION_TAG, TOOL_TAG } from '../src/lib/catalog'
 import { learningSites } from '../src/data/projects'
 
 describe('게임 ↔ 수업 도구 나누기', () => {
@@ -32,6 +32,11 @@ describe('게임 ↔ 수업 도구 나누기', () => {
     expect(isToolOnly({ tags: ['국어', '공부·연습', TOOL_TAG] })).toBe(true)
     expect(isToolOnly({ tags: ['정보', '만들기', TOOL_TAG] })).toBe(true)
     expect(isToolOnly({ tags: ['국어', '공부·연습'] })).toBe(false) // 수업 도구 꼬리표 없는 연습 사이트는 게임 쪽 그대로
+  })
+  it('인기 순위는 통합 — 게임 칸에서 빠진 도구(또박이·뽑기ON·독도)도 순위엔 선다', () => {
+    const r = rankingSites(learningSites).map((s) => s.slug)
+    for (const slug of ['ttobagi', 'iwpick', 'dokdo-log', 'manjijak']) expect(r).toContain(slug)
+    expect(r.length).toBe(learningSites.length)
   })
   it('홈 종류 칩에 «수업 도구»가 없다 · 과목 칩에 «계기교육»이 없다', () => {
     expect(GAME_KINDS).not.toContain(TOOL_TAG)

@@ -6,10 +6,10 @@ import { ChevronLeft, ChevronRight, Flame } from 'lucide-react'
 import { fetchRecentCounts, fetchTotalCountsOnce, recordClick } from '@/lib/community'
 import { rankByClicks } from '@/lib/ranking'
 import { learningSites } from '@/data/projects'
-import { gameSites } from '@/lib/catalog'
+import { rankingSites } from '@/lib/catalog'
 
-// 게임끼리만 순위 — 수업 도구는 /tools 에서 도구끼리 센다(2026-10-24 «정식 종목으로 빼자»)
-const ALL = gameSites(learningSites)
+// 게임·수업 도구 통합 순위(2026-10-24 «인기 순위는 그대로 통합으로») — 게임 칸에서 뺀 도구도 여기엔 선다
+const ALL = rankingSites(learningSites)
 
 /** 자동으로 다음 순위로 넘기는 간격(ms) — 2026-10-23 «자동으로 다음 순위로 넘어가게 · 일정 간격 두고» */
 export const AUTO_ADVANCE_MS = 3500
