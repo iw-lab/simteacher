@@ -5,10 +5,20 @@ import { Catalog } from '@/components/home/Catalog'
 import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
 
+// 구글에 «이 사이트 대표 = 홈»을 알린다(사이트 이름 선행쌤) — 포트폴리오가 대표로 뜨던 일(2026-10-24)
+const SITE_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: '선행쌤',
+  alternateName: ['선행샘', '선행 심선생', 'ssamzip'],
+  url: 'https://ssamzip.com/',
+}
+
 // 첫 화면은 곧바로 쓰는 곳 — 만든 사람 소개는 한 줄 링크로만(2026-10-23 사용자 «빼거나 훨씬 축소 · 바로 쓸 수 있게»)
 export default function Home() {
   return (
     <div className="relative min-h-screen pt-20 md:pt-24 pb-8 overflow-hidden">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_LD) }} />
       <div className="absolute inset-0 overflow-hidden" aria-hidden>
         <div className="aurora-blob aurora-violet w-[460px] h-[460px] -top-24 left-[6%] opacity-70" />
         <div className="aurora-blob aurora-cyan w-[420px] h-[420px] top-[45%] -right-32 opacity-60" />
