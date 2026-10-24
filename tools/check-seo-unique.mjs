@@ -18,6 +18,12 @@ for (const p of pages) {
   const h = readFileSync(p, 'utf8')
   const title = (h.match(/<title>([^<]*)<\/title>/) || [])[1]
   const description = (h.match(/<meta name="description" content="([^"]*)"/) || [])[1]
+  // og:url·canonical 은 자기 주소여야 한다 — 하위 페이지 og:url 이 홈을 가리키면 구글이 홈과 한 묶음으로 본다
+  const want = `https://ssamzip.com/${rel}`
+  for (const [k, re] of [['og:url', /<meta property="og:url" content="([^"]*)"/], ['canonical', /<link rel="canonical" href="([^"]*)"/]]) {
+    const v = (h.match(re) || [])[1]
+    if (v !== want) { console.error(`FAIL /${rel} ${k}=${v} (기대 ${want})`); bad++ }
+  }
   for (const [k, v] of Object.entries({ title, description })) {
     if (!v) { console.error(`FAIL /${rel} ${k} 없음`); bad++; continue }
     if (seen[k].has(v)) { console.error(`FAIL /${rel} ${k} 가 /${seen[k].get(v)} 와 같다: ${v}`); bad++ } else seen[k].set(v, rel)

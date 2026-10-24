@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://ssamzip.com',
+    url: './',
     siteName: '선행쌤',
     title: '선행쌤 | 교실에서 쓰라고 만든 학습 게임·사이트 모음',
     description: '초등 교사 심선생이 만든 학습 게임·사이트·선생님 프로그램 모음',
