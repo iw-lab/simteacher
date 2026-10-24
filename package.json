@@ -10,7 +10,9 @@
     "test:rules": "firebase emulators:exec --only firestore --project demo-rules 'vitest run tests/rules.test.ts'",
     "prebuild": "node tools/sync-lyrics.mjs && node tools/sync-games.mjs && node tools/img-versions.mjs",
     "postbuild": "node tools/img-versions.mjs --check && node tools/check-seo-unique.mjs",
-    "test:unit": "vitest run tests/ranking.test.ts tests/kids-shelf.test.ts tests/visit-counter-top.test.ts tests/library-label.test.ts tests/menu-and-event.test.ts tests/live-rooms.test.ts"
+    "test:unit": "vitest run tests/ranking.test.ts tests/kids-shelf.test.ts tests/visit-counter-top.test.ts tests/library-label.test.ts tests/menu-and-event.test.ts tests/live-rooms.test.ts",
+    "deploy": "npm run build && npx firebase deploy --only hosting:main && node tools/indexnow.mjs",
+    "indexnow": "node tools/indexnow.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
