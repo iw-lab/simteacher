@@ -3,7 +3,7 @@
   "name": "ssamzip",
   "main": "edge/worker.js",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "./out", "binding": "ASSETS", "html_handling": "auto-trailing-slash", "not_found_handling": "none" },
+  "assets": { "directory": "./out", "binding": "ASSETS", "html_handling": "auto-trailing-slash", "not_found_handling": "none", "run_worker_first": true },
   "routes": [
     { "pattern": "ssamzip.com", "custom_domain": true },
     { "pattern": "www.ssamzip.com", "custom_domain": true }
