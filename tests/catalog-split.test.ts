@@ -3,7 +3,7 @@
  * 잡는 것: 어느 쪽에도 안 서는 사이트(사라짐) · 게임 쪽에 남은 «도구뿐인» 곳 · 도구 쪽에서 빠진 꼬리표 사이트.
  */
 import { describe, expect, it } from 'vitest'
-import { classToolSites, gameSites, isToolOnly, GAME_KINDS, TOOL_TAG } from '../src/lib/catalog'
+import { classToolSites, gameSites, isToolOnly, GAME_KINDS, GAME_SUBJECTS, OCCASION_TAG, TOOL_TAG } from '../src/lib/catalog'
 import { learningSites } from '../src/data/projects'
 
 describe('게임 ↔ 수업 도구 나누기', () => {
@@ -14,7 +14,7 @@ describe('게임 ↔ 수업 도구 나누기', () => {
     expect(lost).toEqual([])
   })
   it('«수업 도구» 꼬리표 사이트는 전부 도구 쪽에', () => {
-    const want = learningSites.filter((s) => s.tags.includes(TOOL_TAG)).map((s) => s.slug)
+    const want = learningSites.filter((s) => s.tags.includes(TOOL_TAG) || s.tags.includes(OCCASION_TAG)).map((s) => s.slug)
     expect(classToolSites(learningSites).map((s) => s.slug)).toEqual(want)
     expect(want.length).toBeGreaterThan(0)
   })
@@ -25,7 +25,18 @@ describe('게임 ↔ 수업 도구 나누기', () => {
     expect(isToolOnly({ tags: ['수학', TOOL_TAG] })).toBe(true) // 과목만 있고 다른 «종류»가 없으면 도구뿐
     expect(isToolOnly({ tags: [TOOL_TAG, '퍼즐'] })).toBe(false)
   })
-  it('홈 종류 칩에 «수업 도구»가 없다', () => {
+  it('홈 종류 칩에 «수업 도구»가 없다 · 과목 칩에 «계기교육»이 없다', () => {
     expect(GAME_KINDS).not.toContain(TOOL_TAG)
+    expect(GAME_SUBJECTS).not.toContain(OCCASION_TAG)
+  })
+  it('계기교육(독도 탐사 일지)은 게임 쪽에서 빠지고 수업 도구 쪽에만', () => {
+    expect(gameSites(learningSites).map((s) => s.slug)).not.toContain('dokdo-log')
+    expect(classToolSites(learningSites).map((s) => s.slug)).toContain('dokdo-log')
+  })
+  it('타자 연습(타이핑버스·타자왕국)은 양쪽에', () => {
+    for (const slug of ['typingverse', 'tajawangguk']) {
+      expect(gameSites(learningSites).map((s) => s.slug)).toContain(slug)
+      expect(classToolSites(learningSites).map((s) => s.slug)).toContain(slug)
+    }
   })
 })

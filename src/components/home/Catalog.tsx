@@ -6,11 +6,10 @@ import { ArrowRight, Lock, Search, X } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { fetchTotalCountsOnce } from '@/lib/community'
 import { newestFirst } from '@/lib/ranking'
-import { gameSites, GAME_KINDS } from '@/lib/catalog'
+import { gameSites, GAME_KINDS, GAME_SUBJECTS } from '@/lib/catalog'
 import { SiteCard } from '@/components/home/Cards'
 import {
   learningSites,
-  SITE_SUBJECTS,
   type LearningSite,
   type SiteTag,
 } from '@/data/projects'
@@ -139,7 +138,7 @@ export function Catalog() {
           <ChipRow
             label="과목"
             allLabel="모든 과목"
-            options={SITE_SUBJECTS}
+            options={GAME_SUBJECTS}
             value={subject}
             onChange={setSubject}
             pool={pick(pool, '', kind)}
@@ -196,7 +195,7 @@ export function Catalog() {
               <span className="gradient-text">수업 도구</span>는 따로 모았어요
             </span>
             <span className="mt-1 block text-sm md:text-[15px] text-muted-fg">
-              뽑기·투표·미술·수학 교구, 그리고 선생님 책상 프로그램
+              뽑기·투표·타자·수학 교구·계기교육, 그리고 선생님 책상 프로그램
             </span>
           </span>
           <ArrowRight className="shrink-0 w-6 h-6 text-primary-600 dark:text-primary-300" />

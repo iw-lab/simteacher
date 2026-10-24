@@ -2,15 +2,21 @@
 //   수업 도구 쪽(/tools) = «수업 도구» 꼬리표가 붙은 사이트 전부 + 선생님 책상 프로그램(teacherTools).
 //   게임 쪽(홈) = 나머지 + 게임이기도 한 수업 도구(다른 «종류» 꼬리표가 하나라도 있으면 양쪽에 다 선다).
 //   새 수업 도구를 올릴 땐 projects.ts 에 꼬리표만 붙이면 된다 — 따로 옮기지 않는다.
-import { SITE_KINDS, type LearningSite } from '../data/projects'
+//   계기교육(독도의 날 등 그날 수업)은 통째로 수업 도구 쪽으로 옮긴다 — 게임 쪽엔 안 선다(2026-10-24 «계기 교육도 수업도구 쪽으로 옮기자»).
+import { SITE_KINDS, SITE_SUBJECTS, type LearningSite } from '../data/projects'
 
 export const TOOL_TAG = '수업 도구'
+export const OCCASION_TAG = '계기교육'
 const OTHER_KINDS = new Set<string>(SITE_KINDS.filter((k) => k !== TOOL_TAG))
 
-export const isClassTool = (s: Pick<LearningSite, 'tags'>) => s.tags.includes(TOOL_TAG)
-/** 게임 쪽에 안 서는 곳 — 종류가 «수업 도구» 하나뿐(예: 뽑기ON) */
-export const isToolOnly = (s: Pick<LearningSite, 'tags'>) => isClassTool(s) && !s.tags.some((t) => OTHER_KINDS.has(t))
+export const isOccasion = (s: Pick<LearningSite, 'tags'>) => s.tags.includes(OCCASION_TAG)
+export const isClassTool = (s: Pick<LearningSite, 'tags'>) => s.tags.includes(TOOL_TAG) || isOccasion(s)
+/** 게임 쪽에 안 서는 곳 — 계기교육 · 종류가 «수업 도구» 하나뿐(예: 뽑기ON) */
+export const isToolOnly = (s: Pick<LearningSite, 'tags'>) =>
+  isOccasion(s) || (s.tags.includes(TOOL_TAG) && !s.tags.some((t) => OTHER_KINDS.has(t)))
 export const gameSites = <T extends Pick<LearningSite, 'tags'>>(list: T[]) => list.filter((s) => !isToolOnly(s))
 export const classToolSites = <T extends Pick<LearningSite, 'tags'>>(list: T[]) => list.filter(isClassTool)
 /** 홈 «종류» 칩 — 수업 도구는 따로 칸이 생겼으니 뺀다 */
 export const GAME_KINDS = SITE_KINDS.filter((k) => k !== TOOL_TAG)
+/** 홈 «과목» 칩 — 계기교육도 옮겼으니 뺀다 */
+export const GAME_SUBJECTS = SITE_SUBJECTS.filter((k) => k !== OCCASION_TAG)
