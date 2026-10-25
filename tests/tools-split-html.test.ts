@@ -40,7 +40,12 @@ describe('빌드 HTML — 게임 ↔ 수업 도구', () => {
       for (const b of BANNED) expect(h.includes(b), `${name} 에 «${b}»`).toBe(false)
       expect(h, `${name} 에 쓰임새 안내 풀 문장`).not.toContain('data-use-notice')
     }
-    for (const p of ['about/index.html', 'contact/index.html']) expect(html(p), `${p} 쓰임새 안내`).toContain('data-use-notice')
+    // 10-25 «이 문구는 맨 아래다 써» — 안내 뒤 꼬리말 전까지 다른 글(제목·문단)이 없어야 한다
+    for (const p of ['about/index.html', 'contact/index.html']) {
+      const h = html(p), at = h.indexOf('data-use-notice'), foot = h.indexOf('<footer', at)
+      expect(at, `${p} 쓰임새 안내`).toBeGreaterThan(-1)
+      expect(h.slice(h.indexOf('</p>', at), foot), `${p} 안내가 맨 아래가 아님`).not.toMatch(/<(p|h[1-6]|img)[\s>]/)
+    }
     expect(tools).toContain('>수업 보조 도구<')
   })
 })

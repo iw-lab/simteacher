@@ -149,9 +149,6 @@ export default function ContactPage() {
           </p>
         </motion.div>
 
-        {/* 쓰임새 안내 — 첫 화면·도구 칸엔 두지 않고 소개·문의에만(2026-10-25 «첫화면에 저렇게 써놓으면 안 쓰고 싶겠어») */}
-        <UseNotice className="text-center max-w-2xl mx-auto -mt-4 mb-8" />
-
         {/* 공개 쪽지판 안내 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -342,6 +339,9 @@ export default function ContactPage() {
             </a>
           </div>
         </motion.div>
+
+        {/* 쓰임새 안내 — 소개·문의 맨 아래에만(2026-10-25 «첫화면에 써놓으면 안 쓰고 싶겠어» · «이 문구는 맨 아래다 써») */}
+        <UseNotice className="text-center max-w-2xl mx-auto mt-16" />
       </div>
     </div>
   )

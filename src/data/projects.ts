@@ -1295,7 +1295,7 @@ export const learningSites: LearningSite[] = [
   {
     slug: 'manjijak',
     added: '2026-10-24T11:10',
-    name: '만지작 수학실',
+    name: '만지작 수학교실',   // 2026-10-25 썸네일 문구와 맞춤
     subject: '수학',
     category: '수학',
     tags: ['수학', '수업 보조 도구', '퍼즐', '3D', '학교 대항'],
