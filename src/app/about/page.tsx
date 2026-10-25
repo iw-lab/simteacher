@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Heart, Code2, Users } from 'lucide-react'
+import { UseNotice } from '@/components/ui/UseNotice'
 
 export default function AboutPage() {
   const timeline = [
@@ -42,6 +43,9 @@ export default function AboutPage() {
             먼저 배워서 나누고, 선한 영향력을 전합니다.
           </p>
         </motion.div>
+
+        {/* 쓰임새 안내 — 첫 화면·도구 칸엔 두지 않고 소개·문의에만(2026-10-25 «첫화면에 저렇게 써놓으면 안 쓰고 싶겠어») */}
+        <UseNotice className="text-center max-w-2xl mx-auto -mt-6 mb-12" />
 
         {/* Intro Section */}
         <motion.div

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button'
 import { siteConfig } from '@/data/siteConfig'
 import { submitContactForm } from '@/lib/firestore'
 import { Guestbook } from '@/components/community/Guestbook'
+import { UseNotice } from '@/components/ui/UseNotice'
 
 // 이 기기에서 보낸 문의 기록 (로컬 전용 — 서버로 안 나가고, 다른 사람에겐 안 보임)
 const HISTORY_KEY = 'simteacher:inquiries'
@@ -147,6 +148,9 @@ export default function ContactPage() {
             로그인 없이 익명으로 붙이는 쪽지판이에요. 인사만 남겨주셔도 반가워요.
           </p>
         </motion.div>
+
+        {/* 쓰임새 안내 — 첫 화면·도구 칸엔 두지 않고 소개·문의에만(2026-10-25 «첫화면에 저렇게 써놓으면 안 쓰고 싶겠어») */}
+        <UseNotice className="text-center max-w-2xl mx-auto -mt-4 mb-8" />
 
         {/* 공개 쪽지판 안내 */}
         <motion.div

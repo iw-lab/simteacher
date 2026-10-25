@@ -192,7 +192,7 @@ export function Catalog() {
         >
           <span>
             <span className="block text-xl md:text-2xl font-extrabold tracking-tight text-fg">
-              <span className="gradient-text">교실 보조 도구</span>는 따로 모았어요
+              <span className="gradient-text">수업 보조 도구</span>는 따로 모았어요
             </span>
             <span className="mt-1 block text-sm md:text-[15px] text-muted-fg">
               뽑기·투표·타자·수학 교구·계기교육, 그리고 선생님 책상 프로그램

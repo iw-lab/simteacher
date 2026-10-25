@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { Github, Mail } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
-import { UseNotice } from '@/components/ui/UseNotice'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -19,7 +18,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-muted-fg mb-4 max-w-md leading-relaxed">
-              선행쌤(선행샘) — 쉬는 시간·자투리 시간에 교실에서 쓰는 학습 놀이·보조 도구·선생님 프로그램 모음.
+              선행쌤(선행샘) — 쉬는 시간·자투리 시간에 교실에서 쓰는 학습 놀이·수업 보조 도구·선생님 프로그램 모음.
               <br />
               만든 사람: 초등교사 심선생
             </p>
@@ -110,7 +109,6 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t border-line">
           <div className="flex flex-col items-center gap-3">
-            <UseNotice className="text-center max-w-2xl" />
             <p className="text-center text-muted-fg text-sm">
               © {currentYear} 선행쌤. All rights reserved.
             </p>
