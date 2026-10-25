@@ -11,13 +11,15 @@ export const OCCASION_TAG = '계기교육'
 // (2026-10-24 사용자 «게임과 수업 도구는 중복 제거하는 게 낫나» → 연습·만들기 도구 8곳을 게임 쪽에서 뺐다).
 const NOT_GAME_KINDS = new Set<string>([TOOL_TAG, '공부·연습', '만들기'])
 const OTHER_KINDS = new Set<string>(SITE_KINDS.filter((k) => !NOT_GAME_KINDS.has(k)))
+// 위 규칙의 예외 — 연습뿐이어도 양쪽에 다 선다(2026-10-25 사용자 «메쓰스탭은 양쪽에 같이»)
+const ALSO_GAME = new Set<string>(['mathstep'])
 
 export const isOccasion = (s: Pick<LearningSite, 'tags'>) => s.tags.includes(OCCASION_TAG)
 export const isClassTool = (s: Pick<LearningSite, 'tags'>) => s.tags.includes(TOOL_TAG) || isOccasion(s)
 /** 게임 쪽에 안 서는 곳 — 계기교육 · 게임 종류 꼬리표가 없는 수업 도구(뽑기ON·또박이·코드스쿨 등) */
-export const isToolOnly = (s: Pick<LearningSite, 'tags'>) =>
-  isOccasion(s) || (s.tags.includes(TOOL_TAG) && !s.tags.some((t) => OTHER_KINDS.has(t)))
-export const gameSites = <T extends Pick<LearningSite, 'tags'>>(list: T[]) => list.filter((s) => !isToolOnly(s))
+export const isToolOnly = (s: Pick<LearningSite, 'tags'> & { slug?: string }) =>
+  isOccasion(s) || (s.tags.includes(TOOL_TAG) && !s.tags.some((t) => OTHER_KINDS.has(t)) && !ALSO_GAME.has(s.slug ?? ''))
+export const gameSites = <T extends Pick<LearningSite, 'tags'> & { slug?: string }>(list: T[]) => list.filter((s) => !isToolOnly(s))
 export const classToolSites = <T extends Pick<LearningSite, 'tags'>>(list: T[]) => list.filter(isClassTool)
 /** 홈 «종류» 칩 — 수업 도구는 따로 칸이 생겼으니 뺀다 */
 export const GAME_KINDS = SITE_KINDS.filter((k) => k !== TOOL_TAG)
