@@ -3,6 +3,7 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import './globals.css'
+import { OLD_HOST_REDIRECT } from '@/lib/oldHostRedirect'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ssamzip.com'),
@@ -53,11 +54,12 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
-        {/* 옛 주소(sunhaengssam.web.app·firebaseapp.com)로 들어오면 새 주소 ssamzip.com 으로 넘긴다 — Firebase 는 호스트별 301 을 못 건다 */}
+        {/* 옛 주소(sunhaengssam.web.app·firebaseapp.com)로 들어오면 새 주소 ssamzip.com 으로 넘긴다 — Firebase 는 호스트별 301 을 못 건다.
+            단 ssamzip.com 이 «열릴 때만»(그림 하나를 3초 안에 받아 보고): 학교 망이 새 도메인 ssamzip.com 을 막아(2026-10-26) 넘기면 아이들이 빈 화면에 갇혔다. 🔒 tests/old-host-redirect.test.ts */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){var h=location.hostname;if(/^sunhaengssam\\.(web\\.app|firebaseapp\\.com)$/.test(h)||h==='www.ssamzip.com'){location.replace('https://ssamzip.com'+location.pathname+location.search+location.hash)}})()",
+              OLD_HOST_REDIRECT,
           }}
         />
         <link
