@@ -4,7 +4,9 @@
 import { MathText } from '@/components/ui/MathText'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Download, ExternalLink, Eye, Lock } from 'lucide-react'
+import { Ban, Download, ExternalLink, Eye, Lock } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { probe, type Reach } from '@/lib/reachability'
 import { Badge } from '@/components/ui/Badge'
 import { recordClick } from '@/lib/community'
 import type { LearningSite, TeacherTool } from '@/data/projects'
@@ -26,6 +28,9 @@ export function SiteCard({ site, i, views }: { site: LearningSite; i: number; vi
   //    **href 없는 <a>** 가 된다 — 링크처럼 보이는데 눌러도 아무 일도 안 일어난다.
   //    그래서 링크가 없으면 아예 <div> 로 렌더한다(클릭 집계도 안 한다).
   const linked = Boolean(site.url)
+  // 이 와이파이가 막은 사이트면 카드에 알린다(학교 망 필터 · src/lib/reachability.ts)
+  const [reach, setReach] = useState<Reach>('unknown')
+  useEffect(() => { if (site.url) probe(site.url).then(setReach) }, [site.url])
   const Card = linked ? motion.a : motion.div
   const linkProps = linked
     ? {
@@ -70,6 +75,12 @@ export function SiteCard({ site, i, views }: { site: LearningSite; i: number; vi
           <MathText text={site.tagline} />
         </p>
 
+        {linked && reach === 'blocked' ? (
+          <p data-blocked className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-red-600 dark:text-red-400">
+            <Ban className="w-3.5 h-3.5" aria-hidden />
+            지금 이 와이파이에서 막혀 있어요
+          </p>
+        ) : null}
         {linked ? (
           <div className="mt-auto pt-3 sm:pt-5 flex items-center justify-between gap-2">
             <Views n={views} />
