@@ -17,5 +17,8 @@ for (const p of pages.filter((p) => !/^blog\/[^/]+\/index\.html$/.test(path.rela
   const nav = (h.match(/<nav[^>]*>[\s\S]*?<\/nav>/g) || []).map((n) => n.replace(/<[^>]+>/g, ' '))
   for (const t of [...meta, ...nav]) if (WORDS.test(t)) { console.error(`FAIL ${path.relative(OUT, p)}: «${t.trim().replace(/\s+/g, ' ').slice(0, 80)}» — 제목·설명·메뉴에 «게임»(학교 망이 게임 사이트로 분류해 막는다 · «교실 놀이»로)`); bad++ }
 }
+// 첫 화면 검색 설명 맨 앞에 두 문 주소(학교 와이파이가 ssamzip.com 을 막을 때 검색 화면에서 바로 보이게 · 2026-10-26)
+{ const h = readFileSync(path.join(OUT, 'index.html'), 'utf8'); const d = (h.match(/<meta name="description" content="([^"]*)"/) || [])[1] || ''
+  if (!/^학교 와이파이에서 안 열리면 sunhaengssam\.web\.app/.test(d)) { console.error(`FAIL index.html 검색 설명이 «학교 와이파이에서 안 열리면 sunhaengssam.web.app» 으로 시작하지 않는다: «${d.slice(0, 60)}»`); bad++ } }
 console.log(`check-filter-words: ${bad ? 'FAIL' : 'PASS'} pages=${pages.length} bad=${bad}`)
 process.exit(bad ? 1 : 0)
