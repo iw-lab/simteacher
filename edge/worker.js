@@ -2,7 +2,8 @@
 // 게임 길을 정적 파일보다 먼저 보는 까닭: 옛 복사본(out/jinhwa)이 다시 생겨도 게임을 가리지 못하게(2026-10-24 다른 세션 빌드가 되살림).
 // /<게임>/… 은 그 게임의 원래 배포(pages.dev)에서 그대로 받아 온다(복사 0 · 게임만 배포하면 바로 반영).
 // 학교 망이 pages.dev·하위 도메인을 막아도 ssamzip.com 은 통과하므로 이 길로 연다(2026-10-23 끝까지 진화 실측 · 2026-10-24 사용자 «앞으로는 쌤집 아래로»).
-// 새 게임 = edge/games.json 한 줄. 🔒 tools/check-edge-games.mjs(빌드 뒤 · 목록과 sitemap·out/ 충돌 검사)
+// 🚫 2026-10-26 게임 길 전부 뺐다 — 학교 망 필터가 막힌 게임(끝까지 진화)을 이 길로 연 탓에 ssamzip.com 전체를 게임 사이트로 묶어 막았다.
+//    사용자 «선행쌤에서 도메인 주소 게임들 모두 빼자 — 선행쌤 자체가 죽으면 안 돼». games.json 은 비어 있어야 한다(check-edge-games ⑥). 🔒 tools/check-edge-games.mjs(빌드 뒤 · 목록과 sitemap·out/ 충돌 검사)
 import GAMES from './games.json'
 
 

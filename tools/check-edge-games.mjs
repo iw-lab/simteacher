@@ -8,7 +8,13 @@ import { readFileSync, existsSync } from 'node:fs'
 const GAMES = JSON.parse(readFileSync('edge/games.json', 'utf8'))
 let bad = 0
 const fail = (m) => { console.error('FAIL ' + m); bad++ }
+// ⑤ 학교 망 필터가 막은 원본은 쌤집 길로 잇지 않는다 — 막힌 끝까지 진화를 ssamzip.com/jinhwa/ 로 열었더니(10-23)
+//    필터가 ssamzip.com 전체를 게임 사이트로 묶어 본 주소까지 막았다(2026-10-26 실측 · 우리 사이트 15곳 중 막힌 건 이 둘뿐)
+const FILTER_BLOCKED = ['kkeutjinhwa.pages.dev']
+// ⑥ 2026-10-26 사용자 «선행쌤에서 도메인 주소 게임들 모두 빼자 — 선행쌤 자체가 죽으면 안 돼» → 게임 길은 하나도 두지 않는다
+if (Object.keys(GAMES).length) fail(`games.json 에 게임 길 ${Object.keys(GAMES).length}개(${Object.keys(GAMES).join(', ')}) — 선행쌤 도메인 아래 게임 금지(학교 망이 ssamzip.com 째로 막는다). 게임은 제 주소로 링크`)
 for (const [path, origin] of Object.entries(GAMES)) {
+  if (FILTER_BLOCKED.some((h) => origin.includes(h))) fail(`${path}: 원본 ${origin} 은 학교 망이 막은 게임 — 쌤집 길로 이으면 ssamzip.com 까지 막힌다`)
   if (!/^[a-z0-9-]+$/.test(path)) fail(`${path}: 길 이름은 소문자·숫자·- 만`)
   if (existsSync(`out/${path}`)) fail(`${path}: out/${path} 가 있다 — 정적 복사본이 게임 길을 가린다`)
   if (!/^https:\/\/[a-z0-9-]+\.(pages|workers)\.dev$/.test(origin)) fail(`${path}: 원본 ${origin} 은 https://*.pages.dev|workers.dev 만`)
