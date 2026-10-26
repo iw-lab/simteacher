@@ -3,7 +3,7 @@ import { SiteConfig, NavItem } from '@/types';
 export const siteConfig: SiteConfig = {
   name: '선행쌤',
   description:
-    '초등 교사 심선생이 교실에서 쓰라고 만든 학습 게임·사이트·선생님 프로그램 모음',
+    '초등 교사 심선생이 교실에서 쓰라고 만든 교실 놀이·학습 사이트·선생님 프로그램 모음',
   url: 'https://ssamzip.com',
   ogImage: '/images/og/og-default.png',
   links: {
@@ -23,7 +23,7 @@ export const profile = {
 };
 
 export const navigation: NavItem[] = [
-  { label: '게임·사이트', href: '/' },
+  { label: '교실 놀이', href: '/' },
   { label: '수업 보조 도구', href: '/tools' },
   { label: '학습만화', href: '/library' },
   { label: '음악감상실', href: '/music' },

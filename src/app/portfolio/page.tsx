@@ -94,7 +94,7 @@ export default function PortfolioPage() {
           </h1>
           <p className="mt-6 text-lg text-muted-fg max-w-2xl mx-auto leading-relaxed">
             학급 경제 플랫폼 <strong className="text-fg font-semibold">알찬</strong>, 아이들이 매일 쓰는
-            학습 게임·사이트 {learningSites.length}개, 그리고 선생님을 위한 프로그램 {teacherTools.length}개.
+            교실 놀이·학습 사이트 {learningSites.length}개, 그리고 선생님을 위한 프로그램 {teacherTools.length}개.
             모두 바이브코딩으로 만들어 실제 교실에서 씁니다.
           </p>
         </motion.div>
@@ -297,7 +297,7 @@ export default function PortfolioPage() {
               Learning Games
             </span>
             <h2 className="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight text-fg">
-              알찬 속 <span className="gradient-text">학습 게임·사이트</span>
+              알찬 속 <span className="gradient-text">교실 놀이·학습 사이트</span>
             </h2>
             <p className="mt-4 text-lg text-muted-fg max-w-2xl mx-auto leading-relaxed">
               수학·영어·미술·타자·논리 퍼즐·방탈출까지, 교실에서 필요할 때마다 하나씩

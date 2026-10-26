@@ -30,7 +30,7 @@ export default function Home() {
         {/* 게임 | 수업 도구 두 갈래(2026-10-24) — 폰에선 제목 글씨를 숨기고(검색엔진에는 남긴다) 갈래 단추만 */}
         <div className="mb-4 flex items-center gap-3 whitespace-nowrap">
           <SectionTabs active="games" />
-          <h1 className="sr-only md:not-sr-only min-w-0 truncate text-base md:text-lg font-bold text-fg">교실에서 바로 쓰는 학습 게임</h1>
+          <h1 className="sr-only md:not-sr-only min-w-0 truncate text-base md:text-lg font-bold text-fg">교실에서 바로 쓰는 놀이·학습 사이트</h1>
           <span className="flex-1" aria-hidden />
           <Link href="/about" className="shrink-0 text-sm text-muted-fg hover:text-fg hover:underline">
             만든 사람 →

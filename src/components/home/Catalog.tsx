@@ -107,12 +107,12 @@ export function Catalog() {
       {/* ── 학습 사이트 ───────────────────────────────── */}
       <section id="learning-sites" className="scroll-mt-24">
         <h2 className="mb-4 whitespace-nowrap text-xl md:text-3xl font-extrabold tracking-tight text-fg">
-          <span className="gradient-text">학습 게임·사이트</span> {GAMES.length}개
+          <span className="gradient-text">교실 놀이·학습 사이트</span> {GAMES.length}개
           <span className="ml-2 text-sm font-medium text-muted-fg">새로 올린 순</span>
         </h2>
 
         <label className="relative block mb-4 max-w-md">
-          <span className="sr-only">게임·사이트 찾기</span>
+          <span className="sr-only">놀이·사이트 찾기</span>
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg" aria-hidden />
           <input
             type="search"
@@ -155,7 +155,7 @@ export function Catalog() {
 
         {sites.length === 0 && (
           <p className="py-16 text-center text-muted-fg">
-            찾는 게임·사이트가 없어요.{' '}
+            찾는 놀이·사이트가 없어요.{' '}
             <button
               type="button"
               onClick={() => { setQ(''); setSubject(''); setKind('') }}
@@ -178,7 +178,7 @@ export function Catalog() {
             href="/portfolio"
             className="inline-flex items-center text-sm font-semibold text-muted-fg hover:text-fg transition-colors"
           >
-            각 게임·사이트를 왜, 어떻게 만들었는지 자세히 보기
+            각 놀이·사이트를 왜, 어떻게 만들었는지 자세히 보기
             <ArrowRight className="ml-1.5 w-4 h-4" />
           </Link>
         </div>
