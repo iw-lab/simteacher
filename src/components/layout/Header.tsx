@@ -37,7 +37,20 @@ export function Header() {
       <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          {/* 🔴 이미 «/» 에 있으면 Link 는 아무 일도 안 한다 — 스크롤도 필터도 그대로다
+              (2026-10-27 사용자 «왼쪽 상단을 누르면 다시 첫화면으로 안 들어가니»).
+              같은 길이면 맨 위로 올리고 홈 화면 상태를 되돌린다(Catalog 가 듣는다). */}
+          <Link
+            href="/"
+            aria-label="선행쌤 첫 화면"
+            onClick={(e) => {
+              if (pathname !== '/') return
+              e.preventDefault()
+              window.dispatchEvent(new CustomEvent('ssamzip:home-reset'))
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }}
+            className="flex items-center space-x-2"
+          >
             <span className="text-2xl font-extrabold tracking-tight">
               <span className="gradient-text">선행</span>
               <span className="text-fg">쌤</span>

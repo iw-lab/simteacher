@@ -87,6 +87,17 @@ export function Catalog() {
   const [kind, setKind] = useState<SiteTag | ''>('')
   const [q, setQ] = useState('')
   const [totals, setTotals] = useState<Record<string, number> | null>(null)
+  // 머리말의 «선행쌤»을 이미 첫 화면에서 누르면 길이 같아 Link 가 아무 일도 안 한다 —
+  // 그때 찾는 말·과목·종류를 처음 상태로 되돌린다(2026-10-27 사용자 제보).
+  useEffect(() => {
+    const reset = () => {
+      setSubject('')
+      setKind('')
+      setQ('')
+    }
+    window.addEventListener('ssamzip:home-reset', reset)
+    return () => window.removeEventListener('ssamzip:home-reset', reset)
+  }, [])
   useEffect(() => {
     let alive = true
     fetchTotalCountsOnce()
