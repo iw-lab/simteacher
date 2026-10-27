@@ -179,7 +179,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 전 학년',
     tech: ['Node.js 생성 파이프라인', 'SVG 벡터화', 'Firebase Hosting'],
     image: '/images/portfolio/arton.webp',
-    url: 'https://arton.simssijjang.workers.dev/coloring',
+    url: 'https://arton.simssijjang.workers.dev/',
   },
   {
     slug: 'papersky',
