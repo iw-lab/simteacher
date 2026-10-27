@@ -48,6 +48,12 @@ export function Header() {
               e.preventDefault()
               window.dispatchEvent(new CustomEvent('ssamzip:home-reset'))
               window.scrollTo({ top: 0, behavior: 'smooth' })
+              // 맨 위·필터 없음이면 되돌릴 게 없어 화면이 그대로다 — 누른 것은 언제나 보이게
+              const el = e.currentTarget as HTMLElement
+              el.classList.remove('brand-tap')
+              void el.offsetWidth
+              el.classList.add('brand-tap')
+              window.setTimeout(() => el.classList.remove('brand-tap'), 460)
             }}
             className="flex items-center space-x-2"
           >

@@ -89,6 +89,39 @@ async function checkHome(page, base) {
   return bad;
 }
 
+/**
+ * 이미 맨 위·필터 없는 «처음 상태»에서 눌렀을 때도 눈에 보이는 반응이 나는가.
+ * 되돌릴 게 없으면 화면이 그대로여서 「눌러도 반응 없다」가 된다(2026-10-27 재제보).
+ * 소스에 애니메이션 class 가 있는지가 아니라 **화소가 바뀌는지**로 잰다.
+ */
+async function checkTapFeedback(page, base) {
+  await page.goto(base + '/', { waitUntil: 'networkidle2', timeout: 120000 });
+  await new Promise((r) => setTimeout(r, 1000));
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await new Promise((r) => setTimeout(r, 300));
+
+  const logo = await page.evaluate(() => {
+    const a = [...document.querySelectorAll('a')].find((x) => /선행\s*쌤/.test(x.textContent || '') && x.getBoundingClientRect().top < 140);
+    if (!a) return null;
+    const r = a.getBoundingClientRect();
+    return { clip: { x: Math.max(0, r.x - 14), y: Math.max(0, r.y - 14), width: r.width + 28, height: r.height + 28 }, cx: r.x + r.width / 2, cy: r.y + r.height / 2 };
+  });
+  if (!logo) return ['머리말에서 «선행쌤» 링크를 못 찾았다'];
+
+  const shot = () => page.screenshot({ clip: logo.clip, encoding: 'base64' });
+  const before = await shot();
+  await page.mouse.click(logo.cx, logo.cy);
+  await new Promise((r) => setTimeout(r, 120));      // 반응 한가운데
+  const during = await shot();
+  await new Promise((r) => setTimeout(r, 900));      // 가라앉은 뒤
+  const settled = await shot();
+
+  const bad = [];
+  if (during === before) bad.push('처음 상태에서 눌렀는데 화소가 하나도 안 바뀐다(반응 없음)');
+  if (settled !== before) bad.push('반응이 끝나고도 원래 모습으로 안 돌아온다');
+  return bad;
+}
+
 /** 하위 페이지에서는 그냥 홈으로 가야 한다(원래 되던 것을 깨지 않았는지). */
 async function checkSub(page, base, path) {
   await page.goto(base + path, { waitUntil: 'networkidle2', timeout: 120000 });
@@ -112,6 +145,7 @@ async function run(base) {
   await page.setViewport({ width: 1400, height: 900 });
   const bad = [
     ...(await checkHome(page, base)),
+    ...(await checkTapFeedback(page, base)),
     ...(await checkSub(page, base, '/about/')),
   ];
   await browser.close();
@@ -120,7 +154,7 @@ async function run(base) {
     console.error('✖ 머리말 «선행쌤» 이 첫 화면으로 못 데려간다');
     return 1;
   }
-  console.log('✅ 머리말 «선행쌤» — 홈에서도 맨 위·필터 초기화, 하위 페이지에서도 홈으로 (2항)');
+  console.log('✅ 머리말 «선행쌤» — 홈에서 맨 위·필터 초기화 · 처음 상태에서도 보이는 반응 · 하위 페이지에서 홈으로 (3항)');
   return 0;
 }
 

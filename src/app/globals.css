@@ -221,3 +221,15 @@ code {
 /* 옆으로 미는 칩 줄 — 막대는 숨기고 밀기는 그대로 */
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* 머리말 «선행쌤»을 눌렀을 때 — 이미 첫 화면 맨 위면 되돌릴 게 없어 아무 일도 안 일어난다.
+   그러면 「눌러도 반응 없다」로 보인다(2026-10-27 사용자 재제보). 누른 것은 언제나 보이게 한다. */
+@keyframes brand-tap {
+  0% { transform: scale(1); }
+  38% { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+.brand-tap { animation: brand-tap 420ms cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+@media (prefers-reduced-motion: reduce) {
+  .brand-tap { animation: none; opacity: 0.55; transition: opacity 180ms; }
+}
