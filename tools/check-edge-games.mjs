@@ -28,7 +28,18 @@ if (process.argv.includes('--live')) {
     else console.log(`ok ${path} «${title(ha)}»`)
   }
   for (const from of ['http://ssamzip.com/contact/', 'https://www.ssamzip.com/contact/']) {
-    const r = await fetch(from, { redirect: 'manual' })
+    // 🔴 학교 망은 ssamzip.com 을 DNS 127.0.0.1 로 꺾는다(2026-10-26) — 여기서 그냥 fetch 하면
+    //    ECONNREFUSED 가 «처리 안 된 예외»로 터져 배포 명령 전체가 죽는다(10-28 실측).
+    //    못 재는 것과 틀린 것은 다르다 — 망 탓이면 그렇게 말하고 넘어간다(FAIL 로 세지 않는다).
+    let r
+    try {
+      r = await fetch(from, { redirect: 'manual' })
+    } catch (e) {
+      const sinkholed = /ECONNREFUSED (127\.0\.0\.1|::1)/.test(String(e?.cause ?? e))
+      if (sinkholed) { console.log(`⚪ ${from} — 이 망이 막아 못 쟀다(학교 와이파이 DNS 127.0.0.1). 배포 문제 아님`); continue }
+      fail(`${from} → 못 받았다: ${String(e?.cause ?? e).slice(0, 80)}`)
+      continue
+    }
     const to = r.headers.get('location')
     if (r.status !== 301 || to !== 'https://ssamzip.com/contact/') fail(`${from} → ${r.status} ${to} (기대 301 https://ssamzip.com/contact/)`)
     else console.log(`ok ${from} → 301`)

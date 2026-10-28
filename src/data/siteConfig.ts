@@ -1,10 +1,11 @@
 import { SiteConfig, NavItem } from '@/types';
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const siteConfig: SiteConfig = {
   name: '선행쌤',
   description:
     '초등 교사 심선생이 교실에서 쓰라고 만든 교실 놀이·학습 사이트·선생님 프로그램 모음',
-  url: 'https://ssamzip.com',
+  url: SITE_URL,
   ogImage: '/images/og/og-default.png',
   links: {
     github: 'https://github.com/iw-lab',

@@ -1,10 +1,13 @@
-// 옛 주소 → ssamzip.com 넘기기(layout.tsx 의 <head> 인라인 스크립트).
-// www.ssamzip.com 은 바로 넘긴다. 옛 주소(sunhaengssam.web.app·firebaseapp.com)는 ssamzip.com 이 «이 망에서 열릴 때만» 넘긴다 —
-// 학교 망이 새 도메인 ssamzip.com 을 막아(2026-10-26 · DNS 127.0.0.1) 무조건 넘기면 아이들이 아무것도 못 봤다. 3초 안에 그림이 오면 넘기고, 아니면 옛 주소에 머문다.
+// 주소 정리 — layout.tsx 의 <head> 인라인 스크립트.
+//
+// 2026-10-28 바뀐 점: **두 문(sunhaengssam.web.app)은 더 이상 본 주소로 넘기지 않는다.**
+//   학교 망이 ssamzip.com 을 막아(10-26 DNS 127.0.0.1) 검색으로 들어갈 길이 없어졌다.
+//   두 문을 검색에 걸리게 하려면 자기 주소에 머물러야 한다 — 넘기면 검색엔진이 따라가
+//   두 문을 색인하지 않는다(사용자 «걸리게 해»).
+//   firebaseapp.com 은 같은 내용의 옛 별칭이라 두 문(web.app)으로 모아 준다.
+//
+// 남는 넘기기는 «같은 도메인 안에서 모으는 것»뿐이다 — www.ssamzip.com → ssamzip.com.
 export const OLD_HOST_REDIRECT =
-  "(function(){var h=location.hostname,to='https://ssamzip.com'+location.pathname+location.search+location.hash;" +
-  "if(h==='www.ssamzip.com'){location.replace(to);return}" +
-  "if(!/^sunhaengssam\\.(web\\.app|firebaseapp\\.com)$/.test(h))return;" +
-  "var done=0,i=new Image();i.onload=function(){if(!done){done=1;location.replace(to)}};" +
-  "i.onerror=function(){done=1};setTimeout(function(){done=1},3000);" +
-  "i.src='https://ssamzip.com/icon-48.png?r='+Date.now()})()"
+  "(function(){var h=location.hostname,t=location.pathname+location.search+location.hash;" +
+  "if(h==='www.ssamzip.com'){location.replace('https://ssamzip.com'+t);return}" +
+  "if(h==='sunhaengssam.firebaseapp.com'){location.replace('https://sunhaengssam.web.app'+t)}})()"

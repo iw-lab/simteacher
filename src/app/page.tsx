@@ -5,6 +5,7 @@ import { Catalog } from '@/components/home/Catalog'
 import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
 import { SectionTabs } from '@/components/home/SectionTabs'
+import { SITE_URL } from '@/lib/siteUrl'
 
 // 구글에 «이 사이트 대표 = 홈»을 알린다(사이트 이름 선행쌤) — 포트폴리오가 대표로 뜨던 일(2026-10-24)
 const SITE_LD = {
@@ -12,7 +13,7 @@ const SITE_LD = {
   '@type': 'WebSite',
   name: '선행쌤',
   alternateName: ['선행샘', '선행 심선생', 'ssamzip'],
-  url: 'https://ssamzip.com/',
+  url: `${SITE_URL}/`,
 }
 
 // 첫 화면은 곧바로 쓰는 곳 — 만든 사람 소개는 한 줄 링크로만(2026-10-23 사용자 «빼거나 훨씬 축소 · 바로 쓸 수 있게»)

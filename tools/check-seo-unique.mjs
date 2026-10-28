@@ -4,6 +4,8 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.com').replace(/\/$/, '')
+
 const OUT = process.argv[2] || 'out'
 if (!existsSync(OUT)) { console.error(`check-seo-unique: ${OUT}/ 없음`); process.exit(1) }
 const SKIP = /^(404|_not-found|admin|jinhwa)(\/|$)/ // 검색에 안 내보내는 쪽·따로 사는 게임
@@ -19,7 +21,9 @@ for (const p of pages) {
   const title = (h.match(/<title>([^<]*)<\/title>/) || [])[1]
   const description = (h.match(/<meta name="description" content="([^"]*)"/) || [])[1]
   // og:url·canonical 은 자기 주소여야 한다 — 하위 페이지 og:url 이 홈을 가리키면 구글이 홈과 한 묶음으로 본다
-  const want = `https://ssamzip.com/${rel}`
+  // 선행쌤은 문이 둘이다 — 두 문 빌드(NEXT_PUBLIC_SITE_URL)면 그 주소로 재야 한다.
+  // 본 주소를 박아 두면 두 문 빌드가 통째로 FAIL 난다(2026-10-28 실측 dup=30).
+  const want = `${SITE}/${rel}`
   for (const [k, re] of [['og:url', /<meta property="og:url" content="([^"]*)"/], ['canonical', /<link rel="canonical" href="([^"]*)"/]]) {
     const v = (h.match(re) || [])[1]
     if (v !== want) { console.error(`FAIL /${rel} ${k}=${v} (기대 ${want})`); bad++ }

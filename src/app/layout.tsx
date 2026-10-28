@@ -4,9 +4,10 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import './globals.css'
 import { OLD_HOST_REDIRECT } from '@/lib/oldHostRedirect'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ssamzip.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: '선행쌤 | 교실에서 쓰라고 만든 교실 놀이·학습 사이트 모음',
     template: '%s | 선행쌤',

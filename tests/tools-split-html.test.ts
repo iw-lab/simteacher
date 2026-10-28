@@ -29,7 +29,9 @@ describe('빌드 HTML — 게임 ↔ 수업 도구', () => {
       expect(h).toContain('data-testid="tab-tools"')
     }
     expect(tools).toMatch(/data-testid="tab-tools"[^>]*aria-current="page"|aria-current="page"[^>]*data-testid="tab-tools"/)
-    expect(html('sitemap.xml')).toContain('https://ssamzip.com/tools/')
+    // 두 문 빌드(NEXT_PUBLIC_SITE_URL)면 그 주소로 들어간다 — 본 주소를 박으면 두 문 빌드가 FAIL
+    const site = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.com').replace(/\/$/, '')
+    expect(html('sitemap.xml')).toContain(`${site}/tools/`)
   })
   // 2026-10-24 «수위를 낮추고» — 교육부 가이드라인(안) 2025.12: 학운위 심의 필수는 «정규 교과를 위해 사용하는 것으로 한정»(FAQ Q6).
   //   정규 수업용으로 읽히는 표현을 화면에서 빼고, 쓰임새 안내를 /tools 와 모든 쪽 꼬리말에 둔다.
