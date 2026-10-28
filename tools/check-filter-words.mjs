@@ -17,6 +17,22 @@ for (const p of pages.filter((p) => !/^blog\/[^/]+\/index\.html$/.test(path.rela
   const nav = (h.match(/<nav[^>]*>[\s\S]*?<\/nav>/g) || []).map((n) => n.replace(/<[^>]+>/g, ' '))
   for (const t of [...meta, ...nav]) if (WORDS.test(t)) { console.error(`FAIL ${path.relative(OUT, p)}: «${t.trim().replace(/\s+/g, ' ').slice(0, 80)}» — 제목·설명·메뉴에 «게임»(학교 망이 게임 사이트로 분류해 막는다 · «교실 놀이»로)`); bad++ }
 }
+// 🔴 제목·설명·메뉴만 보면 **분류기가 실제로 읽는 본문**을 못 본다.
+//    2026-10-28 실측: 게이트는 초록인데 첫 화면 본문에 «게임»이 8곳 남아 있었다
+//    (어제 「게이트가 훑는 범위」와 같은 결함). 첫 화면 본문도 본다.
+//    🔸 사이트 하나하나의 «소개 글»(카드 설명)은 글쓴이의 문장이라 빼고,
+//       화면 틀에 해당하는 글(제목·안내문·갈래 이름)만 본다 — data-blurb 로 표시한다.
+{
+  const h = readFileSync(path.join(OUT, 'index.html'), 'utf8')
+  let b = h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '')
+  b = b.replace(/<[^>]*data-blurb[^>]*>[\s\S]*?<\/[a-z]+>/g, ' ')   // 소개 글은 뺀다
+  const text = b.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ')
+  for (const m of text.matchAll(/.{0,18}(게임|game).{0,18}/gi)) {
+    console.error(`FAIL index.html 본문: «${m[0].replace(/\s+/g, ' ').trim()}» — 첫 화면 틀 글자에 «게임»(«놀이»로)`)
+    bad++
+  }
+}
+
 // 첫 화면 검색 설명 맨 앞에 두 문 주소(학교 와이파이가 ssamzip.com 을 막을 때 검색 화면에서 바로 보이게 · 2026-10-26)
 { const h = readFileSync(path.join(OUT, 'index.html'), 'utf8'); const d = (h.match(/<meta name="description" content="([^"]*)"/) || [])[1] || ''
   if (!/^학교 와이파이에서 안 열리면 sunhaengssam\.web\.app/.test(d)) { console.error(`FAIL index.html 검색 설명이 «학교 와이파이에서 안 열리면 sunhaengssam.web.app» 으로 시작하지 않는다: «${d.slice(0, 60)}»`); bad++ } }

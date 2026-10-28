@@ -62,7 +62,7 @@ export function LiveRooms({ className = '' }: { className?: string }) {
         <p className="mt-2 text-sm text-muted-fg">불러오는 중…</p>
       ) : !has ? (
         <p data-testid="live-rooms-empty" className="mt-1 text-sm text-muted-fg">
-          기다리는 방이 없어요. 게임에서 방을 만들면 여기에 떠요.
+          기다리는 방이 없어요. 놀이에서 방을 만들면 여기에 떠요.
         </p>
       ) : (
         <ul className="mt-2 flex gap-2 overflow-x-auto no-scrollbar xl:flex-col xl:overflow-visible xl:max-h-[calc(100vh-10rem)] xl:overflow-y-auto">

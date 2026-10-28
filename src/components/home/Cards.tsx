@@ -71,7 +71,7 @@ export function SiteCard({ site, i, views }: { site: LearningSite; i: number; vi
         </div>
 
         <h3 className="text-[15px] sm:text-lg font-bold text-fg leading-snug">{site.name}</h3>
-        <p className="mt-1 sm:mt-1.5 text-[13px] sm:text-[15px] text-muted-fg leading-relaxed line-clamp-2 sm:line-clamp-none">
+        <p data-blurb className="mt-1 sm:mt-1.5 text-[13px] sm:text-[15px] text-muted-fg leading-relaxed line-clamp-2 sm:line-clamp-none">
           <MathText text={site.tagline} />
         </p>
 
@@ -122,7 +122,7 @@ export function ToolCard({ tool, views }: { tool: TeacherTool; views: number | u
         </div>
 
         <h3 className="text-[15px] sm:text-lg font-bold text-fg leading-snug">{tool.name}</h3>
-        <p className="mt-1 sm:mt-1.5 text-[13px] sm:text-[15px] text-muted-fg leading-relaxed">
+        <p data-blurb className="mt-1 sm:mt-1.5 text-[13px] sm:text-[15px] text-muted-fg leading-relaxed">
           <MathText text={tool.tagline} />
         </p>
 

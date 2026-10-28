@@ -226,12 +226,12 @@ export function Catalog() {
           </div>
 
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-fg">
-            <span className="gradient-text">알찬</span> — 위 학습 게임·사이트가
+            <span className="gradient-text">알찬</span> — 위 교실 놀이·학습 사이트가
             모여 있는 곳
           </h2>
           <p className="mt-4 text-muted-fg leading-relaxed max-w-3xl">
             아이들이 월급을 받고, 세금을 내고, 주식과 부동산에 투자하고, 재판까지
-            경험하는 교실 속 경제 세계입니다. 위의 학습 게임·사이트는 알찬 메뉴에서
+            경험하는 교실 속 경제 세계입니다. 위의 교실 놀이·학습 사이트는 알찬 메뉴에서
             바로 들어가 쓸 수 있게 붙여 두었습니다.
           </p>
           <p className="mt-3 text-sm text-muted-fg">

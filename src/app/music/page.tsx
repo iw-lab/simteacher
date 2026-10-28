@@ -15,7 +15,7 @@ export default function MusicPage() {
             <span className="gradient-text">음악감상실</span>
           </h1>
           <p className="mt-1 text-sm text-muted-fg">
-            직접 만든 노래를 가사와 함께 들어요. 리듬게임 «비트:온»에 들어 있는 곡들이에요.
+            직접 만든 노래를 가사와 함께 들어요. 리듬 놀이 «비트:온»에 들어 있는 곡들이에요.
           </p>
         </div>
         <MusicRoom />
