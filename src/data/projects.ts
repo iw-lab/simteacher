@@ -1408,6 +1408,28 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/dokkaebi-circuit.webp',
     url: 'https://dokkaebi-circuit.pages.dev/',
   },
+  {
+    slug: 'dalmajung',
+    added: '2026-10-30T08:50',
+    name: '달마중',
+    subject: '과학',
+    category: '국어·통합',
+    tags: ['과학', '3D', '학교 대항'],
+    tagline: '로켓 발사부터 달 착륙·표면 탐사·지구 귀환까지 내 손으로 몰고 가는 실제 물리 달 탐사 시뮬레이션',
+    description:
+      '로켓을 골라 발사하고, 지구 궤도를 돌아 사흘 길을 날아가 직접 달에 착륙한 뒤, 6분의 1 중력에서 탐사하고 지구로 돌아오는 달 탐사 시뮬레이션입니다. 중력·궤도·연료가 실제 물리로 계산됩니다. 견습 모드는 초등학생도 끝까지 갈 수 있게 도와주지만, 점화·단 분리·달 출발·착륙·도킹 같은 중요한 순간은 아이가 직접 누르고 결과 화면에서 완벽·좋음·아쉬움으로 돌아봅니다.',
+    features: [
+      '원정 7단계 — 로켓 발사 · 지구 궤도 · 달로 가는 길 · 달 궤도 진입 · 동력 하강·착륙 · 달 표면 탐사 · 상승·귀환',
+      '달 표면 탐사 — 깡충 뛰기 · 발자국 · 돌 4종 줍기 · 망치와 깃털 떨어뜨리기 · 지진계·반사경 설치 · 지구 사진',
+      '견습 «내 손 조종» — 점화 타이밍 막대 · 착륙 하강 속도 막대 · 도킹 마지막 20 m 직접 붙이기',
+      '놀이 6가지 — 달 개척(실제 달 지형 어디든 내려가 걷고 파고 짓기) · 착륙 도전 · 연료 한계 · 역사 재현(아폴로 11·12 · 창어 3) · 오늘의 착륙지 · 자유 실험실',
+      '계정·개인정보 없음 — 진행은 그 기기에만, 학교는 NEIS 목록에서 고르기만, 순위에는 학교별 합계만 보인다',
+    ],
+    target: '초등 4~6학년',
+    tech: ['JavaScript', 'Three.js', 'Cloudflare Pages · Workers · Durable Objects'],
+    image: '/images/portfolio/dalmajung.webp',
+    url: 'https://dalmajung.pages.dev/',
+  },
 ];
 
 // 🔴 썸네일 주소 = 파일 + 내용 해시(tools/img-versions.mjs). 이미지가 1년 immutable 캐시라
