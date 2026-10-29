@@ -10,7 +10,8 @@ let bad = 0
 const fail = (m) => { console.error('FAIL ' + m); bad++ }
 // ⑤ 학교 망 필터가 막은 원본은 쌤집 길로 잇지 않는다 — 막힌 끝까지 진화를 ssamzip.com/jinhwa/ 로 열었더니(10-23)
 //    필터가 ssamzip.com 전체를 게임 사이트로 묶어 본 주소까지 막았다(2026-10-26 실측 · 우리 사이트 15곳 중 막힌 건 이 둘뿐)
-const FILTER_BLOCKED = ['kkeutjinhwa.pages.dev']
+// 2026-10-29 학교 와이파이 실측: tinhelmet·ttak1-rocket·hobakbul 도 막힘 → 넷 다 새 이름(cheolmo·ttak1·hobak-maeul·jinhwa)으로 옮겼다
+const FILTER_BLOCKED = ['kkeutjinhwa.pages.dev', 'tinhelmet.pages.dev', 'ttak1-rocket.pages.dev', 'hobakbul.pages.dev']
 // ⑥ 2026-10-26 사용자 «선행쌤에서 도메인 주소 게임들 모두 빼자 — 선행쌤 자체가 죽으면 안 돼» → 게임 길은 하나도 두지 않는다
 if (Object.keys(GAMES).length) fail(`games.json 에 게임 길 ${Object.keys(GAMES).length}개(${Object.keys(GAMES).join(', ')}) — 선행쌤 도메인 아래 게임 금지(학교 망이 ssamzip.com 째로 막는다). 게임은 제 주소로 링크`)
 for (const [path, origin] of Object.entries(GAMES)) {

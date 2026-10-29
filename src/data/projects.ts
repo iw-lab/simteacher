@@ -477,7 +477,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 4~6학년',
     tech: ['TypeScript', 'Canvas', 'Vite'],
     image: '/images/portfolio/chromafall.webp',
-    url: 'https://ttak1-rocket.pages.dev/',
+    url: 'https://ttak1.pages.dev/',
   },
   {
     slug: 'keywordschool',
@@ -1101,7 +1101,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 1~6학년',
     tech: ['JavaScript', 'Phaser', 'Web Audio', 'Adobe Firefly', 'Cloudflare Pages · Workers · D1'],
     image: '/images/portfolio/tinhelmet.webp',
-    url: 'https://tinhelmet.pages.dev/',
+    url: 'https://cheolmo.pages.dev/',
   },
   {
     slug: 'bingle-step',
@@ -1362,7 +1362,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 1~6학년',
     tech: ['JavaScript', 'Phaser 3', 'Cloudflare Pages · Workers · Durable Objects'],
     image: '/images/portfolio/hobakbul.webp',
-    url: 'https://hobakbul.pages.dev/',
+    url: 'https://hobak-maeul.pages.dev/',
   },
   {
     slug: 'gugu-2d',

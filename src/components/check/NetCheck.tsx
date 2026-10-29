@@ -19,7 +19,7 @@ const TARGETS = [
   { host: 'ssamzip.com', label: '선행쌤 본 주소', path: '/icon-48.png' },
   { host: 'sunhaengssam.web.app', label: '선행쌤 두 문', path: '/icon-48.png' },
   { host: 'tajawangguk.pages.dev', label: '타자왕국(놀이)', path: '/favicon.ico' },
-  { host: 'kkeutjinhwa.pages.dev', label: '끝까지 진화(놀이)', path: '/favicon.ico' },
+  { host: 'jinhwa.pages.dev', label: '끝까지 진화(놀이)', path: '/favicon.ico' },
 ]
 
 const TIMEOUT = 8000
