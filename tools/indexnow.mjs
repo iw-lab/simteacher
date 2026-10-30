@@ -2,7 +2,8 @@
 // 키 = public/<32hex>.txt (파일 이름 = 내용). 주소 = 빌드된 sitemap.xml 전부.
 //   node tools/indexnow.mjs [--dry]
 import { readFileSync, readdirSync } from 'node:fs'
-const HOST = 'ssamzip.com'
+// 두 문 빌드면 그 주소로 — sitemap 주소와 host 가 다르면 거절된다
+const HOST = new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.com').host
 const key = readdirSync('public').map((f) => f.match(/^([0-9a-f]{32})\.txt$/)).find(Boolean)?.[1]
 if (!key || readFileSync(`public/${key}.txt`, 'utf8').trim() !== key) { console.error('indexnow: 키 파일 없음/불일치'); process.exit(1) }
 const urls = [...readFileSync('out/sitemap.xml', 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])

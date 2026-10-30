@@ -5,14 +5,20 @@ import { Catalog } from '@/components/home/Catalog'
 import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
 import { SectionTabs } from '@/components/home/SectionTabs'
+import type { Metadata } from 'next'
 import { SITE_URL } from '@/lib/siteUrl'
+import { HOME_TITLE, OG_BASE } from '@/lib/siteMeta'
+
+export const metadata: Metadata = {
+  openGraph: { ...OG_BASE, title: HOME_TITLE, description: '초등 교사 심선생이 만든 교실 놀이·학습 사이트·선생님 프로그램 모음' },
+}
 
 // 구글에 «이 사이트 대표 = 홈»을 알린다(사이트 이름 선행쌤) — 포트폴리오가 대표로 뜨던 일(2026-10-24)
 const SITE_LD = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: '선행쌤',
-  alternateName: ['선행샘', '선행 심선생', 'ssamzip'],
+  alternateName: ['쌤집', '선행샘', '선행 심선생', 'ssamzip'],
   url: `${SITE_URL}/`,
 }
 

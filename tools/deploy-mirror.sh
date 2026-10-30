@@ -16,6 +16,8 @@ grep -q "^Sitemap: $MIRROR/sitemap.xml" out/robots.txt || { echo "✖ robots 사
 
 echo "▶ 올린다"
 npx -y firebase-tools@latest deploy --only hosting:main
+node tools/check-two-doors.mjs --url "$MIRROR"
+NEXT_PUBLIC_SITE_URL="$MIRROR" node tools/indexnow.mjs || echo "⚠ indexnow 실패(배포는 됨)"
 
 echo "▶ 본 주소로 되돌려 빌드(out/ 오염 방지)"
 npm run build

@@ -22,6 +22,16 @@ const arg = (n) => { const i = process.argv.indexOf(n); return i >= 0 ? process.
 
 const CANON = /<link[^>]*rel="canonical"[^>]*href="([^"]+)"/i;
 const OGURL = /<meta[^>]*property="og:url"[^>]*content="([^"]+)"/i;
+// 두 문 제목 표시 — 검색 결과에서 본 주소 바로 아래 뜰 때 학교에서 어느 쪽을 누를지(2026-10-30 사용자 «제목에»)
+const MARK = '(학교와이파이 막힌경우)';
+const TITLE = /<title>([^<]*)<\/title>/i;
+function titleBad(h, isMirror, where) {
+  const t = TITLE.exec(h)?.[1] || '';
+  if (isMirror && !t.includes(MARK)) return [`${where} 두 문 제목에 ${MARK} 없음: ${t}`];
+  if (!isMirror && t.includes(MARK)) return [`${where} 본 주소 제목에 ${MARK}: ${t}`];
+  return [];
+}
+const MAIN = 'https://ssamzip.com';
 
 function pages(dir, out = []) {
   for (const e of readdirSync(dir)) {
@@ -42,6 +52,7 @@ function checkDir(dir, expect) {
     const o = OGURL.exec(h)?.[1];
     if (c && !c.startsWith(expect)) bad.push(`${f} canonical=${c}`);
     if (o && !o.startsWith(expect)) bad.push(`${f} og:url=${o}`);
+    if (f === join(dir, 'index.html')) bad.push(...titleBad(h, expect !== MAIN, f));
   }
   // 사이트맵·robots 도 같은 주소를 가리켜야 한다
   const sm = join(dir, 'sitemap.xml');
@@ -67,6 +78,7 @@ async function checkUrl(url) {
     const c = CANON.exec(h)?.[1];
     if (!c) bad.push(`${p} canonical 이 없다`);
     else if (!c.startsWith(base)) bad.push(`${p} canonical=${c} (자기 주소가 아니다)`);
+    if (p === '/') bad.push(...titleBad(h, base !== MAIN, p));
   }
   const rb = await fetch(base + '/robots.txt').then((r) => r.text()).catch(() => '');
   const line = rb.split('\n').find((l) => l.startsWith('Sitemap:'));
@@ -87,7 +99,7 @@ function report(bad, what) {
 if (process.argv.includes('--selftest')) {
   const d = mkdtempSync(join(tmpdir(), 'doors-'));
   mkdirSync(join(d, 'tools'), { recursive: true });
-  const page = (canon) => `<html><head><link rel="canonical" href="${canon}"/><meta property="og:url" content="${canon}"/></head><body>x</body></html>`;
+  const page = (canon, t = canon.includes('web.app') ? `선행쌤 ${MARK}` : '선행쌤') => `<html><head><title>${t}</title><link rel="canonical" href="${canon}"/><meta property="og:url" content="${canon}"/></head><body>x</body></html>`;
   // 고장 주입 ① 두 문 빌드를 안 되돌려 본 주소에 두 문 canonical 이 박힌 경우
   writeFileSync(join(d, 'index.html'), page('https://sunhaengssam.web.app/'));
   writeFileSync(join(d, 'tools', 'index.html'), page('https://sunhaengssam.web.app/tools/'));
@@ -96,8 +108,12 @@ if (process.argv.includes('--selftest')) {
   const red2 = report(checkDir(d, 'https://sunhaengssam.web.app') , '주입② 기준');
   writeFileSync(join(d, 'index.html'), page('https://ssamzip.com/'));
   const red3 = report(checkDir(d, 'https://sunhaengssam.web.app'), '주입②');
+  // 고장 주입 ③ 두 문인데 제목 표시가 빠진 경우
+  writeFileSync(join(d, 'index.html'), page('https://sunhaengssam.web.app/', '선행쌤'));
+  const red4 = report(checkDir(d, 'https://sunhaengssam.web.app'), '주입③');
+  console.log(`\n주입③=${red4 === 1 ? 'OK' : '✖'}`);
   console.log(`\n주입①=${red === 1 ? 'OK' : '✖'} · 정상=${red2 === 0 ? 'OK' : '✖'} · 주입②=${red3 === 1 ? 'OK' : '✖'}`);
-  process.exit(red === 1 && red2 === 0 && red3 === 1 ? 0 : 1);
+  process.exit(red === 1 && red2 === 0 && red3 === 1 && red4 === 1 ? 0 : 1);
 }
 
 const url = arg('--url');

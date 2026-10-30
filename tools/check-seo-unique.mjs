@@ -12,7 +12,7 @@ const SKIP = /^(404|_not-found|admin|jinhwa)(\/|$)/ // 검색에 안 내보내�
 const pages = []
 const walk = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) { if (f !== '_next') walk(p) } else if (f === 'index.html') pages.push(p) } }
 walk(OUT)
-const seen = { title: new Map(), description: new Map() }
+const seen = { title: new Map(), description: new Map(), 'og:title': new Map() }
 let bad = 0
 for (const p of pages) {
   const rel = p.slice(OUT.length + 1).replace(/index\.html$/, '')
@@ -28,6 +28,9 @@ for (const p of pages) {
     const v = (h.match(re) || [])[1]
     if (v !== want) { console.error(`FAIL /${rel} ${k}=${v} (기대 ${want})`); bad++ }
   }
+  // og:title 도 — 레이아웃이 홈 og:title 을 하위 페이지 전부에 물려 «문의»가 대표로 떴다(2026-10-30). 없으면 <title> 을 쓰니 없어도 된다
+  const og = (h.match(/<meta property="og:title" content="([^"]*)"/) || [])[1]
+  if (og) { if (seen['og:title'].has(og)) { console.error(`FAIL /${rel} og:title 이 /${seen['og:title'].get(og)} 와 같다: ${og}`); bad++ } else seen['og:title'].set(og, rel) }
   for (const [k, v] of Object.entries({ title, description })) {
     if (!v) { console.error(`FAIL /${rel} ${k} 없음`); bad++; continue }
     if (seen[k].has(v)) { console.error(`FAIL /${rel} ${k} 가 /${seen[k].get(v)} 와 같다: ${v}`); bad++ } else seen[k].set(v, rel)
