@@ -44,6 +44,10 @@ describe('게임 ↔ 수업 도구 나누기', () => {
     expect(GAME_KINDS).not.toContain(TOOL_TAG)
     expect(GAME_SUBJECTS).not.toContain(OCCASION_TAG)
   })
+  it('다정섬 우체부(계기교육 놀이)는 교실 놀이·수업 보조 도구 양쪽에', () => {
+    expect(gameSites(learningSites).map((s) => s.slug)).toContain('dajeong-postman') // 2026-11-01 «교실 놀이 쪽에도 보이게»
+    expect(classToolSites(learningSites).map((s) => s.slug)).toContain('dajeong-postman')
+  })
   it('계기교육(독도 탐사 일지)은 게임 쪽에서 빠지고 수업 도구 쪽에만', () => {
     expect(gameSites(learningSites).map((s) => s.slug)).not.toContain('dokdo-log')
     expect(classToolSites(learningSites).map((s) => s.slug)).toContain('dokdo-log')
