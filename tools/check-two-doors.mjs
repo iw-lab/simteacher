@@ -32,6 +32,18 @@ function titleBad(h, isMirror, where) {
   return [];
 }
 const MAIN = 'https://ssamzip.com';
+// 두 문은 «홈 하나만» 검색에 잡힌다 — 하위 페이지가 잡히면 네이버가 두 문 대표로 «포트폴리오»를 띄웠다(2026-11-02 사용자 «문의말고 이거부터»).
+//   두 문 하위 = noindex,follow · 두 문 홈 = 색인 · 본 주소 = 어디도 noindex 아님(관리·404 빼고)
+const NOINDEX = /<meta[^>]*name="robots"[^>]*content="[^"]*noindex/i;
+// 소유 확인 파일(google….html·naver….html)은 문서가 아니다
+const NOINDEX_OK = /(^|\/)(admin|404|_not-found)(\/|\.html$)|(^|\/)404\.html$|(^|\/)(google|naver)[0-9a-f]+\.html$/;
+function robotsBad(h, isMirror, isRoot, where) {
+  const no = NOINDEX.test(h);
+  if (isRoot && no) return [`${where} 홈이 noindex`];
+  if (!isRoot && isMirror && !no) return [`${where} 두 문 하위 페이지가 색인된다(noindex 없음)`];
+  if (!isRoot && !isMirror && no && !NOINDEX_OK.test(where)) return [`${where} 본 주소 페이지가 noindex`];
+  return [];
+}
 
 function pages(dir, out = []) {
   for (const e of readdirSync(dir)) {
@@ -53,6 +65,8 @@ function checkDir(dir, expect) {
     if (c && !c.startsWith(expect)) bad.push(`${f} canonical=${c}`);
     if (o && !o.startsWith(expect)) bad.push(`${f} og:url=${o}`);
     if (f === join(dir, 'index.html')) bad.push(...titleBad(h, expect !== MAIN, f));
+    const rel = f.slice(dir.length + 1);
+    if (!NOINDEX_OK.test(rel)) bad.push(...robotsBad(h, expect !== MAIN, f === join(dir, 'index.html'), f));
   }
   // 사이트맵·robots 도 같은 주소를 가리켜야 한다
   const sm = join(dir, 'sitemap.xml');
@@ -60,6 +74,8 @@ function checkDir(dir, expect) {
     const s = readFileSync(sm, 'utf8');
     const other = [...s.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]).filter((u) => !u.startsWith(expect));
     if (other.length) bad.push(`sitemap.xml 에 남의 주소 ${other.length}개 (${other[0]})`);
+    const locs = [...s.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+    if (expect !== MAIN && (locs.length !== 1 || locs[0] !== `${expect}/`)) bad.push(`두 문 sitemap.xml 은 홈 하나여야 한다 (${locs.length}개)`);
   }
   const rb = join(dir, 'robots.txt');
   if (existsSync(rb)) {
@@ -79,6 +95,7 @@ async function checkUrl(url) {
     if (!c) bad.push(`${p} canonical 이 없다`);
     else if (!c.startsWith(base)) bad.push(`${p} canonical=${c} (자기 주소가 아니다)`);
     if (p === '/') bad.push(...titleBad(h, base !== MAIN, p));
+    bad.push(...robotsBad(h, base !== MAIN, p === '/', p));
   }
   const rb = await fetch(base + '/robots.txt').then((r) => r.text()).catch(() => '');
   const line = rb.split('\n').find((l) => l.startsWith('Sitemap:'));
@@ -99,7 +116,8 @@ function report(bad, what) {
 if (process.argv.includes('--selftest')) {
   const d = mkdtempSync(join(tmpdir(), 'doors-'));
   mkdirSync(join(d, 'tools'), { recursive: true });
-  const page = (canon, t = canon.includes('web.app') ? `선행쌤 ${MARK}` : '선행쌤') => `<html><head><title>${t}</title><link rel="canonical" href="${canon}"/><meta property="og:url" content="${canon}"/></head><body>x</body></html>`;
+  const isM = (c) => c.includes('web.app');
+  const page = (canon, t = isM(canon) ? `선행쌤 ${MARK}` : '선행쌤', no = isM(canon) && !/web\.app\/$/.test(canon)) => `<html><head><title>${t}</title>${no ? '<meta name="robots" content="noindex, follow"/>' : ''}<link rel="canonical" href="${canon}"/><meta property="og:url" content="${canon}"/></head><body>x</body></html>`;
   // 고장 주입 ① 두 문 빌드를 안 되돌려 본 주소에 두 문 canonical 이 박힌 경우
   writeFileSync(join(d, 'index.html'), page('https://sunhaengssam.web.app/'));
   writeFileSync(join(d, 'tools', 'index.html'), page('https://sunhaengssam.web.app/tools/'));
@@ -112,6 +130,16 @@ if (process.argv.includes('--selftest')) {
   writeFileSync(join(d, 'index.html'), page('https://sunhaengssam.web.app/', '선행쌤'));
   const red4 = report(checkDir(d, 'https://sunhaengssam.web.app'), '주입③');
   console.log(`\n주입③=${red4 === 1 ? 'OK' : '✖'}`);
+  // 고장 주입 ④ 두 문 하위 페이지가 색인된다(네이버가 포트폴리오를 두 문 대표로 띄운 일)
+  writeFileSync(join(d, 'index.html'), page('https://sunhaengssam.web.app/'));
+  writeFileSync(join(d, 'tools', 'index.html'), page('https://sunhaengssam.web.app/tools/', undefined, false));
+  const red5 = report(checkDir(d, 'https://sunhaengssam.web.app'), '주입④');
+  // 고장 주입 ⑤ 본 주소에 noindex 가 새어 들었다
+  writeFileSync(join(d, 'index.html'), page('https://ssamzip.com/'));
+  writeFileSync(join(d, 'tools', 'index.html'), page('https://ssamzip.com/tools/', undefined, true));
+  const red6 = report(checkDir(d, 'https://ssamzip.com'), '주입⑤');
+  console.log(`\n주입④=${red5 === 1 ? 'OK' : '✖'} · 주입⑤=${red6 === 1 ? 'OK' : '✖'}`);
+  if (red5 !== 1 || red6 !== 1) process.exit(1);
   console.log(`\n주입①=${red === 1 ? 'OK' : '✖'} · 정상=${red2 === 0 ? 'OK' : '✖'} · 주입②=${red3 === 1 ? 'OK' : '✖'}`);
   process.exit(red === 1 && red2 === 0 && red3 === 1 && red4 === 1 ? 0 : 1);
 }

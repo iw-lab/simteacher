@@ -55,6 +55,9 @@
             }
           ]
         }
+      ],
+      "predeploy": [
+        "node tools/check-two-doors.mjs --dir out --expect https://sunhaengssam.web.app"
       ]
     },
     {

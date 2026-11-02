@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/Footer'
 import './globals.css'
 import { OLD_HOST_REDIRECT } from '@/lib/oldHostRedirect'
 import { SITE_URL } from '@/lib/siteUrl'
-import { SITE_NAME, HOME_TITLE, OG_BASE } from '@/lib/siteMeta'
+import { SITE_NAME, HOME_TITLE, OG_BASE, MIRROR_ROBOTS } from '@/lib/siteMeta'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     apple: { url: '/apple-touch-icon.png', sizes: '180x180' },
   },
   manifest: '/manifest.webmanifest',
+  robots: MIRROR_ROBOTS,
   openGraph: OG_BASE,
 }
 
