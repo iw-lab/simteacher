@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { ArrowRight, Heart, Palette, X } from 'lucide-react'
 import { recordClick } from '@/lib/community'
 import { learningSites } from '@/data/projects'
-import { ARTON_ORIGIN, safeWorks, type ShowWork } from '@/lib/art-showcase'
+import { ARTON_ORIGIN, mergeWorks, safeWorks, type ShowWork } from '@/lib/art-showcase'
 
 const ARTON = learningSites.find((s) => s.slug === 'arton')
 /** 한 번에 보이는 작품 수 — 올 때마다 섞어서 고른다(킹수학 «친구들의 작품»처럼) */
@@ -12,19 +12,36 @@ const SHOW = 8
 
 /** 홈 «친구들의 작품» — 아트온에서 선생님이 고른 작품만, 그림만(이름·제목 없이 · 2026-11-03 사용자 «이름은 반드시 지우고»).
  *  작품이 아직 적으면 칸은 남기고 아트온으로 가는 길만 보인다. 전시관을 못 읽으면 칸째로 숨긴다. */
-export function ArtShowcase() {
+/** 새로 건 작품을 다시 읽는 간격 — 화면이 보일 때만(서버비: 15초 미만 폴링 금지 · 전시관 대답은 엣지 캐시) */
+export const SHOWCASE_POLL_MS = 60_000
+
+export function ArtShowcase({ live = false }: { live?: boolean }) {
   const [works, setWorks] = useState<ShowWork[] | null>(null)
   const [big, setBig] = useState<ShowWork | null>(null)
   useEffect(() => {
     let alive = true
-    fetch(`${ARTON_ORIGIN}/api/showcase`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => { const w = safeWorks(j); if (alive) setWorks(w && shuffle(w).slice(0, SHOW)) })
-      .catch(() => alive && setWorks(null))
+    const load = () => {
+      if (document.hidden) return
+      fetch(`${ARTON_ORIGIN}/api/showcase`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((j) => {
+          const w = safeWorks(j)
+          if (!alive) return
+          // 실시간(2026-11-03 «수업 보조 도구에 아트온 작품 실시간으로») — 새로 걸린 작품을 앞에, 나머지는 섞어서
+          setWorks((prev) => (w ? mergeWorks(prev, w, SHOW) : prev ?? null))
+        })
+        .catch(() => alive && setWorks((prev) => prev ?? null))
+    }
+    load()
+    const timer = live ? window.setInterval(load, SHOWCASE_POLL_MS) : 0
+    const onShow = () => live && !document.hidden && load()
+    document.addEventListener('visibilitychange', onShow)
     return () => {
       alive = false
+      window.clearInterval(timer)
+      document.removeEventListener('visibilitychange', onShow)
     }
-  }, [])
+  }, [live])
   useEffect(() => {
     if (!big) return
     const k = (e: KeyboardEvent) => e.key === 'Escape' && setBig(null)
@@ -100,13 +117,4 @@ export function ArtShowcase() {
       )}
     </section>
   )
-}
-
-function shuffle<T>(a: T[]): T[] {
-  const b = [...a]
-  for (let i = b.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[b[i], b[j]] = [b[j], b[i]]
-  }
-  return b
 }

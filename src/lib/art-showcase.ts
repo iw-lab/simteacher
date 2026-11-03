@@ -12,3 +12,21 @@ export function safeWorks(raw: unknown): ShowWork[] | null {
     .filter((w): w is ShowWork => !!w && typeof w.id === 'string' && /^[A-Za-z0-9_-]{6,64}$/.test(w.id))
     .map((w) => ({ id: w.id, at: Number(w.at) || 0, likes: Math.max(0, Number(w.likes) || 0) }))
 }
+
+/** 처음엔 섞어서 SHOW 개 · 다시 읽을 땐 새로 걸린 작품을 앞에 끼우고 나머지는 그 자리 그대로(1분마다 판이 뒤섞이지 않게) · 내려간 작품은 뺀다 */
+export function mergeWorks(prev: ShowWork[] | null, now: ShowWork[], n: number): ShowWork[] {
+  if (!prev) return shuffle(now).slice(0, n)
+  const ids = new Set(now.map((x) => x.id)); const had = new Set(prev.map((x) => x.id))
+  const fresh = now.filter((x) => !had.has(x.id)).sort((a, b) => b.at - a.at)
+  const kept = prev.filter((x) => ids.has(x.id)).map((x) => now.find((y) => y.id === x.id)!)
+  return [...fresh, ...kept].slice(0, n)
+}
+
+function shuffle<T>(a: T[]): T[] {
+  const b = [...a]
+  for (let i = b.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[b[i], b[j]] = [b[j], b[i]]
+  }
+  return b
+}

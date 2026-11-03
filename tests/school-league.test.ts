@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { findSchools, leader, mySpots, readMySchool, safeBoard, type Board, type GameBoard } from '../src/lib/school-league'
-import { safeWorks } from '../src/lib/art-showcase'
+import { safeWorks, mergeWorks } from '../src/lib/art-showcase'
+import { readFileSync } from 'node:fs'
 
 const row = (c: string, n: string, s: number, r = '전북') => ({ c, n, r, s })
 const game = (slug: string, week: ReturnType<typeof row>[], today = week): GameBoard => ({ slug, at: 1, week, today, st: { schools: 3, today: 1, playsToday: 1, plays: 1 } })
@@ -55,3 +56,23 @@ describe('친구들의 작품', () => {
     expect(safeWorks({ works: [] })).toEqual([])
   })
 })
+
+// 🔒 2026-11-03 «수업 보조 도구에 아트온 작품 실시간으로» — 1분마다 다시 읽어 새 작품을 앞에 · 판이 뒤섞이지 않게 · 내려간 작품은 뺀다
+describe('친구들의 작품 실시간', () => {
+  const w = (id: string, at: number) => ({ id, at, likes: 0 })
+  it('새로 건 작품은 앞에 · 그대로인 작품은 자리 그대로 · 내린 작품은 빠진다', () => {
+    const prev = [w('aaaaaa', 1), w('bbbbbb', 2), w('cccccc', 3)]
+    const now = [w('aaaaaa', 1), w('cccccc', 3), w('dddddd', 9), w('eeeeee', 8)]
+    expect(mergeWorks(prev, now, 8).map((x) => x.id)).toEqual(['dddddd', 'eeeeee', 'aaaaaa', 'cccccc'])
+    expect(mergeWorks(prev, now, 3).length).toBe(3)
+    expect(mergeWorks(null, now, 2).length).toBe(2)
+  })
+  it('수업 보조 도구에 걸려 있고 다시 읽기는 15초 이상 · 화면이 숨으면 안 읽는다', () => {
+    expect(readFileSync('src/app/tools/page.tsx', 'utf8')).toMatch(/<ArtShowcase live \/>/)
+    const src = readFileSync('src/components/home/ArtShowcase.tsx', 'utf8')
+    const ms = Number((src.match(/SHOWCASE_POLL_MS = ([\d_]+)/)?.[1] || '0').replace(/_/g, ''))
+    expect(ms).toBeGreaterThanOrEqual(15_000)
+    expect(src).toMatch(/document\.hidden/)
+  })
+})
+

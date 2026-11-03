@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { SectionTabs } from '@/components/home/SectionTabs'
 import { ToolsBoard } from '@/components/tools/ToolsBoard'
+import { ArtShowcase } from '@/components/home/ArtShowcase'
 
 export const metadata: Metadata = {
   title: '수업 보조 도구',
@@ -19,6 +20,8 @@ export default function ToolsPage() {
           <h1 className="text-base md:text-lg font-bold text-fg">수업 보조 도구</h1>
           <SectionTabs active="tools" />
         </div>
+        {/* 친구들의 작품 — 아트온 전시관(선생님이 고른 작품만 · 이름 없이 그림만) · 1분마다 새 작품(2026-11-03 «킹수학처럼 · 홍보도 되고») */}
+        <div className="mb-8"><ArtShowcase live /></div>
         <ToolsBoard />
       </div>
     </div>
