@@ -124,6 +124,7 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
                   >
                     <Heart className={`w-3.5 h-3.5 ${liked.has(w.id) ? 'fill-current' : ''}`} aria-hidden /> {w.likes}
                   </button>
+                  {w.r && <span data-art-sido className="absolute bottom-1 left-1 rounded-full bg-black/55 px-1.5 py-0.5 text-[10px] font-bold text-white shadow">{w.r}</span>}
                 </div>
               </li>
             ))}
@@ -159,6 +160,7 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
             </button>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${ARTON_ORIGIN}/api/showcase/${big.id}`} alt="학생 작품" className="w-full rounded-2xl bg-white object-contain max-h-[65dvh]" />
+            {big.r && <p data-art-big-sido className="mt-2 text-center text-sm font-semibold text-muted-fg">{big.r} 친구의 그림</p>}
             <div className="mt-3 flex gap-2">
               <button type="button" onClick={() => { const w = works.find((x) => x.id === big.id) ?? big; toggleLike(w) }} data-art-big-like className={`flex-1 inline-flex items-center justify-center gap-1.5 min-h-11 rounded-2xl font-bold ${liked.has(big.id) ? 'bg-pink-500 text-white' : 'bg-pink-500/15 text-pink-600 dark:text-pink-300 hover:bg-pink-500/25'}`}>
                 <Heart className={`w-4 h-4 ${liked.has(big.id) ? 'fill-current' : ''}`} /> {works.find((x) => x.id === big.id)?.likes ?? big.likes}

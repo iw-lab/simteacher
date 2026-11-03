@@ -51,9 +51,14 @@ describe('학교 대항전', () => {
 
 describe('친구들의 작품', () => {
   it('정해진 칸(id·at·likes·wk·fresh)만 남기고 이상한 id 는 버린다 — 이름 칸이 와도 안 그린다', () => {
-    expect(safeWorks({ works: [{ id: 'abcdef12', at: 5, likes: 2, nickname: '철수', title: '우리 집' }, { id: '../x' }, null] })).toEqual([{ id: 'abcdef12', at: 5, likes: 2, wk: 0, fresh: false }])
+    expect(safeWorks({ works: [{ id: 'abcdef12', at: 5, likes: 2, nickname: '철수', title: '우리 집' }, { id: '../x' }, null] })).toEqual([{ id: 'abcdef12', at: 5, likes: 2, wk: 0, fresh: false, r: '' }])
     expect(safeWorks(null)).toBeNull()
     expect(safeWorks({ works: [] })).toEqual([])
+  })
+  it('시·도는 17개 이름만 — 학교 이름이 r 칸으로 와도 버린다(2026-11-03 «학교 이름은 빼자, 도만»)', () => {
+    expect(safeWorks({ works: [{ id: 'abcdef12', r: '전북' }] })![0].r).toBe('전북')
+    expect(safeWorks({ works: [{ id: 'abcdef12', r: '김제중앙초' }] })![0].r).toBe('')
+    expect(safeWorks({ works: [{ id: 'abcdef12', r: '전북 김제' }] })![0].r).toBe('')
   })
 })
 
@@ -64,7 +69,7 @@ describe('친구들의 작품 실시간', () => {
     const w = safeWorks(raw)!
     expect(w.length).toBe(SHOWCASE_MAX)
     expect(w[2].fresh).toBe(true); expect(w[0].wk).toBe(1)
-    expect(Object.keys(w[0]).sort().join()).toBe('at,fresh,id,likes,wk')
+    expect(Object.keys(w[0]).sort().join()).toBe('at,fresh,id,likes,r,wk')
   })
   it('기기 번호 — 무작위 32자 · 한 번 만들면 그대로 · 이상한 값은 새로', () => {
     const m = new Map<string, string>(); const st = { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v) }
