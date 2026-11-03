@@ -83,3 +83,9 @@ export function fetchBoard(): Promise<Board | null> {
     .catch(() => null)
   return once
 }
+
+/** 학교 종합(메달) 순위 자리 — 판에 없으면 null */
+export function medalRank(b: Board, code: string): number | null {
+  const i = b.medals.findIndex((m) => m.c === code)
+  return i < 0 ? null : i + 1
+}

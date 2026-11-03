@@ -41,7 +41,8 @@ export default function Home() {
           <SectionTabs active="games" />
           <h1 className="sr-only 2xl:not-sr-only shrink-0 text-base md:text-lg font-bold text-fg">교실에서 바로 쓰는 놀이·학습 사이트</h1>
           {/* 학교 종합 1~5위 한 줄(2026-11-03 «학교 성적 너무 과해 · 간단하게») — 폰은 아래 줄 */}
-          <SchoolTop5 className="hidden md:flex flex-1" />
+          {/* 제목과 띄움(2026-11-03 «사이트와 학교종합을 좀 띄우고») */}
+          <SchoolTop5 className="hidden md:flex flex-1 md:ml-8" />
           <span className="flex-1 md:hidden" aria-hidden />
           <Link href="/about" className="shrink-0 text-sm text-muted-fg hover:text-fg hover:underline">
             만든 사람 →

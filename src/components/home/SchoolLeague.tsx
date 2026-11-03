@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Crown, Trophy } from 'lucide-react'
 import { fetchBoard, leader, type Board, type Medal } from '@/lib/school-league'
 
@@ -32,11 +33,11 @@ export function SchoolTop5({ className = '' }: { className?: string }) {
   const top = board?.medals.slice(0, 5) ?? []
   if (!top.length) return null
   return (
-    <div data-testid="school-top5" className={`flex items-center gap-1.5 min-w-0 overflow-x-auto no-scrollbar whitespace-nowrap ${className}`} title="이번 주 학교 종합 순위 — 게임마다 1~3위 학교에 금·은·동">
+    <div data-testid="school-top5" className={`flex items-center gap-1.5 min-w-0 whitespace-nowrap ${className}`} title="이번 주 학교 종합 순위 — 게임마다 1~3위 학교에 금·은·동">
       <span className="shrink-0 inline-flex items-center gap-1 text-sm font-extrabold text-fg">
         <Trophy className="w-4 h-4 text-amber-500" aria-hidden /> 학교 종합
       </span>
-      <ol className="flex items-center gap-1.5">
+      <ol className="flex items-center gap-1.5 min-w-0 overflow-x-auto no-scrollbar">
         {top.map((m, i) => (
           <li key={m.c} className="shrink-0 inline-flex items-center gap-1 rounded-full border border-line bg-card/70 pl-0.5 pr-2 py-0.5">
             <span className={`w-5 h-5 rounded-full inline-flex items-center justify-center text-[11px] font-black ${MEDAL_CLS[i] ?? 'bg-muted text-fg'}`}>{i + 1}</span>
@@ -45,6 +46,10 @@ export function SchoolTop5({ className = '' }: { className?: string }) {
           </li>
         ))}
       </ol>
+      {/* 2026-11-03 사용자 «학교종합순위 맨 오른쪽에 전체 순위 보기» — 칩이 넘쳐 밀려도 이 단추는 늘 보인다 */}
+      <Link href="/ranks/" data-testid="school-ranks-link" className="shrink-0 ml-1 inline-flex items-center rounded-full border border-amber-500/50 bg-amber-500/10 px-2.5 py-0.5 text-sm font-bold text-amber-600 dark:text-amber-400 hover:bg-amber-500/20">
+        전체 순위 보기 →
+      </Link>
     </div>
   )
 }

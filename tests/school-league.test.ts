@@ -85,3 +85,26 @@ describe('친구들의 작품 실시간', () => {
     for (const t of ['art-prev', 'art-next', 'data-art-like', 'data-art-report', 'useAutoRail']) expect(src).toContain(t)
   })
 })
+
+// 2026-11-03 사용자 «사이트와 학교종합을 좀 띄우고 · 학교종합순위 맨 오른쪽에 전체 순위 보기 · 전체 순위와 학교 검색도 되게»
+import { medalRank } from '../src/lib/school-league'
+describe('전체 학교 순위 페이지', () => {
+  it('종합 순위 자리 — 메달 판에 없으면 null', () => {
+    expect(medalRank(B, '7000009')).toBe(1)
+    expect(medalRank(B, '7000001')).toBeNull()
+  })
+  it('제목 줄 학교 종합 맨 오른쪽 «전체 순위 보기» → /ranks · 제목과 띄움', () => {
+    const top = readFileSync(new URL('../src/components/home/SchoolLeague.tsx', import.meta.url), 'utf8')
+    expect(top).toMatch(/href="\/ranks\/?"[\s\S]{0,300}전체 순위 보기/)
+    const home = readFileSync(new URL('../src/app/page.tsx', import.meta.url), 'utf8')
+    expect(home).toMatch(/<SchoolTop5 className="[^"]*\bmd:ml-(6|8|10)\b/)
+  })
+  it('/ranks 페이지 — 자기 제목(SEO 중복 금지) · 사이트맵 · 학교 검색 칸', () => {
+    const page = readFileSync(new URL('../src/app/ranks/page.tsx', import.meta.url), 'utf8')
+    expect(page).toMatch(/export const metadata/)
+    expect(readFileSync(new URL('../src/app/sitemap.ts', import.meta.url), 'utf8')).toMatch(/'ranks\/'/)
+    const ui = readFileSync(new URL('../src/components/home/SchoolRanks.tsx', import.meta.url), 'utf8')
+    expect(ui).toMatch(/data-testid="rank-search"/)
+    expect(ui).toMatch(/findSchools\(/)
+  })
+})
