@@ -8,8 +8,16 @@ const env = { ASSETS: { fetch: vi.fn(async (r: Request) => page(r.url)) } }
 const go = (u: string) => worker.fetch(new Request(u), env as never)
 
 describe('앞문 워커', () => {
-  it('.com·www·http 는 https://ssamzip.kr 같은 길로 301', async () => {
-    for (const from of ['https://ssamzip.com/tools/', 'https://www.ssamzip.com/tools/', 'https://www.ssamzip.kr/tools/', 'http://ssamzip.kr/tools/']) {
+  it('옛 .com 은 .kr 로 넘기지 않는다 — 넘김·링크 없는 410(게임으로 막힌 .com 과 .kr 을 잇지 않는다 · 11-03)', async () => {
+    for (const from of ['https://ssamzip.com/tools/', 'https://www.ssamzip.com/', 'http://ssamzip.com/']) {
+      const r = await go(from)
+      expect(r.status, from).toBe(410)
+      expect(r.headers.get('location'), from).toBeNull()
+      expect(await r.text(), from).not.toMatch(/ssamzip\.kr/)
+    }
+  })
+  it('www·http 는 https://ssamzip.kr 같은 길로 301', async () => {
+    for (const from of ['https://www.ssamzip.kr/tools/', 'http://ssamzip.kr/tools/']) {
       const r = await go(from)
       expect(r.status, from).toBe(301)
       expect(r.headers.get('location'), from).toBe('https://ssamzip.kr/tools/')

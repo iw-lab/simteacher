@@ -44,7 +44,7 @@ if (process.argv.includes('--live')) {
     if (a.status !== 200 || !title(ha) || title(ha) !== title(hb)) fail(`${path}: ssamzip ${a.status} «${title(ha)}» ≠ 원본 ${b.status} «${title(hb)}»`)
     else console.log(`ok ${path} «${title(ha)}»`)
   }
-  for (const from of ['http://ssamzip.kr/contact/', 'https://www.ssamzip.kr/contact/', 'https://ssamzip.com/contact/', 'https://www.ssamzip.com/contact/']) {
+  for (const from of ['http://ssamzip.kr/contact/', 'https://www.ssamzip.kr/contact/']) {
     // 🔴 학교 망은 ssamzip.com 을 DNS 127.0.0.1 로 꺾는다(2026-10-26) — 여기서 그냥 fetch 하면
     //    ECONNREFUSED 가 «처리 안 된 예외»로 터져 배포 명령 전체가 죽는다(10-28 실측).
     //    못 재는 것과 틀린 것은 다르다 — 망 탓이면 그렇게 말하고 넘어간다(FAIL 로 세지 않는다).

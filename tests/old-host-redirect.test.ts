@@ -17,8 +17,8 @@ describe('주소 정리', () => {
   it('옛 별칭 firebaseapp.com 은 두 문으로 모은다', () => {
     expect(run('sunhaengssam.firebaseapp.com')).toHaveBeenCalledWith('https://sunhaengssam.web.app/tools/')
   })
-  it('www·옛 본 주소(.com)는 새 본 주소 ssamzip.kr 로 모으고, 본 주소 자신은 그대로(2026-11-03 «.com 공유하지마»)', () => {
-    for (const h of ['www.ssamzip.kr', 'ssamzip.com', 'www.ssamzip.com']) expect(run(h)).toHaveBeenCalledWith('https://ssamzip.kr/tools/')
-    expect(run('ssamzip.kr')).not.toHaveBeenCalled()
+  it('www 는 ssamzip.kr 로 모으고, 본 주소는 그대로 · 옛 .com 은 .kr 로 넘기지 않는다(11-03)', () => {
+    expect(run('www.ssamzip.kr')).toHaveBeenCalledWith('https://ssamzip.kr/tools/')
+    for (const h of ['ssamzip.kr', 'ssamzip.com', 'www.ssamzip.com']) expect(run(h), h).not.toHaveBeenCalled()
   })
 })

@@ -10,8 +10,11 @@ export const MAIN_HOST = 'ssamzip.kr'
 export default {
   async fetch(req, env) {
     const url = new URL(req.url)
-    // www·http·workers.dev·옛 본 주소 ssamzip.com 은 전부 https://ssamzip.kr 한 주소로(301) — 구글이 같은 페이지를 여러 주소로 보지 않게.
+    // www·http·workers.dev 는 전부 https://ssamzip.kr 한 주소로(301) — 구글이 같은 페이지를 여러 주소로 보지 않게.
     // 2026-11-03 본 주소를 ssamzip.kr 로 옮겼다(사용자 «.com 공유하지마» — .com 은 학교 망이 게임 도메인으로 묶어 막았다). 🔒 tests/edge-worker.test.ts
+    // 🚫 옛 ssamzip.com 은 .kr 로 넘기지 않는다 — 학교 필터가 .com 을 게임으로 묶어 막았으니, .com→.kr 넘김이 있으면 필터가 넘김을 따라가 .kr 까지
+    //    같은 갈래로 묶을 수 있다(사용자 11-03 «닷컴을 kr 로 넘기면 게임 사이트로 걸리지 않냐 · 또 막히게 하면 화낸다»). .com 은 링크·넘김 없는 410 만 낸다.
+    if (/(^|\.)ssamzip\.com$/.test(url.hostname)) return new Response('Gone', { status: 410, headers: { 'content-type': 'text/plain; charset=utf-8', 'x-robots-tag': 'noindex' } })
     if (url.hostname !== 'localhost' && (url.protocol === 'http:' || url.hostname !== MAIN_HOST)) {
       url.protocol = 'https:'; url.hostname = MAIN_HOST; url.port = ''
       return Response.redirect(url.toString(), 301)
