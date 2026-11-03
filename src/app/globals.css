@@ -233,3 +233,14 @@ code {
 @media (prefers-reduced-motion: reduce) {
   .brand-tap { animation: none; opacity: 0.55; transition: opacity 180ms; }
 }
+
+/* 학교 대항전(홈) — 반짝 띠가 천천히 지나가고 1위 메달이 통통 · 움직임 줄이기면 멈춤 */
+@keyframes league-shine { 0% { transform: translateX(-120%); } 55%, 100% { transform: translateX(120%); } }
+.league-shine { background: linear-gradient(105deg, transparent 35%, rgb(251 191 36 / 0.16) 50%, transparent 65%); animation: league-shine 6s ease-in-out infinite; }
+@keyframes league-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.league-bob { animation: league-bob 2.4s ease-in-out infinite; display: inline-block; }
+@keyframes league-pop { 0% { transform: translateY(14px) scale(0.92); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.league-pop { animation: league-pop 600ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+@media (prefers-reduced-motion: reduce) {
+  .league-shine, .league-bob, .league-pop { animation: none; }
+}

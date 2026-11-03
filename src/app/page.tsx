@@ -5,6 +5,7 @@ import { Catalog } from '@/components/home/Catalog'
 import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
 import { SectionTabs } from '@/components/home/SectionTabs'
+import { SchoolLeague } from '@/components/home/SchoolLeague'
 import type { Metadata } from 'next'
 import { SITE_URL } from '@/lib/siteUrl'
 import { HOME_TITLE, OG_BASE } from '@/lib/siteMeta'
@@ -48,6 +49,8 @@ export default function Home() {
         <div className="grid grid-cols-1 [grid-template-areas:'rank'_'rooms'_'rest'] xl:grid-cols-[minmax(0,1fr)_300px] xl:[grid-template-areas:'rank_rank'_'rest_rooms'] xl:gap-x-6">
           <div className="[grid-area:rank] min-w-0">
             <PopularStrip />
+            {/* 학교 대항전 — 게임마다 학교 순위를 모아 메달·1위로(2026-11-03 사용자 «경쟁심을 자극할 만하게») */}
+            <SchoolLeague />
           </div>
           <LiveRooms className="[grid-area:rooms] mb-8 xl:mb-0 xl:self-start xl:sticky xl:top-24" />
           <div className="[grid-area:rest] min-w-0">

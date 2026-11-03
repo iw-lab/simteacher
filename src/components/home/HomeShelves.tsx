@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowRight, BookOpen, Music } from 'lucide-react'
 import { fetchWorks, WorkCard, type Work } from '@/components/library/Bookshelf'
 import { isForKids } from '@/lib/kids-shelf'
+import { ArtShowcase } from '@/components/home/ArtShowcase'
 
 /** 홈 아래 — 서재 새 책 한 줄 + 음악감상실 입구. 서재를 못 읽으면 그 줄만 숨긴다. */
 export function HomeShelves() {
@@ -21,6 +22,8 @@ export function HomeShelves() {
 
   return (
     <div className="mt-24 space-y-10">
+      {/* 친구들의 작품 — 아트온 전시관(2026-11-03 사용자 «킹수학처럼 좋은 작품 전시 + 아트온 바로 가기 · 이름은 반드시 지우고») */}
+      <ArtShowcase />
       {works.length > 0 && (
         <section aria-labelledby="home-shelf">
           <div className="flex items-end justify-between gap-3 mb-3">

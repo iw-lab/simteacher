@@ -8,6 +8,7 @@ import { Ban, Download, ExternalLink, Eye, Lock } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { probe, type Reach } from '@/lib/reachability'
 import { Badge } from '@/components/ui/Badge'
+import { CardLeader } from '@/components/home/SchoolLeague'
 import { recordClick } from '@/lib/community'
 import type { LearningSite, TeacherTool } from '@/data/projects'
 
@@ -74,6 +75,7 @@ export function SiteCard({ site, i, views }: { site: LearningSite; i: number; vi
         <p data-blurb className="mt-1 sm:mt-1.5 text-[13px] sm:text-[15px] text-muted-fg leading-relaxed line-clamp-2 sm:line-clamp-none">
           <MathText text={site.tagline} />
         </p>
+        <CardLeader slug={site.slug} />
 
         {linked && reach === 'blocked' ? (
           <p data-blocked className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-red-600 dark:text-red-400">
