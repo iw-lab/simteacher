@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://ssamzip.com/sitemap.xml
+Sitemap: https://ssamzip.kr/sitemap.xml

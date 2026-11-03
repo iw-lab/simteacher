@@ -21,5 +21,5 @@ NEXT_PUBLIC_SITE_URL="$MIRROR" node tools/indexnow.mjs || echo "⚠ indexnow 실
 
 echo "▶ 본 주소로 되돌려 빌드(out/ 오염 방지)"
 npm run build
-node tools/check-two-doors.mjs --dir out --expect https://ssamzip.com
+node tools/check-two-doors.mjs --dir out --expect https://ssamzip.kr
 echo "✅ 두 문 배포 끝 — $MIRROR · out/ 은 본 주소로 복구됨"

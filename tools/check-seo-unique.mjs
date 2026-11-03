@@ -4,7 +4,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.com').replace(/\/$/, '')
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.kr').replace(/\/$/, '')
 
 const OUT = process.argv[2] || 'out'
 if (!existsSync(OUT)) { console.error(`check-seo-unique: ${OUT}/ 없음`); process.exit(1) }

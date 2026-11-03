@@ -5,7 +5,7 @@
  * 두 문 빌드에서도 본 주소가 박혀 나간다 — 빌드 끝에 한 줄만 갈아 끼운다.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.com').replace(/\/$/, '');
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.kr').replace(/\/$/, '');
 const p = 'out/robots.txt';
 if (!existsSync(p)) { console.error('✖ out/robots.txt 가 없다'); process.exit(1); }
 const before = readFileSync(p, 'utf8');

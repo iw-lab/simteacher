@@ -10,7 +10,7 @@
  * 반대 사고도 막는다 — 두 문 빌드를 되돌리지 않으면 본 주소에 두 문 canonical 이 박힌다.
  * out/ 하나를 두 곳이 같이 쓰므로 이쪽이 더 잦은 사고다.
  *
- * 쓰기: node tools/check-two-doors.mjs --dir out --expect https://ssamzip.com
+ * 쓰기: node tools/check-two-doors.mjs --dir out --expect https://ssamzip.kr
  *       node tools/check-two-doors.mjs --url https://sunhaengssam.web.app   (배포본)
  *       node tools/check-two-doors.mjs --selftest
  */
@@ -31,7 +31,7 @@ function titleBad(h, isMirror, where) {
   if (!isMirror && t.includes(MARK)) return [`${where} 본 주소 제목에 ${MARK}: ${t}`];
   return [];
 }
-const MAIN = 'https://ssamzip.com';
+const MAIN = 'https://ssamzip.kr';
 // 두 문은 «홈 하나만» 검색에 잡힌다 — 하위 페이지가 잡히면 네이버가 두 문 대표로 «포트폴리오»를 띄웠다(2026-11-02 사용자 «문의말고 이거부터»).
 //   두 문 하위 = noindex,follow · 두 문 홈 = 색인 · 본 주소 = 어디도 noindex 아님(관리·404 빼고)
 const NOINDEX = /<meta[^>]*name="robots"[^>]*content="[^"]*noindex/i;
@@ -121,10 +121,10 @@ if (process.argv.includes('--selftest')) {
   // 고장 주입 ① 두 문 빌드를 안 되돌려 본 주소에 두 문 canonical 이 박힌 경우
   writeFileSync(join(d, 'index.html'), page('https://sunhaengssam.web.app/'));
   writeFileSync(join(d, 'tools', 'index.html'), page('https://sunhaengssam.web.app/tools/'));
-  const red = report(checkDir(d, 'https://ssamzip.com'), '주입①');
+  const red = report(checkDir(d, 'https://ssamzip.kr'), '주입①');
   // 고장 주입 ② 두 문인데 canonical 이 본 주소를 가리키는 경우(검색에서 사라진다)
   const red2 = report(checkDir(d, 'https://sunhaengssam.web.app') , '주입② 기준');
-  writeFileSync(join(d, 'index.html'), page('https://ssamzip.com/'));
+  writeFileSync(join(d, 'index.html'), page('https://ssamzip.kr/'));
   const red3 = report(checkDir(d, 'https://sunhaengssam.web.app'), '주입②');
   // 고장 주입 ③ 두 문인데 제목 표시가 빠진 경우
   writeFileSync(join(d, 'index.html'), page('https://sunhaengssam.web.app/', '선행쌤'));
@@ -135,9 +135,9 @@ if (process.argv.includes('--selftest')) {
   writeFileSync(join(d, 'tools', 'index.html'), page('https://sunhaengssam.web.app/tools/', undefined, false));
   const red5 = report(checkDir(d, 'https://sunhaengssam.web.app'), '주입④');
   // 고장 주입 ⑤ 본 주소에 noindex 가 새어 들었다
-  writeFileSync(join(d, 'index.html'), page('https://ssamzip.com/'));
-  writeFileSync(join(d, 'tools', 'index.html'), page('https://ssamzip.com/tools/', undefined, true));
-  const red6 = report(checkDir(d, 'https://ssamzip.com'), '주입⑤');
+  writeFileSync(join(d, 'index.html'), page('https://ssamzip.kr/'));
+  writeFileSync(join(d, 'tools', 'index.html'), page('https://ssamzip.kr/tools/', undefined, true));
+  const red6 = report(checkDir(d, 'https://ssamzip.kr'), '주입⑤');
   console.log(`\n주입④=${red5 === 1 ? 'OK' : '✖'} · 주입⑤=${red6 === 1 ? 'OK' : '✖'}`);
   if (red5 !== 1 || red6 !== 1) process.exit(1);
   console.log(`\n주입①=${red === 1 ? 'OK' : '✖'} · 정상=${red2 === 0 ? 'OK' : '✖'} · 주입②=${red3 === 1 ? 'OK' : '✖'}`);
@@ -146,4 +146,4 @@ if (process.argv.includes('--selftest')) {
 
 const url = arg('--url');
 if (url) process.exit(report(await checkUrl(url), url));
-process.exit(report(checkDir(arg('--dir') || 'out', (arg('--expect') || 'https://ssamzip.com').replace(/\/$/, '')), arg('--expect') || 'https://ssamzip.com'));
+process.exit(report(checkDir(arg('--dir') || 'out', (arg('--expect') || 'https://ssamzip.kr').replace(/\/$/, '')), arg('--expect') || 'https://ssamzip.kr'));

@@ -9,7 +9,7 @@
  * 그래서 문마다 **자기 주소로** 빌드한다. canonical·og:url·sitemap 이 전부 이 값을 쓴다.
  * 차단이 풀리면 두 문 빌드를 그만두면 되고, 그 순간 검색 순위는 다시 본 주소로 모인다.
  */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.com').replace(/\/$/, '')
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.kr').replace(/\/$/, '')
 
 /** 본 주소로 나가는 빌드인가(두 문 빌드면 false). */
-export const IS_MAIN_SITE = SITE_URL === 'https://ssamzip.com'
+export const IS_MAIN_SITE = SITE_URL === 'https://ssamzip.kr'

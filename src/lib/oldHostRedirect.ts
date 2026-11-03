@@ -6,8 +6,8 @@
 //   두 문을 색인하지 않는다(사용자 «걸리게 해»).
 //   firebaseapp.com 은 같은 내용의 옛 별칭이라 두 문(web.app)으로 모아 준다.
 //
-// 남는 넘기기는 «같은 도메인 안에서 모으는 것»뿐이다 — www.ssamzip.com → ssamzip.com.
+// 남는 넘기기 = www·옛 본 주소(ssamzip.com) → 새 본 주소 ssamzip.kr(2026-11-03 사용자 «.com 공유하지마» — 워커가 301 로 먼저 넘기고, 이 줄은 정적 사본용 예비).
 export const OLD_HOST_REDIRECT =
   "(function(){var h=location.hostname,t=location.pathname+location.search+location.hash;" +
-  "if(h==='www.ssamzip.com'){location.replace('https://ssamzip.com'+t);return}" +
+  "if(h==='www.ssamzip.kr'||h==='ssamzip.com'||h==='www.ssamzip.com'){location.replace('https://ssamzip.kr'+t);return}" +
   "if(h==='sunhaengssam.firebaseapp.com'){location.replace('https://sunhaengssam.web.app'+t)}})()"

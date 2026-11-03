@@ -5,14 +5,16 @@
 // 🚫 2026-10-26 게임 길 전부 뺐다 — 학교 망 필터가 막힌 게임(끝까지 진화)을 이 길로 연 탓에 ssamzip.com 전체를 게임 사이트로 묶어 막았다.
 //    사용자 «선행쌤에서 도메인 주소 게임들 모두 빼자 — 선행쌤 자체가 죽으면 안 돼». games.json 은 비어 있어야 한다(check-edge-games ⑥). 🔒 tools/check-edge-games.mjs(빌드 뒤 · 목록과 sitemap·out/ 충돌 검사)
 import GAMES from './games.json'
+export const MAIN_HOST = 'ssamzip.kr'
 
 
 export default {
   async fetch(req, env) {
     const url = new URL(req.url)
-    // www·http·workers.dev 는 전부 https://ssamzip.com 한 주소로 — 구글이 같은 페이지를 여러 주소로 보지 않게
-    if (url.hostname !== 'localhost' && (url.protocol === 'http:' || url.hostname !== 'ssamzip.com')) {
-      url.protocol = 'https:'; url.hostname = 'ssamzip.com'; url.port = ''
+    // www·http·workers.dev·옛 본 주소 ssamzip.com 은 전부 https://ssamzip.kr 한 주소로(301) — 구글이 같은 페이지를 여러 주소로 보지 않게.
+    // 2026-11-03 본 주소를 ssamzip.kr 로 옮겼다(사용자 «.com 공유하지마» — .com 은 학교 망이 게임 도메인으로 묶어 막았다). 🔒 tests/edge-worker.test.ts
+    if (url.hostname !== 'localhost' && (url.protocol === 'http:' || url.hostname !== MAIN_HOST)) {
+      url.protocol = 'https:'; url.hostname = MAIN_HOST; url.port = ''
       return Response.redirect(url.toString(), 301)
     }
     const m = url.pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/)

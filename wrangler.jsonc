@@ -1,10 +1,12 @@
 {
-  // ssamzip.com — korea 계정(이름 관리와 같은 계정). 배포 = npm run deploy
+  // 본 주소 ssamzip.kr(2026-11-03~ · .com 은 301 로 넘김) — korea 계정(이름 관리와 같은 계정). 배포 = npm run deploy
   "name": "ssamzip",
   "main": "edge/worker.js",
   "compatibility_date": "2026-10-01",
   "assets": { "directory": "./out", "binding": "ASSETS", "html_handling": "auto-trailing-slash", "not_found_handling": "none", "run_worker_first": true },
   "routes": [
+    { "pattern": "ssamzip.kr", "custom_domain": true },
+    { "pattern": "www.ssamzip.kr", "custom_domain": true },
     { "pattern": "ssamzip.com", "custom_domain": true },
     { "pattern": "www.ssamzip.com", "custom_domain": true }
   ],

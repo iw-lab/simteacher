@@ -20,15 +20,31 @@ for (const [path, origin] of Object.entries(GAMES)) {
   if (existsSync(`out/${path}`)) fail(`${path}: out/${path} 가 있다 — 정적 복사본이 게임 길을 가린다`)
   if (!/^https:\/\/[a-z0-9-]+\.(pages|workers)\.dev$/.test(origin)) fail(`${path}: 원본 ${origin} 은 https://*.pages.dev|workers.dev 만`)
 }
+// ⑦ 2026-11-03 사용자 «절대 kr 에 게임 붙이지마 — 코드에 박아»: 본 주소가 ssamzip.kr 로 옮겨 갔다. 길 목록(games.json)뿐 아니라
+//    정적 빌드(out/)에 게임을 «복사해» 넣는 길도 막는다 — 10-23 jinhwa 는 복사본으로 먼저 들어왔다(sync-games).
+//    게임 엔진·학교 키트 흔적이 out/ 안 파일에 있으면 FAIL. 선행쌤은 게임으로 «나가는 링크»만 둔다.
+{
+  const { readdirSync, statSync } = await import('node:fs')
+  const MARK = /new Phaser\.Game|phaser(?:\.min)?\.js|three\.module(?:\.min)?\.js|gbGate\(|gb-school\.js|createJuice\(/
+  const walk = (d) => readdirSync(d).flatMap((f) => { const p = `${d}/${f}`; return statSync(p).isDirectory() ? walk(p) : [p] })
+  const root = process.env.EDGE_OUT_DIR || 'out'
+  if (existsSync(root)) for (const f of walk(root)) {
+    if (!/\.(html|js|mjs|xml|txt|webmanifest)$/.test(f)) continue
+    const txt = readFileSync(f, 'utf8')
+    // ⑧ 2026-11-03 «.com 공유하지마» — 빌드 결과물에 옛 본 주소 링크(https://ssamzip.com)가 남으면 FAIL(canonical·sitemap·링크 전부 .kr)
+    if (/https?:\/\/(?:www\.)?ssamzip\.com/.test(txt)) fail(`${f}: 옛 본 주소 ssamzip.com 링크가 남았다 — 선행쌤 주소는 ssamzip.kr 만 알린다`)
+    if (MARK.test(txt)) fail(`${f}: 게임 코드가 선행쌤 빌드에 들어 있다 — ssamzip.kr 에 게임 금지(학교 망이 도메인째 게임으로 묶어 막는다). 게임은 제 주소(pages.dev)에 두고 링크만`)
+  }
+}
 if (process.argv.includes('--live')) {
   const title = (h) => (h.match(/<title>([^<]*)<\/title>/) || [])[1]
   for (const [path, origin] of Object.entries(GAMES)) {
-    const [a, b] = await Promise.all([fetch(`https://ssamzip.com/${path}/`), fetch(`${origin}/`)])
+    const [a, b] = await Promise.all([fetch(`https://ssamzip.kr/${path}/`), fetch(`${origin}/`)])
     const [ha, hb] = await Promise.all([a.text(), b.text()])
     if (a.status !== 200 || !title(ha) || title(ha) !== title(hb)) fail(`${path}: ssamzip ${a.status} «${title(ha)}» ≠ 원본 ${b.status} «${title(hb)}»`)
     else console.log(`ok ${path} «${title(ha)}»`)
   }
-  for (const from of ['http://ssamzip.com/contact/', 'https://www.ssamzip.com/contact/']) {
+  for (const from of ['http://ssamzip.kr/contact/', 'https://www.ssamzip.kr/contact/', 'https://ssamzip.com/contact/', 'https://www.ssamzip.com/contact/']) {
     // 🔴 학교 망은 ssamzip.com 을 DNS 127.0.0.1 로 꺾는다(2026-10-26) — 여기서 그냥 fetch 하면
     //    ECONNREFUSED 가 «처리 안 된 예외»로 터져 배포 명령 전체가 죽는다(10-28 실측).
     //    못 재는 것과 틀린 것은 다르다 — 망 탓이면 그렇게 말하고 넘어간다(FAIL 로 세지 않는다).
@@ -42,7 +58,7 @@ if (process.argv.includes('--live')) {
       continue
     }
     const to = r.headers.get('location')
-    if (r.status !== 301 || to !== 'https://ssamzip.com/contact/') fail(`${from} → ${r.status} ${to} (기대 301 https://ssamzip.com/contact/)`)
+    if (r.status !== 301 || to !== 'https://ssamzip.kr/contact/') fail(`${from} → ${r.status} ${to} (기대 301 https://ssamzip.kr/contact/)`)
     else console.log(`ok ${from} → 301`)
   }
 }

@@ -69,12 +69,12 @@
       "redirects": [
         {
           "source": "/",
-          "destination": "https://ssamzip.com",
+          "destination": "https://ssamzip.kr",
           "type": 301
         },
         {
           "source": "/:path*",
-          "destination": "https://ssamzip.com/:path*",
+          "destination": "https://ssamzip.kr/:path*",
           "type": 301
         }
       ]
