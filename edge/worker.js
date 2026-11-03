@@ -4,7 +4,6 @@
 // 학교 망이 pages.dev·하위 도메인을 막아도 ssamzip.com 은 통과하므로 이 길로 연다(2026-10-23 끝까지 진화 실측 · 2026-10-24 사용자 «앞으로는 쌤집 아래로»).
 // 🚫 2026-10-26 게임 길 전부 뺐다 — 학교 망 필터가 막힌 게임(끝까지 진화)을 이 길로 연 탓에 ssamzip.com 전체를 게임 사이트로 묶어 막았다.
 //    사용자 «선행쌤에서 도메인 주소 게임들 모두 빼자 — 선행쌤 자체가 죽으면 안 돼». games.json 은 비어 있어야 한다(check-edge-games ⑥). 🔒 tools/check-edge-games.mjs(빌드 뒤 · 목록과 sitemap·out/ 충돌 검사)
-import GAMES from './games.json'
 export const MAIN_HOST = 'ssamzip.kr'
 
 
@@ -17,20 +16,8 @@ export default {
       url.protocol = 'https:'; url.hostname = MAIN_HOST; url.port = ''
       return Response.redirect(url.toString(), 301)
     }
-    const m = url.pathname.match(/^\/([a-z0-9-]+)(\/.*)?$/)
-    const origin = m && GAMES[m[1]]
-    if (origin) {
-      if (!m[2]) { url.pathname += '/'; return Response.redirect(url.toString(), 301) }
-      const up = new URL(m[2] + url.search, origin)
-      const res = await fetch(new Request(up, req), { redirect: 'manual' })
-      const loc = res.headers.get('location')
-      if (!loc) return res
-      // 원본이 돌려보내는 주소를 우리 길 아래로(같은 원본 안 이동만)
-      const to = new URL(loc, up)
-      if (to.origin !== new URL(origin).origin) return res
-      const h = new Headers(res.headers); h.set('location', `/${m[1]}${to.pathname}${to.search}`)
-      return new Response(res.body, { status: res.status, headers: h })
-    }
+    // 🚫 2026-11-03 게임 이어주기 코드 자체를 뺐다(사용자 «kr 은 학교 와이파이에서 절대 걸리지 않게 · 절대 게임 같은 거 걸지 마 · 코드에 박아»).
+    //    이 워커는 선행쌤 정적 페이지만 낸다 — 다른 사이트를 대신 받아 오는 길이 아예 없다. 🔒 tests/edge-worker.test.ts · tools/check-edge-games.mjs
     const res = await env.ASSETS.fetch(req)
     if (res.status !== 404) return res
     // 정적 자산에도 게임 목록에도 없는 주소 = 선행쌤 404 페이지
