@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   keywords: ['선행쌤', '쌤집', '선행샘', '선행 심선생', '심선생', '교실 놀이', '초등 수업 놀이', '초등 학습 사이트', '수업 보조 도구', '초등 교사', '바이브코딩', '에듀테크'],
   authors: [{ name: '심선생' }],
   alternates: { canonical: './' },
-  verification: { other: { 'naver-site-verification': 'e4235028c5908547841febe095942fa789e71bb0' } },
+  verification: { other: { 'naver-site-verification': ['e4235028c5908547841febe095942fa789e71bb0', '883c413fcebe372a145ef4047a758e37b3266f7d'] } },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
