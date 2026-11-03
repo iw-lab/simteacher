@@ -34,15 +34,18 @@ try {
     const m = await p.evaluate((c) => {
       const box = document.querySelector('[data-testid=live-rooms]').getBoundingClientRect()
       const a = [...document.querySelectorAll('[data-testid=live-room]')].find((x) => x.href.includes(`room=${c}`))
-      const lg = document.querySelector('[data-testid=school-league]')?.getBoundingClientRect(); const pop = document.querySelector('[data-testid=popular-strip]')?.getBoundingClientRect() || document.querySelector('main h1, h1')?.getBoundingClientRect()
-      return { top: box.top, left: box.left, bottom: box.bottom, ih: innerHeight, sw: document.documentElement.scrollWidth, iw: innerWidth, href: a.href, target: a.target, lgH: lg ? lg.height : 0, lgTop: lg ? lg.top : 0 }
+      const lg = document.querySelector('[data-testid=school-league]')?.getBoundingClientRect(); const t5 = [...document.querySelectorAll('[data-testid=school-top5]')].find((e) => e.offsetParent); const t5r = t5 ? t5.getBoundingClientRect() : null;   /* 넓은 화면·폰 두 벌 중 보이는 것 */ const card = [...document.querySelectorAll('a[data-slug], div[data-slug]')].find((e) => !e.closest('[data-testid=popular-rail]'))?.getBoundingClientRect(); const pop = document.querySelector('[data-testid=popular-strip]')?.getBoundingClientRect() || document.querySelector('main h1, h1')?.getBoundingClientRect()
+      return { top: box.top, left: box.left, bottom: box.bottom, ih: innerHeight, sw: document.documentElement.scrollWidth, iw: innerWidth, href: a.href, target: a.target, lgH: lg ? lg.height : 0, lgTop: lg ? lg.top : 0, t5H: t5r ? t5r.height : -1, t5N: t5 ? t5.querySelectorAll('li').length : 0, cardTop: card ? card.top : 1e9 }
     }, code)
     if (!(m.top >= 0 && m.top < m.ih - 60)) fails.push(`${w}: 칸이 첫 화면 밖(top ${Math.round(m.top)} / ${m.ih})`)
     // 🔒 2026-11-03 사용자 «학교 대항전이 너무 많이 차지 · 오른쪽 첫 화면에 실시간 방 · 실시간 방이 더 중요»
     if (w >= 1280) {
       if (!(m.left > m.iw * 0.6 && m.top < m.ih * 0.5)) fails.push(`${w}: 실시간 방이 오른쪽 첫 화면 위쪽이 아니다(left ${Math.round(m.left)} · top ${Math.round(m.top)})`)
-      if (m.lgH > m.ih * 0.55) fails.push(`${w}: 학교 대항전이 화면 높이의 ${Math.round((m.lgH / m.ih) * 100)}%(≤55%)`)
+      if (m.lgH > 0) fails.push(`${w}: 홈에 큰 학교 대항전 칸이 다시 생겼다(${Math.round(m.lgH)}px) — 제목 줄 «학교 종합» 한 줄만`)
+      if (m.cardTop > m.ih) fails.push(`${w}: 게임 카드가 첫 화면 밖(top ${Math.round(m.cardTop)} / ${m.ih}) — 첫 화면은 콘텐츠가 먼저`)
     } else if (m.lgTop && m.lgTop < m.top) fails.push(`${w}: 폰에서 학교 대항전이 실시간 방보다 위`)
+    // 🔒 2026-11-03 «학교 성적 너무 과해 · 1~5등 종합 순위로 간단하게» — 한 줄(≤ 44px) · 5곳
+    if (!(m.t5H > 0 && m.t5H <= 44 && m.t5N === 5)) fails.push(`${w}: 학교 종합 1~5위 한 줄이 아니다(높이 ${Math.round(m.t5H)} · ${m.t5N}곳)`)
     if (m.sw > m.iw) fails.push(`${w}: 가로 스크롤 ${m.sw} > ${m.iw}`)
     if (!m.href.startsWith(`${GAME.origin}/?room=${code}`)) fails.push(`${w}: 들어가기 주소 ${m.href}`)   /* 뒤에 &via=ssam(들어온 길 표시)은 붙어도 된다 */
     if (m.target !== '_blank') fails.push(`${w}: 새 탭이 아니다`)
@@ -54,9 +57,25 @@ try {
     if (lead.pn < 3) fails.push(`${w}: 인기 순위 카드(data-slug)를 못 찾음 ${lead.pn}`)   /* 0장이면 «빠짐 0» 이 공짜 통과 */
     if (lead.miss.length) fails.push(`${w}: 인기 순위 카드에 1위 줄 빠짐 ${lead.miss.join(',')}`)
     console.log(`  ${w}px: 1위 줄 — 최신순 ${lead.n} · 인기 ${lead.popHas}`)
-    console.log(`  ${w}px: 칸 top ${Math.round(m.top)} left ${Math.round(m.left)} · 대항전 높이 ${Math.round(m.lgH)} · ${m.href}`)
+    console.log(`  ${w}px: 칸 top ${Math.round(m.top)} left ${Math.round(m.left)} · 대항전 ${Math.round(m.lgH)} · 종합줄 ${Math.round(m.t5H)}px ${m.t5N}곳 · 첫 카드 ${Math.round(m.cardTop)} · ${m.href}`)
     await p.close()
   }
+  // 🔒 2026-11-03 «아트온 전시관도 인기 순위처럼 자동으로 넘어가고 · 순위 표시 · 좌우 단추 · 바로 하트»(수업 보조 도구)
+  { const p = await b.newPage(); await p.setViewport({ width: 1600, height: 950 })
+    await p.goto(url.replace(/\/$/, '') + '/tools/', { waitUntil: 'networkidle2', timeout: 60000 })
+    const ok2 = await p.waitForSelector('[data-testid=art-rail] [data-art]', { timeout: 15000 }).then(() => true).catch(() => false)
+    if (!ok2) fails.push('수업 보조 도구: 친구들의 작품 줄이 없다')
+    else {
+      const a = await p.evaluate(() => ({ n: document.querySelectorAll('[data-art]').length, rank: document.querySelectorAll('[data-art-rank]').length, like: document.querySelectorAll('[data-art-like]').length, prev: !!document.querySelector('[data-testid=art-prev]'), next: !!document.querySelector('[data-testid=art-next]'), x0: document.querySelector('[data-testid=art-rail]').scrollLeft, ms: Number(document.querySelector('[data-testid=art-rail]').dataset.autoMs) }))
+      await wait(a.ms + 900)
+      const x1 = await p.$eval('[data-testid=art-rail]', (e) => e.scrollLeft)
+      if (a.n > 50) fails.push(`전시관 ${a.n}점 > 50`)
+      if (a.rank !== a.n || a.like !== a.n) fails.push(`전시관 순위 ${a.rank}·하트 ${a.like} / ${a.n}`)
+      if (!a.prev || !a.next) fails.push('전시관 좌우 단추 없음')
+      if (a.n > 8 && x1 === a.x0) fails.push(`전시관 자동 넘김 안 됨(${a.x0} → ${x1})`)
+      console.log(`  전시관: ${a.n}점 · 자동 넘김 ${a.x0} → ${x1}`)
+    }
+    await p.close() }
   await post({ st: 'closed', k })
   await wait(11000)
   const left = await fetch(`${BOARD}/v1/rooms`).then((r) => r.json())

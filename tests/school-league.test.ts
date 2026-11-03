@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { findSchools, leader, mySpots, readMySchool, safeBoard, type Board, type GameBoard } from '../src/lib/school-league'
-import { safeWorks, mergeWorks } from '../src/lib/art-showcase'
+import { safeWorks, deviceId, SHOWCASE_MAX } from '../src/lib/art-showcase'
 import { readFileSync } from 'node:fs'
 
 const row = (c: string, n: string, s: number, r = '전북') => ({ c, n, r, s })
@@ -50,29 +50,33 @@ describe('학교 대항전', () => {
 })
 
 describe('친구들의 작품', () => {
-  it('id·at·likes 만 남기고 이상한 id 는 버린다 — 이름 칸이 와도 안 그린다', () => {
-    expect(safeWorks({ works: [{ id: 'abcdef12', at: 5, likes: 2, nickname: '철수', title: '우리 집' }, { id: '../x' }, null] })).toEqual([{ id: 'abcdef12', at: 5, likes: 2 }])
+  it('정해진 칸(id·at·likes·wk·fresh)만 남기고 이상한 id 는 버린다 — 이름 칸이 와도 안 그린다', () => {
+    expect(safeWorks({ works: [{ id: 'abcdef12', at: 5, likes: 2, nickname: '철수', title: '우리 집' }, { id: '../x' }, null] })).toEqual([{ id: 'abcdef12', at: 5, likes: 2, wk: 0, fresh: false }])
     expect(safeWorks(null)).toBeNull()
     expect(safeWorks({ works: [] })).toEqual([])
   })
 })
 
-// 🔒 2026-11-03 «수업 보조 도구에 아트온 작품 실시간으로» — 1분마다 다시 읽어 새 작품을 앞에 · 판이 뒤섞이지 않게 · 내려간 작품은 뺀다
+// 🔒 2026-11-03 «수업 보조 도구에 아트온 작품 실시간으로 · 하트 순 50위 · 자동 넘김·좌우 단추 · 여기서 바로 하트»
 describe('친구들의 작품 실시간', () => {
-  const w = (id: string, at: number) => ({ id, at, likes: 0 })
-  it('새로 건 작품은 앞에 · 그대로인 작품은 자리 그대로 · 내린 작품은 빠진다', () => {
-    const prev = [w('aaaaaa', 1), w('bbbbbb', 2), w('cccccc', 3)]
-    const now = [w('aaaaaa', 1), w('cccccc', 3), w('dddddd', 9), w('eeeeee', 8)]
-    expect(mergeWorks(prev, now, 8).map((x) => x.id)).toEqual(['dddddd', 'eeeeee', 'aaaaaa', 'cccccc'])
-    expect(mergeWorks(prev, now, 3).length).toBe(3)
-    expect(mergeWorks(null, now, 2).length).toBe(2)
+  it('50위까지만 · 이번 주 하트·새 작품 표시를 받는다 · 다른 칸은 버린다', () => {
+    const raw = { works: Array.from({ length: 70 }, (_, i) => ({ id: `abcdef${i}`, at: i, likes: i, wk: 1, fresh: i === 2, nick: '이름' })) }
+    const w = safeWorks(raw)!
+    expect(w.length).toBe(SHOWCASE_MAX)
+    expect(w[2].fresh).toBe(true); expect(w[0].wk).toBe(1)
+    expect(Object.keys(w[0]).sort().join()).toBe('at,fresh,id,likes,wk')
   })
-  it('수업 보조 도구에 걸려 있고 다시 읽기는 15초 이상 · 화면이 숨으면 안 읽는다', () => {
+  it('기기 번호 — 무작위 32자 · 한 번 만들면 그대로 · 이상한 값은 새로', () => {
+    const m = new Map<string, string>(); const st = { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v) }
+    const a = deviceId(st); expect(a).toMatch(/^[0-9a-f]{32}$/); expect(deviceId(st)).toBe(a)
+    m.set('ssam.did', 'x'); expect(deviceId(st)).toMatch(/^[0-9a-f]{32}$/)
+  })
+  it('수업 보조 도구에 걸려 있고 다시 읽기는 15초 이상 · 화면이 숨으면 안 읽는다 · 자동 넘김·좌우 단추·하트·숨겨 주세요', () => {
     expect(readFileSync('src/app/tools/page.tsx', 'utf8')).toMatch(/<ArtShowcase live \/>/)
     const src = readFileSync('src/components/home/ArtShowcase.tsx', 'utf8')
     const ms = Number((src.match(/SHOWCASE_POLL_MS = ([\d_]+)/)?.[1] || '0').replace(/_/g, ''))
     expect(ms).toBeGreaterThanOrEqual(15_000)
     expect(src).toMatch(/document\.hidden/)
+    for (const t of ['art-prev', 'art-next', 'data-art-like', 'data-art-report', 'useAutoRail']) expect(src).toContain(t)
   })
 })
-

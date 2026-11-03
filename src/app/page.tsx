@@ -5,7 +5,7 @@ import { Catalog } from '@/components/home/Catalog'
 import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
 import { SectionTabs } from '@/components/home/SectionTabs'
-import { SchoolLeague } from '@/components/home/SchoolLeague'
+import { SchoolTop5 } from '@/components/home/SchoolLeague'
 import type { Metadata } from 'next'
 import { SITE_URL } from '@/lib/siteUrl'
 import { HOME_TITLE, OG_BASE } from '@/lib/siteMeta'
@@ -39,24 +39,23 @@ export default function Home() {
         {/* 게임 | 수업 도구 두 갈래(2026-10-24) — 폰에선 제목 글씨를 숨기고(검색엔진에는 남긴다) 갈래 단추만 */}
         <div className="mb-4 flex items-center gap-3 whitespace-nowrap">
           <SectionTabs active="games" />
-          <h1 className="sr-only md:not-sr-only min-w-0 truncate text-base md:text-lg font-bold text-fg">교실에서 바로 쓰는 놀이·학습 사이트</h1>
-          <span className="flex-1" aria-hidden />
+          <h1 className="sr-only 2xl:not-sr-only shrink-0 text-base md:text-lg font-bold text-fg">교실에서 바로 쓰는 놀이·학습 사이트</h1>
+          {/* 학교 종합 1~5위 한 줄(2026-11-03 «학교 성적 너무 과해 · 간단하게») — 폰은 아래 줄 */}
+          <SchoolTop5 className="hidden md:flex flex-1" />
+          <span className="flex-1 md:hidden" aria-hidden />
           <Link href="/about" className="shrink-0 text-sm text-muted-fg hover:text-fg hover:underline">
             만든 사람 →
           </Link>
         </div>
+        <SchoolTop5 className="md:hidden -mt-2 mb-3" />
         {/* 2026-11-03 사용자 «학교 대항전이 너무 많이 차지 · 오른쪽 첫 화면에 실시간 방 · 실시간 방이 더 중요»
-            넓은 화면 = 인기 순위(7장 폭 그대로) 밑을 좌우로 — 왼쪽 학교 대항전(줄임) · 오른쪽 실시간 방(첫 화면 안 · 스크롤 따라옴)
-            좁은 화면 = 인기 순위 → 실시간 방 → 학교 대항전 순 · 🔒 tools/check-live-rooms.mjs */}
-        <div className="grid grid-cols-1 [grid-template-areas:'rank'_'rooms'_'league'_'rest'] xl:grid-cols-[minmax(0,1fr)_340px] xl:[grid-template-areas:'rank_rank'_'league_rooms'_'rest_rooms'] xl:gap-x-6">
+            넓은 화면 = 인기 순위(7장 폭 그대로) 밑을 좌우로 — 왼쪽 게임 목록 · 오른쪽 실시간 방(첫 화면 안 · 스크롤 따라옴)
+            좁은 화면 = 인기 순위 → 실시간 방 → 게임 목록 · 학교 대항전은 제목 줄 «학교 종합 1~5위» 한 줄뿐 · 🔒 tools/check-live-rooms.mjs */}
+        <div className="grid grid-cols-1 [grid-template-areas:'rank'_'rooms'_'rest'] xl:grid-cols-[minmax(0,1fr)_340px] xl:[grid-template-areas:'rank_rank'_'rest_rooms'] xl:gap-x-6">
           <div className="[grid-area:rank] min-w-0">
             <PopularStrip />
           </div>
           <LiveRooms className="[grid-area:rooms] mb-6 xl:mb-0 xl:self-start xl:sticky xl:top-24" />
-          <div className="[grid-area:league] min-w-0">
-            {/* 학교 대항전 — 게임마다 학교 순위를 모아 메달·1위로(2026-11-03 «경쟁심을 자극할 만하게») */}
-            <SchoolLeague />
-          </div>
           <div className="[grid-area:rest] min-w-0">
             <Catalog />
             <HomeShelves />
