@@ -1548,6 +1548,31 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/sullae.webp',
     url: 'https://sullae.pages.dev/',
   },
+  {
+    slug: 'dawnlight',
+    added: '2026-11-03T22:20',
+    name: '눈보라 마을 지키기',
+    subject: '교과 대항전',
+    category: '국어·통합',
+    tags: ['여러 과목', '공부·연습', '3D', '디펜스', '학교 대항'],
+    tagline: '화로를 지켜 겨울밤을 버티는 3D 마을 디펜스 — 맞힌 문제가 불덩이가 된다',
+    description:
+      '눈보라 치는 밤, 곰·토끼 대장이 되어 작은 마을의 화로를 지키는 3D 생존 디펜스입니다. 나무를 패 장작을 넣고, 사냥한 고기로 수프를 끓이고, 나무꾼·요리사를 고용하고, 망루·울타리를 세워 늑대 떼를 막습니다. 밤마다 «불씨» 단추를 눌러 문제를 맞히면 불덩이가 날아가 보스의 얼음을 녹입니다. 땅을 깰 때마다 다음 땅이 열려 끝없이 이어 갈 수 있고, 화로가 꺼져도 문제 3개를 맞히면 한 번 더 이어 할 수 있습니다.',
+    features: [
+      '나무 패기 · 사냥 · 수프 · 일꾼 고용 · 망루와 울타리 — 손이 하는 일이 계속 바뀐다',
+      '맞히면 불덩이 · 틀리면 잠깐 얼어붙음 — 문제가 곧 힘',
+      '끝없는 땅 — 6번째부터 깰 때마다 새 땅(5번째마다 쉬어 가는 땅)',
+      '화로가 꺼지면 «한 번 더» — 문제 3개 맞히고 그 자리에서 이어 하기',
+      '모드 4가지 — 이야기 · 시간 도전 · 끝없는 겨울 · 오늘의 규칙',
+      '수학·국어·영어·과학·사회 1~6학년 문제 8,800개',
+      '돌진 베기 · 체력바 · 대장 8명과 연구 — 조작하는 맛',
+      '학교 순위 · 가입·로그인 없음',
+    ],
+    target: '초등 1학년 이상',
+    tech: ['JavaScript', 'Three.js', 'Cloudflare Pages · Durable Objects'],
+    image: '/images/portfolio/dawnlight.webp',
+    url: 'https://dawnlight-village.pages.dev/',
+  },
 ];
 
 // 🔴 썸네일 주소 = 파일 + 내용 해시(tools/img-versions.mjs). 이미지가 1년 immutable 캐시라
