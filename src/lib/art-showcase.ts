@@ -1,4 +1,4 @@
-// 친구들의 작품(아트온 전시관) — 순수 함수. 화면은 components/home/ArtShowcase.tsx
+// 학생 작품(아트온 전시관) — 순수 함수. 화면은 components/home/ArtShowcase.tsx
 //   아트온(~/Documents/dev/iwdraw) 교사가 «선행쌤 전시관에 걸기»로 고른 작품만 · 밖으로 나오는 건 id·건 때·하트 수·새 작품 표시뿐.
 //   순서 = 아트온 서버가 정한다(이번 주 하트 순 + 걸린 지 3일 안 된 작품은 3칸마다 · 50위까지 · worker/lib/showcase-rank.ts)
 export const ARTON_ORIGIN = 'https://arton.simssijjang.workers.dev'

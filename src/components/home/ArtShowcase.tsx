@@ -18,7 +18,7 @@ const readLiked = (): Set<string> => {
   try { return new Set(JSON.parse(localStorage.getItem(LIKED_KEY) || '[]')) } catch { return new Set() }
 }
 
-/** «친구들의 작품» — 아트온에서 선생님이 고른 작품만, 그림만(이름·제목 없이).
+/** «학생 작품» — 아트온에서 선생님이 고른 작품만, 그림만(이름·제목 없이).
  *  2026-11-03 사용자: 이번 주 하트 순위(50위까지) · 새 작품은 3칸마다 자리 보장 · 인기 순위처럼 자동 넘김 + 좌우 단추 · 여기서 바로 하트 · «숨겨 주세요»
  *  전시관을 못 읽으면 칸째로 숨긴다. */
 export function ArtShowcase({ live = false }: { live?: boolean }) {
@@ -87,7 +87,7 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
       <div className="flex items-end justify-between gap-3 mb-3">
         <h2 id="art-title" className="inline-flex flex-wrap items-baseline gap-x-1.5 text-lg md:text-xl font-extrabold text-fg">
           <Palette className="w-5 h-5 text-pink-500 self-center" />
-          친구들의 작품
+          학생 작품
           <span className="text-sm font-medium text-muted-fg">이번 주 하트 순 · 새 그림은 3칸마다{works.length ? ` · ${works.length}점` : ''}</span>
         </h2>
         <a href={ARTON.url} target="_blank" rel="noopener noreferrer" onClick={go} className="shrink-0 inline-flex items-center text-sm font-semibold text-muted-fg hover:text-fg">
@@ -108,7 +108,7 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
                 <div className="group relative w-full aspect-square rounded-2xl overflow-hidden border border-line bg-white hover:border-pink-400/70 transition-colors">
                   <button type="button" onClick={() => { pause(); setBig(w) }} aria-label={`${i + 1}위 작품 크게 보기`} className="block w-full h-full">
                     {/* eslint-disable-next-line @next/next/no-img-element -- 아트온 서버 그림(정적 내보내기라 next/image 최적화 없음) */}
-                    <img src={`${ARTON_ORIGIN}/api/showcase/${w.id}`} alt="친구 작품" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300" />
+                    <img src={`${ARTON_ORIGIN}/api/showcase/${w.id}`} alt="학생 작품" loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300" />
                   </button>
                   <span data-art-rank className={`absolute top-1 left-1 min-w-6 h-6 px-1 rounded-full inline-flex items-center justify-center text-xs font-extrabold tabular-nums shadow ${i === 0 ? 'bg-amber-400 text-amber-950' : i === 1 ? 'bg-slate-300 text-slate-900' : i === 2 ? 'bg-orange-400 text-orange-950' : 'bg-black/60 text-white'}`}>
                     {i + 1}
@@ -158,7 +158,7 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
               <X className="w-5 h-5" />
             </button>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${ARTON_ORIGIN}/api/showcase/${big.id}`} alt="친구 작품" className="w-full rounded-2xl bg-white object-contain max-h-[65dvh]" />
+            <img src={`${ARTON_ORIGIN}/api/showcase/${big.id}`} alt="학생 작품" className="w-full rounded-2xl bg-white object-contain max-h-[65dvh]" />
             <div className="mt-3 flex gap-2">
               <button type="button" onClick={() => { const w = works.find((x) => x.id === big.id) ?? big; toggleLike(w) }} data-art-big-like className={`flex-1 inline-flex items-center justify-center gap-1.5 min-h-11 rounded-2xl font-bold ${liked.has(big.id) ? 'bg-pink-500 text-white' : 'bg-pink-500/15 text-pink-600 dark:text-pink-300 hover:bg-pink-500/25'}`}>
                 <Heart className={`w-4 h-4 ${liked.has(big.id) ? 'fill-current' : ''}`} /> {works.find((x) => x.id === big.id)?.likes ?? big.likes}

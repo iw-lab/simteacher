@@ -22,7 +22,7 @@ export function HomeShelves() {
 
   return (
     <div className="mt-24 space-y-10">
-      {/* 친구들의 작품 — 아트온 전시관(2026-11-03 사용자 «킹수학처럼 좋은 작품 전시 + 아트온 바로 가기 · 이름은 반드시 지우고») */}
+      {/* 학생 작품 — 아트온 전시관(2026-11-03 사용자 «킹수학처럼 좋은 작품 전시 + 아트온 바로 가기 · 이름은 반드시 지우고») */}
       <ArtShowcase />
       {works.length > 0 && (
         <section aria-labelledby="home-shelf">
