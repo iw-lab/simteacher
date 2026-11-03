@@ -80,7 +80,7 @@ describe('친구들의 작품 실시간', () => {
     expect(readFileSync('src/app/tools/page.tsx', 'utf8')).toMatch(/<ArtShowcase live \/>/)
     const src = readFileSync('src/components/home/ArtShowcase.tsx', 'utf8')
     const ms = Number((src.match(/SHOWCASE_POLL_MS = ([\d_]+)/)?.[1] || '0').replace(/_/g, ''))
-    expect(ms).toBeGreaterThanOrEqual(15_000)
+    expect(ms).toBeGreaterThanOrEqual(300_000)   // 1분 폴링이 naver 계정 하루 한도를 넘겼다(2026-11-04)
     expect(src).toMatch(/document\.hidden/)
     for (const t of ['art-prev', 'art-next', 'data-art-like', 'data-art-report', 'useAutoRail']) expect(src).toContain(t)
   })

@@ -9,7 +9,7 @@ import { useAutoRail } from '@/lib/use-auto-rail'
 
 const ARTON = learningSites.find((s) => s.slug === 'arton')
 /** 새로 건 작품을 다시 읽는 간격 — 화면이 보일 때만(서버비: 15초 미만 폴링 금지 · 전시관 대답은 엣지 캐시) */
-export const SHOWCASE_POLL_MS = 60_000
+export const SHOWCASE_POLL_MS = 300_000   /* 1분 → 5분(2026-11-04 · arton 하루 요청 1.8천 → 1.2만, naver 계정 한도 113%) */
 /** 자동으로 다음 칸으로 넘기는 간격 — 인기 순위 띠와 같게 */
 export const SHOWCASE_ADVANCE_MS = 3500
 const LIKED_KEY = 'ssam.artLiked'
