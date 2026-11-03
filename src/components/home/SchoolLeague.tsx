@@ -109,7 +109,7 @@ function SchoolPicker({ board, me, setMe }: { board: Board; me: MySchool | null;
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="우리 학교 찾기 (예: 김제 중앙)"
+          placeholder="우리 학교 이름 (예: 김제 중앙)"
           aria-label="우리 학교 찾기"
           data-testid="league-school-input"
           className="flex-1 min-w-0 bg-transparent text-sm outline-none placeholder:text-muted-fg"

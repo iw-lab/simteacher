@@ -127,6 +127,7 @@ export function Catalog() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg" aria-hidden />
           <input
             type="search"
+            data-testid="catalog-search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="이름이나 과목으로 찾기 (예: 구구단, 한국사)"

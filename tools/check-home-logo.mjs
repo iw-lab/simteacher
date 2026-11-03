@@ -49,7 +49,7 @@ async function checkHome(page, base) {
 
   // ① 찾는 말을 넣어 목록을 좁히고 ② 한참 내려간다
   const typed = await page.evaluate(() => {
-    const i = document.querySelector('input[type="search"], input[placeholder*="찾"]');
+    const i = document.querySelector('[data-testid="catalog-search"]');
     if (!i) return false;
     const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
     setter.call(i, '구구');
@@ -75,7 +75,7 @@ async function checkHome(page, base) {
   const after = await page.evaluate(() => ({
     y: Math.round(window.scrollY),
     cards: document.querySelectorAll('[data-slug]').length,
-    q: (document.querySelector('input[type="search"], input[placeholder*="찾"]') || {}).value ?? '',
+    q: (document.querySelector('[data-testid="catalog-search"]') || {}).value ?? '',
     path: location.pathname,
   }));
 
