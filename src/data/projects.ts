@@ -1500,6 +1500,29 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/ochunnyeon.webp',
     url: 'https://ochunnyeon.pages.dev/',
   },
+  {
+    slug: 'sullae',
+    added: '2026-11-03T19:00',
+    name: '술래가 번진다',
+    subject: '교과 대항전',
+    category: '국어·통합',
+    tags: ['여러 과목', '액션', '학교 대항'],
+    tagline: '잡히면 나도 술래 — 한 반 30명이 한 판에서 뛰는 감염 술래잡기',
+    description:
+      '밤의 학교에서 손전등을 든 아이들이 초록 슬라임 술래를 피해 달아나는 감염 술래잡기입니다. 잡힌 아이는 그 자리에서 술래가 되어 같은 편을 쫓습니다. 한 방에 최대 30명까지 들어오고, 사람이 모자란 자리는 봇이 채워 혼자서도 바로 시작할 수 있습니다. 판을 열기 전 문제를 풀어 이용권을 얻습니다.',
+    features: [
+      '한 방 최대 30명 — 인원이 많아지면 첫 술래·경찰 수가 함께 늘어 균형을 맞춤',
+      '규칙 6가지 — 감염 술래 · 얼음땡 · 경찰과 도둑 · 끝까지 도망 · 무한 생존 · 오늘의 판',
+      '숨을 곳 · 열쇠 · 탈출문이 있는 밤의 학교 지도',
+      '«우리 반 방» 코드로 친구끼리 — 열린 방은 선행쌤 «지금 열린 방»에 뜸',
+      '판 전에 문제를 풀어 이용권 · 학교 순위',
+      '가입·로그인 없음',
+    ],
+    target: '초등 3학년 이상',
+    tech: ['JavaScript', 'Vite', 'Cloudflare Pages · Workers · Durable Objects'],
+    image: '/images/portfolio/sullae.webp',
+    url: 'https://sullae.pages.dev/',
+  },
 ];
 
 // 🔴 썸네일 주소 = 파일 + 내용 해시(tools/img-versions.mjs). 이미지가 1년 immutable 캐시라
