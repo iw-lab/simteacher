@@ -35,8 +35,8 @@ const MAIN = 'https://ssamzip.com';
 // 두 문은 «홈 하나만» 검색에 잡힌다 — 하위 페이지가 잡히면 네이버가 두 문 대표로 «포트폴리오»를 띄웠다(2026-11-02 사용자 «문의말고 이거부터»).
 //   두 문 하위 = noindex,follow · 두 문 홈 = 색인 · 본 주소 = 어디도 noindex 아님(관리·404 빼고)
 const NOINDEX = /<meta[^>]*name="robots"[^>]*content="[^"]*noindex/i;
-// 소유 확인 파일(google….html·naver….html)은 문서가 아니다
-const NOINDEX_OK = /(^|\/)(admin|404|_not-found)(\/|\.html$)|(^|\/)404\.html$|(^|\/)(google|naver)[0-9a-f]+\.html$/;
+// 소유 확인 파일(google….html·naver….html)은 문서가 아니다 · /go = 게임 방 멀티 통로(2026-11-03, 검색에 나올 이유 없음)
+const NOINDEX_OK = /(^|\/)(admin|404|_not-found|go)(\/|\.html$)|(^|\/)404\.html$|(^|\/)(google|naver)[0-9a-f]+\.html$/;
 function robotsBad(h, isMirror, isRoot, where) {
   const no = NOINDEX.test(h);
   if (isRoot && no) return [`${where} 홈이 noindex`];

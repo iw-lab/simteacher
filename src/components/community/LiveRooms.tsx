@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Radio, Users } from 'lucide-react'
 import { recordClick } from '@/lib/community'
 import { learningSites } from '@/data/projects'
+import { viaSsam } from '@/lib/via-ssam'
 import { ROOM_BOARD, ROOMS_POLL_MS, safeRooms, type LiveRoom } from '@/lib/live-rooms'
 
 const BY_SLUG = new Map(learningSites.map((s) => [s.slug, s]))
@@ -29,7 +30,7 @@ export function LiveRooms({ className = '' }: { className?: string }) {
         .then((r) => r.json())
         .then((j) => {
           if (!alive) return
-          setRooms(safeRooms(j, (g) => BY_SLUG.get(g)?.url))
+          setRooms(safeRooms(j, (g) => BY_SLUG.get(g)?.url).map((r) => ({ ...r, url: viaSsam(r.url) })))
           setNow(Date.now())
         })
         .catch(() => alive && setRooms((prev) => prev ?? []))

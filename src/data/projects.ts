@@ -1,4 +1,5 @@
 import imageVersions from './imageVersions.json';
+import { viaSsam } from '../lib/via-ssam';
 // 학습 사이트 목록 — 모든 내용은 각 프로젝트 저장소(README/docs/소스)에서 확인된 사실만 기재.
 // 수치를 바꿀 땐 반드시 원본 저장소에서 근거를 재확인할 것.
 
@@ -1508,3 +1509,6 @@ for (const x of [...teacherTools, ...learningSites]) {
   const v = versions[x.image];
   if (v) x.image = `${x.image}?v=${v}`;
 }
+
+// 🔑 게임 링크에 «선행쌤을 거쳐 왔다» 표시 — 방 멀티는 선행쌤에서 온 기기만 열린다(lib/via-ssam.ts · 2026-11-03).
+for (const x of learningSites) x.url = viaSsam(x.url);
