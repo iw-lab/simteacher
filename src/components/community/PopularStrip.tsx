@@ -7,6 +7,7 @@ import { fetchRecentCounts, fetchTotalCountsOnce, recordClick } from '@/lib/comm
 import { rankByClicks } from '@/lib/ranking'
 import { learningSites } from '@/data/projects'
 import { rankingSites } from '@/lib/catalog'
+import { CardLeader } from '@/components/home/SchoolLeague'
 
 // 게임·수업 도구 통합 순위(2026-10-24 «인기 순위는 그대로 통합으로») — 게임 칸에서 뺀 도구도 여기엔 선다
 const ALL = rankingSites(learningSites)
@@ -122,6 +123,7 @@ export function PopularStrip() {
           >
             {site ? (
               <a
+                data-slug={site.slug}
                 href={site.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -159,6 +161,7 @@ export function PopularStrip() {
                   <p className="text-xs text-muted-fg/80 tabular-nums line-clamp-1">
                     누적 {(totals[site.slug] ?? 0).toLocaleString()}번
                   </p>
+                  <CardLeader slug={site.slug} compact />
                 </div>
               </a>
             ) : (

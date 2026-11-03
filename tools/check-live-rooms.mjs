@@ -34,13 +34,27 @@ try {
     const m = await p.evaluate((c) => {
       const box = document.querySelector('[data-testid=live-rooms]').getBoundingClientRect()
       const a = [...document.querySelectorAll('[data-testid=live-room]')].find((x) => x.href.includes(`room=${c}`))
-      return { top: box.top, bottom: box.bottom, ih: innerHeight, sw: document.documentElement.scrollWidth, iw: innerWidth, href: a.href, target: a.target }
+      const lg = document.querySelector('[data-testid=school-league]')?.getBoundingClientRect(); const pop = document.querySelector('[data-testid=popular-strip]')?.getBoundingClientRect() || document.querySelector('main h1, h1')?.getBoundingClientRect()
+      return { top: box.top, left: box.left, bottom: box.bottom, ih: innerHeight, sw: document.documentElement.scrollWidth, iw: innerWidth, href: a.href, target: a.target, lgH: lg ? lg.height : 0, lgTop: lg ? lg.top : 0 }
     }, code)
     if (!(m.top >= 0 && m.top < m.ih - 60)) fails.push(`${w}: 칸이 첫 화면 밖(top ${Math.round(m.top)} / ${m.ih})`)
+    // 🔒 2026-11-03 사용자 «학교 대항전이 너무 많이 차지 · 오른쪽 첫 화면에 실시간 방 · 실시간 방이 더 중요»
+    if (w >= 1280) {
+      if (!(m.left > m.iw * 0.6 && m.top < m.ih * 0.5)) fails.push(`${w}: 실시간 방이 오른쪽 첫 화면 위쪽이 아니다(left ${Math.round(m.left)} · top ${Math.round(m.top)})`)
+      if (m.lgH > m.ih * 0.55) fails.push(`${w}: 학교 대항전이 화면 높이의 ${Math.round((m.lgH / m.ih) * 100)}%(≤55%)`)
+    } else if (m.lgTop && m.lgTop < m.top) fails.push(`${w}: 폰에서 학교 대항전이 실시간 방보다 위`)
     if (m.sw > m.iw) fails.push(`${w}: 가로 스크롤 ${m.sw} > ${m.iw}`)
-    if (m.href !== `${GAME.origin}/?room=${code}`) fails.push(`${w}: 들어가기 주소 ${m.href}`)
+    if (!m.href.startsWith(`${GAME.origin}/?room=${code}`)) fails.push(`${w}: 들어가기 주소 ${m.href}`)   /* 뒤에 &via=ssam(들어온 길 표시)은 붙어도 된다 */
     if (m.target !== '_blank') fails.push(`${w}: 새 탭이 아니다`)
-    console.log(`  ${w}px: 칸 top ${Math.round(m.top)} · ${m.href}`)
+    // 🔒 2026-11-03 «학교 순위 있는 게임은 인기 순위에도 최신순처럼 이번 주 1위를» — 최신순 카드에 1위 줄이 있는 게임은 인기 순위 카드에도
+    await p.waitForSelector('[data-slug] [data-card-leader]', { timeout: 15000 }).catch(() => null)
+    const lead = await p.evaluate(() => { const has = (el) => !!el.querySelector('[data-card-leader]'); const cat = new Map([...document.querySelectorAll('div[data-slug], a[data-slug]')].filter((e) => !e.closest('[data-testid=popular-rail]')).map((e) => [e.dataset.slug, has(e)]));
+      const pop = [...document.querySelectorAll('[data-testid=popular-rail] a[data-slug]')].map((e) => ({ s: e.dataset.slug, has: has(e) })); return { pn: pop.length, n: [...cat.values()].filter(Boolean).length, miss: pop.filter((q) => cat.get(q.s) && !q.has).map((q) => q.s), popHas: pop.filter((q) => q.has).length }; })
+    if (!lead.n) fails.push(`${w}: 최신순 카드에 이번 주 1위 줄이 하나도 없다(판을 못 읽음?)`)
+    if (lead.pn < 3) fails.push(`${w}: 인기 순위 카드(data-slug)를 못 찾음 ${lead.pn}`)   /* 0장이면 «빠짐 0» 이 공짜 통과 */
+    if (lead.miss.length) fails.push(`${w}: 인기 순위 카드에 1위 줄 빠짐 ${lead.miss.join(',')}`)
+    console.log(`  ${w}px: 1위 줄 — 최신순 ${lead.n} · 인기 ${lead.popHas}`)
+    console.log(`  ${w}px: 칸 top ${Math.round(m.top)} left ${Math.round(m.left)} · 대항전 높이 ${Math.round(m.lgH)} · ${m.href}`)
     await p.close()
   }
   await post({ st: 'closed', k })

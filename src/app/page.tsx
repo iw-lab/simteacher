@@ -45,14 +45,18 @@ export default function Home() {
             만든 사람 →
           </Link>
         </div>
-        {/* 지금 열린 온라인 방 = 넓은 화면은 인기 순위 밑 오른쪽 칸(스크롤을 따라 내려옴 · 순위 줄 7장 폭은 그대로) · 좁은 화면은 인기 순위 바로 밑 */}
-        <div className="grid grid-cols-1 [grid-template-areas:'rank'_'rooms'_'rest'] xl:grid-cols-[minmax(0,1fr)_300px] xl:[grid-template-areas:'rank_rank'_'rest_rooms'] xl:gap-x-6">
+        {/* 2026-11-03 사용자 «학교 대항전이 너무 많이 차지 · 오른쪽 첫 화면에 실시간 방 · 실시간 방이 더 중요»
+            넓은 화면 = 인기 순위(7장 폭 그대로) 밑을 좌우로 — 왼쪽 학교 대항전(줄임) · 오른쪽 실시간 방(첫 화면 안 · 스크롤 따라옴)
+            좁은 화면 = 인기 순위 → 실시간 방 → 학교 대항전 순 · 🔒 tools/check-live-rooms.mjs */}
+        <div className="grid grid-cols-1 [grid-template-areas:'rank'_'rooms'_'league'_'rest'] xl:grid-cols-[minmax(0,1fr)_340px] xl:[grid-template-areas:'rank_rank'_'league_rooms'_'rest_rooms'] xl:gap-x-6">
           <div className="[grid-area:rank] min-w-0">
             <PopularStrip />
-            {/* 학교 대항전 — 게임마다 학교 순위를 모아 메달·1위로(2026-11-03 사용자 «경쟁심을 자극할 만하게») */}
+          </div>
+          <LiveRooms className="[grid-area:rooms] mb-6 xl:mb-0 xl:self-start xl:sticky xl:top-24" />
+          <div className="[grid-area:league] min-w-0">
+            {/* 학교 대항전 — 게임마다 학교 순위를 모아 메달·1위로(2026-11-03 «경쟁심을 자극할 만하게») */}
             <SchoolLeague />
           </div>
-          <LiveRooms className="[grid-area:rooms] mb-8 xl:mb-0 xl:self-start xl:sticky xl:top-24" />
           <div className="[grid-area:rest] min-w-0">
             <Catalog />
             <HomeShelves />

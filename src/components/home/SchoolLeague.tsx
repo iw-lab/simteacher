@@ -12,7 +12,7 @@ import {
 
 const SITE = new Map(learningSites.map((s) => [s.slug, s]))
 /** 처음에 보이는 게임 1위 칸 수 — 나머지는 «모두 보기» */
-const FIRST = 8
+const FIRST = 6   /* 2026-11-03 «학교 대항전이 너무 많이 차지» — 8 → 6 */
 
 /** 판 한 벌을 여러 칸이 같이 쓴다(요청은 한 번) — 못 읽으면 null 그대로(칸이 숨는다) */
 export function useBoard(): Board | null {
@@ -62,21 +62,21 @@ function MedalCount({ m }: { m: Medal }) {
 /** 시상대 — 2·1·3 순서로 세우고 1위 단이 가장 높다 */
 function Podium({ medals, me }: { medals: Medal[]; me: string | undefined }) {
   const order = [1, 0, 2].map((i) => medals[i]).filter(Boolean)
-  const h = ['h-16', 'h-24', 'h-12']
+  const h = ['h-7', 'h-10', 'h-5']   /* 시상대 낮게(칸 높이 줄이기) */
   return (
-    <div className="flex items-end justify-center gap-2 sm:gap-3 pt-2" data-testid="league-podium">
+    <div className="flex items-end justify-center gap-2 sm:gap-3 pt-1" data-testid="league-podium">
       {order.map((m) => {
         const rank = medals.indexOf(m)
         return (
           <div key={m.c} className={`flex-1 max-w-[9.5rem] flex flex-col items-center ${rank === 0 ? 'league-pop' : ''}`}>
-            <span className={`text-3xl sm:text-4xl ${rank === 0 ? 'league-bob' : ''}`} aria-hidden>{MEDAL[rank]}</span>
-            <span className={`mt-1 w-full text-center text-sm sm:text-base font-extrabold leading-tight line-clamp-2 ${m.c === me ? 'text-primary-600 dark:text-primary-300' : 'text-fg'}`}>
+            <span className={`text-2xl ${rank === 0 ? 'league-bob' : ''}`} aria-hidden>{MEDAL[rank]}</span>
+            <span className={`mt-0.5 w-full text-center text-sm font-extrabold leading-tight line-clamp-1 ${m.c === me ? 'text-primary-600 dark:text-primary-300' : 'text-fg'}`}>
               {m.n}
             </span>
             <span className="text-[11px] text-muted-fg">{m.r}</span>
             <MedalCount m={m} />
             <div
-              className={`mt-1.5 w-full ${h[rank]} rounded-t-xl flex items-start justify-center pt-1.5 text-lg font-black text-white/95 shadow-inner ${
+              className={`mt-1 w-full ${h[rank]} rounded-t-lg flex items-start justify-center pt-0.5 text-sm font-black text-white/95 shadow-inner ${
                 rank === 0 ? 'bg-gradient-to-b from-amber-300 to-amber-500' : rank === 1 ? 'bg-gradient-to-b from-slate-300 to-slate-400' : 'bg-gradient-to-b from-orange-300 to-orange-500'
               }`}
             >
@@ -214,15 +214,15 @@ export function SchoolLeague() {
   // 1위가 있는 게임 먼저(그 기간 이용 많은 순은 워커가 세웠다)
   const shown = [...games].sort((a, b) => Number(!!leader(b, span)) - Number(!!leader(a, span)))
   const list = all ? shown : shown.slice(0, FIRST)
-  const top = board.medals.slice(0, 8)
+  const top = board.medals.slice(0, 5)   /* 시상대 3 + 4·5위 */
   const meMedal = me ? board.medals.findIndex((m) => m.c === me.c) : -1
 
   return (
-    <section aria-labelledby="league-title" data-testid="school-league" className="mb-10 relative overflow-hidden rounded-3xl border border-amber-400/40 bg-gradient-to-br from-amber-400/15 via-card to-primary-500/10 p-4 md:p-6 shadow-sm">
+    <section aria-labelledby="league-title" data-testid="school-league" className="mb-8 relative overflow-hidden rounded-2xl border border-amber-400/40 bg-gradient-to-br from-amber-400/15 via-card to-primary-500/10 p-3 md:p-4 shadow-sm">
       <div className="league-shine pointer-events-none absolute inset-0" aria-hidden />
-      <div className="relative flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
-        <h2 id="league-title" className="inline-flex items-center gap-2 text-xl md:text-2xl font-black text-fg">
-          <Trophy className="w-6 h-6 text-amber-500 league-bob" />
+      <div className="relative flex flex-wrap items-center gap-x-3 gap-y-2 mb-2">
+        <h2 id="league-title" className="inline-flex items-center gap-2 text-lg font-black text-fg">
+          <Trophy className="w-5 h-5 text-amber-500 league-bob" />
           학교 대항전
         </h2>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 px-2.5 py-0.5 text-xs font-bold">
@@ -238,7 +238,7 @@ export function SchoolLeague() {
         </span>
       </div>
 
-      <div className="relative grid gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,8fr)]">
+      <div className="relative grid gap-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,8fr)]">
         <div className="min-w-0">
           <h3 className="text-sm font-extrabold text-fg mb-1">이번 주 메달 순위 <span className="font-medium text-muted-fg">· 게임마다 1~3위 학교에 금·은·동</span></h3>
           {top.length ? (
@@ -246,14 +246,14 @@ export function SchoolLeague() {
               <Podium medals={top} me={me?.c} />
               <ol start={4} className="mt-2 divide-y divide-line rounded-xl border border-line bg-card/70 overflow-hidden">
                 {top.slice(3).map((m, i) => (
-                  <li key={m.c} className={`flex items-center gap-2 px-3 min-h-9 text-sm ${m.c === me?.c ? 'bg-primary-500/10' : ''}`}>
+                  <li key={m.c} className={`flex items-center gap-2 px-3 min-h-8 text-sm ${m.c === me?.c ? 'bg-primary-500/10' : ''}`}>
                     <span className="w-5 text-right font-black tabular-nums text-muted-fg">{i + 4}</span>
                     <span className="font-bold text-fg truncate">{m.n}</span>
                     <span className="text-[11px] text-muted-fg">{m.r}</span>
                     <span className="ml-auto"><MedalCount m={m} /></span>
                   </li>
                 ))}
-                {meMedal >= 8 && me && (
+                {meMedal >= 5 && me && (
                   <li className="flex items-center gap-2 px-3 min-h-9 text-sm bg-primary-500/10">
                     <span className="w-5 text-right font-black tabular-nums text-primary-600 dark:text-primary-300">{meMedal + 1}</span>
                     <span className="font-bold text-fg truncate">{me.n}</span>
@@ -265,7 +265,7 @@ export function SchoolLeague() {
           ) : (
             <p className="py-6 text-center text-sm text-muted-fg">이번 주 첫 메달을 기다리고 있어요</p>
           )}
-          <div className="mt-3">
+          <div className="mt-2">
             <SchoolPicker board={board} me={me} setMe={setMe} />
             {me && <MySummary board={board} me={me} />}
           </div>
@@ -285,10 +285,10 @@ export function SchoolLeague() {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {/* 폰은 접힌 동안 4칸만(첫 화면 아래 게임 목록이 너무 밀리지 않게) */}
-            {list.map((g, i) => <GameLeader key={g.slug} g={g} site={SITE.get(g.slug)!} span={span} me={me?.c} className={!all && i >= 4 ? 'max-sm:hidden' : ''} />)}
+            {/* 폰은 접힌 동안 3칸만(첫 화면 아래 게임 목록이 너무 밀리지 않게) */}
+            {list.map((g, i) => <GameLeader key={g.slug} g={g} site={SITE.get(g.slug)!} span={span} me={me?.c} className={!all && i >= 3 ? 'max-sm:hidden' : ''} />)}
           </div>
-          {shown.length > 4 && (
+          {shown.length > 3 && (
             <button type="button" onClick={() => setAll(!all)} data-testid="league-more" className={`mt-2 w-full min-h-10 rounded-xl border border-line bg-card/70 text-sm font-bold text-muted-fg hover:text-fg ${shown.length > FIRST ? '' : 'sm:hidden'}`}>
               {all ? '접기' : `게임 ${shown.length}개 모두 보기`}
             </button>
@@ -299,17 +299,24 @@ export function SchoolLeague() {
   )
 }
 
-/** 게임 카드 한 줄 — 학교 허브가 있는 게임이면 이번 주 1위 학교(없으면 아무것도 안 그린다) */
-export function CardLeader({ slug }: { slug: string }) {
+/** 게임 카드 한 줄 — 학교 순위가 있는 게임이면 이번 주 1위 학교(아직 없으면 «첫 1위 도전»). 학교 순위가 없는 게임은 아무것도 안 그린다.
+ *  인기 순위 띠·최신순 목록 두 곳이 같이 쓴다(2026-11-03 «멀티 아니어도 학교 순위 있는 게임은 모두 표시») */
+export function CardLeader({ slug, compact = false }: { slug: string; compact?: boolean }) {
   const board = useBoard()
   const g = board?.games.find((x) => x.slug === slug)
-  const l = g && leader(g, 'week')
-  if (!l) return null
+  if (!g) return null
+  const l = leader(g, 'week')
   return (
-    <p data-card-leader className="mt-2 inline-flex items-center gap-1 text-xs min-w-0">
+    <p data-card-leader className={`${compact ? 'mt-0.5' : 'mt-2'} flex items-center gap-1 text-xs min-w-0`}>
       <Crown className="w-3.5 h-3.5 text-amber-500 shrink-0" aria-hidden />
-      <span className="text-muted-fg shrink-0">이번 주 1위</span>
-      <b className="text-fg truncate">{l.top.n}</b>
+      {l ? (
+        <>
+          <span className="text-muted-fg shrink-0">{compact ? '주 1위' : '이번 주 1위'}</span>
+          <b className="text-fg truncate">{l.top.n}</b>
+        </>
+      ) : (
+        <span className="text-muted-fg truncate">{compact ? '1위 도전!' : '이번 주 1위 자리 비었어요 — 첫 1위 도전!'}</span>
+      )}
     </p>
   )
 }
