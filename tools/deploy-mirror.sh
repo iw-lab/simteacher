@@ -23,3 +23,6 @@ echo "▶ 본 주소로 되돌려 빌드(out/ 오염 방지)"
 npm run build
 node tools/check-two-doors.mjs --dir out --expect https://ssamzip.kr
 echo "✅ 두 문 배포 끝 — $MIRROR · out/ 은 본 주소로 복구됨"
+
+# 옛 .com 문도 같이 새 내용으로(사람엔 열림·검색엔 noindex·.kr 글자 0) — 2026-11-03
+bash tools/deploy-com.sh
