@@ -15,6 +15,8 @@ export default {
     // 🚫 옛 ssamzip.com 은 .kr 로 넘기지 않는다 — 학교 필터가 .com 을 게임으로 묶어 막았으니, .com→.kr 넘김이 있으면 필터가 넘김을 따라가 .kr 까지
     //    같은 갈래로 묶을 수 있다(사용자 11-03 «닷컴을 kr 로 넘기면 게임 사이트로 걸리지 않냐 · 또 막히게 하면 화낸다»). .com 은 링크·넘김 없는 410 만 낸다.
     if (/(^|\.)ssamzip\.com$/.test(url.hostname)) return new Response('Gone', { status: 410, headers: { 'content-type': 'text/plain; charset=utf-8', 'x-robots-tag': 'noindex' } })
+    // 🚫 .kr 로 넘기는 건 www.ssamzip.kr·http 뿐 — 그 밖의 어떤 도메인이 이 워커에 붙어도(막힌 도메인·게임 도메인) .kr 로 넘기지 않고 410(11-03 «절대 게임이나 학교 와이파이에 막힌 도메인을 kr 에 걸지 마»)
+    if (url.hostname !== 'localhost' && url.hostname !== MAIN_HOST && url.hostname !== 'www.' + MAIN_HOST) return new Response('Gone', { status: 410, headers: { 'content-type': 'text/plain; charset=utf-8', 'x-robots-tag': 'noindex' } })
     if (url.hostname !== 'localhost' && (url.protocol === 'http:' || url.hostname !== MAIN_HOST)) {
       url.protocol = 'https:'; url.hostname = MAIN_HOST; url.port = ''
       return Response.redirect(url.toString(), 301)

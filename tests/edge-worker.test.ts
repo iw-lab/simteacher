@@ -16,6 +16,13 @@ describe('앞문 워커', () => {
       expect(await r.text(), from).not.toMatch(/ssamzip\.kr/)
     }
   })
+  it('그 밖의 어떤 도메인도 .kr 로 넘기지 않는다(막힌 게임 도메인·workers.dev 등) — 410', async () => {
+    for (const from of ['https://jinhwa.pages.dev/', 'https://kkeutjinhwa.pages.dev/x', 'https://ssamzip.simssijjang-korea.workers.dev/']) {
+      const r = await go(from)
+      expect(r.status, from).toBe(410)
+      expect(r.headers.get('location'), from).toBeNull()
+    }
+  })
   it('www·http 는 https://ssamzip.kr 같은 길로 301', async () => {
     for (const from of ['https://www.ssamzip.kr/tools/', 'http://ssamzip.kr/tools/']) {
       const r = await go(from)
