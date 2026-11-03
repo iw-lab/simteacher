@@ -32,7 +32,8 @@ for (const [path, origin] of Object.entries(GAMES)) {
     if (!/\.(html|js|mjs|xml|txt|webmanifest)$/.test(f)) continue
     const txt = readFileSync(f, 'utf8')
     // ⑧ 2026-11-03 «.com 공유하지마» — 빌드 결과물에 옛 본 주소 링크(https://ssamzip.com)가 남으면 FAIL(canonical·sitemap·링크 전부 .kr)
-    if (/https?:\/\/(?:www\.)?ssamzip\.com/.test(txt)) fail(`${f}: 옛 본 주소 ssamzip.com 링크가 남았다 — 선행쌤 주소는 ssamzip.kr 만 알린다`)
+    //    단 옛 .com 문 빌드(NEXT_PUBLIC_SITE_URL=https://ssamzip.com · tools/deploy-com.sh)는 자기 주소라 예외 — 그 빌드는 .com 에만 올라가고 전부 noindex, 대신 .kr 글자 0 검사(check-two-doors .com 모드)
+    if (process.env.NEXT_PUBLIC_SITE_URL !== 'https://ssamzip.com' && /https?:\/\/(?:www\.)?ssamzip\.com/.test(txt)) fail(`${f}: 옛 본 주소 ssamzip.com 링크가 남았다 — 선행쌤 주소는 ssamzip.kr 만 알린다`)
     if (MARK.test(txt)) fail(`${f}: 게임 코드가 선행쌤 빌드에 들어 있다 — ssamzip.kr 에 게임 금지(학교 망이 도메인째 게임으로 묶어 막는다). 게임은 제 주소(pages.dev)에 두고 링크만`)
   }
 }

@@ -16,7 +16,8 @@ import { useCallback, useEffect, useState } from 'react'
 type State = 'ing' | 'ok' | 'blocked' | 'slow'
 
 const TARGETS = [
-  { host: 'ssamzip.kr', label: '선행쌤 본 주소', path: '/icon-48.png' },
+  // 옛 .com 문 빌드엔 .kr 을 싣지 않는다(학교 필터가 게임으로 묶은 .com 과 .kr 을 잇지 않는다 · 11-03)
+  ...(process.env.NEXT_PUBLIC_COM_DOOR === '1' ? [] : [{ host: 'ssamzip.kr', label: '선행쌤 본 주소', path: '/icon-48.png' }]),
   { host: 'sunhaengssam.web.app', label: '선행쌤 두 문', path: '/icon-48.png' },
   { host: 'tajawangguk.pages.dev', label: '타자왕국(놀이)', path: '/favicon.ico' },
   { host: 'jinhwa.pages.dev', label: '끝까지 진화(놀이)', path: '/favicon.ico' },

@@ -7,7 +7,8 @@
 //   firebaseapp.com 은 같은 내용의 옛 별칭이라 두 문(web.app)으로 모아 준다.
 //
 // 남는 넘기기 = www.ssamzip.kr → ssamzip.kr 뿐. 🚫 옛 ssamzip.com 은 .kr 로 넘기지 않는다(11-03 — 게임으로 막힌 .com 과 .kr 을 잇지 않는다).
+// 옛 .com 문 빌드(tools/deploy-com.sh)엔 .kr 줄을 싣지 않는다 — 환경값을 여기서 바로 읽어야 빌드가 접어 지운다
 export const OLD_HOST_REDIRECT =
   "(function(){var h=location.hostname,t=location.pathname+location.search+location.hash;" +
-  "if(h==='www.ssamzip.kr'){location.replace('https://ssamzip.kr'+t);return}" +
+  (process.env.NEXT_PUBLIC_COM_DOOR === '1' ? '' : "if(h==='www.ssamzip.kr'){location.replace('https://ssamzip.kr'+t);return}") +
   "if(h==='sunhaengssam.firebaseapp.com'){location.replace('https://sunhaengssam.web.app'+t)}})()"

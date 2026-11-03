@@ -25,20 +25,34 @@ const OGURL = /<meta[^>]*property="og:url"[^>]*content="([^"]+)"/i;
 // 두 문 제목 표시 — 검색 결과에서 본 주소 바로 아래 뜰 때 학교에서 어느 쪽을 누를지(2026-10-30 사용자 «제목에»)
 const MARK = '(학교와이파이 막힌경우)';
 const TITLE = /<title>([^<]*)<\/title>/i;
-function titleBad(h, isMirror, where) {
+function titleBad(h, isMirror, where, isCom = false) {
   const t = TITLE.exec(h)?.[1] || '';
+  if (isCom) return t.includes(MARK) ? [`${where} .com 문 제목에 ${MARK}: ${t}`] : [];
   if (isMirror && !t.includes(MARK)) return [`${where} 두 문 제목에 ${MARK} 없음: ${t}`];
   if (!isMirror && t.includes(MARK)) return [`${where} 본 주소 제목에 ${MARK}: ${t}`];
   return [];
 }
 const MAIN = 'https://ssamzip.kr';
+// 옛 .com 문(2026-11-03 사용자 «.com 에서 사이트 그대로 · 언젠간 자연스럽게 교체»): 제목 표시 없음 · 홈까지 전부 noindex ·
+//   🚫 어떤 파일에도 .kr 글자 0(학교 필터가 게임으로 묶은 .com 과 .kr 을 잇지 않는다 — 사용자 11-03 «절대 kr 을 걸지 마»)
+const COM = 'https://ssamzip.com';
+const KR_RE = /ssamzip\.kr/i;
+function krLeaks(dir, out = []) {
+  for (const e of readdirSync(dir)) {
+    const p = join(dir, e);
+    if (statSync(p).isDirectory()) krLeaks(p, out);
+    else if (/\.(html|js|txt|xml|json|css|webmanifest|rsc)$/i.test(e) && KR_RE.test(readFileSync(p, 'utf8'))) out.push(p);
+  }
+  return out;
+}
 // 두 문은 «홈 하나만» 검색에 잡힌다 — 하위 페이지가 잡히면 네이버가 두 문 대표로 «포트폴리오»를 띄웠다(2026-11-02 사용자 «문의말고 이거부터»).
 //   두 문 하위 = noindex,follow · 두 문 홈 = 색인 · 본 주소 = 어디도 noindex 아님(관리·404 빼고)
 const NOINDEX = /<meta[^>]*name="robots"[^>]*content="[^"]*noindex/i;
 // 소유 확인 파일(google….html·naver….html)은 문서가 아니다 · /go = 게임 방 멀티 통로(2026-11-03, 검색에 나올 이유 없음)
 const NOINDEX_OK = /(^|\/)(admin|404|_not-found|go)(\/|\.html$)|(^|\/)404\.html$|(^|\/)(google|naver)[0-9a-f]+\.html$/;
-function robotsBad(h, isMirror, isRoot, where) {
+function robotsBad(h, isMirror, isRoot, where, isCom = false) {
   const no = NOINDEX.test(h);
+  if (isCom) return no ? [] : [`${where} .com 문 페이지가 색인된다(noindex 없음)`];
   if (isRoot && no) return [`${where} 홈이 noindex`];
   if (!isRoot && isMirror && !no) return [`${where} 두 문 하위 페이지가 색인된다(noindex 없음)`];
   if (!isRoot && !isMirror && no && !NOINDEX_OK.test(where)) return [`${where} 본 주소 페이지가 noindex`];
@@ -64,9 +78,9 @@ function checkDir(dir, expect) {
     const o = OGURL.exec(h)?.[1];
     if (c && !c.startsWith(expect)) bad.push(`${f} canonical=${c}`);
     if (o && !o.startsWith(expect)) bad.push(`${f} og:url=${o}`);
-    if (f === join(dir, 'index.html')) bad.push(...titleBad(h, expect !== MAIN, f));
+    if (f === join(dir, 'index.html')) bad.push(...titleBad(h, expect !== MAIN, f, expect === COM));
     const rel = f.slice(dir.length + 1);
-    if (!NOINDEX_OK.test(rel)) bad.push(...robotsBad(h, expect !== MAIN, f === join(dir, 'index.html'), f));
+    if (!NOINDEX_OK.test(rel) || (expect === COM && !/(^|\/)(google|naver)[0-9a-f]+\.html$/.test(rel))) bad.push(...robotsBad(h, expect !== MAIN, f === join(dir, 'index.html'), f, expect === COM));
   }
   // 사이트맵·robots 도 같은 주소를 가리켜야 한다
   const sm = join(dir, 'sitemap.xml');
@@ -77,6 +91,7 @@ function checkDir(dir, expect) {
     const locs = [...s.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
     if (expect !== MAIN && (locs.length !== 1 || locs[0] !== `${expect}/`)) bad.push(`두 문 sitemap.xml 은 홈 하나여야 한다 (${locs.length}개)`);
   }
+  if (expect === COM) for (const f of krLeaks(dir)) bad.push(`${f} 에 .kr 글자가 있다(.com 문은 .kr 을 가리키면 안 된다)`);
   const rb = join(dir, 'robots.txt');
   if (existsSync(rb)) {
     const line = readFileSync(rb, 'utf8').split('\n').find((l) => l.startsWith('Sitemap:'));
@@ -94,8 +109,9 @@ async function checkUrl(url) {
     const c = CANON.exec(h)?.[1];
     if (!c) bad.push(`${p} canonical 이 없다`);
     else if (!c.startsWith(base)) bad.push(`${p} canonical=${c} (자기 주소가 아니다)`);
-    if (p === '/') bad.push(...titleBad(h, base !== MAIN, p));
-    bad.push(...robotsBad(h, base !== MAIN, p === '/', p));
+    if (p === '/') bad.push(...titleBad(h, base !== MAIN, p, base === COM));
+    bad.push(...robotsBad(h, base !== MAIN, p === '/', p, base === COM));
+    if (base === COM && KR_RE.test(h)) bad.push(`${p} 에 .kr 글자가 있다`);
   }
   const rb = await fetch(base + '/robots.txt').then((r) => r.text()).catch(() => '');
   const line = rb.split('\n').find((l) => l.startsWith('Sitemap:'));

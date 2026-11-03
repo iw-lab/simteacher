@@ -18,7 +18,9 @@ describe('주소 정리', () => {
     expect(run('sunhaengssam.firebaseapp.com')).toHaveBeenCalledWith('https://sunhaengssam.web.app/tools/')
   })
   it('www 는 ssamzip.kr 로 모으고, 본 주소는 그대로 · 옛 .com 은 .kr 로 넘기지 않는다(11-03)', () => {
-    expect(run('www.ssamzip.kr')).toHaveBeenCalledWith('https://ssamzip.kr/tools/')
+    if (process.env.NEXT_PUBLIC_COM_DOOR === '1') {   // 옛 .com 문 빌드 — .kr 줄 자체가 없다(tools/deploy-com.sh)
+      expect(OLD_HOST_REDIRECT).not.toMatch(/ssamzip\.kr/)
+    } else expect(run('www.ssamzip.kr')).toHaveBeenCalledWith('https://ssamzip.kr/tools/')
     for (const h of ['ssamzip.kr', 'ssamzip.com', 'www.ssamzip.com']) expect(run(h), h).not.toHaveBeenCalled()
   })
 })

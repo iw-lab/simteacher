@@ -53,3 +53,4 @@ ui-debug.log
 *.swo
 /public/jinhwa/
 .live-rooms-done
+/out-com/

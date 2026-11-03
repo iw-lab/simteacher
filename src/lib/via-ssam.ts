@@ -1,9 +1,10 @@
 // 선행쌤에서 게임으로 나가는 링크에 «선행쌤을 거쳐 왔다» 표시(?via=ssam)를 붙인다.
 // 게임 쪽 키트 gb-ssam-pass.js 가 이 표시를 보고 «방 만들어 하는 멀티»를 연다(2026-11-03 사용자 «방 멀티는 선행쌤에서만»).
 // referrer 로는 안 된다 — 우리 링크는 전부 rel="noreferrer" 라 게임이 어디서 왔는지 못 본다.
+// 옛 .com 문 빌드엔 .kr 글자를 싣지 않는다(빌드 때 상수로 접힌다) — 🔒 tools/check-two-doors.mjs(.com 모드)
 export const SSAM_HOSTS = [
   'sunhaengssam.web.app', 'sunhaengssam.firebaseapp.com',
-  'ssamzip.com', 'www.ssamzip.com', 'ssamzip.kr', 'www.ssamzip.kr',
+  'ssamzip.com', 'www.ssamzip.com', ...(process.env.NEXT_PUBLIC_COM_DOOR === '1' ? [] : ['ssamzip.kr', 'www.ssamzip.kr']),
 ]
 
 export function viaSsam(url: string): string

@@ -8,11 +8,11 @@ import { SectionTabs } from '@/components/home/SectionTabs'
 import { SchoolTop5 } from '@/components/home/SchoolLeague'
 import type { Metadata } from 'next'
 import { SITE_URL } from '@/lib/siteUrl'
-import { HOME_TITLE, OG_BASE } from '@/lib/siteMeta'
+import { HOME_TITLE, OG_BASE, HOME_ROBOTS } from '@/lib/siteMeta'
 
 export const metadata: Metadata = {
   openGraph: { ...OG_BASE, title: HOME_TITLE, description: '초등 교사 심선생이 만든 교실 놀이·학습 사이트·선생님 프로그램 모음' },
-  robots: { index: true, follow: true }, // 두 문에서도 홈은 잡힌다(레이아웃 MIRROR_ROBOTS 를 되돌림)
+  robots: HOME_ROBOTS, // 두 문에서도 홈은 잡힌다(레이아웃 MIRROR_ROBOTS 를 되돌림) · 옛 .com 문은 noindex
 }
 
 // 구글에 «이 사이트 대표 = 홈»을 알린다(사이트 이름 선행쌤) — 포트폴리오가 대표로 뜨던 일(2026-10-24)
