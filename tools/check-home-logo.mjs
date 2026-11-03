@@ -113,8 +113,11 @@ async function checkTapFeedback(page, base) {
   await page.mouse.click(logo.cx, logo.cy);
   await new Promise((r) => setTimeout(r, 120));      // 반응 한가운데
   const during = await shot();
-  await new Promise((r) => setTimeout(r, 900));      // 가라앉은 뒤
-  const settled = await shot();
+  // 가라앉기 — 고정 0.9초였더니 빌드 중(load 30+)엔 애니메이션이 덜 끝나 거짓 빨강(2026-11-03 세 번째).
+  //   3초까지 0.25초마다 보고 «원래 모습»이 한 번이라도 나오면 통과. 끝내 안 돌아오면 빨강(--selftest 가 그 경우를 만든다).
+  if (process.argv.includes('--selftest')) await page.evaluate(() => { const a = [...document.querySelectorAll('a')].find((x) => /선행\s*쌤/.test(x.textContent || '')); if (a) a.style.outline = '6px solid red'; });
+  let settled = null;
+  for (let t = 0; t < 12; t++) { await new Promise((r) => setTimeout(r, 250)); settled = await shot(); if (settled === before) break; }
 
   const bad = [];
   if (during === before) bad.push('처음 상태에서 눌렀는데 화소가 하나도 안 바뀐다(반응 없음)');
