@@ -15,6 +15,11 @@ describe('앞문 워커', () => {
       expect(r.headers.get('location'), from).toBe('https://ssamzip.kr/tools/')
     }
   })
+  it('검색엔진 소유확인 파일은 .html 그대로 200(네이버가 307 을 실패로 본다)', async () => {
+    const r = await go('https://ssamzip.kr/naver01d9419e1d76eb7de28e0fdc56c2456a.html')
+    expect(r.status).toBe(200)
+    expect(env.ASSETS.fetch.mock.calls.at(-1)![0].url).toBe('https://ssamzip.kr/naver01d9419e1d76eb7de28e0fdc56c2456a')
+  })
   it('본 주소는 정적 페이지를 그대로 낸다', async () => {
     expect((await go('https://ssamzip.kr/tools/')).status).toBe(200)
   })

@@ -18,6 +18,11 @@ export default {
     }
     // 🚫 2026-11-03 게임 이어주기 코드 자체를 뺐다(사용자 «kr 은 학교 와이파이에서 절대 걸리지 않게 · 절대 게임 같은 거 걸지 마 · 코드에 박아»).
     //    이 워커는 선행쌤 정적 페이지만 낸다 — 다른 사이트를 대신 받아 오는 길이 아예 없다. 🔒 tests/edge-worker.test.ts · tools/check-edge-games.mjs
+    // 검색엔진 소유확인 파일(naver….html · google….html)은 «.html 그대로» 200 이어야 한다 — 정적 자산 설정(auto-trailing-slash)이 .html 을 떼는 307 을 줘서 네이버 소유확인이 실패한다(2026-11-03)
+    if (/^\/(naver|google)[0-9a-f]+\.html$/.test(url.pathname)) {
+      const v = await env.ASSETS.fetch(new Request(new URL(url.pathname.replace(/\.html$/, ''), url), req))
+      if (v.ok) return new Response(v.body, { status: 200, headers: { 'content-type': 'text/html; charset=utf-8' } })
+    }
     const res = await env.ASSETS.fetch(req)
     if (res.status !== 404) return res
     // 정적 자산에도 게임 목록에도 없는 주소 = 선행쌤 404 페이지
