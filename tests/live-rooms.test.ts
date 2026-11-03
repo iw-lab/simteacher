@@ -3,7 +3,7 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 
-import { safeRooms, ROOMS_POLL_MS } from '../src/lib/live-rooms'
+import { safeRooms, ROOMS_POLL_MS, roomStatus } from '../src/lib/live-rooms'
 
 const LISTED = (g: string) => (g === 'racket-rush' ? 'https://racket-rush.vercel.app' : undefined)
 const read = (p: string) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8')
@@ -25,5 +25,12 @@ describe('지금 열린 온라인 방', () => {
   it('목록 폴링은 15초 이상 · 화면이 숨으면 안 읽는다', () => {
     expect(ROOMS_POLL_MS).toBeGreaterThanOrEqual(15_000)
     expect(read('src/components/community/LiveRooms.tsx')).toMatch(/if \(document\.hidden\) return/)
+  })
+  // 2026-11-03 «중간에 들어올 수 있는 멀티 게임도 시작하고 중간에 들어올 수 있게 방 표시되니?»
+  it('진행 중 방(st:play)은 «게임 중 · 중간 입장», 기다리는 방은 «N분째 기다림»', () => {
+    expect(roomStatus(room({ st: 'play', since: 0 }), 10 * 60_000)).toBe('게임 중 · 중간 입장')
+    expect(roomStatus(room({ st: 'wait', since: 0 }), 3 * 60_000)).toBe('3분째 기다림')
+    expect(roomStatus(room({ since: 0 }), 10_000)).toBe('방금 열림')
+    expect(read('src/components/community/LiveRooms.tsx')).toMatch(/roomStatus\(r, now\)/)
   })
 })

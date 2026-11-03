@@ -6,14 +6,9 @@ import { Radio, Users } from 'lucide-react'
 import { recordClick } from '@/lib/community'
 import { learningSites } from '@/data/projects'
 import { viaSsam } from '@/lib/via-ssam'
-import { ROOM_BOARD, ROOMS_POLL_MS, safeRooms, type LiveRoom } from '@/lib/live-rooms'
+import { ROOM_BOARD, ROOMS_POLL_MS, roomStatus, safeRooms, type LiveRoom } from '@/lib/live-rooms'
 
 const BY_SLUG = new Map(learningSites.map((s) => [s.slug, s]))
-
-function waited(since: number, now: number) {
-  const m = Math.max(0, Math.floor((now - since) / 60_000))
-  return m < 1 ? '방금 열림' : `${m}분째 기다림`
-}
 
 /** 지금 열린 온라인 방 — 넓은 화면은 오른쪽 칸(따라 내려옴), 폰·태블릿은 인기 순위 바로 밑.
  *  2026-10-23 사용자 «학생들이 온라인방 찾으러 각 게임에 가지 않고 그곳에서 누르면 바로 입장» */
@@ -63,7 +58,7 @@ export function LiveRooms({ className = '' }: { className?: string }) {
         <p className="mt-2 text-sm text-muted-fg">불러오는 중…</p>
       ) : !has ? (
         <p data-testid="live-rooms-empty" className="mt-1 text-sm text-muted-fg">
-          기다리는 방이 없어요. 놀이에서 방을 만들면 여기에 떠요.
+          열린 방이 없어요. 놀이에서 방을 만들면 여기에 떠요.
         </p>
       ) : (
         <ul className="mt-2 flex gap-2 overflow-x-auto no-scrollbar xl:flex-col xl:overflow-visible xl:max-h-[calc(100vh-10rem)] xl:overflow-y-auto">
@@ -90,7 +85,7 @@ export function LiveRooms({ className = '' }: { className?: string }) {
                     <span className="block text-sm font-bold text-fg line-clamp-1">{site?.name.split(' ').filter((w) => /[가-힣]/.test(w)).join(' ') || r.title}</span>
                     <span className="flex items-center gap-1 text-xs text-muted-fg tabular-nums">
                       <Users className="w-3.5 h-3.5" />
-                      {r.n}/{r.max}명 · {waited(r.since, now)}
+                      <span className="leading-snug">{r.n}/{r.max}명 · <b className={r.st === 'play' ? 'text-amber-600 dark:text-amber-400' : 'font-normal'}>{roomStatus(r, now)}</b></span>
                     </span>
                   </span>
                   <span className="shrink-0 rounded-lg bg-emerald-500 px-2.5 py-1.5 text-sm font-extrabold text-white group-hover:bg-emerald-600">

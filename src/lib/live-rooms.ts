@@ -12,6 +12,8 @@ export interface LiveRoom {
   max: number
   url: string
   since: number
+  /** 'play' = 판이 시작됐지만 중간에 들어갈 수 있는 방(게시판 games.js late) · 없으면 기다리는 방 */
+  st?: 'wait' | 'play'
 }
 
 /** 게시판 응답을 믿지 않는다 — 들어가는 주소는 https 이고, 등재된 게임이면 등재 주소와 같은 호스트여야 한다.
@@ -29,4 +31,11 @@ export function safeRooms(raw: unknown, listedUrl: (slug: string) => string | un
       return false
     }
   })
+}
+
+/** 방 칸의 작은 글씨 — 진행 중(중간 입장) 방은 기다린 시간 대신 «게임 중» */
+export function roomStatus(r: Pick<LiveRoom, 'st' | 'since'>, now: number): string {
+  if (r.st === 'play') return '게임 중 · 중간 입장'
+  const m = Math.max(0, Math.floor((now - r.since) / 60_000))
+  return m < 1 ? '방금 열림' : `${m}분째 기다림`
 }
