@@ -136,9 +136,9 @@ export const learningSites: LearningSite[] = [
       '광고·과금·개인정보 수집 없음',
     ],
     target: '초등 고학년',
-    tech: ['Vite', 'Phaser 3', 'Cloudflare Workers · Durable Objects'],
+    tech: ['Vite', 'Three.js', 'Phaser 3', 'Cloudflare Pages · Workers · Durable Objects'],
     image: '/images/portfolio/parabola-crew.webp',
-    url: 'https://parabola-crew.vercel.app/',
+    url: 'https://parabola-crew.pages.dev/',
   },
   {
     slug: 'gulp-planet',
