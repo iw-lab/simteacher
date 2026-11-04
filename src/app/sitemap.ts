@@ -8,7 +8,7 @@ export const dynamic = 'force-static'
 export default function sitemap(): MetadataRoute.Sitemap {
   // 두 문은 홈 하나만(하위 페이지는 noindex) — 🔒 tools/check-two-doors.mjs
   if (!IS_MAIN_SITE) return [{ url: `${SITE_URL}/`, changeFrequency: 'weekly', priority: 1 }]
-  const pages = ['', 'tools/', 'library/', 'music/', 'portfolio/', 'blog/', 'about/', 'contact/', 'ranks/'].map((p) => ({
+  const pages = ['', 'tools/', 'teacher/', 'library/', 'music/', 'portfolio/', 'blog/', 'about/', 'contact/', 'ranks/'].map((p) => ({
     url: `${SITE_URL}/${p}`,
     changeFrequency: 'weekly' as const,
     priority: p === '' ? 1 : 0.7,

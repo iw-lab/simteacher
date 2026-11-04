@@ -13,10 +13,23 @@ const html = (p: string) => readFileSync(`${OUT}/${p}`, 'utf8')
 const slugsIn = (h: string) => [...h.matchAll(/data-slug="([^"]+)"/g)].map((m) => m[1])
 
 describe('빌드 HTML — 게임 ↔ 수업 도구', () => {
-  const home = html('index.html'), tools = html('tools/index.html')
-  it('/tools 에 수업 도구 사이트 + 책상 프로그램이 전부', () => {
-    const want = [...classToolSites(learningSites), ...teacherTools].map((s) => s.slug).sort()
+  const home = html('index.html'), tools = html('tools/index.html'), teacher = html('teacher/index.html')
+  // 2026-11-04 사용자 «수업 보조 도구 오른쪽에 선생님 도구 탭을 추가하고 선생님 책상 프로그램을 그쪽으로 옮기자»
+  it('/tools 에는 수업 도구 사이트만(책상 프로그램은 없다)', () => {
+    const want = classToolSites(learningSites).map((s) => s.slug).sort()
     expect([...new Set(slugsIn(tools))].sort()).toEqual(want)
+  })
+  it('/teacher 에 선생님 책상 프로그램이 전부 · 수업 도구 사이트는 없다', () => {
+    expect([...new Set(slugsIn(teacher))].sort()).toEqual(teacherTools.map((s) => s.slug).sort())
+  })
+  it('갈래 단추 순서 = 교실 놀이 · 수업 보조 도구 · 선생님 도구(세 쪽 모두) · /teacher 에서 선생님 도구가 현재 탭', () => {
+    for (const h of [home, tools, teacher]) {
+      const a = h.indexOf('data-testid="tab-games"'), b = h.indexOf('data-testid="tab-tools"'), c = h.indexOf('data-testid="tab-teacher"')
+      expect(a).toBeGreaterThan(-1); expect(b).toBeGreaterThan(a); expect(c).toBeGreaterThan(b)
+    }
+    expect(teacher).toMatch(/data-testid="tab-teacher"[^>]*aria-current="page"|aria-current="page"[^>]*data-testid="tab-teacher"/)
+    const site = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.kr').replace(/\/$/, '')
+    if (site === 'https://ssamzip.kr') expect(html('sitemap.xml')).toContain(`${site}/teacher/`)
   })
   it('홈 카드 = 게임 쪽 전부, 도구뿐인 곳·책상 프로그램은 없다', () => {
     const got = new Set(slugsIn(home))

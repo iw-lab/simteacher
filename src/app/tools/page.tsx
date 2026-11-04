@@ -5,7 +5,7 @@ import { ArtShowcase } from '@/components/home/ArtShowcase'
 
 export const metadata: Metadata = {
   title: '수업 보조 도구',
-  description: '교실 추첨·투표·미술·수학 교구 등 쉬는 시간·자투리 시간에 쓰는 무료 수업 보조 도구와 선생님 책상 프로그램',
+  description: '교실 추첨·투표·미술·수학 교구·계기교육 등 쉬는 시간·자투리 시간에 교실 화면에 바로 띄우는 무료 수업 보조 도구',
 }
 
 // 교실 보조 도구(옛 «수업 도구») — 게임 옆 정식 갈래(2026-10-24 사용자 «수업도구는 게임 사이트 옆으로 정식 종목으로 빼자»)

@@ -196,7 +196,7 @@ export function Catalog() {
         </div>
       </section>
 
-      {/* ── 수업 도구는 따로 칸(/tools) — 선생님 책상 프로그램도 그쪽으로 갔다(2026-10-24) ── */}
+      {/* ── 수업 도구는 따로 칸(/tools) · 선생님 책상 프로그램은 /teacher(2026-11-04) ── */}
       <section id="class-tools-link" className="scroll-mt-24">
         <Link
           href="/tools/"
@@ -207,7 +207,7 @@ export function Catalog() {
               <span className="gradient-text">수업 보조 도구</span>는 따로 모았어요
             </span>
             <span className="mt-1 block text-sm md:text-[15px] text-muted-fg">
-              뽑기·투표·타자·수학 교구·계기교육, 그리고 선생님 책상 프로그램
+              뽑기·투표·타자·수학 교구·계기교육 — 선생님 책상 프로그램은 «선생님 도구» 탭에
             </span>
           </span>
           <ArrowRight className="shrink-0 w-6 h-6 text-primary-600 dark:text-primary-300" />
