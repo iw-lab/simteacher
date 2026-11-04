@@ -119,6 +119,28 @@ export const teacherTools: TeacherTool[] = [
 
 export const learningSites: LearningSite[] = [
   {
+    slug: 'parabola-crew',
+    added: '2026-11-04T16:00',
+    name: '포물선 요새단',
+    subject: '수학·과학',
+    category: '수학',
+    tags: ['수학', '과학', '보드·놀이'],
+    tagline: '각도와 힘을 맞춰 포물선으로 쏘는 차례 포격 대전 — 친구와 최대 8명 온라인',
+    description:
+      '드래그로 각도와 힘을 정해 쏘면 포탄이 포물선을 그리며 날아가는 차례 포격 게임입니다. 조준 자체가 각도·힘·바람을 어림하는 실습이고, 9턴마다 한 장 나오는 학습 카드가 그 경험을 수학·과학 개념으로 잇습니다. 동물 요새단 8종 중 하나를 골라 친구와 방 코드로 겨룹니다.',
+    features: [
+      '드래그로 각도·힘 조준 → 물리 계산대로 포물선 비행 · 바람·날씨 예보 공개',
+      '온라인 1:1 · 개인전 · 2:2 · 4:4 (최대 8명) · 방 코드 · 선행쌤 «지금 열린 온라인 방»',
+      '동물 요새단 8종 · 맵 4곳',
+      '학습 카드는 9턴마다 1장(22초) — 게임을 끊지 않는 보조, 건너뛸 수 있다',
+      '광고·과금·개인정보 수집 없음',
+    ],
+    target: '초등 고학년',
+    tech: ['Vite', 'Phaser 3', 'Cloudflare Workers · Durable Objects'],
+    image: '/images/portfolio/parabola-crew.webp',
+    url: 'https://parabola-crew.vercel.app/',
+  },
+  {
     slug: 'gulp-planet',
     added: '2026-11-04T15:30',
     name: '꿀꺽 행성',
