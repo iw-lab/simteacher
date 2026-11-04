@@ -20,7 +20,7 @@ export function Footer() {
             <p className="text-muted-fg mb-4 max-w-md leading-relaxed">
               선행쌤(선행샘) — 쉬는 시간·자투리 시간에 교실에서 쓰는 학습 놀이·수업 보조 도구·선생님 프로그램 모음.
               <br />
-              만든 사람: 초등교사 심선생
+              만든 사람: 전북 초등교사 심선생
             </p>
             {/* Social Links */}
             <div className="flex space-x-4">

@@ -37,6 +37,18 @@ for (const [path, origin] of Object.entries(GAMES)) {
     if (MARK.test(txt)) fail(`${f}: 게임 코드가 선행쌤 빌드에 들어 있다 — ssamzip.kr 에 게임 금지(학교 망이 도메인째 게임으로 묶어 막는다). 게임은 제 주소(pages.dev)에 두고 링크만`)
   }
 }
+/** 우리 엣지(Cloudflare)를 거친 응답이 아니면 true — 망의 차단 화면을 «배포 결함»으로 세지 않는다 */
+function interceptedByNetwork(h) { return !h.get('cf-ray') }
+if (process.argv.includes('--selftest')) {
+  const H = (o) => new Headers(o)
+  const cases = [
+    [H({ 'content-type': 'text/html', connection: 'close' }), true],          // 학교 망 차단 화면(실측 머리)
+    [H({ 'cf-ray': '8f1a-ICN', location: 'https://ssamzip.kr/contact/' }), false], // 정상 301
+    [H({ 'cf-ray': '8f1a-ICN', 'content-type': 'text/html' }), false],         // 우리 엣지가 200 을 줬다 = 진짜 결함 → FAIL 로 가야 한다
+  ]
+  for (const [h, want] of cases) if (interceptedByNetwork(h) !== want) fail(`selftest: cf-ray=${h.get('cf-ray')} → ${!want} (기대 ${want})`)
+  console.log(`selftest ${bad ? 'FAIL' : 'PASS'} ${cases.length}칸`); process.exit(bad ? 1 : 0)
+}
 if (process.argv.includes('--live')) {
   const title = (h) => (h.match(/<title>([^<]*)<\/title>/) || [])[1]
   for (const [path, origin] of Object.entries(GAMES)) {
@@ -58,6 +70,9 @@ if (process.argv.includes('--live')) {
       fail(`${from} → 못 받았다: ${String(e?.cause ?? e).slice(0, 80)}`)
       continue
     }
+    // 🔴 학교 망은 http(80)을 가로채 자기 차단 화면(euc-kr · 200)을 준다(2026-11-04 실측 — 같은 때 curl 은 301).
+    //    우리 응답은 늘 Cloudflare 를 거쳐 cf-ray 가 붙는다 — 없으면 우리 응답이 아니다(못 잰 것, 틀린 것 아님).
+    if (interceptedByNetwork(r.headers)) { console.log(`⚪ ${from} — 이 망이 가로채 자기 화면을 줬다(cf-ray 없음 · ${r.status}). 배포 문제 아님`); continue }
     const to = r.headers.get('location')
     if (r.status !== 301 || to !== 'https://ssamzip.kr/contact/') fail(`${from} → ${r.status} ${to} (기대 301 https://ssamzip.kr/contact/)`)
     else console.log(`ok ${from} → 301`)

@@ -39,7 +39,7 @@ export default function AboutPage() {
             안녕하세요, 선행쌤을 만든 <span className="gradient-text">심선생</span>입니다
           </h1>
           <p className="mt-6 text-lg text-muted-fg max-w-2xl mx-auto">
-            초등학교 교사이자 바이브코딩 개발자.
+            전북 초등학교 교사이자 바이브코딩 개발자.
             먼저 배워서 나누고, 선한 영향력을 전합니다.
           </p>
         </motion.div>
