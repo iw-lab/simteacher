@@ -119,6 +119,26 @@ export const teacherTools: TeacherTool[] = [
 
 export const learningSites: LearningSite[] = [
   {
+    slug: 'gulp-planet',
+    added: '2026-11-04T15:30',
+    name: '꿀꺽 행성',
+    subject: '교과 통합',
+    category: '미술·놀이',
+    tags: ['액션', '3D'],
+    tagline: '먹을수록 몸이 커지고 위성이 도는 3D 대전 — 정답 열매를 먹으면 힘이 세진다',
+    description:
+      '하늘에 뜬 작은 섬에서 둥근 꿀꺽이가 도토리부터 간판까지 삼키며 커지는 3D 아케이드입니다. 삼킨 것들이 위성이 되어 몸 주위를 돌고, 위성 수가 곧 힘입니다. 섬 곳곳의 별별 나무에 열린 문제의 정답 열매를 먹으면 부스트를 받습니다. 혼자 타임어택을 하거나, 한 키보드로 둘이서, 또는 온라인 방에서 함께 겨룹니다.',
+    features: [
+      '실제로 먹은 물건이 궤도에 뜨는 위성 — 위성 수가 곧 힘',
+      '혼자 타임어택 · 키보드 한 대 2인 분할 화면 · 폰은 번갈아 하기 · 온라인 최대 8인 방',
+      '문제는 시간을 뺏지 않고 힘을 준다 — 정답 열매 = 꿀꺽 부스트',
+    ],
+    target: '초등 1~6학년',
+    tech: ['JavaScript', 'Three.js', 'Cloudflare Pages · Durable Objects'],
+    image: '/images/portfolio/gulp-planet.webp',
+    url: 'https://gulp-planet.pages.dev/',
+  },
+  {
     slug: 'koreahis',
     added: '2026-09-07T09:21',
     name: '한국사 문제은행',
@@ -1222,6 +1242,30 @@ export const learningSites: LearningSite[] = [
     tech: ['JavaScript', 'Canvas', 'd3-geo', 'Cloudflare Pages · Workers · Durable Objects'],
     image: '/images/portfolio/tajawangguk.webp',
     url: 'https://tajawangguk.pages.dev/',
+  },
+  {
+    slug: 'kkeutjinhwa',
+    added: '2026-10-18T10:27',
+    name: '끝까지 진화',
+    subject: '5과목 통합',
+    category: '국어·통합',
+    tags: ['여러 과목', '액션', '3D', '학교 대항'],
+    tagline: '원시 세포로 태어나 바다에서 뭍으로 — 먹고, 진화하고, 마지막 한 생명까지 버티는 실시간 생존 게임',
+    description:
+      '원시 세포로 태어나 해파리·삼엽충·물고기를 거쳐 뭍으로 올라오고, 공룡 같은 정점 생물까지 진화하는 실시간 생존 게임입니다. 멈추면 배가 빨리 고프고, 몸이 커질수록 더 많이 먹어야 해서 큰 생물일수록 사냥꾼이 됩니다. 시대가 바뀔 때마다 화산·빙하기 같은 대멸종이 와서 살 곳과 먹잇감이 줄어들고, 마지막까지 살아남은 한 생명이 이깁니다. 게임 시간은 문제를 풀어서 법니다 — 5문제 중 4개를 맞히면 생존권 1장(10분)이고, 판 안에서는 게임만 합니다.',
+    features: [
+      '진화 7단계 · 몸 18가지 — 원시 세포 → 해파리·납작벌레 → 삼엽충 → 원시 어류 → 상륙 생물 → 원시 파충류 → 정점 생물, 단계마다 갈래를 골라 능력이 달라진다',
+      '규칙이 곧 생물학 — 대사는 몸무게의 0.75제곱(클라이버 법칙)이라 큰 몸일수록 배고프고, 해수면이 내려가며 «언제 뭍으로 올라가나»가 핵심 결정',
+      '모드 5종 — 5분 번개 · 10분 급속 · 30분 한 시대 · 60분 대진화(사람이 모자라면 로봇이 자리를 채운다) · 컴퓨터와 연습(문제 없이)',
+      '문제 4,122개(수학 1,974 · 영어 1,415 · 과학 271 · 국어 262 · 사회 200, 3~6학년) — 5문제 중 4개 정답이면 생존권 1장 = 10분',
+      '온라인 공개 방·친구 방(방 코드) — 선행쌤 «지금 열린 온라인 방»에서 바로 들어간다(친구 방은 학교 점수 없음)',
+      '계정·개인정보 없음 — 판 안 이름은 생성 별명, 학교는 NEIS 목록에서 고르기만, 순위에는 학교별 합계만 보인다',
+    ],
+    target: '초등 3~6학년',
+    tech: ['JavaScript', 'Three.js', 'Cloudflare Pages · Workers · Durable Objects · D1'],
+    image: '/images/portfolio/kkeutjinhwa.webp',
+    // 🔴 링크만 — 선행쌤 도메인 아래 게임 길로 잇지 않는다(check-edge-games). 옛 주소 kkeutjinhwa 는 학교 망이 막아 jinhwa 로 옮겼다(10-29).
+    url: 'https://jinhwa.pages.dev/',
   },
   {
     slug: 'gongbu-snack',
