@@ -958,7 +958,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 3~6학년',
     tech: ['JavaScript', 'Three.js', 'Adobe Firefly', 'Cloudflare Pages/Durable Objects'],
     image: '/images/portfolio/schoolstars.webp',
-    url: 'https://school-stars.pages.dev/',
+    url: 'https://school-stars-kr.pages.dev/',
   },
   {
     slug: 'mulkko',
