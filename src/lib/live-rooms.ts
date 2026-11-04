@@ -26,7 +26,8 @@ export function safeRooms(raw: unknown, listedUrl: (slug: string) => string | un
     try {
       const u = new URL(r.url)
       const listed = listedUrl(r.g)
-      return u.protocol === 'https:' && (!listed || new URL(listed).host === u.host)
+      // 🔴 등재된 게임만 — 목록에서 뺀 게임(끝까지 진화: 학교 망이 막아 10-26 내림)의 방이 썸네일 없이 떴다(2026-11-04)
+      return u.protocol === 'https:' && !!listed && new URL(listed).host === u.host
     } catch {
       return false
     }

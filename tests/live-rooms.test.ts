@@ -19,8 +19,8 @@ describe('지금 열린 온라인 방', () => {
     const ok = safeRooms({ rooms: [room({}), room({ url: 'https://evil.example/?room=AB12' }), room({ url: 'javascript:alert(1)' }), room({ url: 'http://racket-rush.vercel.app/?room=1' })] }, LISTED)
     expect(ok.map((r) => r.url)).toEqual(['https://racket-rush.vercel.app/?room=AB12'])
     expect(safeRooms(null, LISTED)).toEqual([])
-    // 등재 안 된 게임(감염 술래잡기 등)은 https 만 확인
-    expect(safeRooms({ rooms: [room({ g: 'sullae', url: 'https://sullae.pages.dev/?room=X1' })] }, LISTED)).toHaveLength(1)
+    // 등재 안 된 게임(목록에서 뺀 끝까지 진화 등)의 방은 안 띄운다 — 2026-11-04 썸네일 없는 방 3칸
+    expect(safeRooms({ rooms: [room({ g: 'kkeutjinhwa', url: 'https://jinhwa.pages.dev/?room=X1' })] }, LISTED)).toHaveLength(0)
   })
   it('목록 폴링은 15초 이상 · 화면이 숨으면 안 읽는다', () => {
     expect(ROOMS_POLL_MS).toBeGreaterThanOrEqual(15_000)
