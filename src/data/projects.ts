@@ -1499,6 +1499,28 @@ export const learningSites: LearningSite[] = [
     url: 'https://dokkaebi-circuit.pages.dev/',
   },
   {
+    slug: 'modulab',
+    added: '2026-11-06T09:00',
+    name: '모두의 실험대',
+    subject: '과학',
+    category: '국어·통합',
+    tags: ['과학', '공부·연습', '수업 보조 도구'],
+    tagline: '초등부터 고등까지 교과서 탐구 활동 297가지를 3D 실험실에서 값을 바꿔 가며 직접 재 보는 과학 실험 도구',
+    description:
+      '교과서에 나오는 탐구 활동을 3D 실험실에서 직접 해 보는 수업 보조 도구입니다. 먼저 결과를 예측하고, 값을 바꿔 측정한 뒤, 표와 그래프로 결론을 내립니다. 위험하거나 기구가 없어 못 하는 실험도 교실 화면에서 함께 볼 수 있습니다.',
+    features: [
+      '실험 297가지 — 2022 개정 교육과정 공식 탐구 활동 261개를 모두 다룸(초 3~고등)',
+      '실험 순서 — 의뢰 받기 → 예측 잠그기 → 값 바꿔 측정 → 표·그래프 → 결론·이유·적용 문제',
+      '단원 탐구 22가지 — 측정 표준 · 판구조론 · 기후 시나리오 · 로봇 · 유사과학 판별 등, 끝나면 토의 질문까지',
+      '화면에서 끌어 돌려 보는 3D 기구 · 막히면 단계별 힌트',
+      '가입·로그인 없음 — 진행은 그 기기에만, 학교 순위만 함께',
+    ],
+    target: '초등 3학년~고등학생',
+    tech: ['JavaScript', 'Three.js', 'Cloudflare Pages'],
+    image: '/images/portfolio/modulab.webp',
+    url: 'https://modulab-dal.pages.dev/',
+  },
+  {
     slug: 'dalmajung',
     added: '2026-10-30T08:50',
     name: '달마중',
