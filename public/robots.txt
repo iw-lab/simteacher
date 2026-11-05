@@ -5,3 +5,4 @@ Disallow: /admin/
 
 Sitemap: https://ssamzip.kr/sitemap.xml
 #DaumWebMasterTool:4467b45394124708db4a2eb8f8ba5d27fb96b237e5f4c181b15ad324b3727352:e72ZaETHYmtl8bFrs60rSQ==
+#DaumWebMasterTool:88e8d94e42a3ce6620b1fd17f1ee301d8aa4dabbf6f879821ebc19e0446b4022:u1KY4V8+6gddZ3NiGzwUZw==
