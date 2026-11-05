@@ -119,6 +119,29 @@ export const teacherTools: TeacherTool[] = [
 
 export const learningSites: LearningSite[] = [
   {
+    slug: 'kongkong-cloud',
+    added: '2026-11-05T13:00',
+    name: '콩콩 구름계단',
+    subject: '수학',
+    category: '수학·통합',
+    tags: ['수학', '리듬', '액션', '학교 대항'],
+    tagline: '왼쪽? 오른쪽? 구름을 톡톡 밟고 먹구름보다 빨리 올라가는 게임 — 다음 판은 셈을 직접 풀어 이용권으로',
+    description:
+      '위로 이어지는 구름 계단을 왼쪽·오른쪽 두 버튼으로 밟아 오르는 게임입니다. 뒤에서 먹구름이 쫓아오고, 곡의 박자에 맞춰 밟으면 «딱!» 보너스가 붙습니다. 판은 5개 하늘 20개로 판마다 노래 한 곡(50~90초)이며, 끝없이 도망치는 «끝없는 하늘» 모드도 있습니다. 하루 첫 판은 문제 없이 하고, 그다음부터는 1~6학년 셈 3문제를 조각으로 쪼개 숫자판에 직접 입력해 이용권을 받습니다. 보기를 고르는 방식이 아니라서 찍어서 넘어갈 수 없습니다.',
+    features: [
+      '두 버튼 조작 — 다음 구름을 보고 왼쪽·오른쪽 톡, 틀리면 아래로 미끄러진다',
+      '판 20개(5개 하늘) · 판마다 노래 한 곡 50~90초 · 번개구름 등 구름 종류와 먹구름 돌진',
+      '모드 — 하늘 오르기 · 60초 오르기 · 끝없는 하늘 · 박자 연습',
+      '셈 이용권 — 1~6학년 연산을 조각으로 쪼개 화면 숫자판으로 직접 입력, 왜 이 셈을 하는지 한 줄 안내, 3문제 중 2문제 통과',
+      '하루 첫 판은 문제 없이 · 판 중에는 문제 없음',
+      '학교 순위 · 가입·로그인·이름 입력 없음',
+    ],
+    target: '초등 1~6학년',
+    tech: ['JavaScript', 'Phaser', 'Vite', 'Cloudflare Pages · Workers · Durable Objects'],
+    image: '/images/portfolio/kongkong-cloud.webp',
+    url: 'https://kongkong-cloud.pages.dev/',
+  },
+  {
     slug: 'parabola-crew',
     added: '2026-11-04T16:00',
     name: '포물선 요새단',
