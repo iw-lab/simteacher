@@ -123,7 +123,7 @@ export const learningSites: LearningSite[] = [
     added: '2026-11-05T13:00',
     name: '콩콩 구름계단',
     subject: '수학',
-    category: '수학·통합',
+    category: '수학',
     tags: ['수학', '리듬', '액션', '학교 대항'],
     tagline: '왼쪽? 오른쪽? 구름을 톡톡 밟고 먹구름보다 빨리 올라가는 게임 — 다음 판은 셈을 직접 풀어 이용권으로',
     description:
