@@ -1521,6 +1521,28 @@ export const learningSites: LearningSite[] = [
     url: 'https://modulab-dal.pages.dev/',
   },
   {
+    slug: 'quizundong',
+    added: '2026-11-06T11:50',
+    name: '퀴즈운동회',
+    subject: '여러 과목',
+    category: '국어·통합',
+    tags: ['여러 과목', '공부·연습', '수업 보조 도구'],
+    tagline: '선생님이 방을 열면 반 친구들이 번호로 들어와, 문제를 맞히며 달리기·보물상자 같은 게임으로 함께 겨루는 교실 퀴즈',
+    description:
+      '선생님이 학년과 단원, 게임을 고르고 방을 열면 큰 화면에 QR과 방 번호가 뜹니다. 학생은 휴대폰이나 태블릿으로 번호만 눌러 들어오고, 문제를 맞힐 때마다 큰 화면의 경기가 움직입니다. 선생님도 학생도 가입하지 않습니다.',
+    features: [
+      '게임 31가지 — 달리기 운동회 · 클래식 퀴즈쇼 · 보물상자 · 끝까지 살아남기 · OX 운동장 등, 개인전과 팀전',
+      '문제은행 30,031문항 — 1~6학년 · 국어·수학·사회·과학·영어 · 215개 묶음에서 골라 바로 시작',
+      '한 방에 최대 50명 · 큰 화면과 선생님 진행판이 따로',
+      '내 문제 만들기 · 다른 선생님과 나누기 — 공개는 선생님 확인 퀴즈를 통과해야 하고, 신고가 들어오면 숨겨진다',
+      '가입·광고·결제 없음 · 이름 대신 번호와 자동 별명 · 판 결과는 저장하지 않고 그 자리에서만 보여 준다',
+    ],
+    target: '초등 1~6학년',
+    tech: ['TypeScript', 'Cloudflare Workers', 'Durable Objects', 'D1'],
+    image: '/images/portfolio/quizundong.webp',
+    url: 'https://quizundong.simssijjang-korea.workers.dev/',
+  },
+  {
     slug: 'dalmajung',
     added: '2026-10-30T08:50',
     name: '달마중',
