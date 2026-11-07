@@ -34,6 +34,21 @@ export function safeRooms(raw: unknown, listedUrl: (slug: string) => string | un
   })
 }
 
+/** 선행쌤에서 바로 방을 여는 게임 — 2026-11-04 사용자 «게임에 안 들어가고도 방을 만들 수 있게».
+ *  방은 방장 화면이 살아 있는 동안만 유지되므로(게시판 TTL 2분) 눌러서 게임의 대기실로 곧장 간다.
+ *  🔴 여기 넣기 전에 그 게임이 ?make=1 을 처리해야 한다 — tests/board-listed.test.ts 가 게시판 전체와 대조 */
+export const MAKE_ROOM_GAMES = [
+  'kkeutjinhwa', 'gulp-planet', 'parabola-crew', 'reloadarena', 'racket-rush', 'schoolstars',
+  'blocknuri', 'dokkaebi-circuit', 'sullae', 'malkkori', 'kkeut-bomb', 'dawnlight', 'dalmajung', 'kongkong', 'golden-whistle',
+] as const
+
+/** 게임 주소 → 곧장 방을 만드는 주소(?make=1) */
+export function makeRoomUrl(url: string): string {
+  const u = new URL(url)
+  u.searchParams.set('make', '1')
+  return u.toString()
+}
+
 /** 방 칸의 작은 글씨 — 진행 중(중간 입장) 방은 기다린 시간 대신 «게임 중» */
 export function roomStatus(r: Pick<LiveRoom, 'st' | 'since'>, now: number): string {
   if (r.st === 'play') return '게임 중 · 중간 입장'

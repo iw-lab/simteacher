@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync, existsSync } from 'node:fs'
 import { learningSites } from '../src/data/projects'
+import { MAKE_ROOM_GAMES, makeRoomUrl } from '../src/lib/live-rooms'
 
 const BOARD = `${process.env.HOME}/Documents/dev/room-board/src/games.js`
 describe('방 게시판 ↔ 선행쌤 목록', () => {
@@ -12,5 +13,11 @@ describe('방 게시판 ↔ 선행쌤 목록', () => {
     expect(rows.length).toBeGreaterThan(5)
     const by = new Map(learningSites.map((s) => [s.slug, s.url && new URL(s.url).host]))
     expect(rows.filter(([g, h]) => by.get(g) !== h).map(([g]) => g)).toEqual([])
+    // 🔴 선행쌤 «방 만들기»에도 전부 있어야 한다
+    expect(rows.map(([g]) => g).filter((g) => !(MAKE_ROOM_GAMES as readonly string[]).includes(g))).toEqual([])
+  })
+  it('방 만들기 주소에 make=1 이 붙고 원래 쿼리는 유지된다', () => {
+    expect(makeRoomUrl('https://a.pages.dev/')).toBe('https://a.pages.dev/?make=1')
+    expect(makeRoomUrl('https://a.pages.dev/?x=1')).toBe('https://a.pages.dev/?x=1&make=1')
   })
 })
