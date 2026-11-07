@@ -70,7 +70,9 @@ async function checkHome(page, base) {
   if (!logo) return ['머리말에서 «선행쌤» 링크를 못 찾았다'];
 
   await page.mouse.click(logo.x, logo.y);
+  // 부드러운 스크롤은 부하가 높으면 1.4초에 안 끝난다(2026-11-07 load 50 에서 스크롤 14 로 거짓 빨강) — 5초까지 지켜본다. 끝내 안 올라가면 빨강.
   await new Promise((r) => setTimeout(r, 1400));
+  for (let t = 0; t < 18 && (await page.evaluate(() => window.scrollY)) > 8; t++) await new Promise((r) => setTimeout(r, 200));
 
   const after = await page.evaluate(() => ({
     y: Math.round(window.scrollY),
@@ -109,10 +111,20 @@ async function checkTapFeedback(page, base) {
   if (!logo) return ['머리말에서 «선행쌤» 링크를 못 찾았다'];
 
   const shot = () => page.screenshot({ clip: logo.clip, encoding: 'base64' });
-  const before = await shot();
-  await page.mouse.click(logo.cx, logo.cy);
-  await new Promise((r) => setTimeout(r, 120));      // 반응 한가운데
-  const during = await shot();
+  // 기준 그림은 두 장이 똑같아질 때 잡는다 — 막 뜬 화면은 가만둬도 화소가 달라져(11-07 실측) 반응 없는 빌드가 초록으로, 멀쩡한 빌드가 빨강으로 갈렸다.
+  let before = await shot();
+  for (let t = 0; t < 20; t++) { await new Promise((r) => setTimeout(r, 250)); const again = await shot(); if (again === before) break; before = again; }
+  // 반응은 0.46초뿐인데 부하가 높으면 스크린샷 한 장이 그보다 오래 걸려 끝난 뒤를 찍는다(2026-11-07 load 50~70 에서 연달아 거짓 빨강).
+  //   다섯 번 눌러 한 번이라도 화소가 바뀌면 반응이 있는 것이다. 반응이 없는 빌드는 몇 번을 눌러도 바뀌지 않으니 그대로 빨강.
+  //   화소만으로는 머리말 뒤 배경의 흔들림을 반응으로 착각했다(11-07 반응을 뗀 빌드가 4번 중 2번 초록) — 그 요소에서 실제로 시작된 애니메이션도 함께 본다.
+  await page.evaluate(() => { window.__tap = 0; const a = [...document.querySelectorAll('a')].find((x) => /선행\s*쌤/.test(x.textContent || '')); a?.addEventListener('animationstart', () => { window.__tap++; }); });
+  let during = before;
+  for (let k = 0; k < 5 && during === before; k++) {
+    await page.mouse.click(logo.cx, logo.cy);
+    await new Promise((r) => setTimeout(r, 120));    // 반응 한가운데
+    during = await shot();
+    if (during === before) await new Promise((r) => setTimeout(r, 600));
+  }
   // 가라앉기 — 고정 0.9초였더니 빌드 중(load 30+)엔 애니메이션이 덜 끝나 거짓 빨강(2026-11-03 세 번째).
   //   3초까지 0.25초마다 보고 «원래 모습»이 한 번이라도 나오면 통과. 끝내 안 돌아오면 빨강(--selftest 가 그 경우를 만든다).
   if (process.argv.includes('--selftest')) await page.evaluate(() => { const a = [...document.querySelectorAll('a')].find((x) => /선행\s*쌤/.test(x.textContent || '')); if (a) a.style.outline = '6px solid red'; });
@@ -121,6 +133,7 @@ async function checkTapFeedback(page, base) {
 
   const bad = [];
   if (during === before) bad.push('처음 상태에서 눌렀는데 화소가 하나도 안 바뀐다(반응 없음)');
+  else if (!(await page.evaluate(() => window.__tap))) bad.push('화소는 바뀌었지만 «선행쌤»에서 시작된 애니메이션이 없다(반응 없음)');
   if (settled !== before) bad.push('반응이 끝나고도 원래 모습으로 안 돌아온다');
   return bad;
 }
