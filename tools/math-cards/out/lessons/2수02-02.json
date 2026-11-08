@@ -1,0 +1,243 @@
+{
+ "std": "2수02-02",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {
+    "teacher": [
+     "색종이 조각(동그라미·네모)"
+    ],
+    "student": [
+     "공책",
+     "색연필"
+    ]
+   },
+   "hook": {
+    "title": "규칙이 있는 줄, 없는 줄",
+    "story": "두 줄의 무늬가 있어요. 한 줄은 다음 것을 알 수 있고, 다른 줄은 알 수 없어요.",
+    "visual": {
+     "type": "pattern",
+     "seq": [
+      "circle:red",
+      "square:blue",
+      "circle:red",
+      "square:blue"
+     ],
+     "caption": "이 줄은 규칙이 있어요"
+    },
+    "question": "어느 줄이 규칙이 있는 줄일까요?"
+   },
+   "activities": [
+    {
+     "title": "내 규칙 마디 만들기",
+     "steps": [
+      "반복할 마디를 먼저 정해요.",
+      "그 마디를 세 번 이상 이어 놓아요.",
+      "짝에게 내 규칙을 말로 설명해요.",
+      "짝이 다음 두 개를 맞혀요."
+     ],
+     "visual": {
+      "type": "pattern",
+      "seq": [
+       "square:green",
+       "circle:yellow",
+       "square:green",
+       "circle:yellow",
+       "square:green",
+       "circle:yellow"
+      ],
+      "caption": "내가 정한 규칙"
+     },
+     "share": "짝이 다음 것을 맞혔나요?"
+    },
+    {
+     "title": "100판에서 내 규칙 뛰어 세기",
+     "steps": [
+      "시작 수와 몇씩 커질지 정해요.",
+      "뛰어 세며 칸을 칠해요.",
+      "색칠된 칸이 어떤 모양인지 짝과 말해요."
+     ],
+     "visual": {
+      "type": "numberline",
+      "from": 3,
+      "to": 33,
+      "step": 3,
+      "caption": "3에서 시작해 3씩"
+     },
+     "share": "짝의 판만 보고 몇씩 뛰었는지 맞힐 수 있나요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "내가 반복할 마디를 먼저 정해요.",
+     "마디를 세 번 이상 이어 놓아야 규칙이 보여요.",
+     "수 배열에서는 시작 수와 몇씩 변하는지를 정해요."
+    ],
+    "visual": {
+     "type": "pattern",
+     "seq": [
+      "square:green",
+      "circle:yellow",
+      "square:green",
+      "circle:yellow"
+     ],
+     "caption": "네모, 동그라미 되풀이"
+    }
+   },
+   "worksheet": {
+    "title": "내가 정한 규칙",
+    "items": [
+     {
+      "q": "내가 정한 두 가지 모양으로 규칙을 만들어 6개를 그려 보세요.",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "7에서 시작해서 3씩 커지는 수를 다섯 개 쓰세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "40에서 시작해서 5씩 작아지는 수를 네 개 쓰세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "내가 만든 규칙을 짝에게 한 문장으로 설명해 써 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "2, 4, 6, 8 규칙에서 다음 두 수는 무엇일까요?",
+      "visual": null,
+      "space": "box"
+     }
+    ]
+   }
+  },
+  {
+   "variant": "B",
+   "materials": {
+    "teacher": [
+     "연결 큐브 색깔별"
+    ],
+    "student": [
+     "공책"
+    ]
+   },
+   "hook": {
+    "title": "소리 무늬 숨바꼭질",
+    "story": "짝, 짝, 탁 소리를 되풀이해요. 다음 소리는 무엇일까요?",
+    "visual": {
+     "type": "pattern",
+     "seq": [
+      "ball:red",
+      "ball:red",
+      "star:yellow",
+      "ball:red",
+      "ball:red"
+     ],
+     "caption": "다음 소리는?"
+    },
+    "question": "몇 번 소리가 나면 처음으로 돌아올까요?"
+   },
+   "activities": [
+    {
+     "title": "비밀 색 기차 만들기",
+     "steps": [
+      "모둠이 비밀 규칙을 정해 색 기차를 만들어요.",
+      "한두 칸을 종이로 가려요.",
+      "다른 모둠이 가려진 칸의 색을 맞혀요."
+     ],
+     "visual": {
+      "type": "pattern",
+      "seq": [
+       "circle:red",
+       "circle:blue",
+       "circle:blue",
+       "circle:red",
+       "circle:blue",
+       "circle:blue"
+      ],
+      "blanks": [
+       4
+      ],
+      "caption": "가려진 칸은 무슨 색일까요?"
+     },
+     "share": "묶음 단위로 보면 몇 칸씩 되풀이되나요?"
+    },
+    {
+     "title": "몸짓을 기호와 수로 옮기기",
+     "steps": [
+      "짝의 몸짓이나 소리 규칙을 봐요.",
+      "기호(○, △)로 종이에 그려요.",
+      "정한 규칙으로 수 다섯 개를 늘어놓아요."
+     ],
+     "visual": {
+      "type": "pattern",
+      "seq": [
+       "circle:gray",
+       "triangle:blue",
+       "circle:gray",
+       "triangle:blue",
+       "circle:gray"
+      ],
+      "caption": "○△ 되풀이를 기호로"
+     },
+     "share": "다섯째 수가 맞는지 처음부터 다시 세어 볼까요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "몸짓이나 소리도 모양처럼 규칙이 될 수 있어요.",
+     "규칙을 전할 때는 몇 번은 되풀이해서 보여 줘요.",
+     "수 배열은 커지거나 작아지는 방향을 정확히 지켜요."
+    ],
+    "visual": {
+     "type": "pattern",
+     "seq": [
+      "circle:red",
+      "circle:blue",
+      "circle:blue",
+      "circle:red",
+      "circle:blue",
+      "circle:blue"
+     ],
+     "caption": "빨강, 파랑, 파랑 되풀이"
+    }
+   },
+   "worksheet": {
+    "title": "몸짓과 수 배열",
+    "items": [
+     {
+      "q": "내가 정한 규칙으로 모양 두 가지를 번갈아 6개 그려 보세요.",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "50에서 시작해서 10씩 작아지는 수를 다섯 개 쓰세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "1에서 시작해서 4씩 커지는 수를 네 개 쓰세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "짝, 탁, 탁이 되풀이되는 규칙을 짝은 1, 탁은 2로 나타내 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "내가 만든 수 배열에서 규칙을 한 문장으로 써 보세요.",
+      "visual": null,
+      "space": "line"
+     }
+    ]
+   }
+  }
+ ]
+}

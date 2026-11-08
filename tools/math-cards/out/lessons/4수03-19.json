@@ -1,0 +1,65 @@
+{
+ "std": "4수03-19",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["비커 교구(G10)"], "student": ["공책", "연필"]},
+   "hook": {
+    "title": "두 비커를 하나로",
+    "story": "주스가 1 L 400 mL 있어요. 사이다 병을 더 부으려고 해요.",
+    "visual": {"type": "beaker", "cap": 2000, "amount": 1400, "step": 200, "unit": "mL", "caption": "주스 1 L 400 mL"},
+    "question": "두 들이를 합치면 모두 몇 L 몇 mL일까요?"
+   },
+   "activities": [
+    {"title": "들이 더하기, mL가 넘치면 L로",
+     "steps": ["L는 L끼리, mL는 mL끼리 더해요.", "mL가 1000이 넘으면 1 L로 바꿔요.", "합친 들이를 말해요."],
+     "visual": {"type": "equation", "text": "1 L 400 mL + 1 L 900 mL = 2 L 300 mL"},
+     "share": "mL끼리 더한 수가 1000이 넘었을 때 어떻게 했나요?"},
+    {"title": "들이 빼기, mL가 모자라면 빌려오기",
+     "steps": ["L는 L끼리, mL는 mL끼리 빼요.", "mL가 모자라면 1 L를 1000 mL로 바꿔 와요.", "남은 들이를 말해요."],
+     "visual": {"type": "equation", "text": "3 L 100 mL - 1 L 600 mL = 1 L 500 mL"},
+     "share": "100에서 600을 뺄 수 없을 때 어떻게 했나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["L는 L끼리, mL는 mL끼리 계산해요.", "더해서 mL가 1000이 넘으면 1 L로 바꿔요.", "빼다가 mL가 모자라면 1 L를 1000 mL로 바꿔 와요."],
+    "visual": {"type": "beaker", "cap": 3000, "amount": 2300, "step": 500, "unit": "mL"}},
+   "worksheet": {"title": "들이 더하고 빼기", "items": [
+    {"q": "2 L 300 mL + 1 L 500 mL는 몇 L 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "4 L 100 mL - 2 L 600 mL는 몇 L 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "물통에 물이 3 L 있어요. 화분에 1 L 250 mL를 주었어요. 남은 물은 몇 L 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "우유 900 mL와 두유 1 L 300 mL를 합치면 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "보리차 1 L 700 mL 중 950 mL를 마셨어요. 남은 보리차는 몇 mL일까요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["모둠 물 계획표", "비커 교구(G10)"], "student": ["공책"]},
+   "hook": {
+    "title": "캠핑 물통 계획",
+    "story": "캠핑에서 마실 물 1 L 800 mL, 라면 물 1 L 300 mL가 필요해요.",
+    "visual": {"type": "equation", "text": "1 L 800 mL + 1 L 300 mL = ?"},
+    "question": "두 가지를 더하면 모두 몇 L 몇 mL가 필요할까요?"
+   },
+   "activities": [
+    {"title": "필요한 물 모두 더하기",
+     "steps": ["필요한 물의 양을 차례로 더해요.", "mL가 1000이 넘으면 1 L로 바꿔요.", "모두 더한 양을 말해요."],
+     "visual": {"type": "equation", "text": "1 L 800 mL + 1 L 300 mL = 3 L 100 mL"},
+     "share": "더하다가 1000 mL를 넘긴 곳이 있었나요?"},
+    {"title": "물통에서 쓰고 남은 양 구하기",
+     "steps": ["가져간 물통의 양에서 쓴 양을 빼요.", "mL가 모자라면 1 L를 1000 mL로 바꿔요.", "남은 양을 말해요."],
+     "visual": {"type": "equation", "text": "5 L - 3 L 100 mL = 1 L 900 mL"},
+     "share": "5 L에서 뺄 때 mL 자리가 0이면 어떻게 하나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["여러 번 더할 때마다 1000 mL가 넘으면 그때그때 1 L로 바꿔요.", "mL가 0인 수에서 뺄 때도 1 L를 1000 mL로 바꿔요.", "L는 L끼리, mL는 mL끼리 계산해요."],
+    "visual": {"type": "equation", "text": "1 L = 1000 mL"}},
+   "worksheet": {"title": "캠핑 물 계산", "items": [
+    {"q": "1 L 600 mL + 1 L 700 mL는 몇 L 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "4 L - 1 L 400 mL는 몇 L 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "물병에 2 L 100 mL가 있어요. 800 mL를 마셨어요. 남은 물은 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "보리차 1 L 250 mL와 식혜 950 mL를 합치면 몇 L 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "6 L 중 2 L 700 mL를 썼어요. 남은 양은 몇 L 몇 mL일까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

@@ -1,0 +1,254 @@
+{
+ "std": "2수03-05",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {
+    "teacher": [
+     "지오보드",
+     "고무줄"
+    ],
+    "student": [
+     "점종이"
+    ]
+   },
+   "hook": {
+    "title": "기울어진 세모도 세모일까",
+    "story": "똑바로 놓인 세모 하나와 기울어진 세모 하나를 보여 줘요.",
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "세모"
+      },
+      {
+       "kind": "right_triangle",
+       "label": "세모"
+      }
+     ]
+    },
+    "question": "둘 다 세모일까요?"
+   },
+   "activities": [
+    {
+     "title": "다양한 삼각형 만들기",
+     "steps": [
+      "지오보드에 서로 다른 삼각형을 3개 만들어요.",
+      "변과 꼭짓점을 세어요.",
+      "짝과 비교해 같은 점을 말해요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "삼각형1"
+       },
+       {
+        "kind": "right_triangle",
+        "label": "삼각형2"
+       }
+      ]
+     },
+     "share": "모양은 다 다른데 똑같은 게 있나요?"
+    },
+    {
+     "title": "사각형 바꾸고 세모로 줄이기",
+     "steps": [
+      "고무줄로 사각형을 만들어요.",
+      "길쭉하게, 기울게 바꿔요.",
+      "꼭짓점 하나를 빼서 삼각형으로 바꿔요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "rect",
+        "label": "사각형"
+       },
+       {
+        "kind": "rhombus",
+        "label": "사각형"
+       }
+      ]
+     },
+     "share": "변과 꼭짓점이 몇 개 줄었나요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "삼각형은 모두 곧은 선 3개, 꼭짓점 3개예요.",
+     "사각형은 모두 곧은 선 4개, 꼭짓점 4개예요.",
+     "모양이 달라도 변과 꼭짓점 수가 같으면 같은 이름이에요."
+    ],
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "삼각형"
+      },
+      {
+       "kind": "square",
+       "label": "사각형"
+      }
+     ]
+    }
+   },
+   "worksheet": {
+    "title": "변과 꼭짓점 세기",
+    "items": [
+     {
+      "q": "삼각형의 변은 몇 개일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "사각형의 꼭짓점은 몇 개일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "찌그러진 사각형도 사각형일까요? 이유를 써 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "삼각형과 사각형 중 변이 더 많은 것은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "변 4개, 꼭짓점 4개인 모양의 이름은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     }
+    ]
+   }
+  },
+  {
+   "variant": "B",
+   "materials": {
+    "teacher": [
+     "모양 카드"
+    ],
+    "student": [
+     "점종이",
+     "자"
+    ]
+   },
+   "hook": {
+    "title": "문지기가 막았어요",
+    "story": "도형 마을 문지기가 어떤 모양을 '너는 세모 집 아니야!' 하고 막았어요.",
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "세모 집"
+      }
+     ]
+    },
+    "question": "문지기는 왜 막았을까요?"
+   },
+   "activities": [
+    {
+     "title": "문지기 되어 모양 나누기",
+     "steps": [
+      "여러 모양 카드를 세모 집, 네모 집, 못 들어가요 칸으로 나눠요.",
+      "못 들어가는 모양은 이유를 말해요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "세모 집"
+       },
+       {
+        "kind": "square",
+        "label": "네모 집"
+       }
+      ]
+     },
+     "share": "울타리가 끊어진 모양도 세모 집에 들어갈 수 있나요?"
+    },
+    {
+     "title": "문지기 규칙 쪽지 만들기",
+     "steps": [
+      "점을 이어 삼각형 하나, 사각형 하나를 그려요.",
+      "'곧은 선 □개, 꼭짓점 □개' 규칙을 써요.",
+      "짝과 쪽지를 바꿔 확인해요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "삼각형"
+       },
+       {
+        "kind": "rect",
+        "label": "사각형"
+       }
+      ]
+     },
+     "share": "세모 집 규칙과 네모 집 규칙에 똑같은 말이 있나요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "모양을 가르는 규칙은 변과 꼭짓점의 수예요.",
+     "곧은 선으로 빈틈없이 둘러싸여야 해요.",
+     "생김새가 달라도 규칙에 맞으면 같은 이름이에요."
+    ],
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "삼각형"
+      },
+      {
+       "kind": "square",
+       "label": "사각형"
+      }
+     ]
+    }
+   },
+   "worksheet": {
+    "title": "문지기 규칙",
+    "items": [
+     {
+      "q": "세모 집에 들어가려면 곧은 선이 몇 개 있어야 할까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "네모 집에 들어가려면 꼭짓점이 몇 개 있어야 할까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "선이 끊긴 모양은 문지기를 통과할 수 있을까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "삼각형과 사각형이 둘 다 가진 것은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "꼭짓점 4개, 변 4개인 모양을 그려 보세요.",
+      "visual": null,
+      "space": "box"
+     }
+    ]
+   }
+  }
+ ]
+}

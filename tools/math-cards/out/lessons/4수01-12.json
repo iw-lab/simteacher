@@ -1,0 +1,61 @@
+{
+ "std": "4수01-12",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["10칸 모눈판"], "student": ["색연필"]},
+   "hook": {
+     "title": "10칸 중 한 칸",
+     "story": "10칸 모눈에서 한 칸만 색칠해요. 이 한 칸을 분수와 소수로 나타내 볼까요.",
+     "visual": {"type": "grid", "rows": 1, "cols": 10, "filled": [[0, 0]], "caption": "10칸 중 1칸 색칠"},
+     "question": "1/10을 소수로 쓰면 어떻게 될까요?"
+   },
+   "activities": [
+     {"title": "부른 수만큼 칠하고 쓰기",
+      "steps": ["짝이 부른 수만큼 10칸 모눈에 칠해요.", "칠한 칸을 세어 분수로 써요.", "같은 수를 소수로도 써요.", "6칸을 칠하면 6/10, 0.6이라고 써요."],
+      "visual": {"type": "grid", "rows": 1, "cols": 10, "filled": [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5]], "caption": "6칸 색칠은 0.6"},
+      "share": "0.6을 0.06이라고 쓰면 왜 틀릴까요?"},
+     {"title": "수직선에서 0.1씩 뛰기",
+      "steps": ["0에서 0.1씩 점을 찍으며 뛰어 세요.", "0.9에서 한 칸 더 가면 어디에 닿는지 봐요.", "그 자리는 1이에요.", "0.4는 몇 번째 자리인지 짝과 확인해요."],
+      "visual": {"type": "numberline", "from": 0, "to": 1, "step": 0.1, "marks": [0.4, 0.9], "caption": "0.1씩 뛰어요"},
+      "share": "0.9 다음 수는 무엇인가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["1/10은 0.1이라고 쓰고 영 점 일이라고 읽어요.", "0.1이 몇 개인지 세면 소수를 알 수 있어요.", "0.1이 10개 모이면 1이 돼요."], "visual": {"type": "grid", "rows": 1, "cols": 10, "filled": [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6]], "caption": "0.1이 7개면 0.7"}},
+   "worksheet": {"title": "분수를 소수로 바꾸기", "items": [
+     {"q": "10칸 모눈에서 4칸을 색칠했습니다. 소수로 쓰세요.", "visual": {"type": "grid", "rows": 1, "cols": 10, "filled": [[0, 0], [0, 1], [0, 2], [0, 3]]}, "space": "box"},
+     {"q": "0.8을 분수로 나타내면 무엇인가요?", "visual": null, "space": "box"},
+     {"q": "2.3을 바르게 읽어 보세요.", "visual": null, "space": "line"},
+     {"q": "0.1이 9개면 얼마인가요?", "visual": {"type": "numberline", "from": 0, "to": 1, "step": 0.1, "marks": [0.9]}, "space": "box"},
+     {"q": "0.5보다 0.1 큰 수는 무엇인가요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["30 cm 자"], "student": ["연필", "공책"]},
+   "hook": {
+     "title": "애벌레 키는 몇 cm",
+     "story": "애벌레 키가 4 cm보다 조금 더 길어요. 자로 재 보니 작은 눈금 2칸이 더 있어요.",
+     "visual": {"type": "ruler", "length": 10, "mark": 4.2, "caption": "4 cm 2 mm"},
+     "question": "남은 부분을 소수로 어떻게 나타낼 수 있을까요?"
+   },
+   "activities": [
+     {"title": "자로 재서 소수로 쓰기",
+      "steps": ["애벌레 길이를 자로 재서 몇 cm 몇 mm로 써요.", "2 mm는 0.1 cm가 2개라는 걸 확인해요.", "4 cm 2 mm를 4.2 cm로 바꿔 써요.", "사 점 이라고 소리 내어 읽어요."],
+      "visual": {"type": "ruler", "length": 10, "mark": 4.2, "caption": "4.2 cm"},
+      "share": "4.2 cm를 4.02 cm라고 쓰면 왜 틀릴까요?"},
+     {"title": "수직선에 애벌레 자리 찾기",
+      "steps": ["0에서 5 cm까지 수직선을 봐요.", "0.7 cm 애벌레 카드를 받아요.", "0.1 cm 눈금 7칸 간 자리에 애벌레를 놓아요.", "짝과 소리 내어 읽어 확인해요."],
+      "visual": {"type": "numberline", "from": 0, "to": 5, "step": 0.1, "marks": [0.7], "caption": "0.7 cm"},
+      "share": "2.5 cm는 어디쯤 놓아야 할까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["1 mm는 0.1 cm와 같아요.", "몇 cm 몇 mm는 소수로 바꿔 쓸 수 있어요.", "점 뒤의 숫자는 하나씩 따로 읽어요."], "visual": {"type": "ruler", "length": 10, "mark": 3.9, "caption": "3.9 cm"}},
+   "worksheet": {"title": "길이를 소수로 나타내기", "items": [
+     {"q": "6 cm 5 mm는 몇 cm인가요?", "visual": {"type": "ruler", "length": 10, "mark": 6.5}, "space": "box"},
+     {"q": "2.8 cm는 몇 cm 몇 mm인가요?", "visual": {"type": "ruler", "length": 10, "mark": 2.8}, "space": "box"},
+     {"q": "1.4를 바르게 읽어 보세요.", "visual": null, "space": "line"},
+     {"q": "0에서 5 cm까지 수직선에서 3.2 cm는 어디쯤 있는지 설명하세요.", "visual": {"type": "numberline", "from": 0, "to": 5, "step": 0.1, "marks": [3.2]}, "space": "line"},
+     {"q": "0.1 cm가 25개면 몇 cm인가요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

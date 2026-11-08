@@ -1,0 +1,61 @@
+{
+ "std": "4수03-08",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["모눈종이나 점종이", "각도기"], "student": ["공책", "자"]},
+   "hook": {
+    "title": "삼각형 두 무리로 나누기",
+    "story": "모양이 다른 삼각형 카드 여러 개가 있어요. 짝과 함께 두 무리로 나눠 보려고 해요.",
+    "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "5cm,5cm,8cm"}, {"kind": "triangle", "label": "6cm,6cm,6cm"}, {"kind": "triangle", "label": "3cm,4cm,6cm"}], "caption": "세 가지 삼각형"},
+    "question": "어떤 기준으로 삼각형을 두 무리로 나눌 수 있을까요?"
+   },
+   "activities": [
+    {"title": "변 길이로 삼각형 나누기",
+     "steps": ["삼각형의 세 변을 자로 재요.", "두 변이 같은 것, 세 변이 다 같은 것, 다 다른 것으로 나눠요.", "세 변이 다 같은 삼각형이 어느 칸에 들어가는지 짝과 말해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "5cm,5cm,8cm → 이등변삼각형"}, {"kind": "triangle", "label": "6cm,6cm,6cm → 정삼각형"}], "caption": "두 변이 같은 것과 세 변이 같은 것"},
+     "share": "정삼각형도 두 변이 같은 칸에 넣을 수 있을까요?"},
+    {"title": "정삼각형 만들어 각 재기",
+     "steps": ["길이가 같은 빨대 3개로 삼각형 틀을 만들어요.", "종이에 따라 그려요.", "각도기로 세 각을 재요.", "같은 길이 두 변 사이에 있지 않은 각을 찾아 말해요."],
+     "visual": {"type": "angle", "deg": 60, "label": "정삼각형의 한 각 60°"},
+     "share": "정삼각형 세 각은 모두 몇 도씩이었나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["두 변의 길이가 같은 삼각형을 이등변삼각형이라고 해요.", "세 변의 길이가 모두 같은 삼각형을 정삼각형이라고 해요.", "정삼각형은 두 변이 같다는 조건도 맞아서 이등변삼각형이라고도 할 수 있어요."], "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "5cm,5cm,8cm"}, {"kind": "triangle", "label": "6cm,6cm,6cm"}], "caption": "이등변삼각형과 정삼각형"}},
+   "worksheet": {"title": "변 길이로 삼각형 나누기", "items": [
+     {"q": "세 변이 4 cm, 4 cm, 7 cm인 삼각형의 이름은 무엇일까요?", "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "4cm,4cm,7cm"}]}, "space": "box"},
+     {"q": "세 변이 모두 5 cm인 삼각형의 이름은 무엇일까요?", "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "5cm,5cm,5cm"}]}, "space": "box"},
+     {"q": "이등변삼각형에서 크기가 같은 두 각 중 한 각이 50°예요. 다른 한 각은 몇 도일까요?", "visual": null, "space": "box"},
+     {"q": "정삼각형의 한 각이 60°예요. 세 각을 모두 더하면 몇 도일까요?", "visual": null, "space": "box"},
+     {"q": "세 변이 3 cm, 5 cm, 6 cm인 삼각형을 이등변삼각형이라고 할 수 있나요?", "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "3cm,5cm,6cm"}]}, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["색종이", "가위"], "student": ["색종이", "자", "각도기"]},
+   "hook": {
+    "title": "색종이를 접어 자른 삼각형",
+    "story": "색종이를 반으로 접고, 접힌 선 위의 한 점에서 비스듬히 한 번 잘라 펼쳤어요. 어떤 삼각형이 나왔을까요?",
+    "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "접어서 자른 삼각형"}], "caption": "색종이를 접어 자른 모양"},
+    "question": "펼친 삼각형에서 길이가 같아 보이는 변이 있을까요?"
+   },
+   "activities": [
+    {"title": "접어서 겹치는지 확인하기",
+     "steps": ["자른 삼각형을 다시 접어요.", "두 변과 두 각이 겹치는지 봐요.", "자로 재서 이등변삼각형인지 확인해요.", "자르는 각도를 바꿔 다른 이등변삼각형을 만들어요."],
+     "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "6cm,6cm,4cm"}], "caption": "두 변이 겹치는 이등변삼각형"},
+     "share": "다시 접었더니 변만 겹쳤나요, 각도 겹쳤나요?"},
+    {"title": "삼각형 빙고 놀이",
+     "steps": ["점종이에 삼각형을 그려요.", "다른 모둠이 «이등변», «정», «둘 다 아님» 카드를 들어요.", "자와 각도기로 확인하고 점수를 매겨요."],
+     "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "5cm,5cm,5cm → 정"}, {"kind": "triangle", "label": "5cm,5cm,9cm → 이등변"}, {"kind": "triangle", "label": "3cm,5cm,7cm → 둘 다 아님"}], "caption": "삼각형 빙고 카드"},
+     "share": "정삼각형에 «이등변» 카드도 같이 들 수 있을까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["이등변삼각형을 접으면 두 변과 두 각이 겹쳐요.", "정삼각형은 세 변과 세 각이 모두 같아요.", "정삼각형도 이등변삼각형이라고 부를 수 있어요."], "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "6cm,6cm,4cm"}], "caption": "접으면 겹치는 이등변삼각형"}},
+   "worksheet": {"title": "접어서 찾는 같은 각", "items": [
+     {"q": "세 변이 7 cm, 7 cm, 10 cm인 삼각형을 접으면 무엇이 겹칠까요?", "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "7cm,7cm,10cm"}]}, "space": "line"},
+     {"q": "정삼각형 모양 색종이를 반으로 접었어요. 접힌 선 양쪽이 겹치나요?", "visual": null, "space": "line"},
+     {"q": "이등변삼각형에서 같은 두 각이 각각 65°예요. 나머지 한 각은 몇 도일까요?", "visual": null, "space": "box"},
+     {"q": "세 변이 8 cm, 8 cm, 8 cm인 삼각형의 한 각은 몇 도일까요?", "visual": {"type": "angle", "deg": 60, "label": "60°"}, "space": "box"},
+     {"q": "세 변이 4 cm, 6 cm, 9 cm인 삼각형을 접으면 완전히 겹칠까요?", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

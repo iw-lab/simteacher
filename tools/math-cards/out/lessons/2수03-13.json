@@ -1,0 +1,63 @@
+{
+ "std": "2수03-13",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["리본 2개(1 m 20 cm, 2 m 35 cm)", "화면 자"], "student": ["공책"]},
+   "hook": {
+     "title": "리본 두 개를 이으면?",
+     "story": "파란 리본은 1 m 20 cm, 노란 리본은 2 m 35 cm예요. 두 리본을 이으면 얼마나 될까요?",
+     "visual": {"type": "table", "head": ["리본", "길이"], "rows": [["파란 리본", "1 m 20 cm"], ["노란 리본", "2 m 35 cm"]], "caption": "두 리본의 길이"},
+     "question": "m는 m끼리, cm는 cm끼리 더하면 얼마일까요?"
+   },
+   "activities": [
+     {"title": "m는 m끼리, cm는 cm끼리",
+      "steps": ["두 리본을 각각 재어 적어요.", "m 자리끼리 더해요.", "cm 자리끼리 더해요.", "이어 붙여 다시 재어 같은지 확인해요."],
+      "visual": {"type": "table", "head": ["리본", "길이"], "rows": [["파란 리본", "1 m 20 cm"], ["노란 리본", "2 m 35 cm"], ["이은 길이", "3 m 55 cm"]], "caption": "1+2=3, 20+35=55"},
+      "share": "m 숫자와 cm 숫자를 섞어서 더하면 안 되는 까닭은 무엇일까요?"},
+     {"title": "수직선에서 빼기",
+      "steps": ["4 m 60 cm 지점에 서요.", "1 m만큼 왼쪽으로 뛰어요.", "30 cm를 더 왼쪽으로 뛰어요.", "남은 자리를 읽어요."],
+      "visual": {"type": "numberline", "from": 0, "to": 460, "step": 10, "marks": [330, 460], "jumps": [[460, 330]], "caption": "4 m 60 cm에서 1 m 30 cm만큼 가요"},
+      "share": "4 m 60 cm에서 1 m 30 cm를 빼면 몇 m 몇 cm인가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["길이를 더하거나 뺄 때는 m는 m끼리, cm는 cm끼리 계산해요.", "계산한 값과 실제로 재어 본 값이 같은지 확인해요."],
+     "visual": {"type": "table", "head": ["계산", "결과"], "rows": [["1 m 20 cm + 2 m 35 cm", "3 m 55 cm"], ["4 m 60 cm - 1 m 30 cm", "3 m 30 cm"]], "caption": "m는 m끼리, cm는 cm끼리"}},
+   "worksheet": {"title": "m와 cm 더하고 빼기", "items": [
+     {"q": "1 m 10 cm와 1 m 25 cm를 더하면 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "3 m 70 cm에서 1 m 20 cm를 빼면 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "2 m 15 cm에 40 cm를 더하면 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "5 m 90 cm에서 2 m 60 cm를 빼면 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "m는 m끼리, cm는 cm끼리 계산해야 하는 까닭을 써 보세요.", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["끈 묶음", "꾸밀 곳 카드"], "student": ["공책"]},
+   "hook": {
+     "title": "교실을 꾸며요",
+     "story": "칠판 위에 줄을 걸려면 2 m 50 cm가 필요해요. 가진 끈 두 개를 이어서 그 길이를 만들 수 있을까요?",
+     "visual": {"type": "table", "head": ["끈", "길이"], "rows": [["끈 1", "1 m 20 cm"], ["끈 2", "1 m 30 cm"]], "caption": "두 끈을 이어요"},
+     "question": "끈 두 개를 이으면 몇 m 몇 cm가 될까요?"
+   },
+   "activities": [
+     {"title": "끈 두 개를 이어 길이 맞추기",
+      "steps": ["꾸밀 곳 카드의 길이를 읽어요.", "가진 끈 두 개의 길이를 적어요.", "m는 m끼리, cm는 cm끼리 더해요.", "필요한 길이가 되는지 확인해요."],
+      "visual": {"type": "table", "head": ["끈", "길이"], "rows": [["끈 1", "1 m 20 cm"], ["끈 2", "1 m 30 cm"], ["이은 길이", "2 m 50 cm"]], "caption": "1+1=2, 20+30=50"},
+      "share": "이은 길이가 꾸밀 곳 길이와 같나요?"},
+     {"title": "남은 끈 길이 구하기",
+      "steps": ["5 m 80 cm 끈 묶음을 봐요.", "쓴 길이 2 m 50 cm를 빼요.", "m는 m끼리, cm는 cm끼리 빼요.", "남은 길이를 수직선에 그려요."],
+      "visual": {"type": "numberline", "from": 0, "to": 580, "step": 10, "marks": [330, 580], "jumps": [[580, 330]], "caption": "5 m 80 cm에서 2 m 50 cm를 빼요"},
+      "share": "남은 길이는 몇 m 몇 cm인가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["끈을 이을 때는 더하기, 남는 길이를 구할 때는 빼기를 써요.", "m는 m끼리, cm는 cm끼리 계산해요."],
+     "visual": {"type": "table", "head": ["계산", "결과"], "rows": [["1 m 20 cm + 1 m 30 cm", "2 m 50 cm"], ["5 m 80 cm - 2 m 50 cm", "3 m 30 cm"]], "caption": "더하기와 빼기"}},
+   "worksheet": {"title": "끈 길이 더하고 빼기", "items": [
+     {"q": "1 m 15 cm와 1 m 20 cm를 더하면 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "3 m 90 cm에서 1 m 40 cm를 빼면 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "1 m 35 cm에 30 cm를 더하면 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "4 m 70 cm에서 2 m 20 cm를 빼면 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "끈을 이을 때와 남은 길이를 구할 때, 각각 더하기와 빼기 중 어떤 것을 쓰는지 써 보세요.", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "std": "4수03-07",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["컴퍼스(모둠별 1개)", "자"], "student": ["공책", "색연필"]},
+   "hook": {
+    "title": "컴퍼스 탐정의 첫 원",
+    "story": "탐정이 보물 자리를 표시하려고 해요. 바늘을 꽂은 자리에서 똑같은 거리만큼 떨어진 곳에 둥글게 선을 그으려고 해요.",
+    "visual": {"type": "circles", "radii": [3], "caption": "컴퍼스를 3 cm 벌려요"},
+    "question": "바늘에서 3 cm 떨어진 곳에 선을 그으려면 컴퍼스를 몇 cm 벌려야 할까요?"
+   },
+   "activities": [
+    {"title": "2 cm, 5 cm 원 그리기",
+     "steps": ["컴퍼스를 자의 0에 맞춰 2 cm로 벌려요.", "바늘을 점에 꽂고 연필을 돌려 원을 그려요.", "자로 중심에서 원까지 다시 재어 2 cm인지 확인해요.", "이번엔 5 cm로 벌려 같은 방법으로 원을 그려요."],
+     "visual": {"type": "circles", "radii": [2, 5], "caption": "반지름 2 cm와 5 cm 원"},
+     "share": "두 원 중에 어느 원이 더 클까요?"},
+    {"title": "반지름과 지름으로 원 그리기",
+     "steps": ["선생님이 부르는 대로 원을 그려요(반지름 3 cm, 지름 8 cm, 지름 6 cm).", "지름이 주어지면 반지름이 얼마인지 먼저 계산해요.", "짝의 원을 자로 재어 맞는지 말해 줘요."],
+     "visual": {"type": "circles", "radii": [3, 4, 3], "labels": ["반지름 3 cm", "지름 8 cm", "지름 6 cm"], "caption": "반지름 3 cm, 지름 8 cm, 지름 6 cm 원"},
+     "share": "반지름 3 cm 원과 지름 6 cm 원, 크기가 어때요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["컴퍼스를 벌린 길이가 원의 반지름이에요.", "지름이 주어지면 반으로 나눈 만큼 컴퍼스를 벌려요.", "지름은 반지름의 2배예요."], "visual": {"type": "circles", "radii": [4], "caption": "반지름 4 cm면 지름은 8 cm"}},
+   "worksheet": {"title": "컴퍼스로 원 그리기", "items": [
+     {"q": "반지름이 5 cm인 원을 그리려면 컴퍼스를 몇 cm 벌려야 할까요?", "visual": {"type": "circles", "radii": [5]}, "space": "box"},
+     {"q": "지름이 14 cm인 원을 그리려면 컴퍼스를 몇 cm 벌려야 할까요?", "visual": null, "space": "box"},
+     {"q": "반지름 6 cm 원과 지름 6 cm 원 중 더 큰 원은 어느 것일까요?", "visual": {"type": "circles", "radii": [6, 3], "labels": ["반지름 6 cm", "지름 6 cm"]}, "space": "line"},
+     {"q": "컴퍼스를 7 cm 벌려 원을 그렸어요. 이 원의 지름은 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "같은 점에 바늘을 꽂고 반지름 2 cm, 4 cm인 원 두 개를 그렸어요. 두 반지름의 차는 몇 cm일까요?", "visual": {"type": "circles", "radii": [2, 4]}, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["컴퍼스", "큰 도화지"], "student": ["공책", "색연필"]},
+   "hook": {
+    "title": "체육 선생님의 부탁",
+    "story": "체육 선생님이 콩주머니 던지기 과녁판을 만들어 달라고 했어요. 가운데가 작고 바깥이 큰 동그라미 세 개가 겹쳐 있어요.",
+    "visual": {"type": "circles", "radii": [1, 2, 3], "caption": "같은 가운데, 다른 반지름"},
+    "question": "크기가 다른 원을 같은 가운데에서 그리려면 컴퍼스를 어떻게 해야 할까요?"
+   },
+   "activities": [
+    {"title": "과녁 원 4개 그리기",
+     "steps": ["바늘을 한 점에 꽂고 그대로 둬요.", "반지름 1 cm, 2 cm, 3 cm, 4 cm 원을 차례로 그려요.", "칸마다 점수를 적어요."],
+     "visual": {"type": "circles", "radii": [1, 2, 3, 4], "caption": "반지름 1~4 cm 과녁"},
+     "share": "원과 원 사이는 몇 cm씩 벌어졌어요?"},
+    {"title": "주문대로 과녁 설계하기",
+     "steps": ["주문 카드(가장 큰 원 지름 12 cm, 3겹)를 받아요.", "가장 큰 원의 반지름을 먼저 구해요(12를 반으로 나누면 6 cm).", "반지름을 6 cm, 4 cm, 2 cm로 고르게 정해 원을 그려요.", "다른 모둠이 자로 재어 주문대로인지 확인해요."],
+     "visual": {"type": "circles", "radii": [2, 4, 6], "labels": ["반지름 2 cm", "반지름 4 cm", "반지름 6 cm(지름 12 cm)"], "caption": "가장 큰 원 지름 12 cm"},
+     "share": "우리 모둠 과녁과 다른 모둠 과녁, 어디가 다른가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["같은 중심에서 반지름을 다르게 하면 크기가 다른 원이 겹쳐 그려져요.", "원을 그릴 때마다 바늘 자리는 그대로 둬요.", "지름이 주어지면 반으로 나눈 만큼 컴퍼스를 벌려요."], "visual": {"type": "circles", "radii": [2, 4, 6], "caption": "한 점에서 그린 세 원"}},
+   "worksheet": {"title": "같은 중심, 다른 반지름", "items": [
+     {"q": "가장 큰 원의 지름이 10 cm예요. 컴퍼스는 몇 cm 벌려야 할까요?", "visual": null, "space": "box"},
+     {"q": "한 점에 바늘을 꽂고 반지름 1 cm, 3 cm, 5 cm인 원 세 개를 그렸어요. 가장 큰 원의 지름은 몇 cm일까요?", "visual": {"type": "circles", "radii": [1, 3, 5]}, "space": "box"},
+     {"q": "과녁의 가장 바깥 원 반지름이 8 cm이고 안쪽 원 반지름이 5 cm예요. 두 원의 반지름 차는 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "지름 4 cm 원과 반지름 2 cm 원을 같은 중심에 그렸어요. 두 원은 같은 원일까요, 다른 원일까요?", "visual": {"type": "circles", "radii": [2, 2], "labels": ["지름 4 cm", "반지름 2 cm"]}, "space": "line"},
+     {"q": "반지름 6 cm인 원을 그리고 싶어요. 자의 눈금 0과 몇 사이에 컴퍼스를 벌려야 할까요?", "visual": {"type": "circles", "radii": [6]}, "space": "box"}
+   ]}
+  }
+ ]
+}

@@ -1,0 +1,65 @@
+{
+ "std": "4수03-18",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["비커 교구(G10)", "500 mL 페트병 두 개, 1 L 우유갑"], "student": ["공책", "연필"]},
+   "hook": {
+    "title": "물통 라벨 읽기",
+    "story": "물통에 1 L 250 mL라고 적혀 있어요. 짝은 이걸 1250 mL라고 다시 썼어요.",
+    "visual": {"type": "beaker", "cap": 1500, "amount": 1250, "step": 100, "unit": "mL", "caption": "1 L 250 mL = 1250 mL"},
+    "question": "짝이 쓴 1250 mL는 맞을까요?"
+   },
+   "activities": [
+    {"title": "100 mL씩 부어 1 L 만들기",
+     "steps": ["비커에 100 mL씩 채워요.", "몇 번 채우면 1 L가 되는지 세어요.", "1 L는 몇 mL인지 말해요."],
+     "visual": {"type": "beaker", "cap": 1000, "amount": 1000, "step": 100, "unit": "mL", "caption": "100 mL씩 10번이면 1 L"},
+     "share": "100 mL를 몇 번 모으면 1 L가 되었나요?"},
+    {"title": "두 가지로 쓰기",
+     "steps": ["비커 눈금을 읽어요.", "몇 L 몇 mL로 써요.", "몇 mL로도 바꿔 써요."],
+     "visual": {"type": "table", "head": ["몇 L 몇 mL", "몇 mL"], "rows": [["1 L 250 mL", "1250 mL"], ["2 L 40 mL", "2040 mL"]]},
+     "share": "2 L 40 mL를 mL로 쓸 때 빈자리에 무엇을 넣었나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["1 L는 1000 mL예요.", "몇 L 몇 mL를 mL로 쓸 때는 L를 1000배 해서 더해요.", "빈 자리에는 꼭 0을 넣어야 해요."],
+    "visual": {"type": "equation", "text": "2 L 40 mL = 2040 mL"}},
+   "worksheet": {"title": "L와 mL 바꾸기", "items": [
+    {"q": "3 L 60 mL는 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "4800 mL는 몇 L 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "5 L는 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "2 L 5 mL와 2050 mL 중 어느 쪽이 더 많을까요?", "visual": null, "space": "box"},
+    {"q": "6090 mL를 몇 L 몇 mL로 나타내면 무엇일까요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["들이 카드 16장", "비커 교구(G10)"], "student": ["공책"]},
+   "hook": {
+    "title": "짝이 맞을까",
+    "story": "들이 카드 두 장, 3 L 80 mL와 3800 mL를 보았어요.",
+    "visual": {"type": "numberline", "from": 0, "to": 4000, "step": 400, "marks": [3080, 3800], "caption": "3 L 80 mL와 3800 mL"},
+    "question": "두 카드는 같은 양일까요, 다른 양일까요?"
+   },
+   "activities": [
+    {"title": "카드 짝 맞추기",
+     "steps": ["몇 L 몇 mL 카드를 읽어요.", "mL로 바꿔 보아요.", "같은 양의 mL 카드를 찾아 짝지어요."],
+     "visual": {"type": "equation", "text": "3 L 80 mL = 3080 mL"},
+     "share": "왜 이 두 장이 같은 양인가요?"},
+    {"title": "적은 양부터 많은 양까지 줄 세우기",
+     "steps": ["짝지은 카드들을 모두 mL로 바꿔요.", "적은 것부터 많은 것까지 늘어놓아요.", "이웃 모둠과 비교해요."],
+     "visual": {"type": "table", "head": ["카드", "mL로"], "rows": [["3 L 80 mL", "3080 mL"], ["3800 mL", "3800 mL"]]},
+     "share": "단위를 맞추지 않고 비교하면 왜 실수하기 쉬운가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["몇 L 몇 mL를 mL로 바꿀 때 L를 1000배 해서 더해요.", "0의 자리를 조심해서 써야 해요.", "단위를 같게 바꾸면 크기를 쉽게 비교할 수 있어요."],
+    "visual": {"type": "equation", "text": "3 L 80 mL = 3080 mL"}},
+   "worksheet": {"title": "같은 양 찾기", "items": [
+    {"q": "1 L 6 mL는 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "2300 mL는 몇 L 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "7 L는 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "4 L 15 mL와 4150 mL 중 어느 쪽이 더 많을까요?", "visual": null, "space": "box"},
+    {"q": "6040 mL를 몇 L 몇 mL로 나타내면 무엇일까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

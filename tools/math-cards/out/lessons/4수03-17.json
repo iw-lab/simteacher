@@ -1,0 +1,65 @@
+{
+ "std": "4수03-17",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["비커 교구(G10)", "1 L 우유갑과 작은 병"], "student": ["공책", "연필"]},
+   "hook": {
+    "title": "우유갑 속 숫자",
+    "story": "우유갑에 1 L라고 적혀 있고, 요구르트 병에는 65 mL라고 적혀 있어요.",
+    "visual": {"type": "beaker", "cap": 1000, "amount": 650, "step": 100, "unit": "mL", "caption": "650 mL 자리"},
+    "question": "비커에 650 mL를 담으려면 눈금 어디까지 채워야 할까요?"
+   },
+   "activities": [
+    {"title": "비커 눈금 650 mL 채우기",
+     "steps": ["큰 눈금 사이의 작은 눈금 수를 세어요.", "작은 눈금 한 칸이 몇 mL인지 알아내요.", "650 mL가 되는 자리까지 색칠해요."],
+     "visual": {"type": "beaker", "cap": 1000, "amount": 650, "step": 50, "unit": "mL", "caption": "650 mL"},
+     "share": "작은 눈금 한 칸은 몇 mL였나요?"},
+    {"title": "말로 들은 들이 어림해 표시하기",
+     "steps": ["들이를 듣고 먼저 어림해 눈금에 표시해요.", "정확한 자리를 찾아 확인해요.", "1 L보다 많으면 넘긴 만큼을 따로 말해요."],
+     "visual": {"type": "beaker", "cap": 1200, "amount": 1200, "step": 100, "unit": "mL", "caption": "1 L 200 mL = 1200 mL"},
+     "share": "1 L 200 mL를 mL로 바꾸면 얼마인가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["비커의 작은 눈금 한 칸이 몇 mL인지 먼저 알아야 해요.", "1 L는 1000 mL예요.", "1 L보다 많으면 1 L를 넘긴 만큼을 더 보아요."],
+    "visual": {"type": "beaker", "cap": 1000, "amount": 1000, "step": 100, "unit": "mL"}},
+   "worksheet": {"title": "들이 어림하고 재기", "items": [
+    {"q": "비커의 작은 눈금 한 칸이 10 mL예요. 400 mL에서 작은 눈금 5칸을 더 채우면 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "1 L 500 mL는 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "900 mL는 1 L보다 몇 mL 적을까요?", "visual": null, "space": "box"},
+    {"q": "생수 2 L는 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "비커에 850 mL가 담겨 있어요. 150 mL를 더 부으면 몇 mL가 될까요? 1 L가 될까요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["들이 그림 카드", "비커 교구(G10)"], "student": ["공책"]},
+   "hook": {
+    "title": "소풍 물 준비",
+    "story": "소풍 갈 때 물통, 컵, 물약 병에 물을 얼마나 담을지 정해야 해요.",
+    "visual": {"type": "beaker", "cap": 1000, "amount": 300, "step": 100, "unit": "mL", "caption": "300 mL"},
+    "question": "물약 병과 물통, 둘 다 mL로 말하면 편할까요?"
+   },
+   "activities": [
+    {"title": "L로 잴 것과 mL로 잴 것 나누기",
+     "steps": ["물건을 떠올려요.", "L로 재면 좋은지 mL로 재면 좋은지 생각해요.", "두 칸으로 나누어 말해요."],
+     "visual": {"type": "table", "head": ["L로 재면 좋은 것", "mL로 재면 좋은 것"], "rows": [["물통", "물약 병"], ["욕조", "종이컵"]]},
+     "share": "욕조에 물 200 mL를 받으면 어떨까요?"},
+    {"title": "비커로 양 어림하고 확인하기",
+     "steps": ["먼저 몇 mL쯤인지 어림해요.", "비커 눈금에 맞춰요.", "1 L보다 많은지 적은지 말해요."],
+     "visual": {"type": "beaker", "cap": 1000, "amount": 300, "step": 100, "unit": "mL", "caption": "한 사람 몫 300 mL"},
+     "share": "두 사람 몫을 합치면 1 L보다 많을까요, 적을까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["아주 적은 양은 mL로, 많은 양은 L로 나타내요.", "1 L는 1000 mL예요.", "눈금을 읽을 때 눈높이를 물 높이와 맞춰야 해요."],
+    "visual": {"type": "beaker", "cap": 1000, "amount": 600, "step": 100, "unit": "mL"}},
+   "worksheet": {"title": "L와 mL 고르기", "items": [
+    {"q": "물컵 한 잔의 들이로 가장 알맞은 것은 무엇일까요? 200 mL와 2 L 중에서 고르세요.", "visual": null, "space": "box"},
+    {"q": "비커 눈금이 500 mL에서 작은 눈금 7칸(한 칸 10 mL) 위에 있어요. 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "1 L 50 mL는 몇 mL일까요?", "visual": null, "space": "box"},
+    {"q": "물통에 700 mL가 있어요. 300 mL를 더 부으면 몇 mL가 될까요? 1 L가 될까요?", "visual": null, "space": "box"},
+    {"q": "욕조 물, 약 숟가락 물 중 L로 재기 알맞은 것은 무엇일까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

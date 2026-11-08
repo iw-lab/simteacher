@@ -1,0 +1,61 @@
+{
+ "std": "4수01-09",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["패턴 블록(육각형, 사다리꼴, 마름모, 삼각형)"], "student": ["공책"]},
+   "hook": {
+     "title": "똑같이 나눈 조각일까",
+     "story": "선생님이 피자를 똑같이 3조각으로 나눴어요. 그중 1조각을 먹었어요.",
+     "visual": {"type": "fraction", "num": 1, "den": 3, "shape": "circle", "caption": "똑같이 3조각 중 1조각"},
+     "question": "이 조각은 전체의 얼마라고 말할 수 있을까요?"
+   },
+   "activities": [
+     {"title": "육각형을 삼각형으로 덮기",
+      "steps": ["노란 육각형 하나를 전체로 정해요.", "삼각형 6개로 빈틈없이 덮어요.", "조각 하나는 전체를 똑같이 6으로 나눈 것 중 하나예요.", "이것을 1/6이라고 쓰고 6분의 1이라고 읽어요."],
+      "visual": {"type": "fraction", "num": 1, "den": 6, "shape": "circle", "caption": "삼각형 한 개는 1/6"},
+      "share": "사다리꼴 2개로 덮으면 한 조각은 얼마일까요?"},
+     {"title": "조각을 빼고 남은 것 쓰기",
+      "steps": ["삼각형 6개로 덮은 육각형에서 2개를 빼내요.", "남은 조각이 몇 개인지 세어요.", "남은 4개를 분수로 써요.", "분모는 전체 조각 수, 분자는 남은 조각 수예요."],
+      "visual": {"type": "fraction", "num": 4, "den": 6, "shape": "circle", "caption": "남은 조각은 4/6"},
+      "share": "분모와 분자 중 어느 수가 아래에 있나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["전체를 똑같이 나눈 조각의 수가 분모예요.", "그중 몇 개인지가 분자예요.", "조각 크기가 다르면 분수로 쓸 수 없어요."], "visual": {"type": "fraction", "num": 1, "den": 2, "shape": "bar", "caption": "똑같이 나눈 것만 분수로 써요"}},
+   "worksheet": {"title": "분모와 분자 쓰기", "items": [
+     {"q": "원을 똑같이 8칸으로 나누고 5칸을 색칠했습니다. 색칠한 부분은 전체의 얼마인가요?", "visual": {"type": "fraction", "num": 5, "den": 8, "shape": "circle"}, "space": "box"},
+     {"q": "직사각형을 똑같이 6칸으로 나누고 2칸을 색칠했습니다. 분수로 쓰세요.", "visual": {"type": "fraction", "num": 2, "den": 6, "shape": "bar"}, "space": "box"},
+     {"q": "7분의 4를 분모와 분자로 나누어 말해 보세요.", "visual": null, "space": "line"},
+     {"q": "똑같이 나누지 않은 조각은 분수로 쓸 수 있나요? 이유를 쓰세요.", "visual": null, "space": "line"},
+     {"q": "띠 전체를 똑같이 5칸으로 나누고 3칸을 색칠한 그림을 보고 분수로 쓰세요.", "visual": {"type": "fraction", "num": 3, "den": 5, "shape": "bar"}, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["종이띠", "분수 막대"], "student": ["색연필"]},
+   "hook": {
+     "title": "떡 한 줄을 나눠요",
+     "story": "가래떡 한 줄을 모둠 네 명이 똑같이 나눠 먹기로 했어요. 한 사람은 그중 한 도막을 먹어요.",
+     "visual": {"type": "fraction", "num": 1, "den": 4, "shape": "bar", "caption": "네 도막 중 한 도막"},
+     "question": "한 사람이 먹은 몫은 전체의 얼마라고 말할 수 있을까요?"
+   },
+   "activities": [
+     {"title": "종이띠 접어서 분수 만들기",
+      "steps": ["종이띠를 반으로 접고, 또 반으로 접어요.", "펼치면 똑같은 4칸이 생겨요.", "세 칸을 색칠하고 3/4이라고 써요.", "접힌 선이 어긋나지 않았는지 겹쳐서 확인해요."],
+      "visual": {"type": "fraction", "num": 3, "den": 4, "shape": "bar", "caption": "세 칸을 색칠하면 3/4"},
+      "share": "두 칸을 색칠하면 분수로 어떻게 쓸까요?"},
+     {"title": "말로 들은 분수 만들기",
+      "steps": ["선생님이 5분의 2라고 말해요.", "먼저 5조각짜리 막대를 골라요.", "그중 2조각을 색칠해요.", "분모 5는 아래, 분자 2는 위에 써요."],
+      "visual": {"type": "fraction", "num": 2, "den": 5, "shape": "bar", "caption": "5분의 2"},
+      "share": "분모와 분자 중 먼저 읽는 수는 어느 것인가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["분수를 읽을 때는 분모를 먼저 읽어요.", "분수를 쓸 때는 분자를 위에, 분모를 아래에 써요.", "똑같이 나눈 전체에서 몇 조각인지로 분수를 나타내요."], "visual": {"type": "fraction", "num": 1, "den": 4, "shape": "bar", "caption": "4분의 1"}},
+   "worksheet": {"title": "들은 분수 쓰고 읽기", "items": [
+     {"q": "리본을 똑같이 6도막으로 나누고 5도막을 사용했습니다. 사용한 리본은 전체의 얼마인가요?", "visual": {"type": "fraction", "num": 5, "den": 6, "shape": "bar"}, "space": "box"},
+     {"q": "7분의 3을 바르게 읽어 보세요.", "visual": null, "space": "line"},
+     {"q": "종이띠를 똑같이 8칸으로 나누고 3칸을 색칠한 그림을 보고 분수로 쓰세요.", "visual": {"type": "fraction", "num": 3, "den": 8, "shape": "bar"}, "space": "box"},
+     {"q": "분모가 4인 진분수를 모두 써 보세요.", "visual": null, "space": "line"},
+     {"q": "똑같이 나눈 9조각 중 2조각을 색칠한 그림을 보고 분수로 쓰세요.", "visual": {"type": "fraction", "num": 2, "den": 9, "shape": "bar"}, "space": "box"}
+   ]}
+  }
+ ]
+}

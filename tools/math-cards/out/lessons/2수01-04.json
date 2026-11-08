@@ -1,0 +1,61 @@
+{
+ "std": "2수01-04",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["칩(바둑돌) 8개씩 짝 수만큼", "10칸 틀 활동지(짝마다 1장)"], "student": ["공책", "색연필 2가지"]},
+   "hook": {
+     "title": "다람쥐의 도토리 주머니",
+     "story": "다람쥐가 도토리 8개를 주웠어요. 왼쪽 주머니와 오른쪽 주머니에 나눠 담으려고 해요.",
+     "visual": {"type": "objects", "kind": "cookie", "groups": [3, 5], "caption": "왼쪽 3개, 오른쪽 5개"},
+     "question": "도토리 8개를 두 주머니에 또 어떻게 나눠 담을 수 있을까요?"
+   },
+   "activities": [
+     {"title": "칩 8개를 두 접시에",
+      "steps": ["칩 8개를 꺼내요.", "두 접시에 나눠 놓아요.", "왼쪽 몇 개, 오른쪽 몇 개인지 공책에 동그라미로 그려요.", "다른 방법을 찾을 때마다 한 줄씩 더 그려요."],
+      "visual": {"type": "counters", "groups": [2, 6], "caption": "8은 2와 6"},
+      "share": "8을 가르는 방법을 몇 가지 찾았나요?"},
+     {"title": "10칸 틀 채우기",
+      "steps": ["짝이 칩을 몇 개 놓아요.", "빈칸이 몇 개인지 세어요.", "10은 □와 □라고 말해요."],
+      "visual": {"type": "tenframe", "filled": 7, "caption": "7개를 놓았어요. 빈칸은 몇 개일까요?"},
+      "share": "10이 되는 두 수를 모두 말해 볼까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["하나의 수를 두 수로 가를 수 있어요.", "가르는 방법은 여러 가지예요.", "두 수를 모으면 다시 처음 수가 돼요."], "visual": {"type": "counters", "groups": [3, 5], "caption": "3과 5를 모으면 8"}},
+   "worksheet": {"title": "모으기와 가르기", "items": [
+     {"q": "그림을 보고 빈칸에 알맞은 수를 쓰세요. 8은 3과 □", "visual": {"type": "counters", "groups": [3, 5], "hide": 1}, "space": "box"},
+     {"q": "두 수를 모으면 얼마일까요? 4와 4", "visual": {"type": "counters", "groups": [4, 4], "labels": false}, "space": "box"},
+     {"q": "10칸 틀을 보고 10은 6과 □", "visual": {"type": "tenframe", "filled": 6}, "space": "box"},
+     {"q": "9를 두 수로 가르는 방법을 두 가지 쓰세요.", "visual": null, "space": "line"},
+     {"q": "5와 2를 모은 수만큼 동그라미를 그리세요.", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["구슬틀 또는 바둑돌 10개씩 짝 수만큼", "모둠 바구니"], "student": ["공책"]},
+   "hook": {
+     "title": "손 안에 숨은 구슬",
+     "story": "선생님 두 손에 구슬이 모두 6개 있어요. 한 손을 펴 보니 2개가 보여요.",
+     "visual": {"type": "counters", "groups": [2, 4], "hide": 1, "caption": "모두 6개"},
+     "question": "다른 손에는 구슬이 몇 개 숨어 있을까요?"
+   },
+   "activities": [
+     {"title": "숨은 구슬 찾기 놀이",
+      "steps": ["짝과 구슬 수를 정해요(10까지).", "한 사람이 구슬을 두 손에 나눠 쥐어요.", "한 손만 펴 보여 줘요.", "짝은 숨은 손의 구슬 수를 맞혀요."],
+      "visual": {"type": "counters", "groups": [3, 5], "hide": 1, "caption": "모두 8개, 숨은 쪽은?"},
+      "share": "어떻게 숨은 수를 알아냈나요?"},
+     {"title": "짝꿍 수 모으기",
+      "steps": ["바구니에 바둑돌 10개를 넣어요.", "한 사람이 한 번 집어요.", "남은 돌을 세어 두 수를 모아 10인지 확인해요."],
+      "visual": {"type": "tenframe", "filled": 4, "filled2": 6, "caption": "4와 6을 모으면 10"},
+      "share": "10이 되는 짝꿍 수를 몇 쌍 찾았나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["전체 수를 알면 숨은 수를 찾을 수 있어요.", "10은 1과 9, 2와 8, 3과 7, 4와 6, 5와 5로 가를 수 있어요."], "visual": {"type": "tenframe", "filled": 3, "filled2": 7, "caption": "3과 7을 모으면 10"}},
+   "worksheet": {"title": "숨은 수 찾기", "items": [
+     {"q": "모두 7개예요. 숨은 쪽은 몇 개일까요?", "visual": {"type": "counters", "groups": [4, 3], "hide": 1}, "space": "box"},
+     {"q": "10칸 틀을 보고 10은 2와 □", "visual": {"type": "tenframe", "filled": 2}, "space": "box"},
+     {"q": "6과 □를 모으면 10이에요.", "visual": null, "space": "box"},
+     {"q": "모두 9개예요. 보이는 것이 5개면 숨은 것은 몇 개일까요?", "visual": {"type": "counters", "groups": [5, 4], "hide": 1}, "space": "box"},
+     {"q": "10이 되는 두 수를 세 쌍 쓰세요.", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

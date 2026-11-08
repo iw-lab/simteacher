@@ -1,0 +1,65 @@
+{
+ "std": "4수03-21",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["저울 교구(G10)", "자릿값 판(N05)"], "student": ["공책", "연필"]},
+   "hook": {
+    "title": "장바구니 영수증",
+    "story": "장바구니 영수증에 2 kg 300 g이라고 적혀 있어요. 이걸 g으로만 쓰면 얼마일까요?",
+    "visual": {"type": "base10", "thousands": 2, "hundreds": 3, "tens": 0, "ones": 0, "caption": "2 kg 300 g = 2300 g"},
+    "question": "빈 자리에는 왜 0을 써야 할까요?"
+   },
+   "activities": [
+    {"title": "저울에서 몇 kg 몇 g, 몇 g 두 가지로 쓰기",
+     "steps": ["저울 눈금을 읽어요.", "몇 kg 몇 g으로 써요.", "몇 g으로도 바꿔 써요."],
+     "visual": {"type": "base10", "thousands": 1, "hundreds": 4, "tens": 5, "ones": 0, "caption": "1 kg 450 g = 1450 g"},
+     "share": "1450 g에서 1000은 어디로 갔나요?"},
+    {"title": "자릿값 판에서 빈 자리 채우기",
+     "steps": ["천의 자리를 kg 칸, 나머지 세 자리를 g 칸으로 나눠요.", "수 모형을 놓아요.", "빈 자리에 0을 채워 읽어요."],
+     "visual": {"type": "base10", "thousands": 2, "hundreds": 0, "tens": 5, "ones": 0, "caption": "2 kg 50 g = 2050 g"},
+     "share": "50 g을 쓸 때 백의 자리에 왜 0이 들어가나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["천의 자리부터 kg, 나머지 세 자리가 g이에요.", "몇 kg 몇 g을 g으로 쓸 때 빈 자리에 0을 꼭 써요.", "1 kg은 1000 g이에요."],
+    "visual": {"type": "base10", "thousands": 1, "hundreds": 0, "tens": 0, "ones": 0, "caption": "1 kg = 1000 g"}},
+   "worksheet": {"title": "kg과 g 바꾸기", "items": [
+    {"q": "2 kg 70 g은 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "4006 g은 몇 kg 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "6 kg은 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "다음 중 가장 무거운 것은 무엇일까요? 1 kg 80 g, 1800 g, 1 kg 8 g", "visual": null, "space": "box"},
+    {"q": "감자 한 봉지가 3 kg보다 150 g 더 무거워요. 몇 g일까요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["수 카드(N22)", "원 저울 그림"], "student": ["공책"]},
+   "hook": {
+    "title": "택배 상자 딱지",
+    "story": "택배 상자 하나의 무게가 2070 g이에요. 딱지에는 몇 kg 몇 g이라고 써야 할까요?",
+    "visual": {"type": "base10", "thousands": 2, "hundreds": 0, "tens": 7, "ones": 0, "caption": "2070 g = 2 kg 70 g"},
+    "question": "70 g을 쓸 때 백의 자리는 왜 0인가요?"
+   },
+   "activities": [
+    {"title": "수 카드로 주문서 무게 만들기",
+     "steps": ["수 카드를 뽑아 네 자리 수를 만들어요.", "1000 g 묶음이 몇 개인지 찾아요.", "몇 kg 몇 g 딱지로 바꿔 적어요."],
+     "visual": {"type": "base10", "thousands": 3, "hundreds": 0, "tens": 5, "ones": 0, "caption": "3050 g = 3 kg 50 g"},
+     "share": "3050 g에서 1000 g 묶음이 몇 개 나왔나요?"},
+    {"title": "원 저울에 바늘 그리기",
+     "steps": ["상자 무게를 듣고 바늘 자리를 어림해요.", "1 kg과 2 kg 사이를 고르게 나눠 그려요.", "짝이 그린 바늘을 읽어요."],
+     "visual": {"type": "scale", "max": 2000, "value": 1650, "step": 100, "unit": "g", "caption": "1 kg 650 g"},
+     "share": "짝이 그린 바늘을 읽으니 몇 g이었나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["천의 자리가 kg, 나머지 세 자리가 g이에요.", "빈 자리에는 꼭 0을 써요.", "1 kg은 1000 g이에요."],
+    "visual": {"type": "base10", "thousands": 2, "hundreds": 0, "tens": 7, "ones": 0}},
+   "worksheet": {"title": "택배 상자 딱지", "items": [
+    {"q": "4 kg 8 g은 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "7090 g은 몇 kg 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "다음 중 가장 가벼운 것은 무엇일까요? 2 kg 30 g, 2300 g, 2 kg 3 g", "visual": null, "space": "box"},
+    {"q": "상자 무게가 1 kg보다 450 g 더 무거워요. 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "8 kg은 몇 g일까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

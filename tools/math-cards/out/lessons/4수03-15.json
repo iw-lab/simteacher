@@ -1,0 +1,65 @@
+{
+ "std": "4수03-15",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["종이 자(G08)", "지우개·클립 같은 작은 물건"], "student": ["공책", "연필"]},
+   "hook": {
+    "title": "지우개는 몇 mm일까",
+    "story": "지우개의 길이를 자로 재려고 해요. cm로만 말하면 어딘가 애매하게 남아요.",
+    "visual": {"type": "ruler", "length": 10, "mark": 4.7, "caption": "지우개 길이를 자로 재어요"},
+    "question": "지우개는 몇 cm 몇 mm일까요?"
+   },
+   "activities": [
+    {"title": "자로 물건 길이 재기",
+     "steps": ["물건 끝을 자의 0에 맞춰요.", "큰 눈금 cm를 먼저 읽어요.", "작은 눈금을 mm로 세어요.", "몇 cm 몇 mm인지, 몇 mm인지 둘 다 말해요."],
+     "visual": {"type": "ruler", "length": 10, "mark": 3.6, "caption": "3 cm 6 mm = 36 mm"},
+     "share": "36 mm와 3 cm 6 mm, 같은 길이인가요?"},
+    {"title": "시작점이 다를 때 길이 구하기",
+     "steps": ["물건의 양 끝이 자의 어느 눈금에 있는지 봐요.", "끝 눈금에서 시작 눈금을 빼요.", "몇 cm 몇 mm인지 말해요."],
+     "visual": {"type": "ruler", "length": 10, "mark": 5.2, "caption": "2 cm에서 7 cm 2 mm까지"},
+     "share": "끝 눈금을 그대로 길이라고 하면 왜 틀릴까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["자의 작은 눈금 한 칸은 1 mm예요.", "1 cm는 10 mm와 같아요.", "물건 끝을 자의 0에 맞추지 않으면 두 눈금의 차이를 구해야 해요."],
+    "visual": {"type": "ruler", "length": 10, "mark": 4.7, "caption": "4 cm 7 mm = 47 mm"}},
+   "worksheet": {"title": "mm로 길이 재기", "items": [
+    {"q": "6 cm 3 mm는 몇 mm일까요?", "visual": null, "space": "box"},
+    {"q": "58 mm는 몇 cm 몇 mm일까요?", "visual": null, "space": "box"},
+    {"q": "자의 3 cm 눈금에서 시작해 8 cm 5 mm 눈금까지 색연필을 그었어요. 그은 선의 길이는 몇 cm 몇 mm일까요?", "visual": {"type": "ruler", "length": 10, "mark": 5.5, "caption": "3 cm에서 8 cm 5 mm까지"}, "space": "box"},
+    {"q": "학교에서 우체국까지는 1 km 400 m, 우체국에서 시장까지는 600 m예요. 학교에서 시장까지는 몇 km일까요?", "visual": null, "space": "box"},
+    {"q": "3 km 70 m는 몇 m일까요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["동네 그림 지도(구간 거리 표시)", "색연필"], "student": ["공책"]},
+   "hook": {
+    "title": "운동장 몇 바퀴면 1 km",
+    "story": "운동장 한 바퀴가 200 m라면 1 km를 걸으려면 몇 바퀴를 돌아야 할지 궁금해요.",
+    "visual": {"type": "numberline", "from": 0, "to": 1000, "step": 200, "marks": [1000], "labels": {"1000": "1 km"}, "caption": "200 m씩 가면 1 km까지"},
+    "question": "200 m를 다섯 번 걸으면 몇 m가 될까요?"
+   },
+   "activities": [
+    {"title": "지도의 구간 거리 읽기",
+     "steps": ["지도 위 점을 세어 거리를 읽어요.", "1 km보다 긴지 짧은지 말해요.", "몇 km 몇 m로 바꿔 말해요."],
+     "visual": {"type": "numberline", "from": 0, "to": 2000, "step": 200, "marks": [1300], "labels": {"1000": "1 km"}, "caption": "1 km 300 m"},
+     "share": "1 km 300 m는 몇 m라고 말할 수 있나요?"},
+    {"title": "걷기 길 정해 거리 더하기",
+     "steps": ["지도 위 구간을 골라 길을 이어요.", "구간 거리를 더해요.", "1000 m가 넘으면 1 km로 바꿔요."],
+     "visual": {"type": "equation", "text": "700 m + 900 m = 1 km 600 m"},
+     "share": "구간을 더하다가 1000 m가 넘으면 어떻게 하나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["1 km는 1000 m예요.", "구간 거리를 더할 때 1000 m가 넘으면 1 km로 바꿔요.", "길이를 잴 때 mm, cm, m, km 중 알맞은 단위를 골라요."],
+    "visual": {"type": "numberline", "from": 0, "to": 2000, "step": 200, "marks": [1000], "labels": {"1000": "1 km"}}},
+   "worksheet": {"title": "km로 거리 나타내기", "items": [
+    {"q": "집에서 공원까지 800 m, 공원에서 학교까지 900 m예요. 집에서 학교까지는 몇 m일까요? 1 km보다 멀까요?", "visual": null, "space": "box"},
+    {"q": "2 km 100 m를 m로 나타내면 몇 m일까요?", "visual": null, "space": "box"},
+    {"q": "3500 m는 몇 km 몇 m일까요?", "visual": null, "space": "box"},
+    {"q": "운동장 한 바퀴가 250 m예요. 네 바퀴를 돌면 몇 m일까요? 1 km가 될까요?", "visual": null, "space": "box"},
+    {"q": "리본 한쪽 끝을 자의 4 cm 눈금에 맞췄더니 다른 끝이 9 cm 1 mm 눈금에 왔어요. 리본의 길이는 몇 cm 몇 mm일까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

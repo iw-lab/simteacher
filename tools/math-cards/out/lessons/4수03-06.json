@@ -1,0 +1,61 @@
+{
+ "std": "4수03-06",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["컴퍼스", "자"], "student": ["공책", "자"]},
+   "hook": {
+    "title": "두 원 중 어느 쪽이 동그랄까",
+    "story": "손으로 그린 원과 컴퍼스로 그린 원이 나란히 있어요. 어느 쪽이 더 동그랄까요?",
+    "visual": {"type": "circles", "radii": [3, 3], "labels": ["손으로 그린 원", "컴퍼스로 그린 원"], "center": false, "caption": "두 원을 비교해 봐요"},
+    "question": "컴퍼스는 어떻게 이렇게 반듯한 원을 그릴 수 있을까요?"
+   },
+   "activities": [
+    {"title": "반지름 여러 개 긋고 재기",
+     "steps": ["컴퍼스를 3 cm 벌려 원을 그려요.", "바늘을 꽂았던 점을 원의 중심이라 해요.", "중심에서 원 위까지 선분을 세 개 그어 자로 재요."],
+     "visual": {"type": "circles", "radii": [3], "caption": "중심에서 원까지는 모두 3 cm예요"},
+     "share": "방향을 바꿔 그어도 길이가 같았나요?"},
+    {"title": "지름 긋고 반지름과 비교하기",
+     "steps": ["중심을 지나 원 위의 두 점을 잇는 선분을 그어요.", "자로 재어 반지름과 비교해요.", "중심을 지나지 않는 선분도 긋고 가장 긴 선을 찾아요."],
+     "visual": {"type": "circles", "radii": [3], "caption": "지름 6 cm는 반지름 3 cm의 2배예요"},
+     "share": "중심을 안 지난 선분은 왜 지름보다 짧았나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["원의 한가운데 점을 중심이라고 해요.", "중심에서 원 위까지 그은 선분을 반지름이라고 해요.", "중심을 지나 원 위의 두 점을 이은 선분을 지름이라고 해요.", "지름은 반지름의 2배예요."], "visual": {"type": "circles", "radii": [4], "caption": "지름 8 cm, 반지름 4 cm"}},
+   "worksheet": {"title": "반지름과 지름 연습", "items": [
+     {"q": "반지름이 5 cm인 원이 있어요. 지름은 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "지름이 14 cm인 원이 있어요. 반지름은 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "원 안에 선분을 여러 개 그었어요. 중심을 지나는 선분과 지나지 않는 선분 중 어느 쪽이 더 길까요?", "visual": {"type": "circles", "radii": [5], "center": false}, "space": "line"},
+     {"q": "한 원에 반지름을 몇 개까지 그을 수 있을까요?", "visual": null, "space": "line"},
+     {"q": "지름 12 cm인 원을 그리려면 컴퍼스를 몇 cm 벌려야 할까요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["압정", "실", "우드락 받침"], "student": ["연필", "자", "가위"]},
+   "hook": {
+    "title": "말뚝과 끈으로 만드는 꽃밭",
+    "story": "학교에 둥근 꽃밭을 만들어요. 말뚝 하나와 끈 하나만 있어요. 어떻게 하면 동그랗게 그릴 수 있을까요?",
+    "visual": {"type": "circles", "radii": [4], "labels": ["꽃밭"], "caption": "말뚝이 중심, 끈 길이가 반지름이에요"},
+    "question": "끈을 짧게 잡으면 꽃밭은 어떻게 될까요?"
+   },
+   "activities": [
+    {"title": "실로 원 그리고 반지름 재기",
+     "steps": ["압정을 꽂고 실에 연필을 묶어요.", "실을 팽팽히 당겨 원을 그려요.", "실 길이를 자로 재어 반지름이라 불러요."],
+     "visual": {"type": "circles", "radii": [4], "caption": "실 길이 4 cm가 반지름이에요"},
+     "share": "실이 길수록 꽃밭은 어떻게 달라지나요?"},
+    {"title": "원 접어 지름 확인하기",
+     "steps": ["그린 원을 오려 반으로 접어요.", "다른 방향으로 한 번 더 접어 중심을 확인해요.", "접힌 선의 길이를 재어 실 길이와 비교해요."],
+     "visual": {"type": "circles", "radii": [4], "caption": "접힌 선 8 cm는 실 길이 4 cm의 2배예요"},
+     "share": "접힌 선 길이는 실 길이의 몇 배였나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["말뚝을 꽂은 자리가 원의 중심이에요.", "실의 길이가 반지름이에요.", "반으로 두 번 접으면 지름을 찾을 수 있어요.", "지름은 반지름의 2배예요."], "visual": {"type": "circles", "radii": [5], "caption": "지름 10 cm, 반지름 5 cm"}},
+   "worksheet": {"title": "꽃밭 설계하기", "items": [
+     {"q": "꽃밭 지름을 16 m로 하려면 끈은 몇 m 준비해야 할까요?", "visual": null, "space": "box"},
+     {"q": "반지름이 7 cm인 원의 지름은 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "원을 반으로 두 번 접으면 두 선이 만나는 점은 무엇일까요?", "visual": null, "space": "line"},
+     {"q": "실이 느슨하면 그린 모양이 동그랗지 않아요. 왜 그럴까요?", "visual": null, "space": "line"},
+     {"q": "지름이 9 cm인 원의 반지름은 몇 cm일까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

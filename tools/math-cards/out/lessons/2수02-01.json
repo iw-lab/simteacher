@@ -1,0 +1,289 @@
+{
+ "std": "2수02-01",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {
+    "teacher": [
+     "검은·흰 바둑돌",
+     "100판"
+    ],
+    "student": [
+     "공책",
+     "색연필"
+    ]
+   },
+   "hook": {
+    "title": "다음에 올 모양은?",
+    "story": "동그라미, 세모, 세모가 되풀이되는 무늬가 있어요. 다음에는 무엇이 올까요?",
+    "visual": {
+     "type": "pattern",
+     "seq": [
+      "circle:red",
+      "triangle:blue",
+      "triangle:blue",
+      "circle:red",
+      "triangle:blue",
+      "triangle:blue",
+      "circle:red"
+     ],
+     "caption": "다음엔 무엇이 올까요?"
+    },
+    "question": "왜 그렇게 생각했나요?"
+   },
+   "activities": [
+    {
+     "title": "무늬 마디 찾아 잇기",
+     "steps": [
+      "되풀이되는 마디를 손으로 묶어요.",
+      "마디를 세 번 이어 놓아요.",
+      "무늬를 손뼉과 발 구르기로 바꿔 소리 내요."
+     ],
+     "visual": {
+      "type": "pattern",
+      "seq": [
+       "circle:red",
+       "triangle:blue",
+       "triangle:blue",
+       "circle:red",
+       "triangle:blue",
+       "triangle:blue",
+       "circle:red"
+      ],
+      "blanks": [
+       6
+      ],
+      "caption": "다음 모양은?"
+     },
+     "share": "묶은 덩어리끼리 비교하면 무엇이 같나요?"
+    },
+    {
+     "title": "100판에서 5씩 뛰어 세기",
+     "steps": [
+      "5부터 5씩 뛰어 세며 칸을 칠해요.",
+      "칠한 칸이 어떤 줄로 늘어서는지 봐요.",
+      "끝자리가 어떻게 되풀이되는지 말해요."
+     ],
+     "visual": {
+      "type": "numberline",
+      "from": 0,
+      "to": 50,
+      "step": 5,
+      "caption": "5씩 뛰어 세기"
+     },
+     "share": "끝자리는 어떤 두 수가 되풀이되나요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "되풀이되는 덩어리를 마디라고 해요.",
+     "같은 규칙을 모양, 몸짓, 수로 나타낼 수 있어요.",
+     "규칙을 찾을 때는 마디를 먼저 찾아요."
+    ],
+    "visual": {
+     "type": "pattern",
+     "seq": [
+      "circle:red",
+      "triangle:blue",
+      "triangle:blue",
+      "circle:red",
+      "triangle:blue",
+      "triangle:blue"
+     ],
+     "caption": "○△△ 되풀이"
+    }
+   },
+   "worksheet": {
+    "title": "규칙 찾기",
+    "items": [
+     {
+      "q": "노랑, 빨강, 빨강이 되풀이돼요. 노랑 다음에 올 두 개는 무엇일까요?",
+      "visual": {
+       "type": "pattern",
+       "seq": [
+        "square:yellow",
+        "circle:red",
+        "circle:red",
+        "square:yellow"
+       ]
+      },
+      "space": "line"
+     },
+     {
+      "q": "3, 6, 9, 12, □ 에서 □는 얼마일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "△○○△○○△ 에서 되풀이되는 마디는 무엇일까요?",
+      "visual": {
+       "type": "pattern",
+       "seq": [
+        "triangle:blue",
+        "circle:red",
+        "circle:red",
+        "triangle:blue",
+        "circle:red",
+        "circle:red",
+        "triangle:blue"
+       ]
+      },
+      "space": "line"
+     },
+     {
+      "q": "발, 손뼉, 손뼉이 되풀이되는 규칙을 발은 1, 손뼉은 2로 나타내 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "10, 20, 30, □, 50 에서 □는 얼마일까요?",
+      "visual": null,
+      "space": "box"
+     }
+    ]
+   }
+  },
+  {
+   "variant": "B",
+   "materials": {
+    "teacher": [
+     "색 바둑돌 두 색"
+    ],
+    "student": [
+     "공책"
+    ]
+   },
+   "hook": {
+    "title": "몸짓 수수께끼",
+    "story": "선생님이 손뼉, 손뼉, 무릎 치기를 되풀이했어요. 다음 동작은 무엇일까요?",
+    "visual": {
+     "type": "pattern",
+     "seq": [
+      "star:yellow",
+      "star:yellow",
+      "ball:blue",
+      "star:yellow",
+      "star:yellow"
+     ],
+     "caption": "다음 동작은?"
+    },
+    "question": "몇 번째 동작부터 다시 처음으로 돌아갈까요?"
+   },
+   "activities": [
+    {
+     "title": "비밀 규칙 무늬 만들기",
+     "steps": [
+      "바둑돌 두 색으로 마디를 두 번 놓아요.",
+      "다음 칸은 비워 둬요.",
+      "다른 모둠이 빈칸을 채워요.",
+      "규칙을 말로 설명해요."
+     ],
+     "visual": {
+      "type": "pattern",
+      "seq": [
+       "circle:gray",
+       "circle:red",
+       "circle:red",
+       "circle:gray"
+      ],
+      "blanks": [
+       3
+      ],
+      "caption": "빈칸에 무엇이 올까요?"
+     },
+     "share": "몇 개씩 되풀이되는지 세어 볼까요?"
+    },
+    {
+     "title": "세 가지 방법으로 바꿔 나타내기",
+     "steps": [
+      "바둑돌 무늬를 모양으로 다시 놓아요.",
+      "몸짓으로 소리를 내요.",
+      "검은 돌은 1, 흰 돌은 2로 수를 써요."
+     ],
+     "visual": {
+      "type": "pattern",
+      "seq": [
+       "circle:gray",
+       "circle:red",
+       "circle:gray",
+       "circle:red"
+      ],
+      "caption": "검은 1, 흰 2"
+     },
+     "share": "수만 보고 원래 무늬를 맞힐 수 있었나요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "같은 규칙을 모양, 몸짓, 수로 바꿀 수 있어요.",
+     "규칙을 보여 줄 때는 마디를 두 번 이상 놓아요.",
+     "모양과 수의 짝은 끝까지 바꾸지 않아요."
+    ],
+    "visual": {
+     "type": "pattern",
+     "seq": [
+      "star:yellow",
+      "star:yellow",
+      "ball:blue",
+      "star:yellow",
+      "star:yellow",
+      "ball:blue"
+     ],
+     "caption": "별, 별, 공 되풀이"
+    }
+   },
+   "worksheet": {
+    "title": "규칙 바꿔 나타내기",
+    "items": [
+     {
+      "q": "별, 공, 공, 별, 공, 공 에서 되풀이되는 마디는 무엇일까요?",
+      "visual": {
+       "type": "pattern",
+       "seq": [
+        "star:yellow",
+        "circle:blue",
+        "circle:blue",
+        "star:yellow",
+        "circle:blue",
+        "circle:blue"
+       ]
+      },
+      "space": "line"
+     },
+     {
+      "q": "무릎, 손뼉, 손뼉 규칙을 무릎은 1, 손뼉은 2로 나타내 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "2, 4, 6, 8, □ 에서 □는 얼마일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "네모, 공, 공, 네모, 공, 공 다음에 올 두 개는 무엇일까요?",
+      "visual": {
+       "type": "pattern",
+       "seq": [
+        "square:green",
+        "circle:purple",
+        "circle:purple",
+        "square:green",
+        "circle:purple",
+        "circle:purple"
+       ]
+      },
+      "space": "line"
+     },
+     {
+      "q": "20, 25, 30, □, 40 에서 □는 얼마일까요?",
+      "visual": null,
+      "space": "box"
+     }
+    ]
+   }
+  }
+ ]
+}

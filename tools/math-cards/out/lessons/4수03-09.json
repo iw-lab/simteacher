@@ -1,0 +1,61 @@
+{
+ "std": "4수03-09",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["각도기"], "student": ["공책", "각도기"]},
+   "hook": {
+    "title": "삼각형을 무리 지어 보기",
+    "story": "모양이 다른 삼각형 여러 개가 있어요. 비슷한 것끼리 모아 보려고 해요.",
+    "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "가장 큰 각 50°"}, {"kind": "right_triangle", "label": "가장 큰 각 90°"}, {"kind": "triangle", "label": "가장 큰 각 120°"}], "caption": "가장 큰 각이 다른 세 삼각형"},
+    "question": "가장 큰 각을 보면 삼각형을 어떻게 나눌 수 있을까요?"
+   },
+   "activities": [
+    {"title": "꼭짓점을 끌어 각 바꾸기",
+     "steps": ["꼭짓점 하나를 끌어 가장 큰 각을 직각으로 만들어요.", "직각보다 작게, 직각보다 크게도 만들어요.", "만들 때마다 직각삼각형·예각삼각형·둔각삼각형 이름을 붙여요."],
+     "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "가장 큰 각 50° → 예각삼각형"}, {"kind": "right_triangle", "label": "가장 큰 각 90° → 직각삼각형"}, {"kind": "triangle", "label": "가장 큰 각 120° → 둔각삼각형"}], "caption": "세 가지 삼각형 이름"},
+     "share": "둔각을 두 개 만들 수 있을까요? 왜 안 될까요?"},
+    {"title": "헷갈리는 각 재어 보기",
+     "steps": ["가장 큰 각이 88°, 90°, 93°인 삼각형을 각도기로 재요.", "재기 전에 먼저 어떤 삼각형일지 짐작해요.", "삼각형을 돌려도 이름이 그대로인지 확인해요."],
+     "visual": {"type": "angle", "deg": 93, "label": "93°"},
+     "share": "눈으로 봤을 때 짐작이 맞았나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["세 각이 모두 직각보다 작으면 예각삼각형이에요.", "한 각이 직각이면 직각삼각형이에요.", "한 각이 직각보다 크면 둔각삼각형이에요.", "돌려 놓아도 각의 크기는 바뀌지 않아요."], "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "예각삼각형"}, {"kind": "right_triangle", "label": "직각삼각형"}, {"kind": "triangle", "label": "둔각삼각형"}], "caption": "세 가지 삼각형"}},
+   "worksheet": {"title": "각으로 삼각형 나누기", "items": [
+     {"q": "세 각이 40°, 65°, 75°인 삼각형의 이름은 무엇일까요?", "visual": null, "space": "box"},
+     {"q": "한 각이 100°인 삼각형의 이름은 무엇일까요?", "visual": {"type": "angle", "deg": 100, "label": "100°"}, "space": "box"},
+     {"q": "한 각이 정확히 90°인 삼각형의 이름은 무엇일까요?", "visual": {"type": "angle", "deg": 90, "label": "90°"}, "space": "box"},
+     {"q": "둔각삼각형에는 예각이 몇 개 있을까요?", "visual": null, "space": "box"},
+     {"q": "직각삼각형을 거울에 비친 모양처럼 뒤집었어요. 이름이 바뀔까요?", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["지오보드", "고무줄"], "student": ["점종이", "연필"]},
+   "hook": {
+    "title": "팔로 만드는 각",
+    "story": "선생님이 팔 두 개로 각을 만들어요. 직각보다 큰지 작은지 맞혀 보려고 해요.",
+    "visual": {"type": "angle", "deg": 110, "label": "110°"},
+    "question": "이 각을 삼각형 안에 넣으면 어떤 삼각형이 될까요?"
+   },
+   "activities": [
+    {"title": "주문받은 삼각형 만들기",
+     "steps": ["모둠이 주문 카드를 뽑아요(직각삼각형, 예각삼각형, 둔각삼각형 중 하나).", "지오보드에 고무줄로 주문받은 삼각형을 만들어요.", "다른 모둠이 각을 재어 주문대로인지 확인해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "right_triangle", "label": "직각삼각형 주문"}, {"kind": "triangle", "label": "예각삼각형 주문"}], "caption": "주문 카드 두 가지"},
+     "share": "예각삼각형을 확인할 때 왜 세 각을 다 봐야 할까요?"},
+    {"title": "꼭짓점 하나만 옮기기",
+     "steps": ["직각삼각형을 둔각삼각형으로 바꿔요.", "꼭짓점을 딱 한 개만 옮겨요.", "바뀐 삼각형의 세 각을 다시 확인해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "right_triangle", "label": "직각삼각형(가장 큰 각 90°)"}, {"kind": "triangle", "label": "둔각삼각형(가장 큰 각 130°)"}], "caption": "꼭짓점 하나를 옮기면"},
+     "share": "점 하나만 옮겼는데 다른 두 각은 어떻게 됐나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["삼각형은 가장 큰 각을 보고 이름을 정해요.", "예각삼각형은 세 각이 모두 예각이에요.", "둔각삼각형은 둔각이 1개, 나머지 둘은 예각이에요."], "visual": {"type": "angle", "deg": 130, "label": "130°"}},
+   "worksheet": {"title": "주문대로 삼각형 만들기", "items": [
+     {"q": "세 각이 55°, 60°, 65°인 삼각형의 이름은 무엇일까요?", "visual": null, "space": "box"},
+     {"q": "한 각이 150°인 삼각형의 이름은 무엇일까요?", "visual": {"type": "angle", "deg": 150, "label": "150°"}, "space": "box"},
+     {"q": "직각삼각형의 세 각 중 두 각이 30°, 60°예요. 나머지 한 각은 몇 도일까요?", "visual": null, "space": "box"},
+     {"q": "둔각삼각형을 돌려서 둔각이 아래로 가게 놓았어요. 이름이 바뀔까요?", "visual": null, "space": "line"},
+     {"q": "예각삼각형에는 둔각이 몇 개 있을까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "std": "2수03-11",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["줄자", "1 m 자"], "student": ["공책"]},
+   "hook": {
+     "title": "줄자로 100 cm 찾기",
+     "story": "줄자를 쭉 펴고 10 cm씩 세어 가요. 100 cm가 되는 곳에 1 m 표시가 있어요.",
+     "visual": {"type": "numberline", "from": 0, "to": 100, "step": 10, "marks": [100], "caption": "10씩 10번 가면 100"},
+     "question": "10 cm씩 몇 번 세면 100 cm가 될까요?"
+   },
+   "activities": [
+     {"title": "100 cm 지나 더 가기",
+      "steps": ["줄자를 0부터 10 cm씩 짚어요.", "100 cm가 되는 곳을 찾아요.", "100 cm는 1 m라고 말해요.", "120 cm까지 더 가서 1 m보다 얼마나 더 갔는지 말해요."],
+      "visual": {"type": "numberline", "from": 0, "to": 120, "step": 10, "marks": [100, 120], "caption": "100을 지나 120까지"},
+      "share": "120 cm는 1 m 몇 cm인가요?"},
+     {"title": "교실 물건 두 가지로 쓰기",
+      "steps": ["모둠 물건 하나를 골라요.", "1 m 자로 재어요.", "몇 m 몇 cm인지 말해요.", "같은 길이를 몇 cm로도 써요."],
+      "visual": {"type": "table", "head": ["물건", "몇 m 몇 cm", "몇 cm"], "rows": [["칠판", "1 m 30 cm", "130 cm"]], "caption": "두 가지로 써요"},
+      "share": "두 가지로 쓴 수가 같은 길이인지 어떻게 확인했나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["1 m는 100 cm예요.", "100 cm보다 긴 길이는 몇 m 몇 cm로도, 몇 cm로도 쓸 수 있어요."],
+     "visual": {"type": "table", "head": ["몇 m 몇 cm", "몇 cm"], "rows": [["1 m 30 cm", "130 cm"]], "caption": "같은 길이, 다른 표현"}},
+   "worksheet": {"title": "m와 cm 바꾸기", "items": [
+     {"q": "1 m 40 cm는 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "150 cm는 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "줄자로 110 cm까지 재었어요. 1 m보다 몇 cm 더 갔나요?", "visual": {"type": "numberline", "from": 0, "to": 110, "step": 10, "marks": [100, 110]}, "space": "box"},
+     {"q": "1 m 8 cm를 cm로 쓰면 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "280 cm는 몇 m 몇 cm인가요?", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["털실", "길이 카드(몇 m 몇 cm와 몇 cm 짝)"], "student": ["공책"]},
+   "hook": {
+     "title": "내가 자른 실은 1 m일까",
+     "story": "자를 보지 않고 실을 1 m만큼 잘라요. 줄자에 대어 맞는지 확인해요.",
+     "visual": {"type": "numberline", "from": 0, "to": 100, "step": 10, "marks": [90, 100], "caption": "90 cm면 1 m보다 10 cm 짧아요"},
+     "question": "우리가 자른 실은 1 m보다 길까요, 짧을까요?"
+   },
+   "activities": [
+     {"title": "자른 실 길이 재기",
+      "steps": ["자른 실을 줄자에 대어 재요.", "1 m보다 길거나 짧은지 말해요.", "몇 cm 차이 나는지 세어요.", "길이를 몇 m 몇 cm로 적어요."],
+      "visual": {"type": "numberline", "from": 0, "to": 100, "step": 10, "marks": [90, 100], "caption": "10 cm가 모자라요"},
+      "share": "다시 자른다면 어떻게 고칠까요?"},
+     {"title": "같은 길이 카드 짝 찾기",
+      "steps": ["카드 두 장을 뒤집어요.", "두 길이가 같은지 말해요.", "같으면 가져가요.", "헷갈리면 줄자로 확인해요."],
+      "visual": {"type": "table", "head": ["몇 m 몇 cm", "몇 cm"], "rows": [["2 m 40 cm", "240 cm"], ["2 m 4 cm", "204 cm"]], "caption": "짝을 찾아요"},
+      "share": "2 m 4 cm와 240 cm는 왜 짝이 아닌가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["몇 m 몇 cm와 몇 cm는 같은 길이를 나타내요.", "m 자리와 cm 자리를 헷갈리면 다른 길이가 돼요."],
+     "visual": {"type": "table", "head": ["몇 m 몇 cm", "몇 cm"], "rows": [["1 m 6 cm", "106 cm"]], "caption": "1 m 6 cm는 106 cm"}},
+   "worksheet": {"title": "길이 카드 짝 맞추기", "items": [
+     {"q": "1 m 15 cm는 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "175 cm는 몇 m 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "3 m 7 cm를 cm로 쓰면 몇 cm인가요?", "visual": null, "space": "box"},
+     {"q": "다음 중 1 m 2 cm와 같은 길이에 동그라미 하세요: 12 cm, 102 cm, 120 cm", "visual": null, "space": "none"},
+     {"q": "250 cm는 몇 m 몇 cm인가요?", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

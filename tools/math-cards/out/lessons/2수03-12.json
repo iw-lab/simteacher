@@ -1,0 +1,63 @@
+{
+ "std": "2수03-12",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["막대 그림(화면)", "30 cm 자"], "student": ["공책"]},
+   "hook": {
+     "title": "자 대기 전에 먼저 어림!",
+     "story": "막대 길이를 자로 재기 전에 먼저 눈으로 짐작해요. 약 몇 cm라고 말해 봐요.",
+     "visual": {"type": "ruler", "length": 16, "mark": 14, "caption": "실제로는 14 cm"},
+     "question": "이 막대는 약 몇 cm쯤일까요?"
+   },
+   "activities": [
+     {"title": "어림하고 재어 확인하기",
+      "steps": ["막대 길이를 먼저 어림해 말해요.", "공책에 어림한 수를 적어요.", "자의 눈금 0에 맞추어 재요.", "어림한 수와 잰 수의 차이를 세어요."],
+      "visual": {"type": "ruler", "length": 16, "mark": 14, "caption": "어림 12 cm, 실제 14 cm"},
+      "share": "내 어림과 실제 길이는 몇 cm 차이 났나요?"},
+     {"title": "교실 물건 어림표 채우기",
+      "steps": ["연필 길이를 한 뼘으로 어림해요.", "자로 재어 표에 적어요.", "지우개도 같은 방법으로 해요.", "차이가 가장 작았던 물건에 동그라미해요."],
+      "visual": {"type": "table", "head": ["물건", "어림", "잰 길이"], "rows": [["연필", "약 15 cm", "16 cm"], ["지우개", "약 5 cm", "4 cm"]], "caption": "어림과 실제를 견주어요"},
+      "share": "어떤 물건이 어림하기 쉬웠나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["자로 재기 전에 먼저 어림해요.", "어림한 길이와 잰 길이는 조금 달라도 괜찮아요.", "자의 눈금 0에 맞추어 재요."],
+     "visual": {"type": "ruler", "length": 16, "mark": 14, "caption": "14 cm"}},
+   "worksheet": {"title": "어림하고 재어 보기", "items": [
+     {"q": "지우개 길이를 먼저 어림해 약 몇 cm로 써 보세요.", "visual": null, "space": "line"},
+     {"q": "자로 재니 지우개는 5 cm였어요. 어림한 수와 몇 cm 차이 나나요?", "visual": {"type": "ruler", "length": 10, "mark": 5}, "space": "box"},
+     {"q": "풀의 길이를 먼저 어림하고, 자로 재어 두 수를 비교해 쓰세요.", "visual": null, "space": "line"},
+     {"q": "책상 가로를 뼘으로 어림하면 몇 뼘쯤일까요?", "visual": null, "space": "box"},
+     {"q": "어림한 길이가 잰 길이와 다르면 틀린 걸까요? 생각을 써 보세요.", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["종이띠", "가위", "1 m 줄"], "student": ["공책"]},
+   "hook": {
+     "title": "20 cm를 어림해서 잘라요",
+     "story": "선생님이 '20 cm'라고 부르면 자를 보지 않고 종이띠를 그만큼 잘라요.",
+     "visual": {"type": "ruler", "length": 22, "mark": 20, "caption": "실제 20 cm"},
+     "question": "20 cm는 얼마만큼일까요?"
+   },
+   "activities": [
+     {"title": "부른 길이만큼 잘라 보기",
+      "steps": ["선생님이 부른 길이를 들어요.", "자를 보지 않고 종이띠를 잘라요.", "자로 재어 몇 cm인지 확인해요.", "부른 길이와 몇 cm 차이 나는지 세어요."],
+      "visual": {"type": "ruler", "length": 22, "mark": 18, "caption": "부른 길이 20 cm, 자른 길이 18 cm"},
+      "share": "다음엔 어떻게 하면 더 가까워질까요?"},
+     {"title": "1 m보다 길까 짧을까 나누기",
+      "steps": ["교실 물건을 하나 골라요.", "1 m보다 긴지 짧은지 어림해요.", "어울리는 단위(cm 또는 m)를 말해요.", "두 칸으로 나누어 적어요."],
+      "visual": {"type": "table", "head": ["1 m보다 짧다", "1 m보다 길다"], "rows": [["필통", "칠판"]], "caption": "단위를 알맞게 골라요"},
+      "share": "필통을 m로 재면 어색한 까닭은 무엇일까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["짧은 물건은 cm, 긴 물건은 m가 어울려요.", "어림을 여러 번 하면 점점 가까워져요."],
+     "visual": {"type": "ruler", "length": 22, "mark": 20, "caption": "20 cm"}},
+   "worksheet": {"title": "어림해서 맞춰 보기", "items": [
+     {"q": "'30 cm'를 듣고 종이띠를 잘랐더니 28 cm였어요. 몇 cm 차이 나나요?", "visual": {"type": "ruler", "length": 30, "mark": 28}, "space": "box"},
+     {"q": "사물함 높이는 1 m보다 길까요, 짧을까요?", "visual": null, "space": "line"},
+     {"q": "풀의 길이는 cm와 m 가운데 어떤 단위가 어울릴까요?", "visual": null, "space": "line"},
+     {"q": "'15 cm'를 듣고 어림해서 그려 보세요.", "visual": {"type": "ruler", "length": 18, "mark": 15}, "space": "none"},
+     {"q": "교실에서 1 m보다 짧은 물건을 한 가지 쓰세요.", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

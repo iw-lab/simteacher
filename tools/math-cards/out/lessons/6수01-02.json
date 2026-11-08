@@ -1,0 +1,65 @@
+{
+ "std": "6수01-02",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["수직선 교구(N18, N07)"], "student": ["공책", "바둑돌"]},
+   "hook": {
+    "title": "엘리베이터 안내문",
+    "story": "엘리베이터에 몸무게 합 500 kg 넘으면 소리가 나요라고 적혀 있어요.",
+    "visual": {"type": "numberline", "from": 0, "to": 1000, "step": 100, "marks": [500], "caption": "500 kg 지점"},
+    "question": "딱 500 kg이면 소리가 날까요, 안 날까요?"
+   },
+   "activities": [
+    {"title": "끝점 ●와 ○ 바꿔 보기",
+     "steps": ["기준 수를 하나 정해요.", "끝점을 ●와 ○로 각각 표시해요.", "기준 수가 들어가는지 안 들어가는지 말해요."],
+     "visual": {"type": "numberline", "from": 0, "to": 60, "step": 10, "marks": [30], "caption": "기준 수 30"},
+     "share": "●일 때와 ○일 때 기준 수는 어떻게 다른가요?"},
+    {"title": "생활 문장을 수직선으로",
+     "steps": ["문장에서 기준이 되는 수를 찾아요.", "수직선에 범위를 그려요.", "들어가는 수와 안 들어가는 수를 하나씩 말해요."],
+     "visual": {"type": "numberline", "from": 100, "to": 200, "step": 10, "marks": [150], "caption": "키 150cm 기준"},
+     "share": "두 기준이 함께 나오면 수직선을 어떻게 그리나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["이상, 이하는 기준 수가 들어가요.", "초과, 미만은 기준 수가 들어가지 않아요.", "수직선에서 ●는 들어간다, ○는 안 들어간다는 뜻이에요."],
+    "visual": {"type": "numberline", "from": 0, "to": 60, "step": 10, "marks": [30]}},
+   "worksheet": {"title": "이상·이하·초과·미만", "items": [
+    {"q": "30 이상인 수에 30이 들어갈까요, 안 들어갈까요?", "visual": null, "space": "box"},
+    {"q": "50 초과 55 이하인 자연수는 모두 몇 개일까요?", "visual": null, "space": "box"},
+    {"q": "택배 요금이 3kg 이하 3000원, 3kg 초과 6kg 이하 4500원, 6kg 초과 6000원이에요. 3kg 상자의 요금은 얼마일까요?", "visual": null, "space": "box"},
+    {"q": "어떤 범위에 12, 13, 14는 들어가고 11과 15는 들어가지 않아요. 알맞은 범위를 쓰세요.", "visual": null, "space": "box"},
+    {"q": "수직선에서 20 위에 ●가 있고 왼쪽으로 화살표가 있어요. 이 범위는 무엇일까요?", "visual": {"type": "numberline", "from": 0, "to": 40, "step": 10, "marks": [20]}, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["무게 카드 12장", "수직선 교구(N07)"], "student": ["공책"]},
+   "hook": {
+    "title": "사과 상자 등급",
+    "story": "과수원에서 사과 상자를 무게로 나눠요. 기준은 3kg 미만 보통, 3kg 이상 4kg 미만 좋음, 4kg 이상 아주 좋음이에요.",
+    "visual": {"type": "numberline", "from": 0, "to": 60, "step": 10, "caption": "기준 3과 4"},
+    "question": "딱 3kg인 상자는 보통일까요, 좋음일까요?"
+   },
+   "activities": [
+    {"title": "무게 카드 등급 바구니에 나누기",
+     "steps": ["무게 카드를 읽어요.", "기준과 비교해요.", "알맞은 바구니에 놓아요."],
+     "visual": {"type": "numberline", "from": 0, "to": 60, "step": 10, "marks": [30, 40], "caption": "기준 3kg, 4kg"},
+     "share": "3kg 카드는 어느 바구니에 넣었나요?"},
+    {"title": "요금표 빈칸 채우기",
+     "steps": ["구간을 수직선에 이어 그려요.", "끝점을 ●와 ○로 표시해요.", "이상·이하·초과·미만 중 알맞은 말을 채워요."],
+     "visual": {"type": "numberline", "from": 0, "to": 70, "step": 10, "marks": [20, 50], "caption": "기준 2kg, 5kg"},
+     "share": "경계에 ●가 둘이거나 ○가 둘이면 어떤 문제가 생기나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["기준이 같은 수라도 이상·이하와 초과·미만은 포함 여부가 달라요.", "구간을 나눌 때 경계에서 겹치거나 비면 안 돼요.", "수직선의 ●, ○로 포함 여부를 나타내요."],
+    "visual": {"type": "numberline", "from": 0, "to": 70, "step": 10, "marks": [20, 50]}},
+   "worksheet": {"title": "과일 상자 등급", "items": [
+    {"q": "45 이하인 수에 45가 들어갈까요, 안 들어갈까요?", "visual": null, "space": "box"},
+    {"q": "20 초과 25 이하인 자연수는 모두 몇 개일까요?", "visual": null, "space": "box"},
+    {"q": "몸무게가 40kg 이상 45kg 미만이면 중간 사이즈예요. 44.9kg은 중간 사이즈일까요?", "visual": null, "space": "box"},
+    {"q": "어떤 범위에 8, 9, 10은 들어가고 7과 11은 들어가지 않아요. 알맞은 범위를 쓰세요.", "visual": null, "space": "box"},
+    {"q": "수직선에서 35 위에 ○가 있고 오른쪽으로 화살표가 있어요. 이 범위는 무엇일까요?", "visual": {"type": "numberline", "from": 0, "to": 50, "step": 10, "marks": [35]}, "space": "box"}
+   ]}
+  }
+ ]
+}

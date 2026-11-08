@@ -1,0 +1,65 @@
+{
+ "std": "4수03-23",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["저울 교구(G10)"], "student": ["공책", "연필"]},
+   "hook": {
+    "title": "장바구니 저울",
+    "story": "사과 1 kg 400 g과 배 1 kg 800 g을 저울에 함께 올리려고 해요.",
+    "visual": {"type": "equation", "text": "1 kg 400 g + 1 kg 800 g = ?"},
+    "question": "두 무게를 더하면 모두 몇 kg 몇 g일까요?"
+   },
+   "activities": [
+    {"title": "무게 더하기, g이 1000 넘으면 kg으로",
+     "steps": ["g은 g끼리, kg은 kg끼리 더해요.", "g이 1000이 넘으면 1 kg으로 바꿔요.", "합한 무게를 말해요."],
+     "visual": {"type": "equation", "text": "1 kg 400 g + 1 kg 800 g = 3 kg 200 g"},
+     "share": "400+800을 더한 값에서 1000을 어떻게 했나요?"},
+    {"title": "무게 빼기, g이 모자라면 1 kg 빌려오기",
+     "steps": ["g은 g끼리, kg은 kg끼리 빼요.", "g이 모자라면 1 kg을 1000 g으로 바꿔 와요.", "남은 무게를 말해요."],
+     "visual": {"type": "equation", "text": "4 kg 200 g - 1 kg 500 g = 2 kg 700 g"},
+     "share": "200에서 500을 뺄 수 없을 때 어떻게 했나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["kg은 kg끼리, g은 g끼리 계산해요.", "더해서 g이 1000이 넘으면 1 kg으로 바꿔요.", "빼다가 g이 모자라면 1 kg을 1000 g으로 바꿔 와요."],
+    "visual": {"type": "equation", "text": "1 kg = 1000 g"}},
+   "worksheet": {"title": "무게 더하고 빼기", "items": [
+    {"q": "2 kg 500 g + 1 kg 800 g은 몇 kg 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "3 kg 100 g - 1 kg 400 g은 몇 kg 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "수박 4 kg 200 g 중 1 kg 600 g을 나눠 주었어요. 남은 수박은 몇 kg 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "당근 900 g과 양파 1 kg 300 g을 합치면 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "쌀 5 kg 중 2 kg 750 g을 썼어요. 남은 쌀은 몇 kg 몇 g일까요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["물건 무게 카드"], "student": ["공책"]},
+   "hook": {
+    "title": "할머니께 보낼 상자",
+    "story": "상자에 사과 1 kg 900 g과 감자 2 kg 400 g을 담으려고 해요. 5 kg을 넘으면 요금이 비싸져요.",
+    "visual": {"type": "equation", "text": "1 kg 900 g + 2 kg 400 g = ?"},
+    "question": "두 가지를 넣으면 몇 kg 몇 g이 될까요? 5 kg을 넘을까요?"
+   },
+   "activities": [
+    {"title": "물건 무게 더해 5 kg 안 넘기기",
+     "steps": ["담을 물건의 무게를 더해요.", "g이 1000이 넘으면 1 kg으로 바꿔요.", "5 kg을 넘는지 확인해요."],
+     "visual": {"type": "equation", "text": "1 kg 900 g + 2 kg 400 g = 4 kg 300 g"},
+     "share": "5 kg까지 얼마가 남았나요?"},
+    {"title": "5 kg까지 남은 무게 구하기",
+     "steps": ["5 kg에서 담은 무게를 빼요.", "g이 모자라면 1 kg을 1000 g으로 바꿔요.", "남은 무게보다 가벼운 물건을 찾아요."],
+     "visual": {"type": "equation", "text": "5 kg - 4 kg 300 g = 700 g"},
+     "share": "남은 무게 안에 더 넣을 수 있는 물건이 있나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것",
+    "points": ["여러 물건의 무게를 더할 때마다 1000 g이 넘으면 1 kg으로 바꿔요.", "5 kg처럼 g이 0인 수에서 뺄 때도 1 kg을 1000 g으로 바꿔요.", "무게를 더하고 뺄 때 kg은 kg끼리, g은 g끼리 계산해요."],
+    "visual": {"type": "equation", "text": "4 kg 300 g + 700 g = 5 kg"}},
+   "worksheet": {"title": "5 kg 상자 꾸리기", "items": [
+    {"q": "1 kg 650 g + 2 kg 500 g은 몇 kg 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "6 kg - 2 kg 300 g은 몇 kg 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "가방 무게가 2 kg 800 g이었는데 책 한 권을 뺐더니 2 kg 300 g이 되었어요. 뺀 책은 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "귤 1 kg 200 g과 배 1 kg 900 g을 합치면 몇 g일까요?", "visual": null, "space": "box"},
+    {"q": "쌀 4 kg 중 1 kg 650 g을 썼어요. 남은 쌀은 몇 kg 몇 g일까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

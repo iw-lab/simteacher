@@ -1,0 +1,61 @@
+{
+ "std": "4수03-10",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["지오보드", "고무줄", "삼각자"], "student": ["점종이", "자"]},
+   "hook": {
+    "title": "꼭짓점 하나를 옮겼어요",
+    "story": "직사각형 꼭짓점 하나를 옆으로 옮겼어요. 모양이 바뀌었지만 아직 남아 있는 것이 있어요.",
+    "visual": {"type": "shapes", "items": [{"kind": "rect", "label": "직사각형"}, {"kind": "parallelogram", "label": "꼭짓점을 옮긴 모양"}], "caption": "직사각형에서 평행사변형으로"},
+    "question": "평행한 변이 몇 쌍 남았을까요?"
+   },
+   "activities": [
+    {"title": "평행한 변 쌍 수로 나누기",
+     "steps": ["여러 사각형의 변이 평행한지 삼각자로 확인해요.", "평행한 변이 0쌍, 1쌍, 2쌍인 것으로 나눠요.", "두 쌍인 사각형도 사다리꼴이라 부를 수 있는지 말해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "trapezoid", "label": "평행한 변 1쌍 → 사다리꼴"}, {"kind": "parallelogram", "label": "평행한 변 2쌍 → 평행사변형"}], "caption": "평행한 변 쌍 수로 나누기"},
+     "share": "평행한 변이 한 쌍이라도 있으면 어떤 이름이 될까요?"},
+    {"title": "지오보드로 마름모 만들기",
+     "steps": ["고무줄로 평행사변형을 걸어요.", "네 변의 길이가 모두 같아지도록 못을 옮겨요.", "마주 보는 두 각의 크기를 비교해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "parallelogram", "label": "평행사변형"}, {"kind": "rhombus", "label": "마름모(네 변 모두 같음)"}], "caption": "평행사변형에서 마름모로"},
+     "share": "마름모에서 마주 보는 두 각은 크기가 어땠나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["평행한 변이 한 쌍이라도 있으면 사다리꼴이에요.", "평행한 변이 두 쌍이면 평행사변형이에요.", "네 변의 길이가 모두 같은 평행사변형을 마름모라고 해요."], "visual": {"type": "shapes", "items": [{"kind": "trapezoid", "label": "사다리꼴"}, {"kind": "parallelogram", "label": "평행사변형"}, {"kind": "rhombus", "label": "마름모"}], "caption": "사다리꼴·평행사변형·마름모"}},
+   "worksheet": {"title": "평행한 변으로 사각형 나누기", "items": [
+     {"q": "평행한 변이 두 쌍인 사각형을 사다리꼴이라고 부를 수 있을까요? 이유도 써 보세요.", "visual": null, "space": "line"},
+     {"q": "평행사변형에서 한 각이 55°예요. 마주 보는 각은 몇 도일까요?", "visual": null, "space": "box"},
+     {"q": "마름모의 한 변이 9 cm예요. 네 변의 길이를 모두 더하면 몇 cm일까요?", "visual": {"type": "shapes", "items": [{"kind": "rhombus", "label": "한 변 9 cm"}]}, "space": "box"},
+     {"q": "정사각형을 비스듬히 기울여 놓았어요. 이 도형을 마름모라고 부를 수 있을까요?", "visual": {"type": "shapes", "items": [{"kind": "square", "label": "기울인 정사각형"}]}, "space": "line"},
+     {"q": "평행한 변이 하나도 없는 사각형을 사다리꼴이라고 할 수 있을까요?", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["지오보드", "고무줄"], "student": ["점종이", "연필"]},
+   "hook": {
+    "title": "칠판 뒤에 숨은 사각형",
+    "story": "선생님이 사각형 하나를 몰래 숨겼어요. '예/아니요'로만 답할 수 있는 질문으로 이름을 맞혀야 해요.",
+    "visual": {"type": "shapes", "items": [{"kind": "rhombus", "label": "숨은 사각형?"}], "caption": "평행한 변이 있을까요?"},
+    "question": "이름을 빨리 좁힐 수 있는 첫 질문은 무엇일까요?"
+   },
+   "activities": [
+    {"title": "지오보드에 몰래 걸기",
+     "steps": ["짝이 지오보드에 사각형을 몰래 걸어요.", "질문을 다섯 번까지만 해서 이름을 맞혀요.", "맞히면 가장 쓸모 있던 질문에 표시해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "rhombus", "label": "마름모?"}, {"kind": "parallelogram", "label": "평행사변형?"}], "caption": "질문으로 좁혀 가기"},
+     "share": "평행한 변이 두 쌍이라는 답을 들으면 남는 후보는 무엇일까요?"},
+    {"title": "수수께끼 사각형 만들기",
+     "steps": ["점종이에 수수께끼 사각형을 그려요.", "성질 세 가지를 짧은 문장으로 써요.", "다른 모둠과 바꾸어 풀어요."],
+     "visual": {"type": "shapes", "items": [{"kind": "trapezoid", "label": "수수께끼 사각형"}], "caption": "힌트: 평행한 변이 한 쌍"},
+     "share": "힌트 하나만 있으면 답이 여러 개 나올 수 있을까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["질문으로 평행한 변의 쌍 수를 먼저 물으면 이름을 빨리 좁힐 수 있어요.", "마름모는 평행사변형이라고도 부를 수 있어요.", "사각형 하나가 여러 이름을 가질 수 있어요."], "visual": {"type": "shapes", "items": [{"kind": "rhombus", "label": "마름모 = 평행사변형의 한 종류"}], "caption": "마름모는 평행사변형이기도 해요"}},
+   "worksheet": {"title": "몰래 사각형 스무고개", "items": [
+     {"q": "'평행한 변이 한 쌍도 없어요'라는 답을 들었어요. 이 사각형은 사다리꼴일까요?", "visual": null, "space": "line"},
+     {"q": "네 변의 길이가 모두 같고 직각이 없는 사각형의 이름은 무엇일까요?", "visual": {"type": "shapes", "items": [{"kind": "rhombus", "label": "네 변 같음, 직각 없음"}]}, "space": "box"},
+     {"q": "평행사변형에서 한 각이 95°예요. 마주 보는 각은 몇 도일까요?", "visual": null, "space": "box"},
+     {"q": "마름모에서 한 변의 길이가 11 cm예요. 이웃한 변의 길이는 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "정사각형은 사다리꼴이라고 할 수 있나요? 이유도 써 보세요.", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

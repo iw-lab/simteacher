@@ -1,0 +1,270 @@
+{
+ "std": "2수03-03",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {
+    "teacher": [
+     "도형 조각(삼각형·사각형·원)",
+     "칠교판"
+    ],
+    "student": [
+     "공책"
+    ]
+   },
+   "hook": {
+    "title": "뾰족한 곳 세어 보기",
+    "story": "시계 앞면과 칠판을 보고 뾰족한 곳이 몇 군데인지 세어 봐요.",
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "circle",
+       "label": "시계"
+      },
+      {
+       "kind": "rect",
+       "label": "칠판"
+      }
+     ]
+    },
+    "question": "뾰족한 곳이 없는 것과 네 군데인 것은 어느 것일까요?"
+   },
+   "activities": [
+    {
+     "title": "모양 나누기",
+     "steps": [
+      "여러 모양을 삼각형, 사각형, 원 칸으로 나눠요.",
+      "칸마다 몇 개인지 세어요.",
+      "왜 그 칸에 넣었는지 말해요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "삼각형"
+       },
+       {
+        "kind": "square",
+        "label": "사각형"
+       },
+       {
+        "kind": "circle",
+        "label": "원"
+       }
+      ]
+     },
+     "share": "거꾸로 놓인 삼각형도 삼각형일까요?"
+    },
+    {
+     "title": "칠교로 모양 만들기",
+     "steps": [
+      "칠교 조각을 돌리고 뒤집어 모양을 만들어요.",
+      "쓴 조각 중 삼각형과 사각형 개수를 세어요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "지붕"
+       },
+       {
+        "kind": "rhombus",
+        "label": "조각"
+       }
+      ]
+     },
+     "share": "작은 삼각형 두 개를 붙이면 무슨 모양이 될까요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "뾰족한 곳이 3군데면 삼각형, 4군데면 사각형이에요.",
+     "둥글고 뾰족한 곳이 없으면 원이에요.",
+     "방향이 바뀌어도 모양 이름은 바뀌지 않아요."
+    ],
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "삼각형"
+      },
+      {
+       "kind": "square",
+       "label": "사각형"
+      },
+      {
+       "kind": "circle",
+       "label": "원"
+      }
+     ]
+    }
+   },
+   "worksheet": {
+    "title": "세 모양 찾기",
+    "items": [
+     {
+      "q": "뾰족한 곳이 3군데인 모양의 이름은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "동전의 앞면은 무슨 모양일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "교실 창문은 보통 무슨 모양일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "삼각형을 거꾸로 돌려 놓아도 삼각형일까요? 이유를 써 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "우리 교실에서 원 모양 물건을 하나 찾아 써 보세요.",
+      "visual": null,
+      "space": "line"
+     }
+    ]
+   }
+  },
+  {
+   "variant": "B",
+   "materials": {
+    "teacher": [
+     "점종이",
+     "패턴 블록(삼각형·사각형)"
+    ],
+    "student": [
+     "색연필"
+    ]
+   },
+   "hook": {
+    "title": "모양 마을 친구들",
+    "story": "모양 마을 친구들이 지붕, 벽, 창문을 무슨 모양으로 할지 궁리하고 있어요.",
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "지붕"
+      },
+      {
+       "kind": "square",
+       "label": "벽"
+      }
+     ]
+    },
+    "question": "지붕은 무슨 모양이면 비가 잘 흘러내릴까요?"
+   },
+   "activities": [
+    {
+     "title": "점종이로 집 꾸미기",
+     "steps": [
+      "점을 이어 삼각형 지붕을 그려요.",
+      "점을 이어 사각형 벽과 창문을 그려요.",
+      "몇 개 썼는지 세어요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "지붕"
+       },
+       {
+        "kind": "rect",
+        "label": "창문"
+       }
+      ]
+     },
+     "share": "창문을 길쭉하게 그려도 사각형일까요?"
+    },
+    {
+     "title": "패턴 블록으로 마을 꾸미기",
+     "steps": [
+      "삼각형, 사각형 조각으로 길과 나무를 꾸며요.",
+      "해와 바퀴는 병뚜껑을 본떠 원으로 그려요.",
+      "모양마다 몇 개인지 세어요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "나무"
+       },
+       {
+        "kind": "circle",
+        "label": "해"
+       }
+      ]
+     },
+     "share": "병뚜껑 전체와 본뜬 모양 중 어느 것이 원 모양일까요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "생활 속 물건에서 삼각형, 사각형, 원을 찾을 수 있어요.",
+     "길쭉하거나 기울어져도 뾰족한 곳 수는 같아요.",
+     "둥근 물건의 납작한 면을 본뜨면 원이 돼요."
+    ],
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "삼각형"
+      },
+      {
+       "kind": "rect",
+       "label": "사각형"
+      },
+      {
+       "kind": "circle",
+       "label": "원"
+      }
+     ]
+    }
+   },
+   "worksheet": {
+    "title": "모양 마을 꾸미기",
+    "items": [
+     {
+      "q": "집 지붕을 삼각형으로 그리려면 곧은 선이 몇 개 필요할까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "창문을 사각형으로 그리려면 꼭짓점이 몇 개 필요할까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "바퀴를 원 모양으로 그리려면 무엇을 본뜨면 좋을까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "모양 마을에서 가장 많이 쓴 모양은 무엇일지 짝과 정해 써 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "삼각형과 사각형의 다른 점을 한 가지 써 보세요.",
+      "visual": null,
+      "space": "line"
+     }
+    ]
+   }
+  }
+ ]
+}

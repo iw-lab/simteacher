@@ -1,0 +1,61 @@
+{
+ "std": "4수03-11",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["지오보드와 고무줄", "각도기"], "student": ["공책", "자"]},
+   "hook": {
+    "title": "고무줄 한 바퀴",
+    "story": "지오보드에 고무줄을 걸어 모양을 만들어요. 고무줄이 끊긴 데 없이 한 바퀴 돌면 곧은 선으로 둘러싸인 모양이 돼요.",
+    "visual": {"type": "shapes", "items": [{"kind": "pentagon", "label": "변 5개"}], "caption": "곧은 선 5개로 둘러싸인 모양"},
+    "question": "이 모양을 뭐라고 부르면 좋을까요?"
+   },
+   "activities": [
+    {"title": "변의 수로 이름 붙이기",
+     "steps": ["지오보드에 변 3개, 4개, 5개, 6개인 모양을 차례로 만들어요.", "곧은 선만 있는지 확인해요.", "변의 수를 세어 삼각형, 사각형, 오각형, 육각형이라는 이름을 붙여요."],
+     "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "삼각형"}, {"kind": "square", "label": "사각형"}, {"kind": "pentagon", "label": "오각형"}, {"kind": "hexagon", "label": "육각형"}], "caption": "변 3, 4, 5, 6개로 만든 모양이에요"},
+     "share": "변이 5개인 모양은 무슨 이름일까요?"},
+    {"title": "변도 각도 같은지 확인하기",
+     "steps": ["네 변의 길이가 모두 같은 사각형을 만들어요.", "각도기로 네 각의 크기를 재어요.", "정사각형과 비교해서 무엇이 다른지 말해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "square", "label": "정사각형"}, {"kind": "rhombus", "label": "마름모"}], "caption": "변은 같지만 각은 다를 수 있어요"},
+     "share": "변이 같아도 정다각형이 아닌 까닭을 말해 볼까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["선분으로만 둘러싸인 도형을 다각형이라고 해요.", "변의 길이와 각의 크기가 모두 같은 다각형을 정다각형이라고 해요.", "변이 5개면 오각형, 6개면 육각형이에요."], "visual": {"type": "shapes", "items": [{"kind": "hexagon", "label": "정육각형"}, {"kind": "trapezoid", "label": "사다리꼴"}], "caption": "정육각형은 정다각형, 사다리꼴은 정다각형이 아니에요"}},
+   "worksheet": {"title": "다각형과 정다각형", "items": [
+     {"q": "변이 4개인 다각형의 이름을 쓰세요.", "visual": null, "space": "box"},
+     {"q": "그림의 다각형은 변이 몇 개인가요?", "visual": {"type": "shapes", "items": [{"kind": "hexagon"}]}, "space": "box"},
+     {"q": "한 변이 5 cm인 정삼각형의 세 변의 길이를 모두 더하면 몇 cm인가요?", "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "5 cm"}]}, "space": "box"},
+     {"q": "네 변의 길이는 모두 같지만 각의 크기가 다른 사각형은 정다각형인가요, 아닌가요? 까닭도 쓰세요.", "visual": {"type": "shapes", "items": [{"kind": "rhombus"}]}, "space": "line"},
+     {"q": "정다각형이 되려면 꼭 같아야 하는 것 두 가지를 쓰세요.", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["패턴 블록(정삼각형·정사각형·정육각형·마름모·사다리꼴)", "점종이"], "student": ["자", "각도기"]},
+   "hook": {
+    "title": "조각 수수께끼",
+    "story": "선생님이 «나는 곧은 선 6개로 닫혀 있고, 변도 각도 모두 똑같아»라는 수수께끼를 냈어요.",
+    "visual": {"type": "shapes", "items": [{"kind": "hexagon", "label": "변 6개"}], "caption": "변 6개로 닫힌 모양"},
+    "question": "이 수수께끼의 답은 어떤 모양일까요?"
+   },
+   "activities": [
+    {"title": "정다각형 찾기",
+     "steps": ["패턴 블록 조각을 살펴봐요.", "변의 길이가 모두 같은지 자로 재어요.", "각의 크기도 모두 같은지 겹쳐서 확인해요.", "정다각형과 정다각형이 아닌 다각형으로 나눠요."],
+     "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "정삼각형"}, {"kind": "rhombus", "label": "마름모"}, {"kind": "trapezoid", "label": "사다리꼴"}], "caption": "변이 같아도 각이 다르면 정다각형이 아니에요"},
+     "share": "마름모는 왜 정다각형이 아닐까요?"},
+    {"title": "점종이 수수께끼 놀이",
+     "steps": ["점종이에 다각형을 몰래 그려요.", "변의 수, 변의 길이가 같은지, 각이 같은지로 힌트를 세 번 줘요.", "짝이 힌트를 듣고 같은 모양을 그려요.", "자와 각도기로 맞는지 확인해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "pentagon", "label": "오각형"}], "caption": "힌트로 맞혀 볼 모양"},
+     "share": "힌트 세 가지 중 어떤 힌트가 가장 도움이 됐나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["변의 수로 다각형의 이름이 정해져요.", "정다각형은 변의 길이와 각의 크기가 모두 같아요.", "돌려놓아도 정다각형은 그대로 정다각형이에요."], "visual": {"type": "shapes", "items": [{"kind": "hexagon", "label": "정육각형"}, {"kind": "square", "label": "정사각형"}], "caption": "둘 다 정다각형이에요"}},
+   "worksheet": {"title": "정다각형 찾기", "items": [
+     {"q": "변이 8개인 다각형의 이름을 쓰세요.", "visual": null, "space": "box"},
+     {"q": "그림을 보고 이 다각형이 정다각형인지 아닌지 쓰고 까닭을 말해 보세요.", "visual": {"type": "shapes", "items": [{"kind": "trapezoid"}]}, "space": "line"},
+     {"q": "한 변이 4 cm인 정육각형의 모든 변의 길이를 더하면 몇 cm인가요?", "visual": {"type": "shapes", "items": [{"kind": "hexagon", "label": "4 cm"}]}, "space": "box"},
+     {"q": "기울여서 놓은 정삼각형도 정삼각형이라고 할 수 있나요?", "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "기울어진 정삼각형"}]}, "space": "box"},
+     {"q": "변의 길이만 같고 각의 크기가 다른 사각형의 이름을 하나 쓰세요.", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "std": "4수03-12",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["패턴 블록(정삼각형·마름모·사다리꼴)", "정육각형 틀 활동지"], "student": ["색연필", "점종이"]},
+   "hook": {
+    "title": "틀 밖으로 나온 조각",
+    "story": "정육각형 틀에 세모 조각을 놓았는데 조각 반쪼가리가 틀 밖으로 삐져나왔어요.",
+    "visual": {"type": "shapes", "items": [{"kind": "hexagon", "label": "정육각형 틀"}, {"kind": "triangle", "label": "세모 조각"}], "caption": "세모 조각이 선 밖으로 조금 나왔어요"},
+    "question": "이것도 틀을 채운 것이라고 할 수 있을까요?"
+   },
+   "activities": [
+    {"title": "세모로 육각형 채우기",
+     "steps": ["정삼각형 조각을 육각형 틀에 놓아요.", "모자라면 조각을 더 놓아요.", "몇 개를 썼는지 세어요.", "마름모와 사다리꼴로도 채워 봐요."],
+     "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "1"}, {"kind": "triangle", "label": "2"}, {"kind": "triangle", "label": "3"}, {"kind": "triangle", "label": "4"}, {"kind": "triangle", "label": "5"}, {"kind": "triangle", "label": "6"}], "caption": "정삼각형 6개를 모아 붙이면 정육각형 한 개와 같은 자리를 채워요(조각은 나란히 그려졌어요)"},
+     "share": "정삼각형 몇 개로 정육각형을 다 채웠나요?"},
+    {"title": "다른 방법 찾기",
+     "steps": ["모둠별로 조각을 섞어 채우는 방법을 찾아요.", "찾은 방법을 점종이에 그려요.", "돌려놓은 것과 다른 방법을 구별해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "trapezoid", "label": "사다리꼴 1개"}, {"kind": "triangle", "label": "세모 1"}, {"kind": "triangle", "label": "세모 2"}, {"kind": "triangle", "label": "세모 3"}], "caption": "사다리꼴 1개와 정삼각형 3개를 모아 붙이면 정육각형 한 개와 같은 자리를 채워요"},
+     "share": "조각 수가 가장 적은 방법은 몇 개를 썼나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["조각끼리 겹치지 않고 빈틈없이 채우면 돼요.", "조각을 돌리거나 뒤집어도 같은 조각이에요.", "같은 모양도 채우는 방법이 여러 가지예요."], "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "세모 6개"}, {"kind": "hexagon", "label": "정육각형"}], "caption": "정삼각형 6개를 모으면 정육각형 한 개와 같은 자리를 채워요"}},
+   "worksheet": {"title": "조각으로 채우기", "items": [
+     {"q": "정육각형 한 개를 채우려면 마름모 조각이 몇 개 필요할까요?", "visual": null, "space": "box"},
+     {"q": "사다리꼴 2개로 정육각형 한 개를 채울 수 있나요?", "visual": {"type": "shapes", "items": [{"kind": "trapezoid", "label": "사다리꼴"}]}, "space": "box"},
+     {"q": "조각이 틀 밖으로 나가거나 겹치면 «빈틈없이 채웠다»고 할 수 있나요?", "visual": null, "space": "line"},
+     {"q": "정삼각형 2개를 겹치지 않게 붙이면 어떤 모양이 될 수 있나요? 한 가지만 쓰세요.", "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "세모"}]}, "space": "line"},
+     {"q": "정삼각형 3개와 사다리꼴 1개를 섞어서 채우면 정육각형 한 개를 다 채울 수 있나요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["칠교판", "펜토미노 조각(같은 조각 2벌)"], "student": ["색연필", "가위"]},
+   "hook": {
+    "title": "그림자 맞히기",
+    "story": "칠교판의 작은 세모 두 조각으로 정사각형 모양을 만들었어요.",
+    "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "세모 1"}, {"kind": "triangle", "label": "세모 2"}, {"kind": "square", "label": "정사각형"}], "caption": "세모 두 개를 모으면 정사각형이 돼요"},
+    "question": "이 두 조각으로 또 어떤 모양을 만들 수 있을까요?"
+   },
+   "activities": [
+    {"title": "그림자 채우기 놀이",
+     "steps": ["짝이 조각 2~3개로 모양을 만들고 테두리만 그려요.", "나는 같은 조각으로 그림자를 채워요.", "돌리거나 뒤집어서 맞춰 봐요."],
+     "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "세모"}, {"kind": "square", "label": "정사각형"}, {"kind": "parallelogram", "label": "평행사변형"}], "caption": "같은 조각으로 여러 모양을 만들 수 있어요"},
+     "share": "그림자를 채울 때 돌리기와 뒤집기 중 무엇을 썼나요?"},
+    {"title": "펜토미노 두 조각 채우기",
+     "steps": ["모눈 2칸×5칸 틀을 준비해요.", "같은 펜토미노 조각 2개로 틀을 채워 봐요.", "안 되면 돌리거나 뒤집어서 다시 놓아요.", "되는 조각과 안 되는 조각을 표에 적어요."],
+     "visual": {"type": "grid", "rows": 2, "cols": 5, "caption": "2칸×5칸 틀, 모두 10칸이에요"},
+     "share": "칸 수는 같은데 왜 못 채운 조각이 있었나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["조각을 돌리거나 뒤집어도 같은 조각이에요.", "칸 수가 같아도 모양이 안 맞으면 채울 수 없어요.", "같은 모양을 채우는 방법은 여러 가지예요."], "visual": {"type": "shapes", "items": [{"kind": "triangle", "label": "세모"}, {"kind": "parallelogram", "label": "평행사변형"}], "caption": "돌리고 뒤집어도 같은 조각이에요"}},
+   "worksheet": {"title": "그림자와 틀 채우기", "items": [
+     {"q": "작은 세모 2개를 겹치지 않게 붙이면 큰 직각삼각형을 만들 수 있나요?", "visual": {"type": "shapes", "items": [{"kind": "right_triangle", "label": "큰 직각삼각형"}]}, "space": "box"},
+     {"q": "조각을 뒤집으면 다른 조각이 되나요, 같은 조각이 되나요?", "visual": null, "space": "box"},
+     {"q": "모눈 2칸×5칸 틀을 채우는 데 칸이 5개인 펜토미노 조각은 몇 개 필요한가요?", "visual": {"type": "grid", "rows": 2, "cols": 5, "caption": "2×5 틀, 칸 10개"}, "space": "box"},
+     {"q": "조각 두 개가 틀 안에서 겹쳤습니다. 이것도 빈틈없이 채운 것인가요?", "visual": null, "space": "line"},
+     {"q": "같은 모양을 채우는 방법이 한 가지뿐인가요, 여러 가지인가요?", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

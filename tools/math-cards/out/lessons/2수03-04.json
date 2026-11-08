@@ -1,0 +1,262 @@
+{
+ "std": "2수03-04",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {
+    "teacher": [
+     "지오보드",
+     "고무줄"
+    ],
+    "student": [
+     "점종이",
+     "자"
+    ]
+   },
+   "hook": {
+    "title": "선이 끊기면 어떻게 될까",
+    "story": "고무줄 3개로 삼각형을 만들었다가 하나를 빼서 선이 끊긴 모양을 만들었어요.",
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "삼각형"
+      }
+     ]
+    },
+    "question": "두 모양은 같은 모양일까요?"
+   },
+   "activities": [
+    {
+     "title": "지오보드로 삼각형·사각형 만들기",
+     "steps": [
+      "고무줄로 삼각형을 걸어요.",
+      "크기와 기울기를 바꿔 또 만들어요.",
+      "곧은 선과 꼭짓점을 세어요.",
+      "판을 돌려도 같은 모양인지 봐요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "삼각형"
+       },
+       {
+        "kind": "square",
+        "label": "사각형"
+       }
+      ]
+     },
+     "share": "판을 돌려도 아직 삼각형일까요?"
+    },
+    {
+     "title": "점을 이어 그리고 본뜨기",
+     "steps": [
+      "점종이에 자로 점을 이어 삼각형을 그려요.",
+      "사각형도 2개 그려요.",
+      "둥근 물건을 대고 원을 따라 그려요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "square",
+        "label": "사각형"
+       },
+       {
+        "kind": "circle",
+        "label": "원"
+       }
+      ]
+     },
+     "share": "원은 점을 이어서 그릴 수 있을까요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "삼각형은 곧은 선 3개로 끊기지 않게 둘러싸여요.",
+     "사각형은 곧은 선 4개로 둘러싸여요.",
+     "원은 곧은 선 없이 둥근 물건을 본떠 그려요."
+    ],
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "삼각형"
+      },
+      {
+       "kind": "square",
+       "label": "사각형"
+      },
+      {
+       "kind": "circle",
+       "label": "원"
+      }
+     ]
+    }
+   },
+   "worksheet": {
+    "title": "도형 직접 그리기",
+    "items": [
+     {
+      "q": "삼각형을 그리려면 점과 점을 몇 번 이어야 할까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "사각형의 꼭짓점은 몇 개일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "원을 그릴 때 자 대신 무엇을 대고 그리면 좋을까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "길쭉하게 그린 세모도 삼각형일까요? 이유를 써 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "점종이에 사각형 한 개를 그려 보세요.",
+      "visual": null,
+      "space": "box"
+     }
+    ]
+   }
+  },
+  {
+   "variant": "B",
+   "materials": {
+    "teacher": [
+     "도형 분류기 카드",
+     "쪽지"
+    ],
+    "student": [
+     "점종이",
+     "컵·병뚜껑"
+    ]
+   },
+   "hook": {
+    "title": "길 잃은 모양들",
+    "story": "도형 마을에 이사 온 모양들이 자기 집을 못 찾고 있어요.",
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "물음표"
+      },
+      {
+       "kind": "square",
+       "label": "물음표"
+      }
+     ]
+    },
+    "question": "이 모양들을 도와줄 수 있을까요?"
+   },
+   "activities": [
+    {
+     "title": "모양 집 찾아 주기",
+     "steps": [
+      "여러 모양을 삼각형, 사각형, 원, '어느 집도 아님' 칸으로 나눠요.",
+      "끊긴 모양과 굽은 선 모양도 섞여 있어요.",
+      "왜 그 칸에 넣었는지 말해요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "삼각형 집"
+       },
+       {
+        "kind": "square",
+        "label": "사각형 집"
+       }
+      ]
+     },
+     "share": "끊긴 선 모양은 어느 집에도 못 들어갈까요?"
+    },
+    {
+     "title": "쪽지 보고 모양 그리기",
+     "steps": [
+      "쪽지(곧은 선 3개, 뾰족한 점 4개 등)를 뽑아요.",
+      "점종이에 그 도형을 그려요.",
+      "원 쪽지는 컵이나 병뚜껑을 대고 그려요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "triangle",
+        "label": "곧은 선 3개"
+       },
+       {
+        "kind": "circle",
+        "label": "원 쪽지"
+       }
+      ]
+     },
+     "share": "같은 쪽지인데 짝이랑 모양이 다르면 둘 다 맞을까요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "끊긴 선이나 굽은 선이 섞이면 그 모양이 아니에요.",
+     "같은 삼각형이라도 크기와 모양이 다를 수 있어요.",
+     "원은 곧은 선과 꼭짓점이 없어요."
+    ],
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "triangle",
+       "label": "삼각형"
+      },
+      {
+       "kind": "circle",
+       "label": "원"
+      }
+     ]
+    }
+   },
+   "worksheet": {
+    "title": "도형 마을 문지기",
+    "items": [
+     {
+      "q": "선이 하나 끊긴 네 변 모양은 사각형일까요? 이유를 써 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "뾰족한 점 3개로 그린 모양의 이름은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "곧은 선이 하나도 없는 모양의 이름은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "길쭉한 사각형과 반듯한 사각형은 같은 모양일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "달걀 모양도 원일까요? 이유를 써 보세요.",
+      "visual": null,
+      "space": "line"
+     }
+    ]
+   }
+  }
+ ]
+}

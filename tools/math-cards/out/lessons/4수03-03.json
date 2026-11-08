@@ -1,0 +1,61 @@
+{
+ "std": "4수03-03",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["삼각자", "점종이"], "student": ["자", "연필"]},
+   "hook": {
+    "title": "창틀 속 두 선",
+    "story": "교실 창틀을 보니 어떤 선은 직각으로 딱 만나고, 어떤 선은 아무리 늘여도 만나지 않을 것 같아요.",
+    "visual": {"type": "lines", "items": [{"kind": "perpendicular", "label": "직각으로 만나는 선"}], "caption": "창틀 모서리"},
+    "question": "창틀에서 직각으로 만나는 선을 찾을 수 있을까요?"
+   },
+   "activities": [
+    {"title": "수선 긋기",
+     "steps": ["점종이에 비스듬한 직선을 그어요.", "그 직선과 직각으로 만나는 직선을 그어요.", "삼각자의 직각 모서리를 대어 확인해요."],
+     "visual": {"type": "lines", "items": [{"kind": "perpendicular", "label": "수직"}], "caption": "두 직선이 직각으로 만나요"},
+     "share": "기울어진 직선에도 수선을 그을 수 있었나요?"},
+    {"title": "평행선 긋고 거리 재기",
+     "steps": ["한 직선에 수직인 직선을 두 개 그어요.", "늘여도 만나지 않는지 확인해요.", "두 평행선 사이에 수직인 선분을 그어 길이를 재요."],
+     "visual": {"type": "lines", "items": [{"kind": "parallel", "label": "평행선"}], "caption": "나란히 있는 두 길처럼 평행선이에요"},
+     "share": "수직인 선분의 길이는 어디서 재도 같았나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["두 직선이 직각으로 만나면 서로 수직이에요.", "한 직선에 수직인 두 직선은 서로 평행해요.", "평행선 사이의 거리는 수직인 선분의 길이로 재요."], "visual": {"type": "lines", "items": [{"kind": "perpendicular", "label": "수직"}]}},
+   "worksheet": {"title": "수직과 평행 찾기", "items": [
+     {"q": "두 직선이 만나서 생긴 각이 직각이에요. 두 직선은 서로 무엇일까요?", "visual": {"type": "lines", "items": [{"kind": "perpendicular"}]}, "space": "box"},
+     {"q": "평행선 사이의 거리를 잴 때는 어떤 선분의 길이를 재야 할까요?", "visual": null, "space": "line"},
+     {"q": "기울어진 두 직선이 그림처럼 직각으로 만나요. 두 직선은 수직일까요, 아닐까요?", "visual": {"type": "lines", "items": [{"kind": "perpendicular"}], "caption": "기울어진 두 직선"}, "space": "box"},
+     {"q": "한 직선에 수직인 직선을 두 개 그었어요. 이 두 직선은 서로 어떤 관계일까요?", "visual": null, "space": "line"},
+     {"q": "교실에서 평행한 곳을 한 가지 찾아 쓰고, 왜 평행인지 설명해 보세요.", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["모눈종이", "색연필"], "student": ["삼각자", "자"]},
+   "hook": {
+    "title": "동네 설계사가 된 날",
+    "story": "새 동네를 만드는 설계사가 되었어요. 큰길과 직각으로 만나는 길, 큰길과 나란히 가는 길이 필요해요.",
+    "visual": {"type": "lines", "items": [{"kind": "line", "label": "큰길"}], "caption": "이 길과 직각으로 만나는 길을 만들어요"},
+    "question": "자동차가 똑바로 꺾어 들어가려면 길이 어떻게 만나야 할까요?"
+   },
+   "activities": [
+    {"title": "큰길과 수직·평행인 골목길 긋기",
+     "steps": ["모눈종이에 비스듬한 큰길을 그어요.", "큰길과 직각으로 만나는 골목길 두 개를 그어요.", "삼각자로 직각을 확인해요.", "큰길과 평행한 길을 하나 더 그어요."],
+     "visual": {"type": "lines", "items": [{"kind": "perpendicular", "label": "수직인 골목길"}], "caption": "큰길과 직각으로 만나요"},
+     "share": "골목길 두 개끼리는 어떤 관계가 됐나요?"},
+    {"title": "지도 보고 다리 놓기",
+     "steps": ["다른 모둠 지도에서 수직인 길 한 쌍을 찾아요.", "평행한 길 한 쌍을 찾아요.", "두 평행한 길 사이에 가장 짧은 다리를 그어요.", "다리의 길이를 자로 재요."],
+     "visual": {"type": "lines", "items": [{"kind": "parallel", "label": "평행한 두 길"}], "caption": "두 길 사이에 수직으로 놓은 다리가 가장 짧아요"},
+     "share": "다리를 다른 곳에 옮겨도 길이가 같았나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["큰길과 직각으로 만나는 길은 수직이에요.", "서로 만나지 않는 두 직선은 평행해요.", "평행한 두 길 사이의 가장 짧은 거리는 수직으로 잰 거리예요."], "visual": {"type": "lines", "items": [{"kind": "perpendicular", "label": "수직"}]}},
+   "worksheet": {"title": "우리 동네 수직·평행", "items": [
+     {"q": "그림처럼 두 직선이 직각으로 만나요. 두 직선의 관계는 무엇일까요?", "visual": {"type": "lines", "items": [{"kind": "perpendicular"}]}, "space": "box"},
+     {"q": "평행한 두 길 사이에 다리를 놓을 때 가장 짧은 다리는 어떤 방향으로 놓아야 할까요?", "visual": null, "space": "line"},
+     {"q": "한 직선에 수직인 두 직선을 그었어요. 이 두 직선이 늘여도 만나지 않는 까닭을 한 문장으로 쓰세요.", "visual": null, "space": "line"},
+     {"q": "우리 동네에서 수직인 곳을 한 가지 찾아 쓰세요.", "visual": null, "space": "line"},
+     {"q": "평행선 사이의 거리를 비스듬한 선분으로 재면 안 되는 까닭을 써 보세요.", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

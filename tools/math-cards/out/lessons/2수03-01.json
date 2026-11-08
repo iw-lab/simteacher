@@ -1,0 +1,251 @@
+{
+ "std": "2수03-01",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {
+    "teacher": [
+     "상자, 캔, 공 실물"
+    ],
+    "student": [
+     "교실 물건 모음"
+    ]
+   },
+   "hook": {
+    "title": "굴려 보면 알아요",
+    "story": "상자, 캔, 공을 하나씩 밀어 보았어요. 어떤 것은 잘 굴러가고, 어떤 것은 안 굴러갔어요.",
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "rect",
+       "label": "상자"
+      },
+      {
+       "kind": "circle",
+       "label": "공"
+      }
+     ]
+    },
+    "question": "어느 것이 똑바로 잘 굴러갔을까요?"
+   },
+   "activities": [
+    {
+     "title": "물건 굴리고 쌓아 나누기",
+     "steps": [
+      "물건 6~8개를 굴려 봐요.",
+      "그 위에 다른 물건을 쌓아 봐요.",
+      "상자 모양, 둥근 기둥 모양, 공 모양으로 나누어 놓아요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "rect",
+        "label": "상자 모양"
+       },
+       {
+        "kind": "circle",
+        "label": "공 모양"
+       }
+      ]
+     },
+     "share": "풀이랑 공은 둘 다 굴러가는데 왜 다른 자리에 놓았나요?"
+    },
+    {
+     "title": "탑과 기차 만들기",
+     "steps": [
+      "모은 물건으로 탑이나 기차를 만들어요.",
+      "모양마다 몇 개 썼는지 세어요.",
+      "짝 모둠에게 말해 줘요."
+     ],
+     "visual": {
+      "type": "cubes",
+      "stacks": [
+       3,
+       2,
+       1
+      ],
+      "caption": "모양을 쌓은 탑"
+     },
+     "share": "공 모양을 맨 아래에 놓으면 어떻게 될까요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "상자 모양은 평평해서 잘 쌓이고 굴러가지 않아요.",
+     "둥근 기둥 모양은 눕히면 굴러가고 세우면 쌓을 수 있어요.",
+     "공 모양은 어느 쪽으로도 잘 굴러가요."
+    ],
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "rect",
+       "label": "상자"
+      },
+      {
+       "kind": "circle",
+       "label": "공"
+      },
+      {
+       "kind": "rect",
+       "label": "기둥"
+      }
+     ]
+    }
+   },
+   "worksheet": {
+    "title": "세 가지 모양",
+    "items": [
+     {
+      "q": "어느 쪽으로 굴려도 잘 굴러가는 모양은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "눕히면 굴러가고 세우면 쌓을 수 있는 모양은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "상자 모양 물건을 교실에서 두 가지 찾아 써 보세요.",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "탑을 쌓을 때 맨 아래에 놓기 좋은 모양은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "공 모양과 둥근 기둥 모양의 같은 점을 한 가지 써 보세요.",
+      "visual": null,
+      "space": "line"
+     }
+    ]
+   }
+  },
+  {
+   "variant": "B",
+   "materials": {
+    "teacher": [
+     "속이 안 보이는 주머니",
+     "상자·캔·공 실물"
+    ],
+    "student": [
+     "종이테이프",
+     "지점토"
+    ]
+   },
+   "hook": {
+    "title": "손으로 만져 맞히기",
+    "story": "주머니 속 물건을 눈으로 보지 않고 손으로만 만져 보았어요.",
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "rect",
+       "label": "물음표"
+      }
+     ]
+    },
+    "question": "뾰족한 데가 있을까요, 평평한 데가 있을까요?"
+   },
+   "activities": [
+    {
+     "title": "주머니 속 모양 맞히기",
+     "steps": [
+      "한 명이 주머니에 물건을 넣어요.",
+      "다른 한 명이 만져서 모양을 말해요.",
+      "맞히면 그 모양 칸에 놓아요."
+     ],
+     "visual": {
+      "type": "shapes",
+      "items": [
+       {
+        "kind": "circle",
+        "label": "공 모양"
+       },
+       {
+        "kind": "rect",
+        "label": "상자 모양"
+       }
+      ]
+     },
+     "share": "손에 뭐가 느껴졌는지 말해 줄 수 있나요?"
+    },
+    {
+     "title": "모양 로봇 만들기",
+     "steps": [
+      "주문서대로 물건을 골라요.",
+      "로봇을 만들어요.",
+      "그린 뒤 어느 부분이 무슨 모양인지 말해요."
+     ],
+     "visual": {
+      "type": "cubes",
+      "stacks": [
+       2,
+       3,
+       2
+      ],
+      "caption": "모양 로봇"
+     },
+     "share": "로봇 머리는 무슨 모양으로 했나요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "손으로 만져도 뾰족한 곳과 평평한 곳으로 모양을 알 수 있어요.",
+     "평평한 면이 있으면 쌓을 수 있어요.",
+     "세 가지 모양을 섞어 새로운 모양을 만들 수 있어요."
+    ],
+    "visual": {
+     "type": "shapes",
+     "items": [
+      {
+       "kind": "rect",
+       "label": "상자"
+      },
+      {
+       "kind": "circle",
+       "label": "공"
+      }
+     ]
+    }
+   },
+   "worksheet": {
+    "title": "만져서 모양 알기",
+    "items": [
+     {
+      "q": "평평한 면이 위아래에 있고 옆이 둥근 모양은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "주사위는 어떤 모양일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "구슬은 어떤 모양일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "로봇 바퀴로 쓰기 좋은 모양은 무엇일까요?",
+      "visual": null,
+      "space": "line"
+     },
+     {
+      "q": "집에서 상자 모양 물건을 하나 찾아 써 보세요.",
+      "visual": null,
+      "space": "line"
+     }
+    ]
+   }
+  }
+ ]
+}

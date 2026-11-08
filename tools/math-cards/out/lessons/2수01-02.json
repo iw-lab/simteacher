@@ -1,0 +1,239 @@
+{
+ "std": "2수01-02",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {
+    "teacher": [
+     "천·백·십·일 모형(수 모형) 세트"
+    ],
+    "student": [
+     "공책",
+     "자릿값 판"
+    ]
+   },
+   "hook": {
+    "title": "수 모형 놀이터",
+    "story": "선생님이 모형 상자를 하나씩 보여 줄게요. 천, 백, 십, 일 모형이 섞여 있어요.",
+    "visual": {
+     "type": "base10",
+     "thousands": 2,
+     "hundreds": 3,
+     "tens": 1,
+     "ones": 5,
+     "caption": "이 모형은 무슨 수일까요?"
+    },
+    "question": "모형을 보고 어떤 수인지 말할 수 있을까요?"
+   },
+   "activities": [
+    {
+     "title": "수 모형으로 수 만들기",
+     "steps": [
+      "선생님이 부르는 수(이천삼백십오)를 들어요.",
+      "천, 백, 십, 일 모형을 각각 놓아요.",
+      "모형이 몇 개인지 세어요.",
+      "빈 자리는 모형 없이 그대로 두어요."
+     ],
+     "visual": {
+      "type": "base10",
+      "thousands": 2,
+      "hundreds": 3,
+      "tens": 1,
+      "ones": 5,
+      "caption": "이천삼백십오"
+     },
+     "share": "친구가 놓은 모형을 보고 수를 읽어 줄까요?"
+    },
+    {
+     "title": "자릿값 판에 숫자 쓰기",
+     "steps": [
+      "모형이 없는 자리에 0을 써요.",
+      "천, 백, 십, 일 순서로 숫자를 써요.",
+      "공책에 수를 쓰고 짝에게 읽어 줘요."
+     ],
+     "visual": {
+      "type": "base10",
+      "thousands": 3,
+      "tens": 4,
+      "caption": "삼천사십"
+     },
+     "share": "0을 쓴 자리는 왜 비어 있을까요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "수는 천, 백, 십, 일의 자리로 이루어져요.",
+     "모형이 없는 자리에는 0을 써요.",
+     "0이 있어도 소리 내어 읽지 않는 자리가 있어요."
+    ],
+    "visual": {
+     "type": "base10",
+     "thousands": 5,
+     "ones": 8,
+     "caption": "오천팔은 5008"
+    }
+   },
+   "worksheet": {
+    "title": "천의 자리 수 읽기",
+    "items": [
+     {
+      "q": "천 모형 6개, 십 모형 2개, 일 모형 9개가 나타내는 수는 얼마일까요?",
+      "visual": {
+       "type": "base10",
+       "thousands": 6,
+       "tens": 2,
+       "ones": 9
+      },
+      "space": "box"
+     },
+     {
+      "q": "천팔백칠십을 숫자로 쓰면 얼마일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "4500을 바르게 읽어 보세요.",
+      "visual": {
+       "type": "base10",
+       "thousands": 4,
+       "hundreds": 5
+      },
+      "space": "line"
+     },
+     {
+      "q": "구천삼을 숫자로 쓰면 얼마일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "2200에서 숫자 2(백의 자리)가 나타내는 값은 얼마일까요?",
+      "visual": {
+       "type": "base10",
+       "thousands": 2,
+       "hundreds": 2
+      },
+      "space": "box"
+     }
+    ]
+   }
+  },
+  {
+   "variant": "B",
+   "materials": {
+    "teacher": [
+     "색종이 묶음 그림 카드(천장 상자·백장 묶음·십장 봉투·낱장)"
+    ],
+    "student": [
+     "공책",
+     "수 카드"
+    ]
+   },
+   "hook": {
+    "title": "색종이 가게 주문",
+    "story": "색종이 가게에 손님이 와서 '이천백오 장 주세요' 라고 말해요. 가게 주인이 되어 몇 장을 챙겨야 할지 알아봐요.",
+    "visual": {
+     "type": "base10",
+     "thousands": 2,
+     "hundreds": 1,
+     "ones": 5,
+     "caption": "이천백오"
+    },
+    "question": "천 장 상자는 몇 개 챙겨야 할까요?"
+   },
+   "activities": [
+    {
+     "title": "주문대로 포장하기",
+     "steps": [
+      "주문(사천육백이십)을 들어요.",
+      "천, 백, 십 모형을 주문대로 놓아요.",
+      "모형 개수를 세어 확인해요."
+     ],
+     "visual": {
+      "type": "base10",
+      "thousands": 4,
+      "hundreds": 6,
+      "tens": 2,
+      "caption": "사천육백이십"
+     },
+     "share": "십 모형이 없는 주문도 있었어요. 왜 그랬을까요?"
+    },
+    {
+     "title": "송장에 숫자 쓰고 읽기",
+     "steps": [
+      "숫자로 쓴 송장(3506)을 봐요.",
+      "자리마다 숫자를 하나씩 수 카드로 놓아요.",
+      "소리 내어 읽어요.",
+      "짝이 들은 말로 맞는 카드를 찾아요."
+     ],
+     "visual": {
+      "type": "base10",
+      "thousands": 3,
+      "hundreds": 5,
+      "ones": 6,
+      "caption": "3506은 삼천오백육"
+     },
+     "share": "0이 있는 자리를 읽을 때 조심할 점은 뭘까요?"
+    }
+   ],
+   "concept": {
+    "title": "오늘 배운 것",
+    "points": [
+     "수를 읽을 때 0이 있는 자리는 소리 내지 않아요.",
+     "수를 쓸 때는 자리마다 숫자 하나씩만 써요.",
+     "읽은 대로 이어 쓰면 안 돼요."
+    ],
+    "visual": {
+     "type": "base10",
+     "thousands": 7,
+     "tens": 3,
+     "ones": 8,
+     "caption": "칠천삼십팔"
+    }
+   },
+   "worksheet": {
+    "title": "송장 숫자 쓰기",
+    "items": [
+     {
+      "q": "오천이백사를 숫자로 쓰면 얼마일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "3012를 읽을 때 소리 내지 않는 자리는 어디일까요?",
+      "visual": {
+       "type": "base10",
+       "thousands": 3,
+       "tens": 1,
+       "ones": 2
+      },
+      "space": "line"
+     },
+     {
+      "q": "8090을 바르게 읽어 보세요.",
+      "visual": {
+       "type": "base10",
+       "thousands": 8,
+       "tens": 9
+      },
+      "space": "line"
+     },
+     {
+      "q": "육천칠백을 숫자로 쓰면 얼마일까요?",
+      "visual": null,
+      "space": "box"
+     },
+     {
+      "q": "1001을 바르게 읽어 보세요.",
+      "visual": {
+       "type": "base10",
+       "thousands": 1,
+       "ones": 1
+      },
+      "space": "line"
+     }
+    ]
+   }
+  }
+ ]
+}

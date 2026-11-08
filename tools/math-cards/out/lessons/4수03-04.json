@@ -1,0 +1,61 @@
+{
+ "std": "4수03-04",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["깃발 도형 카드"], "student": ["공책", "색연필", "모눈종이"]},
+   "hook": {
+    "title": "손바닥으로 알아보는 세 가지 움직임",
+    "story": "깃발 모양을 손바닥으로 흉내 내 봐요. 책상 위에서 밀어 보고, 뒤집어 보고, 돌려 봐요.",
+    "visual": {"type": "shapes", "items": [{"kind": "right_triangle", "label": "처음 모양"}, {"kind": "right_triangle", "label": "뒤집은 모양"}], "caption": "어느 쪽이 뒤집은 모양일까요?"},
+    "question": "손바닥을 뒤집으면 처음과 무엇이 달라질까요?"
+   },
+   "activities": [
+    {"title": "밀기와 뒤집기 비교하기",
+     "steps": ["깃발을 오른쪽으로 쭉 밀어요.", "밀기 전과 민 후 모양을 공책에 그려요.", "오른쪽 뒤집기와 왼쪽 뒤집기를 비교해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "right_triangle", "label": "민 모양"}, {"kind": "right_triangle", "label": "뒤집은 모양"}], "caption": "밀기는 모양이 그대로, 뒤집기는 거울처럼 바뀌어요"},
+     "share": "밀기와 뒤집기 중 모양이 바뀌는 건 어느 쪽인가요?"},
+    {"title": "시계 방향으로 돌리기",
+     "steps": ["깃발을 시계 방향으로 90°씩 돌려요.", "돌릴 때마다 깃대가 가리키는 방향을 화살표로 적어요.", "180° 돌린 모양과 아래로 뒤집은 모양을 비교해요."],
+     "visual": {"type": "angle", "deg": 90, "label": "시계 방향 90°", "caption": "한 번 돌리면 90°예요"},
+     "share": "180° 돌리기와 뒤집기, 정말 같은 모양인가요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["밀기는 모양과 방향은 그대로, 자리만 바뀌어요.", "뒤집기는 거울에 비친 모양처럼 바뀌어요.", "돌리기는 시계 방향이나 반대 방향으로 도는 정도만큼 바뀌어요."], "visual": {"type": "shapes", "items": [{"kind": "right_triangle", "label": "처음"}, {"kind": "right_triangle", "label": "90° 돌린 모양"}]}},
+   "worksheet": {"title": "밀기·뒤집기·돌리기", "items": [
+     {"q": "도형을 왼쪽으로 7 cm 밀었어요. 모양과 방향은 어떻게 될까요?", "visual": null, "space": "line"},
+     {"q": "위쪽을 가리키는 화살표를 시계 방향으로 90° 돌리면 어느 쪽을 가리킬까요?", "visual": {"type": "angle", "deg": 90, "label": "시계 방향 90°"}, "space": "box"},
+     {"q": "깃발을 오른쪽으로 뒤집은 모양과 똑같이 되는 다른 움직임은 무엇일까요?", "visual": null, "space": "line"},
+     {"q": "시계 방향으로 180° 돌린 모양과 시계 반대 방향으로 180° 돌린 모양을 비교하면 어떨까요?", "visual": null, "space": "line"},
+     {"q": "도형을 아래로 두 번 뒤집으면 처음 모양과 같아질까요, 달라질까요?", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["명령 카드", "칠교 조각"], "student": ["모눈종이", "연필"]},
+   "hook": {
+    "title": "명령대로 움직이는 조각",
+    "story": "칠교 조각 하나를 보여 주고 선생님이 «오른쪽으로 뒤집기!»라고 외쳐요. 조각이 어떻게 될지 손가락으로 그려 봐요.",
+    "visual": {"type": "shapes", "items": [{"kind": "parallelogram", "label": "조각"}], "caption": "이 조각을 오른쪽으로 뒤집으면 어떻게 될까요"},
+    "question": "손가락으로 뒤집은 모양을 그려 볼까요?"
+   },
+   "activities": [
+    {"title": "명령 카드대로 모양 그리기",
+     "steps": ["명령 카드를 한 장 뽑아요.", "결과를 모눈종이에 먼저 그려요.", "화면에서 움직여 맞는지 확인해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "trapezoid", "label": "처음 모양"}, {"kind": "trapezoid", "label": "움직인 모양"}], "caption": "밀기 카드는 모양이 그대로예요"},
+     "share": "그림이랑 화면이 다르면 어디서부터 달랐나요?"},
+    {"title": "거꾸로 명령 맞히기",
+     "steps": ["움직이기 전과 후 모양을 나란히 그려 줘요.", "짝이 무슨 명령이었는지 맞혀요.", "답이 두 가지 이상 나오는 경우를 찾아요."],
+     "visual": {"type": "shapes", "items": [{"kind": "trapezoid", "label": "전"}, {"kind": "trapezoid", "label": "후"}], "caption": "오른쪽 뒤집기와 왼쪽 뒤집기 결과가 같을 때도 있어요"},
+     "share": "결과가 같은 명령 두 개를 찾았나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["모양이 대칭이 아니면 뒤집는 방향에 따라 결과가 달라 보여도 같을 수 있어요.", "시계 방향 180°와 시계 반대 방향 180°는 결과가 같아요.", "밀기는 가장 쉬운 움직임이에요, 모양과 방향이 그대로거든요."], "visual": {"type": "shapes", "items": [{"kind": "trapezoid", "label": "전"}, {"kind": "trapezoid", "label": "180° 돌린 후"}]}},
+   "worksheet": {"title": "명령 맞히기 연습", "items": [
+     {"q": "대칭이 아닌 도형을 위쪽으로 뒤집은 것과 결과가 같은 움직임은 무엇일까요?", "visual": null, "space": "line"},
+     {"q": "도형을 시계 방향으로 270° 돌린 것과 결과가 같은 시계 반대 방향 돌리기는 몇 도일까요?", "visual": null, "space": "box"},
+     {"q": "도형을 오른쪽으로 3 cm 밀고, 다시 오른쪽으로 2 cm 밀었어요. 한 번에 말하면 몇 cm 밀었을까요?", "visual": null, "space": "box"},
+     {"q": "뒤집기를 했을 때 바뀌는 것과 바뀌지 않는 것을 각각 한 가지씩 쓰세요.", "visual": null, "space": "line"},
+     {"q": "도형을 시계 방향으로 360° 돌리면 처음 모양과 비교해 어떻게 될까요?", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

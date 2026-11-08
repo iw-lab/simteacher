@@ -1,0 +1,61 @@
+{
+ "std": "4수01-10",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["분수 원", "분수 막대"], "student": ["공책"]},
+   "hook": {
+     "title": "조각이 쌓이면 1이 돼요",
+     "story": "분수 원에 1/4 조각을 하나씩 끼워요. 네 조각을 다 끼우면 원이 꽉 차요.",
+     "visual": {"type": "fraction", "num": 4, "den": 4, "shape": "circle", "caption": "4/4는 1과 같아요"},
+     "question": "조각을 하나 더 끼우면 분수는 어떻게 달라질까요?"
+   },
+   "activities": [
+     {"title": "조각 7개로 가분수와 대분수 만들기",
+      "steps": ["1/4 조각을 7개 세어 끼워요.", "첫 번째 원이 차면 다음 원에 이어 끼워요.", "꽉 찬 원 1개와 남은 조각 3개를 봐요.", "7/4와 1과 3/4을 나란히 써요."],
+      "visual": {"type": "fraction", "num": 7, "den": 4, "shape": "circle", "caption": "7/4는 1과 3/4과 같아요"},
+      "share": "7/4와 1과 3/4은 같은 크기인가요?"},
+     {"title": "대분수 듣고 가분수로 바꾸기",
+      "steps": ["짝이 1과 2/5라고 말해요.", "분수 막대로 1을 만들고 남은 2/5를 더 놓아요.", "1을 1/5 조각 5개로 바꿔 세어요.", "모두 7조각이니 7/5라고 써요."],
+      "visual": {"type": "fraction", "num": 7, "den": 5, "shape": "bar", "caption": "1과 2/5는 7/5와 같아요"},
+      "share": "12/5라고 쓴 친구는 어디가 틀렸을까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["분자가 분모보다 크거나 같은 분수를 가분수라고 해요.", "자연수와 진분수를 합친 것을 대분수라고 해요.", "자연수 부분은 단위분수 조각으로 바꾸어 세어요."], "visual": {"type": "fraction", "num": 9, "den": 7, "shape": "circle", "caption": "9/7은 1과 2/7과 같아요"}},
+   "worksheet": {"title": "가분수와 대분수 바꾸기", "items": [
+     {"q": "11/4를 대분수로 나타내면 무엇인가요?", "visual": {"type": "fraction", "num": 11, "den": 4, "shape": "circle"}, "space": "box"},
+     {"q": "2와 1/3을 가분수로 나타내면 무엇인가요?", "visual": {"type": "fraction", "num": 7, "den": 3, "shape": "bar"}, "space": "box"},
+     {"q": "5/5는 진분수인가요, 가분수인가요? 이유를 쓰세요.", "visual": null, "space": "line"},
+     {"q": "10/3은 1/3이 몇 개인 수인가요?", "visual": {"type": "fraction", "num": 10, "den": 3, "shape": "bar"}, "space": "box"},
+     {"q": "1과 4/5를 가분수로 나타내면 무엇인가요?", "visual": {"type": "fraction", "num": 9, "den": 5, "shape": "bar"}, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["수직선 띠", "분수 막대"], "student": ["공책"]},
+   "hook": {
+     "title": "리본 한 도막은 몇 m",
+     "story": "리본 가게는 리본을 1/3 m씩 잘라서 팔아요. 오늘 한 도막을 사 갔어요.",
+     "visual": {"type": "fraction", "num": 1, "den": 3, "shape": "bar", "caption": "리본 한 도막은 1/3 m"},
+     "question": "도막 3개를 이으면 몇 m가 될까요?"
+   },
+   "activities": [
+     {"title": "1/3 m씩 뛰어 세기",
+      "steps": ["1/3 m씩 수직선에서 8번 뛰어 세요.", "도착한 자리를 8/3이라고 써요.", "1과 2를 지나 몇 칸 더 갔는지 봐요.", "8/3은 2와 2/3 m와 같아요."],
+      "visual": {"type": "fraction", "num": 8, "den": 3, "shape": "bar", "caption": "8/3 m는 2와 2/3 m"},
+      "share": "5/3 m는 몇 m와 같을까요?"},
+     {"title": "장부의 길이를 가분수로 바꾸기",
+      "steps": ["장부에 적힌 3과 2/3 m를 봐요.", "3 m는 1/3 m 도막 9개와 같아요.", "9개에 남은 2개를 더해 11개예요.", "11/3 m라고 써요."],
+      "visual": {"type": "fraction", "num": 11, "den": 3, "shape": "bar", "caption": "3과 2/3 m는 11/3 m"},
+      "share": "1 m보다 짧은 리본은 어떤 분수로 적혀 있을까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["가분수는 분자가 분모보다 크거나 같아요.", "가분수는 1보다 크거나 같아요.", "같은 길이를 가분수와 대분수 두 가지로 나타낼 수 있어요."], "visual": {"type": "fraction", "num": 7, "den": 3, "shape": "bar", "caption": "7/3 m는 2와 1/3 m"}},
+   "worksheet": {"title": "리본 길이 바꾸기", "items": [
+     {"q": "1/5 m 도막이 9개 있습니다. 모두 이으면 몇 m인가요? 가분수로 쓰세요.", "visual": {"type": "fraction", "num": 9, "den": 5, "shape": "bar"}, "space": "box"},
+     {"q": "2와 3/4 m를 가분수로 나타내면 몇 m인가요?", "visual": {"type": "fraction", "num": 11, "den": 4, "shape": "bar"}, "space": "box"},
+     {"q": "10/4 m는 몇 m와 같은지 대분수로 쓰세요.", "visual": {"type": "fraction", "num": 10, "den": 4, "shape": "bar"}, "space": "box"},
+     {"q": "리본 1 m는 1/6 m 도막 몇 개와 같은가요?", "visual": {"type": "fraction", "num": 6, "den": 6, "shape": "bar"}, "space": "box"},
+     {"q": "가분수는 항상 1보다 크거나 같은가요? 예를 들어 설명하세요.", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

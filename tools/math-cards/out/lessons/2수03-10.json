@@ -1,0 +1,63 @@
+{
+ "std": "2수03-10",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["30 cm 자", "지우개와 연필"], "student": ["공책"]},
+   "hook": {
+     "title": "지우개 길이는 몇 cm?",
+     "story": "지우개를 자 눈금 0에 맞추어 재어 보려고 해요. 끝이 어디에 닿는지 살펴봐요.",
+     "visual": {"type": "ruler", "length": 12, "mark": 6, "caption": "지우개는 6 cm"},
+     "question": "지우개는 몇 cm일까요?"
+   },
+   "activities": [
+     {"title": "자의 눈금 0에 맞추기",
+      "steps": ["자에서 1 cm 칸 하나를 손가락으로 짚어요.", "지우개를 자의 눈금 0에 맞춰요.", "끝이 닿은 눈금을 읽어요.", "일부러 눈금 1에 맞추고 다시 재어 봐요."],
+      "visual": {"type": "ruler", "length": 15, "mark": 6, "caption": "눈금 0부터 재면 6 cm"},
+      "share": "눈금 1에 맞추면 왜 답이 달라질까요?"},
+     {"title": "10 cm씩 이어 1 m 띠 만들기",
+      "steps": ["종이띠에 10 cm씩 표시해요.", "10, 20, 30…100까지 세어요.", "100 cm는 1 m라고 말해요.", "이 띠로 교실 문의 폭을 재요."],
+      "visual": {"type": "numberline", "from": 0, "to": 100, "step": 10, "marks": [100], "caption": "10씩 10번 가면 100"},
+      "share": "교실 문의 폭은 몇 m쯤일까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["자는 눈금 0에 맞추어 재어요.", "1 m는 100 cm예요."],
+     "visual": {"type": "equation", "text": "100 cm = 1 m"}},
+   "worksheet": {"title": "자로 재기", "items": [
+     {"q": "지우개를 자의 눈금 0에 맞추어 재니 끝이 7에 닿았어요. 지우개는 몇 cm인가요?", "visual": {"type": "ruler", "length": 15, "mark": 7}, "space": "box"},
+     {"q": "풀을 눈금 0에 맞추어 재니 4 cm였어요. 자 그림에 표시해 보세요.", "visual": {"type": "ruler", "length": 10, "mark": 4}, "space": "none"},
+     {"q": "100 cm는 몇 m인가요?", "visual": null, "space": "box"},
+     {"q": "10 cm 띠를 몇 번 이으면 1 m가 되나요?", "visual": {"type": "numberline", "from": 0, "to": 100, "step": 10, "marks": [100]}, "space": "box"},
+     {"q": "책상 긴 쪽을 재려면 큰 자(m)가 편할까요, 작은 자(cm)가 편할까요? 이유를 써 보세요.", "visual": null, "space": "line"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["모둠별 30 cm 자", "미션 카드(약 5 cm, 약 10 cm, 약 20 cm)"], "student": ["공책"]},
+   "hook": {
+     "title": "길이 탐정이 되어 보기",
+     "story": "미션 카드에 약 10 cm라고 써 있어요. 교실에서 그만큼 되는 물건을 찾아야 해요.",
+     "visual": {"type": "ruler", "length": 12, "mark": 10, "caption": "약 10 cm"},
+     "question": "약 10 cm가 될 만한 물건은 무엇일까요?"
+   },
+   "activities": [
+     {"title": "미션 카드로 물건 찾기",
+      "steps": ["미션 카드를 한 장 뽑아요.", "그만큼일 것 같은 물건을 찾아요.", "자의 눈금 0에 물건 끝을 맞춰요.", "끝이 닿은 눈금을 읽고 약 몇 cm라고 말해요."],
+      "visual": {"type": "ruler", "length": 22, "mark": 20, "caption": "약 20 cm"},
+      "share": "자의 0에 바르게 맞추어 쟀나요?"},
+     {"title": "1 m보다 길까 짧을까",
+      "steps": ["모둠에서 1 m 줄을 받아요.", "교실 물건에 줄을 대어 봐요.", "1 m보다 긴 것과 짧은 것을 나눠요.", "두 칸에 그림으로 그려 넣어요."],
+      "visual": {"type": "table", "head": ["1 m보다 짧다", "1 m보다 길다"], "rows": [["지우개", "칠판"]], "caption": "길이에 따라 나눠요"},
+      "share": "1 m보다 짧은 물건은 무슨 단위로 재면 좋을까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["자의 눈금 0에 맞추어 재요.", "끝이 눈금 사이에 있으면 가까운 쪽으로 약 몇 cm라고 말해요.", "1 m보다 짧은 물건은 cm로 재면 편해요."],
+     "visual": {"type": "ruler", "length": 18, "mark": 15, "caption": "약 15 cm"}},
+   "worksheet": {"title": "길이 재기 탐정", "items": [
+     {"q": "자의 눈금 0에 맞추어 재니 끝이 눈금과 눈금 사이, 11에 더 가까웠어요. 약 몇 cm라고 말할까요?", "visual": {"type": "ruler", "length": 15, "mark": 11}, "space": "box"},
+     {"q": "책상은 1 m보다 길까요, 짧을까요?", "visual": null, "space": "line"},
+     {"q": "지우개는 1 m보다 길까요, 짧을까요? 어떤 단위로 재면 좋을까요?", "visual": null, "space": "line"},
+     {"q": "자의 눈금 0에 물건을 맞추어 재니 8 cm였어요. 자 그림에 표시해 보세요.", "visual": {"type": "ruler", "length": 12, "mark": 8}, "space": "none"},
+     {"q": "교실에서 약 5 cm가 될 만한 물건을 한 가지 쓰세요.", "visual": null, "space": "line"}
+   ]}
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "std": "6수03-11",
+ "variants": [
+  {
+   "variant": "A",
+   "materials": {"teacher": ["지오보드 또는 모눈종이"], "student": ["모눈종이", "자"]},
+   "hook": {
+    "title": "개미의 울타리 산책",
+    "story": "개미가 직사각형 모양 꽃밭 가장자리를 따라 한 바퀴 돌려고 해요. 가로 5 cm, 세로 3 cm예요.",
+    "visual": {"type": "shapes", "items": [{"kind": "rect", "label": "5×3"}]},
+    "question": "개미는 모두 몇 cm를 걸을까요?"
+   },
+   "activities": [
+    {"title": "둘레 표 만들기",
+     "steps": ["가로와 세로를 바꿔 가며 직사각형을 만들어요.", "둘레를 한 칸씩 세어 표에 적어요.", "세지 않고 구하는 방법을 짝과 찾아요."],
+     "visual": {"type": "table", "head": ["가로", "세로", "둘레"], "rows": [["4", "2", "12"], ["5", "3", "16"], ["6", "6", "24"]]},
+     "share": "(가로+세로)×2로 구해도 같은 답이 나오나요?"},
+    {"title": "여러 도형 둘레 구하기",
+     "steps": ["마름모(한 변 6 cm)의 둘레를 구해요.", "평행사변형(변 8 cm, 5 cm)의 둘레를 구해요.", "정육각형(한 변 3 cm)의 둘레를 구해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "rhombus", "label": "6cm"}, {"kind": "parallelogram", "label": "8,5cm"}, {"kind": "hexagon", "label": "3cm"}]},
+     "share": "평행사변형에 적힌 높이 4 cm는 둘레에 들어갈까요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["직사각형 둘레는 (가로+세로)×2예요.", "변이 모두 같은 도형은 한 변 × 변의 수로 구해요.", "높이는 둘레에 들어가지 않아요."], "visual": {"type": "equation", "text": "직사각형 둘레 = (가로+세로)×2"}},
+   "worksheet": {"title": "둘레 구하기", "items": [
+     {"q": "가로가 9 cm, 세로가 6 cm인 직사각형의 둘레는 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "한 변이 4 cm인 정육각형의 둘레는 몇 cm일까요?", "visual": {"type": "shapes", "items": [{"kind": "hexagon", "label": "4cm"}]}, "space": "box"},
+     {"q": "이웃한 두 변이 8 cm와 4 cm이고 높이가 3 cm인 평행사변형의 둘레는 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "한 변이 2 cm인 정사각형 4개를 한 줄로 이어 붙인 도형의 둘레는 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "마름모의 네 변이 모두 5 cm일 때 둘레는 몇 cm일까요?", "visual": null, "space": "box"}
+   ]}
+  },
+  {
+   "variant": "B",
+   "materials": {"teacher": ["펜토미노 조각 종이", "도형·길이 카드"], "student": ["모눈종이", "가위"]},
+   "hook": {
+    "title": "칸은 같은데 울타리가 다르다고?",
+    "story": "정사각형 5개를 붙인 두 모양이 있어요. 칸 수는 같은데 둘레도 같을까요?",
+    "visual": {"type": "grid", "rows": 1, "cols": 5, "count": 5, "caption": "정사각형 5칸"},
+    "question": "어느 쪽 울타리가 더 길까요?"
+   },
+   "activities": [
+    {"title": "펜토미노 둘레 재기",
+     "steps": ["조각 하나를 골라 바깥 둘레를 한 칸씩 세어요.", "다른 모양 조각도 세어 비교해요.", "칸이 같아도 둘레가 다른 까닭을 말해요."],
+     "visual": {"type": "table", "head": ["조각", "칸 수", "둘레"], "rows": [["①(한 줄)", "5", "12"], ["②(십자 모양)", "5", "12"], ["③(2×2+1)", "5", "10"]]},
+     "share": "칸끼리 맞닿은 변은 왜 둘레에서 빠지나요?"},
+    {"title": "도형 카드 둘레 놀이",
+     "steps": ["도형 카드를 한 장 뒤집어요.", "필요한 길이 카드를 뒤집어요.", "공책에 대강 그려 길이를 적고 둘레를 구해요."],
+     "visual": {"type": "shapes", "items": [{"kind": "square", "label": "4cm"}, {"kind": "parallelogram", "label": "7,3cm"}]},
+     "share": "직사각형 카드는 왜 길이 카드를 두 장 뒤집어야 하나요?"}
+   ],
+   "concept": {"title": "오늘 배운 것", "points": ["칸 수가 같아도 모양에 따라 둘레가 달라질 수 있어요.", "변이 모두 같은 도형은 한 변 × 변의 수로 구해요.", "직사각형·평행사변형은 두 길이를 알아야 둘레를 구할 수 있어요."], "visual": {"type": "table", "head": ["조각", "칸 수", "둘레"], "rows": [["①", "5", "12"], ["③", "5", "10"]]}},
+   "worksheet": {"title": "울타리 길이 구하기", "items": [
+     {"q": "가로가 8 cm, 세로가 5 cm인 직사각형의 둘레는 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "한 변이 7 cm인 정삼각형의 둘레는 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "이웃한 두 변이 6 cm와 4 cm이고 높이가 3 cm인 평행사변형의 둘레는 몇 cm일까요?", "visual": null, "space": "box"},
+     {"q": "정사각형 5개를 붙였는데 한 모양은 둘레가 12 cm, 다른 모양은 10 cm예요. 칸 수가 같은데 둘레가 다른 까닭을 쓰세요.", "visual": null, "space": "line"},
+     {"q": "한 변이 3 cm인 마름모의 둘레는 몇 cm일까요?", "visual": null, "space": "box"}
+   ]}
+  }
+ ]
+}
