@@ -28,7 +28,7 @@ HTML = r'''<!DOCTYPE html>
 <style>
 :root{--bg:#fdf8ee;--ink:#22303c;--sub:#6b7680;--acc:#1f7a5c;--acc2:#e3f3ec;--sun:#ffb938;--coral:#ef6b4f;--sky:#3d8bd9;--card:#fff;--line:#ecdfc8}
 *{box-sizing:border-box}html,body{height:100%}
-body{margin:0;font-family:'Noto Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow:hidden}
+body{margin:0;font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow:hidden}
 button{font:inherit;cursor:pointer}
 .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.8em;line-height:1.05;margin:0 .12em}
 .frac span:first-child{border-bottom:.08em solid currentColor;padding:0 .12em}
@@ -93,6 +93,9 @@ button{font:inherit;cursor:pointer}
 .games{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px}
 .burst{position:fixed;pointer-events:none;font-family:Jua,sans-serif;font-size:60px;color:var(--sun);animation:up 1s ease-out forwards;z-index:30}
 @keyframes up{to{transform:translateY(-120px) scale(1.4);opacity:0}}
+#toolbox{position:fixed;inset:0;z-index:40;background:#fff;display:none;flex-direction:column}
+#toolbox .tb{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:2px solid var(--line);font-size:18px}
+#toolbox iframe{flex:1;border:0;width:100%}
 @media (max-width:760px){.choices{grid-template-columns:1fr}.note{position:static;max-width:none;margin-bottom:10px}.timer{position:static;margin-bottom:10px}}
 </style></head><body>
 <section id="home"><div class="top"><div class="logo">선행쌤 수학 수업</div>
@@ -101,8 +104,9 @@ button{font:inherit;cursor:pointer}
 <div id="pick"><div class="p" id="pickp"></div></div>
 <section id="stage"><div class="bar"><button class="x" id="exit">← 차시 목록</button><div class="dots" id="dots"></div><button class="x" id="fs">전체 화면</button></div>
 <div class="slide" id="slide"></div></section>
+<div id="toolbox"><div class="tb"><b>만지작 교구</b><button class="pill" id="tclose">닫고 수업으로 ✕</button></div><iframe id="toolf" title="만지작 교구"></iframe></div>
 <script>
-const D=__DATA__;
+let D=__DATA__;
 const AREA={'01':'수와 연산','02':'변화와 관계','03':'도형과 측정','04':'자료와 가능성'};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -124,7 +128,8 @@ function fmt(s){return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`}
 function tick(){left--;const el=$('.timer');if(!el){stopT();return}el.querySelector('.t').textContent=fmt(Math.max(0,left));if(left<=0){stopT();el.classList.add('end');beep(880,.4);setTimeout(()=>beep(660,.4),450)}}
 function dots(){const lab=x=>x.kind==='cover'?'시작':x.kind==='step'?x.lbl:x.kind==='quiz'?'문제 '+(x.i+1):'마침';
  $('#dots').innerHTML=S.map((x,i)=>`<button class="dot ${i===at?'on':i<at?'done':''}" data-i="${i}">${lab(x)}</button>`).join('')}
-function tool(id){return id?`<a class="pill tool" href="https://manjijak-4ys.pages.dev/#t=${id}" target="_blank" rel="noopener">교구 열기 · ${esc(D.tools[id]||id)}</a>`:''}
+const SAME=location.hostname.includes('manjijak')||location.hostname==='127.0.0.1'||location.hostname==='localhost';
+function tool(id){if(!id)return'';const n=esc(D.tools[id]||id);return SAME?`<button class="pill tool" data-tool="${id}">교구 열기 · ${n}</button>`:`<a class="pill tool" href="https://manjijak-4ys.pages.dev/#t=${id}" target="_blank" rel="noopener">교구 열기 · ${n}</a>`}
 function render(){stopT();dots();const x=S[at],el=$('#slide');qi=0;
  const foot=`<div class="foot"><button class="prev" id="prev" ${at?'':'style="visibility:hidden"'}>◀ 이전</button><button class="next" id="next">${at===S.length-1?'끝내기':at===0?'수업 시작 ▶':'다음 ▶'}</button></div>`;
  if(x.kind==='cover'){el.innerHTML=`<div class="tag">오늘의 수학</div><div class="big">${fr(L.topic)}</div><div class="mid">${fr(L.objective)}</div><div class="hands">${['생각 열기','활동','정리','문제 '+L.quiz.length+'개'].map(h=>`<span class="hand">${h}</span>`).join('')}</div>`+foot}
@@ -143,6 +148,7 @@ function go(d){at=Math.max(0,Math.min(S.length-1,at+d));render()}
 document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
  if(t.dataset.b){band=t.dataset.b;$('#find').value='';document.querySelectorAll('#grades button').forEach(b=>b.classList.toggle('on',b===t));home();return}
  if(t.dataset.s){pick(t.dataset.s);return}if(t.dataset.v!=null){start(+t.dataset.v);return}
+ if(t.dataset.tool){$('#toolf').src='/#t='+t.dataset.tool;$('#toolbox').style.display='flex';return}if(t.id==='tclose'){$('#toolbox').style.display='none';$('#toolf').src='about:blank';return}
  if(t.id==='pclose'){$('#pick').style.display='none';return}
  if(t.id==='exit'){stopT();$('#stage').style.display='none';$('#home').style.display='block';return}
  if(t.id==='fs'){(document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()).catch(()=>{});return}
@@ -154,9 +160,21 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(t.id==='qnext'||t.id==='qprev'){const a=JSON.parse($('#slide').dataset.asks);qi=(qi+(t.id==='qnext'?1:-1)+a.length)%a.length;$('#ask').innerHTML=fr(a[qi]);$('#qn').textContent=`질문 ${qi+1} / ${a.length}`;return}
  if(t.classList.contains('choice')){reveal(+t.dataset.j);return}if(t.id==='reveal'){reveal(null);return}});
 document.addEventListener('keydown',e=>{if($('#stage').style.display!=='flex'||e.target.tagName==='INPUT')return;if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();$('#next').click()}if(e.key==='ArrowLeft')$('#prev').click()});
-$('#find').oninput=home;home();
+$('#find').oninput=home;if(D)home();else fetch('data.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{D=d;home()});
 </script></body></html>'''
 
 out = os.path.join(gen.OUT, 'player.html')
 open(out, 'w').write(HTML.replace('__DATA__', json.dumps(data, ensure_ascii=False)))
 print(out, os.path.getsize(out))
+
+# 만지작 /lesson/ — CSP(script-src 'self' · font-src 'self') 라 스크립트·자료를 파일로 나눈다. 문은 functions/lesson/_middleware.js(비밀번호)
+MJL = os.path.join(gen.MJ, 'lesson')
+os.makedirs(MJL, exist_ok=True)
+head, rest = HTML.split('<script>', 1)
+js, tail = rest.split('</script>', 1)
+head = head.replace('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">\n', '')
+head = head.replace('<meta name="viewport"', '<meta name="robots" content="noindex,nofollow"><meta name="viewport"')
+open(os.path.join(MJL, 'index.html'), 'w').write(head + '<script src="player.js"></script>' + tail)
+open(os.path.join(MJL, 'player.js'), 'w').write(js.replace('__DATA__', 'null'))
+open(os.path.join(MJL, 'data.json'), 'w').write(json.dumps(data, ensure_ascii=False))
+print(MJL, sorted(os.listdir(MJL)))
