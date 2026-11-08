@@ -193,15 +193,35 @@ export function recordClick(slug: string, rawName: string): void {
       { merge: true }
     ),
     setDoc(doc(db, 'clicks', slug), { slug, name, count: increment(1) }, { merge: true }),
+    // 홈 인기 순위용 합계 — 홈은 이 문서 3~4개만 읽는다(규칙: 한 칸만 +1, 올리는 칸 이름을 k 에)
+    ...(/^[a-z0-9-]{1,60}$/.test(slug)
+      ? [
+          setDoc(doc(db, 'clickSum', day), { c: { [slug]: increment(1) }, k: slug }, { merge: true }),
+          setDoc(doc(db, 'clickSum', 'total'), { c: { [slug]: increment(1) }, k: slug }, { merge: true }),
+        ]
+      : []),
   ]).catch(() => {
     /* 통계 실패는 조용히 무시 */
   })
 }
 
 /** 최근 48시간 조회수 — slug → 수. 홈 맨 위 인기 순위가 1등부터 마지막까지 세운다(2026-10-23 사용자 «최근 48시간 기준»).
- *  날짜별 문서(clicksDaily)를 오늘·어제·그제 사흘치 읽어 창에 걸친 만큼만 더한다(window48). */
+ *  하루 합계 문서(clickSum/yyyymmdd) 사흘치만 읽는다 — 예전엔 앱별 clicksDaily 를 통째로(방문마다 수백 건) 읽어
+ *  Firestore 읽기가 30일 364만 건(₩1,428)까지 났다(2026-11-08). 합계 문서가 아직 없으면(옮기기 전) 예전 방식으로 읽는다. */
 export async function fetchRecentCounts(now = Date.now()): Promise<Record<string, number>> {
   const win = window48(now)
+  const db = getDb()
+  const [total, ...days] = await Promise.all([getDoc(doc(db, 'clickSum', 'total')), ...win.map((w) => getDoc(doc(db, 'clickSum', w.day)))])
+  if (!total.exists()) return fetchRecentCountsLegacy(win)
+  const rows: { date: string; slug: string; count: number }[] = []
+  days.forEach((d, i) => {
+    const c = (d.exists() ? d.data().c : null) as Record<string, number> | null
+    if (c) for (const [slug, count] of Object.entries(c)) rows.push({ date: win[i].day, slug, count: Number(count) || 0 })
+  })
+  return sumWindow(rows, win)
+}
+
+async function fetchRecentCountsLegacy(win: ReturnType<typeof window48>): Promise<Record<string, number>> {
   const snap = await getDocs(
     query(collection(getDb(), 'clicksDaily'), where('date', 'in', win.map((w) => w.day)))
   )
@@ -214,8 +234,14 @@ export async function fetchRecentCounts(now = Date.now()): Promise<Record<string
   )
 }
 
-/** 전체 누적 클릭 수 — slug → 수(인기 순위 카드에 48시간 수와 함께 보인다). */
+/** 전체 누적 클릭 수 — slug → 수(인기 순위 카드에 48시간 수와 함께 보인다). 합계 문서 1개, 없으면 예전 방식. */
 export async function fetchTotalCounts(): Promise<Record<string, number>> {
+  const total = await getDoc(doc(getDb(), 'clickSum', 'total'))
+  if (total.exists()) {
+    const out: Record<string, number> = {}
+    for (const [slug, n] of Object.entries((total.data().c ?? {}) as Record<string, number>)) out[slug] = Number(n) || 0
+    return out
+  }
   const snap = await getDocs(collection(getDb(), 'clicks'))
   const out: Record<string, number> = {}
   for (const d of snap.docs) {

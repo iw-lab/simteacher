@@ -202,6 +202,29 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // 홈 인기 순위 합계(2026-11-08 «파이어베이스 쓸데없는 요금») — 하루 문서(yyyymmdd) 1개 + 누적(total) 1개, 칸 = 앱 slug.
+    // 홈이 앱별 clicks·clicksDaily 문서를 방문마다 수백 건 읽던 것을 문서 3~4개로 줄인다. 쓰기는 «한 칸만, +1 씩만».
+    // (clicks·clicksDaily 는 그대로 함께 쌓는다 — 합계가 어긋나면 그것으로 다시 맞춘다.)
+    function clickKeyOk(k) { return k is string && k.matches('^[a-z0-9-]{1,60}$'); }
+    // 쓰는 쪽이 올리는 칸 이름을 k 에 함께 적는다(규칙 엔진이 바뀐 칸 집합에서 원소를 꺼내지 못해서).
+    // 칸 상한 2000 — 가짜 이름으로 칸을 채우는 장난은 scripts/seed-click-sums.mjs --apply 가 «등록된 앱만» 다시 맞춘다.
+    match /clickSum/{sumId} {
+      allow read: if true;
+      allow create: if (sumId == 'total' || sumId.matches('^[0-9]{8}$'))
+        && request.resource.data.keys().hasOnly(['c', 'k'])
+        && clickKeyOk(request.resource.data.k)
+        && request.resource.data.c is map
+        && request.resource.data.c.keys().hasOnly([request.resource.data.k])
+        && request.resource.data.c[request.resource.data.k] == 1;
+      allow update: if request.resource.data.keys().hasOnly(['c', 'k'])
+        && clickKeyOk(request.resource.data.k)
+        && request.resource.data.c is map
+        && request.resource.data.c.size() <= 2000
+        && request.resource.data.c.diff(resource.data.c).affectedKeys().hasOnly([request.resource.data.k])
+        && request.resource.data.c[request.resource.data.k] == resource.data.c.get(request.resource.data.k, 0) + 1;
+      allow delete: if false;
+    }
+
     match /clicksDaily/{dailyId} {
       allow read: if true;
       allow create: if request.resource.data.keys().hasOnly(['date', 'slug', 'name', 'count'])

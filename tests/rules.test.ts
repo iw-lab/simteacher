@@ -179,3 +179,50 @@ describe('서재 책 클릭 수 규칙', () => {
     await assertFails(setDoc(doc(db, 'bookClicksDaily', '20261023__a'), { date: '20261023', id: 'b', count: 1 }))
   })
 })
+
+// 홈 인기 순위 합계(2026-11-08 «파이어베이스 요금») — 하루 문서 1개 + 누적 1개.
+// 홈은 문서 3~4개만 읽는다(예전: 앱별 문서 수백 건). 쓰기는 «한 칸만 +1» 만 된다.
+describe('클릭 합계(clickSum) 규칙', () => {
+  const anon = () => env.unauthenticatedContext().firestore()
+  const seed = async (id: string, c: Record<string, number>) =>
+    env.withSecurityRulesDisabled(async (ctx) => { await setDoc(doc(ctx.firestore(), 'clickSum', id), { c }) })
+  it('누구나 처음 한 칸을 1로 만든다', async () => {
+    await assertSucceeds(setDoc(doc(anon(), 'clickSum', '20261108'), { c: { 'kkeut-bomb': 1 }, k: 'kkeut-bomb' }))
+    await assertSucceeds(setDoc(doc(anon(), 'clickSum', 'total'), { c: { gugu: 1 }, k: 'gugu' }))
+  })
+  it('한 칸을 +1 하는 것만 된다(다른 칸은 그대로)', async () => {
+    await seed('total', { gugu: 5, mulkko: 2 })
+    await assertSucceeds(setDoc(doc(anon(), 'clickSum', 'total'), { c: { gugu: 6, mulkko: 2 }, k: 'gugu' }))
+    await assertSucceeds(setDoc(doc(anon(), 'clickSum', 'total'), { c: { gugu: 6, mulkko: 2, newgame: 1 }, k: 'newgame' }))
+  })
+  it('🔴 +2 이상·깎기·두 칸 동시·칸 지우기·딴 필드는 막는다', async () => {
+    await seed('total', { gugu: 5, mulkko: 2 })
+    const d = doc(anon(), 'clickSum', 'total')
+    await assertFails(setDoc(d, { c: { gugu: 7, mulkko: 2 }, k: 'gugu' }))
+    await assertFails(setDoc(d, { c: { gugu: 4, mulkko: 2 }, k: 'gugu' }))
+    await assertFails(setDoc(d, { c: { gugu: 6, mulkko: 3 }, k: 'gugu' }))
+    await assertFails(setDoc(d, { c: { gugu: 5, mulkko: 3 }, k: 'gugu' }))
+    await assertFails(setDoc(d, { c: { gugu: 5 }, k: 'gugu' }))
+    await assertFails(setDoc(d, { c: { gugu: 6, mulkko: 2 }, k: 'gugu', x: 1 }))
+    await assertFails(setDoc(d, { c: { gugu: 5, mulkko: 2, newgame: 5 }, k: 'newgame' }))
+    await assertFails(deleteDoc(d))
+  })
+  it('🔴 이상한 문서 이름·이상한 칸 이름·처음부터 큰 값은 막는다', async () => {
+    await assertFails(setDoc(doc(anon(), 'clickSum', 'hack'), { c: { gugu: 1 }, k: 'gugu' }))
+    await assertFails(setDoc(doc(anon(), 'clickSum', '20261108'), { c: { 'Bad Name!': 1 }, k: 'Bad Name!' }))
+    await assertFails(setDoc(doc(anon(), 'clickSum', '20261108'), { c: { gugu: 9 }, k: 'gugu' }))
+    await assertFails(setDoc(doc(anon(), 'clickSum', '20261108'), { c: { gugu: 1, mulkko: 1 }, k: 'gugu' }))
+  })
+  it('🔴 칸 상한(2000)을 넘는 새 칸은 막는다', async () => {
+    const big: Record<string, number> = {}
+    for (let i = 0; i < 2000; i++) big[`g${i}`] = 1
+    await seed('total', big)
+    await assertFails(setDoc(doc(anon(), 'clickSum', 'total'), { c: { ...big, extra: 1 }, k: 'extra' }))
+    await assertSucceeds(setDoc(doc(anon(), 'clickSum', 'total'), { c: { ...big, g5: 2 }, k: 'g5' }))
+  })
+  it('누구나 읽는다', async () => {
+    await seed('total', { gugu: 5 })
+    const { getDoc } = await import('firebase/firestore')
+    await assertSucceeds(getDoc(doc(anon(), 'clickSum', 'total')))
+  })
+})
