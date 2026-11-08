@@ -220,6 +220,21 @@ describe('클릭 합계(clickSum) 규칙', () => {
     await assertFails(setDoc(doc(anon(), 'clickSum', 'total'), { c: { ...big, extra: 1 }, k: 'extra' }))
     await assertSucceeds(setDoc(doc(anon(), 'clickSum', 'total'), { c: { ...big, g5: 2 }, k: 'g5' }))
   })
+  it('사이트가 실제로 쓰는 모양(병합 + increment)이 통과한다 — 새 날짜 문서·기존 칸·새 칸', async () => {
+    const { increment } = await import('firebase/firestore')
+    const w = (id: string, slug: string) => setDoc(doc(anon(), 'clickSum', id), { c: { [slug]: increment(1) }, k: slug }, { merge: true })
+    await assertSucceeds(w('20261109', 'gugu'))
+    await assertSucceeds(w('20261109', 'gugu'))
+    await assertSucceeds(w('20261109', 'mulkko'))
+    await seed('total', { gugu: 5 })
+    await assertSucceeds(w('total', 'gugu'))
+    await assertSucceeds(w('total', 'newgame'))
+    const { getDoc } = await import('firebase/firestore')
+    let snap: Record<string, unknown> | undefined
+    await env.withSecurityRulesDisabled(async (ctx) => { snap = (await getDoc(doc(ctx.firestore(), 'clickSum', '20261109'))).data() })
+    expect(snap?.c).toEqual({ gugu: 2, mulkko: 1 })
+    await assertFails(setDoc(doc(anon(), 'clickSum', 'total'), { c: { gugu: increment(2) }, k: 'gugu' }, { merge: true }))
+  })
   it('누구나 읽는다', async () => {
     await seed('total', { gugu: 5 })
     const { getDoc } = await import('firebase/firestore')
