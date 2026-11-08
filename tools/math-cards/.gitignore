@@ -1,2 +1,5 @@
 out/requests.jsonl
 out/batch.json
+out/vrequests.jsonl
+out/vbatch.json
+out/fbatch.json

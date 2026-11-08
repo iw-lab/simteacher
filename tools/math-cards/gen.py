@@ -224,6 +224,7 @@ def fetch():
         except Exception as e:
             bad.append((code, f'json {e}')); open(os.path.join(CARDS, code + '.raw.txt'), 'w').write(txt); continue
         card['std'] = code
+        card['cards'] = [k for k in card.get('cards', []) if k.get('variant') and k.get('develop')]  # 빈 카드 꼬리 제거
         json.dump(card, open(os.path.join(CARDS, code + '.json'), 'w'), ensure_ascii=False, indent=1)
     print('토큰', usage, '실패', bad)
     return check()
@@ -292,7 +293,87 @@ def retry():
     build(); submit()
 
 
+VSYS = """너는 초등 수학 교과서 검토위원이다. 아래 수업 카드를 엄격히 검수한다. 찾을 것:
+1) 수학적으로 틀린 것(정답이 틀림·오답 중 정답이 또 있음·풀이 오류·수치 모순·분 합계 오류)
+2) 학년 맞춤 위반(그 학년군에서 아직 안 배운 개념·수 범위·기호를 씀)
+3) 성취기준에서 벗어난 내용
+4) 교과서 문구 베끼기 흔적·출판사 언급
+5) 교실에서 실행 불가능한 활동(40분에 안 됨·준비물 비현실)
+사소한 문체 취향은 지적하지 않는다. JSON 하나만:
+{"ok": true|false, "issues": [{"where": "quiz[2] 등 위치", "kind": "math|grade|std|copy|feasible", "problem": "", "fix": "고친 문장·값 그대로"}]}"""
+
+
+def vbuild():
+    m = model(); stds = dict(standards()); n = 0
+    with open(os.path.join(OUT, 'vrequests.jsonl'), 'w') as f:
+        for code, text in stds.items():
+            c = open(os.path.join(CARDS, code + '.json')).read()
+            req = {'custom_id': 'v' + code.replace('수', 'M'), 'params': {'model': m, 'max_tokens': 6000, 'system': VSYS,
+                   'messages': [{'role': 'user', 'content': f'성취기준 [{code}] «{text}»\n\n카드:\n{c}'}]}}
+            f.write(json.dumps(req, ensure_ascii=False) + '\n'); n += 1
+    reqs = [json.loads(l) for l in open(os.path.join(OUT, 'vrequests.jsonl'))]
+    b = json.loads(call(API, {'requests': reqs}))
+    json.dump(b, open(os.path.join(OUT, 'vbatch.json'), 'w'), indent=1)
+    print('검수 보냄', b['id'], n)
+
+
+def vfetch():
+    bid = json.load(open(os.path.join(OUT, 'vbatch.json')))['id']
+    b = json.loads(call(f'{API}/{bid}'))
+    print(b['processing_status'], json.dumps(b['request_counts']))
+    if b['processing_status'] != 'ended':
+        return 1
+    VD = os.path.join(OUT, 'verify'); os.makedirs(VD, exist_ok=True)
+    from collections import Counter
+    kinds = Counter(); bad = 0
+    for line in call(b['results_url']).splitlines():
+        if not line.strip(): continue
+        r = json.loads(line); code = norm_code(r['custom_id'][1:])
+        if r['result']['type'] != 'succeeded': print('실패', code); continue
+        t = ''.join(x.get('text', '') for x in r['result']['message']['content']); t = t[t.find('{'):t.rfind('}') + 1]
+        v = json.loads(t); json.dump(v, open(os.path.join(VD, code + '.json'), 'w'), ensure_ascii=False, indent=1)
+        if not v.get('ok'): bad += 1
+        for i in v.get('issues', []): kinds[i.get('kind')] += 1
+    print('지적 있는 카드', bad, dict(kinds))
+    return 0
+
+
+FSYS = SYSTEM + "\n\n지금은 이미 만든 카드를 검토위원 지적대로 고친다. 지적마다 반영하되(틀린 지적이면 무시), 지적 없는 부분은 그대로 둔다. 같은 스키마의 고친 카드 JSON 전체만 출력."
+
+
+def fbuild():
+    m = model(); stds = dict(standards()); n = 0; reqs = []
+    for code, text in stds.items():
+        v = json.load(open(os.path.join(OUT, 'verify', code + '.json')))
+        if v.get('ok') and not v.get('issues'): continue
+        c = open(os.path.join(CARDS, code + '.json')).read()
+        reqs.append({'custom_id': 'f' + code.replace('수', 'M'), 'params': {'model': m, 'max_tokens': 9000, 'system': FSYS,
+            'messages': [{'role': 'user', 'content': f'성취기준 [{code}] «{text}»\n\n카드:\n{c}\n\n검토 지적:\n{json.dumps(v["issues"], ensure_ascii=False)}\n\n스키마:\n{SCHEMA}'}]}})
+    b = json.loads(call(API, {'requests': reqs}))
+    json.dump(b, open(os.path.join(OUT, 'fbatch.json'), 'w'), indent=1)
+    print('고치기 보냄', b['id'], len(reqs))
+
+
+def ffetch():
+    bid = json.load(open(os.path.join(OUT, 'fbatch.json')))['id']
+    b = json.loads(call(f'{API}/{bid}'))
+    print(b['processing_status'], json.dumps(b['request_counts']))
+    if b['processing_status'] != 'ended': return 1
+    n = 0
+    for line in call(b['results_url']).splitlines():
+        if not line.strip(): continue
+        r = json.loads(line); code = norm_code(r['custom_id'][1:])
+        if r['result']['type'] != 'succeeded': print('실패', code); continue
+        t = ''.join(x.get('text', '') for x in r['result']['message']['content']); t = t[t.find('{'):t.rfind('}') + 1]
+        try: c = json.loads(t)
+        except Exception as e: print('json', code, e); continue
+        c['std'] = code; c['cards'] = [k for k in c.get('cards', []) if k.get('variant') and k.get('develop')]
+        json.dump(c, open(os.path.join(CARDS, code + '.json'), 'w'), ensure_ascii=False, indent=1); n += 1
+    print('고침 반영', n)
+    return 0
+
+
 if __name__ == '__main__':
     cmd = sys.argv[1] if len(sys.argv) > 1 else 'status'
-    r = {'build': build, 'submit': submit, 'status': status, 'fetch': fetch, 'check': check, 'deal': deal, 'retry': retry}[cmd]()
+    r = {'build': build, 'submit': submit, 'status': status, 'fetch': fetch, 'check': check, 'deal': deal, 'retry': retry, 'vbuild': vbuild, 'vfetch': vfetch, 'fbuild': fbuild, 'ffetch': ffetch}[cmd]()
     sys.exit(r if isinstance(r, int) else 0)
