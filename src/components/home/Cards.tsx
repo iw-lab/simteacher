@@ -54,7 +54,7 @@ export function SiteCard({ site, i, views }: { site: LearningSite; i: number; vi
     >
       <div className="relative aspect-[8/5] bg-muted overflow-hidden border-b border-line">
         <Image
-          src={site.image}
+          src={site.thumb ?? site.image}
           alt={`${site.name} 화면`}
           fill
           sizes="(max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
@@ -109,7 +109,7 @@ export function ToolCard({ tool, views }: { tool: TeacherTool; views: number | u
     <div data-slug={tool.slug} className="group glass rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col hover:border-primary-500/60 hover:-translate-y-1 transition-all duration-200">
       <div className="relative aspect-[8/5] bg-muted overflow-hidden border-b border-line">
         <Image
-          src={tool.image}
+          src={tool.thumb ?? tool.image}
           alt={`${tool.name} 화면`}
           fill
           sizes="(max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"

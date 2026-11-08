@@ -12,7 +12,7 @@ const BY_SLUG = new Map(learningSites.map((s) => [s.slug, s]))
 const koName = (name: string) => name.split(' ').filter((w) => /[가-힣]/.test(w)).join(' ') || name
 const MAKE_SITES = MAKE_ROOM_GAMES.flatMap((g) => {
   const s = BY_SLUG.get(g)
-  return s?.url ? [{ slug: g, name: koName(s.name), image: s.image, url: s.url }] : []
+  return s?.url ? [{ slug: g, name: koName(s.name), image: s.thumb ?? s.image, url: s.url }] : []
 })
 
 /** 지금 열린 온라인 방 — 넓은 화면은 오른쪽 칸(따라 내려옴), 폰·태블릿은 인기 순위 바로 밑.
@@ -82,7 +82,7 @@ export function LiveRooms({ className = '' }: { className?: string }) {
                 >
                   <span className="relative w-12 h-12 shrink-0 rounded-lg overflow-hidden bg-muted">
                     {site?.image ? (
-                      <Image src={site.image} alt="" fill sizes="48px" className="object-cover object-top" />
+                      <Image src={site.thumb ?? site.image} alt="" fill sizes="48px" className="object-cover object-top" />
                     ) : (
                       <Radio className="w-6 h-6 m-3 text-muted-fg" />
                     )}

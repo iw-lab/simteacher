@@ -133,7 +133,7 @@ export function PopularStrip() {
               >
                 <div className="relative aspect-[8/5] bg-muted overflow-hidden border-b border-line">
                   <Image
-                    src={site.image}
+                    src={site.thumb ?? site.image}
                     alt={`${site.name} 화면`}
                     fill
                     sizes="(max-width: 640px) 30vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 14vw"

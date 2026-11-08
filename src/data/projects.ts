@@ -29,6 +29,8 @@ export interface LearningSite {
   target: string;
   tech: string[];
   image: string;
+  /** 카드·아이콘용 작은 그림(폭 640 · tools/img-thumbs.mjs) — 없으면 image. 아래 루프가 채운다 */
+  thumb?: string;
   /** 공개 링크. 링크를 걸지 않는 사이트면 undefined */
   url?: string;
   /** url 이 없을 때 카드에 대신 보일 사유. 없으면 '학급 운영 중'.
@@ -46,6 +48,8 @@ export interface TeacherTool {
   features: string[];
   tech: string[];
   image: string;
+  /** 카드·아이콘용 작은 그림(폭 640 · tools/img-thumbs.mjs) — 없으면 image. 아래 루프가 채운다 */
+  thumb?: string;
   /** 다운로드/실행 링크 */
   url?: string;
   urlLabel?: string;
@@ -1760,8 +1764,12 @@ export const learningSites: LearningSite[] = [
 //    해시 없이 그림을 바꾸면 이미 본 폰은 옛 그림을 계속 본다(2026-10-21). postbuild 가 검사한다.
 const versions: Record<string, string> = imageVersions;
 for (const x of [...teacherTools, ...learningSites]) {
+  // 카드용 작은 그림 — 첫 화면은 40~380px 로 보이는데 원본(1200px)을 받아 Hosting 전송이 24GB/30일까지 났다(2026-11-08)
+  const t = x.image.replace(/\.(webp|png|jpe?g)$/, '.thumb.webp');
+  const tv = versions[t];
   const v = versions[x.image];
   if (v) x.image = `${x.image}?v=${v}`;
+  x.thumb = tv ? `${t}?v=${tv}` : x.image;
 }
 
 // 🔑 게임 링크에 «선행쌤을 거쳐 왔다» 표시 — 방 멀티는 선행쌤에서 온 기기만 열린다(lib/via-ssam.ts · 2026-11-03).

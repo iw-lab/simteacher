@@ -129,7 +129,7 @@ export function SchoolRanks() {
             return (
               <div key={g.slug} className="glass rounded-2xl p-3">
                 <a href={site?.url ? viaSsam(site.url) : undefined} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 min-w-0">
-                  {site?.image && <span className="relative w-10 h-10 shrink-0 rounded-lg overflow-hidden bg-muted"><Image src={site.image} alt="" fill sizes="40px" className="object-cover object-top" /></span>}
+                  {site?.image && <span className="relative w-10 h-10 shrink-0 rounded-lg overflow-hidden bg-muted"><Image src={site.thumb ?? site.image} alt="" fill sizes="40px" className="object-cover object-top" /></span>}
                   <b className="text-fg truncate">{gameName(g.slug)}</b>
                   <span className="ml-auto shrink-0 text-xs text-muted-fg tabular-nums">{g.st.schools}개교</span>
                 </a>
