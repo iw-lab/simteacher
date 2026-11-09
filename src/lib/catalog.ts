@@ -27,3 +27,11 @@ export const GAME_KINDS = SITE_KINDS.filter((k) => k !== TOOL_TAG)
 export const GAME_SUBJECTS = SITE_SUBJECTS.filter((k) => k !== OCCASION_TAG)
 /** 홈 맨 위 인기 순위 = 게임·수업 도구 통합(2026-10-24 사용자 «인기 순위는 그대로 통합으로») — 게임 쪽에서 뺀 도구도 순위엔 선다 */
 export const rankingSites = <T extends Pick<LearningSite, 'tags'>>(list: T[]) => list
+
+/** 수업 보조 도구 판 순서 — 새로 올린 것이 맨 위(게임 목록과 같은 규칙). 2026-11-10 사용자 «신규 도구가 왜 맨 밑으로 가니 맨위로 와야지»
+ *  (조회수 순이면 갓 올린 도구는 늘 0 이라 맨 밑) · 시험 tests/tools-order.test.ts */
+export function toolBoardOrder<T extends { slug: string; added: string; tags: string[] }>(all: T[]) {
+  const byNew = (l: T[]) => [...l].sort((a, b) => b.added.localeCompare(a.added))
+  const tools = classToolSites(all as never) as unknown as T[]
+  return { sites: byNew(tools.filter((s) => !isOccasion(s as never))), occasions: byNew(tools.filter((s) => isOccasion(s as never))) }
+}

@@ -1,15 +1,15 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchTotalCountsOnce } from '@/lib/community'
-import { classToolSites, isOccasion } from '@/lib/catalog'
+import { toolBoardOrder } from '@/lib/catalog'
 import { SiteCard } from '@/components/home/Cards'
 import { learningSites } from '@/data/projects'
 
-const SITES = classToolSites(learningSites).filter((s) => !isOccasion(s))
-const OCCASIONS = classToolSites(learningSites).filter(isOccasion)
+// 새로 올린 도구가 맨 위(게임 목록과 같은 규칙 · 2026-11-10 사용자 «신규 도구가 왜 맨 밑으로 가니 맨위로 와야지» — 조회수 순이라 갓 올린 도구는 늘 0 으로 맨 밑이었다)
+const { sites: SITES, occasions: OCCASIONS } = toolBoardOrder(learningSites)
 
-// 수업 도구 — 도구끼리만 많이 쓴 순서(게임과 섞으면 늘 밑으로 깔린다). 조회수를 못 읽으면 새로 올린 순서 그대로.
+// 수업 도구 — 새로 올린 순서. 조회수는 카드에 숫자로만 보인다.
 export function ToolsBoard() {
   const [totals, setTotals] = useState<Record<string, number> | null>(null)
   useEffect(() => {
@@ -22,10 +22,8 @@ export function ToolsBoard() {
     }
   }, [])
   const views = (slug: string) => (totals ? totals[slug] ?? 0 : undefined)
-  const byViews = <T extends { slug: string }>(list: T[]) =>
-    totals ? [...list].sort((a, b) => (totals[b.slug] ?? 0) - (totals[a.slug] ?? 0)) : list
-  const sites = useMemo(() => byViews(SITES), [totals]) // eslint-disable-line react-hooks/exhaustive-deps
-  const occasions = useMemo(() => byViews(OCCASIONS), [totals]) // eslint-disable-line react-hooks/exhaustive-deps
+  const sites = SITES
+  const occasions = OCCASIONS
 
   return (
     <div className="space-y-14">
