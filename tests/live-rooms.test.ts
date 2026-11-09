@@ -3,7 +3,7 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 
-import { safeRooms, ROOMS_POLL_MS, roomStatus } from '../src/lib/live-rooms'
+import { safeRooms, safeWorlds, ROOMS_POLL_MS, roomStatus } from '../src/lib/live-rooms'
 
 const LISTED = (g: string) => (g === 'racket-rush' ? 'https://racket-rush.pages.dev' : undefined)
 const read = (p: string) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8')
@@ -32,5 +32,17 @@ describe('지금 열린 온라인 방', () => {
     expect(roomStatus(room({ st: 'wait', since: 0 }), 3 * 60_000)).toBe('3분째 기다림')
     expect(roomStatus(room({ since: 0 }), 10_000)).toBe('방금 열림')
     expect(read('src/components/community/LiveRooms.tsx')).toMatch(/roomStatus\(r, now\)/)
+  })
+  // 2026-11-09 «별빛 용사단은 서버에 한 명이라도 있으면 선행쌤에 표시되지?» → «비슷한 멀티 게임은 다 이런 식으로»
+  it('열린 세계 게임은 «지금 N명 모험 중» — 등재 게임만, 한 명 이상, 주소는 등재 주소', () => {
+    const L = (g: string) => (g === 'starlight-heroes' ? 'https://starlight-heroes.pages.dev/' : undefined)
+    const w = (o: object) => ({ g: 'starlight-heroes', title: '별빛 용사단', n: 3, url: 'https://evil.example/', ...o })
+    expect(safeWorlds({ worlds: [w({})] }, L)).toEqual([{ g: 'starlight-heroes', title: '별빛 용사단', n: 3, url: 'https://starlight-heroes.pages.dev/' }])
+    expect(safeWorlds({ worlds: [w({ n: 0 }), w({ g: 'nope' }), w({ n: 'x' })] }, L)).toEqual([])
+    expect(safeWorlds(null, L)).toEqual([])
+    const ui = read('src/components/community/LiveRooms.tsx')
+    expect(ui).toMatch(/safeWorlds\(j,/)
+    expect(ui).toMatch(/data-testid="live-world"/)
+    expect(ui).toMatch(/모험 중/)
   })
 })

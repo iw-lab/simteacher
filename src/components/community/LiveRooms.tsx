@@ -6,7 +6,7 @@ import { Plus, Radio, Users } from 'lucide-react'
 import { recordClick } from '@/lib/community'
 import { learningSites } from '@/data/projects'
 import { viaSsam } from '@/lib/via-ssam'
-import { MAKE_ROOM_GAMES, makeRoomUrl, ROOM_BOARD, ROOMS_POLL_MS, roomStatus, safeRooms, type LiveRoom } from '@/lib/live-rooms'
+import { MAKE_ROOM_GAMES, makeRoomUrl, ROOM_BOARD, ROOMS_POLL_MS, roomStatus, safeRooms, safeWorlds, type LiveRoom, type LiveWorld } from '@/lib/live-rooms'
 
 const BY_SLUG = new Map(learningSites.map((s) => [s.slug, s]))
 const koName = (name: string) => name.split(' ').filter((w) => /[가-힣]/.test(w)).join(' ') || name
@@ -19,6 +19,7 @@ const MAKE_SITES = MAKE_ROOM_GAMES.flatMap((g) => {
  *  2026-10-23 사용자 «학생들이 온라인방 찾으러 각 게임에 가지 않고 그곳에서 누르면 바로 입장» */
 export function LiveRooms({ className = '' }: { className?: string }) {
   const [rooms, setRooms] = useState<LiveRoom[] | null>(null)
+  const [worlds, setWorlds] = useState<LiveWorld[]>([])
   const [now, setNow] = useState(() => Date.now())
   const [picking, setPicking] = useState(false)
 
@@ -32,6 +33,7 @@ export function LiveRooms({ className = '' }: { className?: string }) {
         .then((j) => {
           if (!alive) return
           setRooms(safeRooms(j, (g) => BY_SLUG.get(g)?.url).map((r) => ({ ...r, url: viaSsam(r.url) })))
+          setWorlds(safeWorlds(j, (g) => BY_SLUG.get(g)?.url).map((w) => ({ ...w, url: viaSsam(w.url) })))
           setNow(Date.now())
         })
         .catch(() => alive && setRooms((prev) => prev ?? []))
@@ -47,7 +49,8 @@ export function LiveRooms({ className = '' }: { className?: string }) {
     }
   }, [])
 
-  const has = !!rooms && rooms.length > 0
+  const has = (!!rooms && rooms.length > 0) || worlds.length > 0
+  const count = (rooms?.length ?? 0) + worlds.length
 
   return (
     <aside aria-labelledby="live-rooms-title" data-testid="live-rooms" className={`glass rounded-2xl p-3 ${has ? '' : 'max-xl:py-2'} ${className}`}>
@@ -57,7 +60,7 @@ export function LiveRooms({ className = '' }: { className?: string }) {
           <span className={`relative inline-flex w-2.5 h-2.5 rounded-full ${has ? 'bg-emerald-500' : 'bg-muted-fg/40'}`} />
         </span>
         지금 열린 온라인 방
-        {has && <span className="ml-auto text-sm font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">{rooms.length}개</span>}
+        {has && <span className="ml-auto text-sm font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">{count}개</span>}
       </h2>
 
       {rooms === null ? (
@@ -68,7 +71,40 @@ export function LiveRooms({ className = '' }: { className?: string }) {
         </p>
       ) : (
         <ul className="mt-2 flex gap-2 overflow-x-auto no-scrollbar xl:flex-col xl:overflow-visible xl:max-h-[calc(100vh-10rem)] xl:overflow-y-auto">
-          {rooms.map((r) => {
+          {worlds.map((w) => {
+            const site = BY_SLUG.get(w.g)
+            return (
+              <li key={`world:${w.g}`} className="shrink-0 basis-[88%] sm:basis-[48%] md:basis-[30%] xl:basis-auto">
+                <a
+                  href={w.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="live-world"
+                  onClick={() => recordClick(w.g, site?.name ?? w.title)}
+                  className="group flex items-center gap-2.5 rounded-xl border border-line bg-card/70 p-2 min-h-[56px] hover:border-emerald-500/60 transition-colors"
+                >
+                  <span className="relative w-12 h-12 shrink-0 rounded-lg overflow-hidden bg-muted">
+                    {site?.image ? (
+                      <Image src={site.thumb ?? site.image} alt="" fill sizes="48px" className="object-cover object-top" />
+                    ) : (
+                      <Radio className="w-6 h-6 m-3 text-muted-fg" />
+                    )}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-bold text-fg line-clamp-1">{site ? koName(site.name) : w.title}</span>
+                    <span className="flex items-center gap-1 text-xs text-muted-fg tabular-nums">
+                      <Users className="w-3.5 h-3.5" />
+                      <span className="leading-snug">지금 <b className="text-emerald-600 dark:text-emerald-400">{w.n}명</b> 모험 중</span>
+                    </span>
+                  </span>
+                  <span className="shrink-0 rounded-lg bg-emerald-500 px-2.5 py-1.5 text-sm font-extrabold text-white group-hover:bg-emerald-600">
+                    들어가기
+                  </span>
+                </a>
+              </li>
+            )
+          })}
+          {(rooms ?? []).map((r) => {
             const site = BY_SLUG.get(r.g)
             return (
               <li key={`${r.g}:${r.code}`} className="shrink-0 basis-[88%] sm:basis-[48%] md:basis-[30%] xl:basis-auto">

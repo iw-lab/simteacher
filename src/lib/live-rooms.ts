@@ -34,6 +34,31 @@ export function safeRooms(raw: unknown, listedUrl: (slug: string) => string | un
   })
 }
 
+/** 열린 세계 게임(방 코드 없이 채널에 모이는 멀티 — 게시판 games.js WORLDS) · 2026-11-09 «별빛 용사단은 한 명이라도 있으면 표시되지?» */
+export interface LiveWorld {
+  g: string
+  title: string
+  n: number
+  /** 선행쌤 등재 주소(게시판이 준 주소는 쓰지 않는다) — 누르면 게임 첫 화면 */
+  url: string
+}
+
+/** 게시판의 열린 세계 목록 — 등재된 게임만, 한 명 이상, 주소는 등재 주소로 바꿔 끼운다 */
+export function safeWorlds(raw: unknown, listedUrl: (slug: string) => string | undefined): LiveWorld[] {
+  const list = (raw as { worlds?: unknown } | null)?.worlds
+  if (!Array.isArray(list)) return []
+  const out: LiveWorld[] = []
+  for (const w of list) {
+    if (!w || typeof w.g !== 'string' || typeof w.title !== 'string') continue
+    const n = Math.floor(Number(w.n))
+    const listed = listedUrl(w.g)
+    if (!listed || !Number.isFinite(n) || n < 1) continue
+    try { if (new URL(listed).protocol !== 'https:') continue } catch { continue }
+    out.push({ g: w.g, title: w.title, n: Math.min(n, 999), url: listed })
+  }
+  return out
+}
+
 /** 선행쌤에서 바로 방을 여는 게임 — 2026-11-04 사용자 «게임에 안 들어가고도 방을 만들 수 있게».
  *  방은 방장 화면이 살아 있는 동안만 유지되므로(게시판 TTL 2분) 눌러서 게임의 대기실로 곧장 간다.
  *  🔴 여기 넣기 전에 그 게임이 ?make=1 을 처리해야 한다 — tests/board-listed.test.ts 가 게시판 전체와 대조 */
