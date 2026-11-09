@@ -10,7 +10,7 @@ import os from 'node:os'
 const puppeteer = createRequire(os.homedir() + '/.claude/skills/game-builder/')('puppeteer')
 const url = process.argv[2] || 'http://localhost:4177/'
 const BOARD = 'https://room-board.simssijjang-korea.workers.dev'
-const GAME = { g: 'racket-rush', origin: 'https://racket-rush.vercel.app' }
+const GAME = { g: 'racket-rush', origin: 'https://racket-rush.pages.dev' }
 const code = `CHK${Date.now().toString(36).slice(-5).toUpperCase()}`
 const fails = []
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))

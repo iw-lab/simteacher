@@ -5,9 +5,9 @@ import { readFileSync } from 'node:fs'
 
 import { safeRooms, ROOMS_POLL_MS, roomStatus } from '../src/lib/live-rooms'
 
-const LISTED = (g: string) => (g === 'racket-rush' ? 'https://racket-rush.vercel.app' : undefined)
+const LISTED = (g: string) => (g === 'racket-rush' ? 'https://racket-rush.pages.dev' : undefined)
 const read = (p: string) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8')
-const room = (o: object) => ({ g: 'racket-rush', title: '래킷 러시', code: 'AB12', n: 1, max: 2, since: 0, url: 'https://racket-rush.vercel.app/?room=AB12', ...o })
+const room = (o: object) => ({ g: 'racket-rush', title: '래킷 러시', code: 'AB12', n: 1, max: 2, since: 0, url: 'https://racket-rush.pages.dev/?room=AB12', ...o })
 
 describe('지금 열린 온라인 방', () => {
   it('첫 화면에 한 번 그린다(인기 순위 옆·밑)', () => {
@@ -17,7 +17,7 @@ describe('지금 열린 온라인 방', () => {
   })
   it('등재 주소와 다른 호스트·https 아닌 주소는 버린다', () => {
     const ok = safeRooms({ rooms: [room({}), room({ url: 'https://evil.example/?room=AB12' }), room({ url: 'javascript:alert(1)' }), room({ url: 'http://racket-rush.vercel.app/?room=1' })] }, LISTED)
-    expect(ok.map((r) => r.url)).toEqual(['https://racket-rush.vercel.app/?room=AB12'])
+    expect(ok.map((r) => r.url)).toEqual(['https://racket-rush.pages.dev/?room=AB12'])
     expect(safeRooms(null, LISTED)).toEqual([])
     // 등재 안 된 게임(목록에서 뺀 끝까지 진화 등)의 방은 안 띄운다 — 2026-11-04 썸네일 없는 방 3칸
     expect(safeRooms({ rooms: [room({ g: 'kkeutjinhwa', url: 'https://jinhwa.pages.dev/?room=X1' })] }, LISTED)).toHaveLength(0)

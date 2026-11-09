@@ -276,7 +276,7 @@ export const learningSites: LearningSite[] = [
     target: '한국사능력검정시험 준비생 · 초등 고학년 이상',
     tech: ['Python 문항 생성 파이프라인', '결정론 검수 게이트', 'Vanilla JS PWA', 'Vercel'],
     image: '/images/portfolio/koreahis.webp',
-    url: 'https://koreahis.vercel.app/',
+    url: 'https://koreahis.pages.dev/',
   },
   {
     slug: 'beaton',
@@ -339,7 +339,7 @@ export const learningSites: LearningSite[] = [
     target: '전 연령',
     tech: ['TypeScript', 'Canvas 2D', 'Vite'],
     image: '/images/portfolio/papersky.webp',
-    url: 'https://narae-teal.vercel.app/',
+    url: 'https://narae-4fe.pages.dev/',
   },
   {
     slug: 'vocaworm',
@@ -360,7 +360,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 3~6학년',
     tech: ['Phaser 3', 'TypeScript', 'PWA'],
     image: '/images/portfolio/vocaworm.webp',
-    url: 'https://vocaworm-defense.vercel.app/',
+    url: 'https://vocaworm-defense.pages.dev/',
   },
   {
     slug: 'echotale',
@@ -553,7 +553,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 3~6학년',
     tech: ['Vanilla JS'],
     image: '/images/portfolio/numrush.webp',
-    url: 'https://numrush.vercel.app',
+    url: 'https://numrush-2qi.pages.dev',
   },
   {
     slug: 'spanland',
@@ -574,7 +574,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 3~6학년',
     tech: ['Vanilla JS'],
     image: '/images/portfolio/spanland.webp',
-    url: 'https://spanland.vercel.app',
+    url: 'https://spanland.pages.dev',
   },
   {
     slug: 'yutdash',
@@ -595,7 +595,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 3~6학년',
     tech: ['Vanilla JS'],
     image: '/images/portfolio/yutdash.webp',
-    url: 'https://yutdash.vercel.app',
+    url: 'https://yutdash.pages.dev',
   },
   {
     slug: 'chromafall',
@@ -637,7 +637,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 3~6학년',
     tech: ['Phaser 3', 'TypeScript', 'Vite'],
     image: '/images/portfolio/keywordschool.webp',
-    url: 'https://yeolsoemal-school.vercel.app/',
+    url: 'https://yeolsoemal-school.pages.dev/',
   },
   {
     slug: 'kongkong',
@@ -703,7 +703,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 2~6학년',
     tech: ['Phaser 3', 'Vite', 'Cloudflare Workers'],
     image: '/images/portfolio/oreudap.webp',
-    url: 'https://oreudap.vercel.app',
+    url: 'https://muhan-61w.pages.dev',
   },
   {
     slug: 'hopsquad',
@@ -726,7 +726,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 1~6학년',
     tech: ['Phaser 3', 'JavaScript', 'Vite'],
     image: '/images/portfolio/hopsquad.webp',
-    url: 'https://hop-squad-mu.vercel.app',
+    url: 'https://hop-squad.pages.dev',
   },
   {
     slug: 'ttobagi',
@@ -958,7 +958,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 1~6학년(전연령)',
     tech: ['TypeScript', 'Phaser 3', 'Vite', 'Cloudflare Workers/Durable Objects'],
     image: '/images/portfolio/racket-rush.webp',
-    url: 'https://racket-rush.vercel.app',
+    url: 'https://racket-rush.pages.dev',
   },
   {
     slug: 'seolbong',
