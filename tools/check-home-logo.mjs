@@ -132,8 +132,10 @@ async function checkTapFeedback(page, base) {
   for (let t = 0; t < 12; t++) { await new Promise((r) => setTimeout(r, 250)); settled = await shot(); if (settled === before) break; }
 
   const bad = [];
-  if (during === before) bad.push('처음 상태에서 눌렀는데 화소가 하나도 안 바뀐다(반응 없음)');
-  else if (!(await page.evaluate(() => window.__tap))) bad.push('화소는 바뀌었지만 «선행쌤»에서 시작된 애니메이션이 없다(반응 없음)');
+  // 반응 = 그 요소에서 실제로 시작된 애니메이션(animationstart). 화소 비교는 보조 — 빌드 직후 열기(부하)엔 스크린샷 한 장이 반응(0.46초)보다
+  //   오래 걸려 끝난 뒤만 찍혀 배포가 4번 내리 거짓 빨강이었다(2026-11-10 · --throttle 20 으로 재현). 반응을 뗀 빌드는 animationstart 가 0 이라 그대로 빨강(--selftest-noreact).
+  const tapped = await page.evaluate(() => window.__tap);
+  if (!tapped) bad.push(during === before ? '처음 상태에서 눌렀는데 화소가 하나도 안 바뀐다(반응 없음)' : '화소는 바뀌었지만 «선행쌤»에서 시작된 애니메이션이 없다(반응 없음)');
   if (settled !== before) bad.push('반응이 끝나고도 원래 모습으로 안 돌아온다');
   return bad;
 }
@@ -159,6 +161,9 @@ async function run(base) {
   const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
   await page.setViewport({ width: 1400, height: 900 });
+  // --throttle N = CPU N배 느리게(배포 직후 빌드 열기에서 4번 내리 거짓 빨강 — 2026-11-10 재현용) · --selftest-noreact = 반응을 뗀 빌드 흉내(빨강이어야)
+  { const t = process.argv.indexOf('--throttle'); if (t >= 0) { const c = await page.target().createCDPSession(); await c.send('Emulation.setCPUThrottlingRate', { rate: +process.argv[t + 1] || 20 }); } }
+  if (process.argv.includes('--selftest-noreact')) await page.evaluateOnNewDocument(() => { addEventListener('DOMContentLoaded', () => { const st = document.createElement('style'); st.textContent = '.brand-tap{animation:none!important;transform:none!important;filter:none!important}'; document.head.append(st); }); });
   const bad = [
     ...(await checkHome(page, base)),
     ...(await checkTapFeedback(page, base)),
