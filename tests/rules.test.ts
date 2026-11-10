@@ -36,6 +36,41 @@ async function post(db: ReturnType<RulesTestEnvironment['authenticatedContext']>
 }
 
 describe('댓글 규칙', () => {
+  // 2026-11-10 사용자 «왜 갑자기 선행쌤 답글이 안 달아지지?» — 여러 줄 답글이 «Missing or insufficient permissions».
+  // RE2 의 . 은 줄바꿈을 못 건넌다 → '.*\\S.*' 가 줄바꿈 있는 글을 통째로 거절했다(한 줄 «감사합니다^^» 는 통과).
+  it('🔴 여러 줄 댓글·답글도 쓸 수 있다(줄바꿈)', async () => {
+    const db = env.authenticatedContext('aaa').firestore()
+    await assertSucceeds(post(db, 'aaa', 'm1', { slug: 'hello-world', message: '첫 줄입니다.\n둘째 줄입니다.^^' }))
+    await assertSucceeds(post(db, 'aaa', 'm2', { slug: 'hello-world', message: '\n\n가운데만 글\n', nickname: '선행쌤' }))
+  })
+  it('공백·줄바꿈만 있는 글은 여전히 거부', async () => {
+    const db = env.authenticatedContext('aaa').firestore()
+    await assertFails(post(db, 'aaa', 'm3', { slug: 'hello-world', message: '\n  \n\t' }))
+    // 교차검증(codex): 유니코드 공백(NBSP·전각 공백·폭 없는 공백)만으로도 «빈 글»이다
+    await assertFails(post(db, 'aaa', 'm4', { slug: 'hello-world', message: '\n\u00A0\n\u3000\u200B' }))
+    await assertFails(post(db, 'aaa', 'm5', { slug: 'hello-world', message: '\n\u2002\u000B\u0085\u2029\n' }))
+    await assertSucceeds(post(db, 'aaa', 'm6', { slug: 'hello-world', message: '\u2002가\u3000' }))
+  })
+  it('🔴 이름: 특수 공백만·폭 없는 문자로 «심쌤» 사칭 금지', async () => {
+    const db = env.authenticatedContext('aaa').firestore()
+    await assertFails(post(db, 'aaa', 'n1', { slug: 'hello-world', nickname: '\u00A0\u200B' }))
+    await assertFails(post(db, 'aaa', 'n2', { slug: 'hello-world', nickname: '심\u200B쌤' }))
+    await assertFails(post(db, 'aaa', 'n4', { slug: 'hello-world', nickname: '심\u2066쌤\u2069' }))
+    await assertFails(post(db, 'aaa', 'm7', { slug: 'hello-world', message: '\u2060' }))
+    await assertSucceeds(post(db, 'aaa', 'n3', { slug: 'hello-world', nickname: '바다 선생님' }))
+    await assertFails(post(db, 'aaa', 'n5', { slug: 'hello-world', nickname: '\u1109\u1175\u11B7\u110A\u1162\u11B7' }))   // 조합형 자모 «심쌤»
+    await assertFails(post(db, 'aaa', 'n6', { slug: 'hello-world', nickname: '심\u180E쌤' }))
+    await assertSucceeds(post(db, 'aaa', 'n7', { slug: 'hello-world', nickname: 'ㅋㅋ Kim_3' }))
+  })
+  it('글: 보이는 글자가 있어야 — 결합 문자·변형 선택자만은 거부 · 이모지·^^ 만은 허용', async () => {
+    const db = env.authenticatedContext('aaa').firestore()
+    await assertFails(post(db, 'aaa', 'v1', { slug: 'hello-world', message: '\u034F' }))
+    await assertFails(post(db, 'aaa', 'v2', { slug: 'hello-world', message: '\uFE0F\n\u200D' }))
+    await assertSucceeds(post(db, 'aaa', 'v3', { slug: 'hello-world', message: '👍' }))
+    await assertSucceeds(post(db, 'aaa', 'v4', { slug: 'hello-world', message: '^^' }))
+    await assertSucceeds(post(db, 'aaa', 'v5', { slug: 'hello-world', message: '감사합니다.\n다음에도 부탁드려요 :)' }))
+  })
+
   it('보통 사람은 최상위 댓글을 쓸 수 있다', async () => {
     const db = env.authenticatedContext('aaa').firestore()
     await assertSucceeds(post(db, 'aaa', 'c1', { slug: 'hello-world' }))
