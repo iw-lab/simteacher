@@ -1873,6 +1873,28 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/badaend.webp',
     url: 'https://badaend.pages.dev/',
   },
+  {
+    slug: 'snowballarena',
+    added: '2026-11-10T15:30',
+    name: '눈싸움 대작전 Snowball Arena',
+    subject: '교과 대항전',
+    category: '국어·통합',
+    tags: ['여러 과목', '액션', '3D'],
+    tagline: '눈사람이 되어 휘는 눈덩이로 상대 눈사람을 무너뜨린다',
+    description:
+      '첫눈 온 날, 눈사람이 되어 팀을 나눠 눈싸움을 하는 3D 대항전입니다. 눈덩이는 포물선으로 휘어 날아가 멀리 던질수록 위로 겨눠야 하고, 눈이 떨어지면 눈밭에 서서 퍼 담아야 합니다(얼음 위에선 못 퍼요). 판에 들어가려면 문제를 풀어 코인을 모읍니다.',
+    features: [
+      '던지기 3종 — 주먹 눈덩이 · 한 줌 뿌리기 · 꽁꽁 얼음덩이',
+      '겨울 맵 3장 — 눈 덮인 운동장 · 미끄러운 얼음 호수 · 눈 마을 골목',
+      '놀이 4가지 — 눈덩이 대결 · 색깔 눈밭 · 왕관 눈사람 · 마지막 눈사람',
+      '혼자(AI와) 또는 방 코드로 함께 · 팀전·개인전 · 눈송이 요정 솜이가 자라는 이야기',
+      '이름 직접 입력 · 계정 없음 · 채팅 없음 · 학교 순위는 학교별 합계만',
+    ],
+    target: '초등 3~6학년',
+    tech: ['Three.js', 'Cloudflare Workers', 'Durable Objects'],
+    image: '/images/portfolio/snowballarena.webp',
+    url: 'https://snowball-arena.simssijjang-korea.workers.dev/',
+  },
 ];
 
 // 🔴 썸네일 주소 = 파일 + 내용 해시(tools/img-versions.mjs). 이미지가 1년 immutable 캐시라
