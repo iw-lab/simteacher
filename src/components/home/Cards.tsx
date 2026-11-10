@@ -80,7 +80,7 @@ export function SiteCard({ site, i, views }: { site: LearningSite; i: number; vi
         {linked && reach === 'blocked' ? (
           <p data-blocked className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-red-600 dark:text-red-400">
             <Ban className="w-3.5 h-3.5" aria-hidden />
-            지금 이 와이파이에서 막혀 있어요
+            이 와이파이에서는 막혀 있어요 · 집에서 해 보세요
           </p>
         ) : null}
         {linked ? (
