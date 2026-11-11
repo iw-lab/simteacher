@@ -58,6 +58,13 @@
       ],
       "predeploy": [
         "node tools/check-two-doors.mjs --dir out --expect https://sunhaengssam.web.app"
+      ],
+      "redirects": [
+        {
+          "source": "/images/:path*",
+          "destination": "https://ssam-img.pages.dev/images/:path*",
+          "type": 301
+        }
       ]
     },
     {

@@ -14,6 +14,9 @@ NEXT_PUBLIC_SITE_URL="$MIRROR" npm run build
 # robots·두 문 검사는 빌드(postbuild)가 이미 했다 — 여기서 한 번 더 확인만 한다
 grep -q "^Sitemap: $MIRROR/sitemap.xml" out/robots.txt || { echo "✖ robots 사이트맵이 두 문 주소가 아니다"; exit 1; }
 
+echo "▶ 그림 문(ssam-img.pages.dev) 먼저 — web.app 의 /images/** 가 여기로 넘어간다(Hosting 전송비 0 · tests/hosting-cost.test.ts)"
+bash tools/deploy-img-door.sh
+
 echo "▶ 올린다"
 npx -y firebase-tools@latest deploy --only hosting:main
 node tools/check-two-doors.mjs --url "$MIRROR"
