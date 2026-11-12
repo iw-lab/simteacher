@@ -13,9 +13,10 @@ cat > "$D/_headers" <<'H'
   Access-Control-Allow-Origin: *
 H
 printf '<!doctype html><meta charset="utf-8"><title>선행쌤 그림</title><a href="https://sunhaengssam.web.app">선행쌤</a>\n' > "$D/index.html"
+printf 'not found\n' > "$D/404.html"   # 없으면 Pages 가 없는 그림에도 첫 페이지를 200 으로 준다(깨진 그림·검사 속음 · 2026-11-12 알찬에서 발견)
 bash tools/cf-korea.sh pages project list 2>/dev/null | grep -q 'ssam-img' || bash tools/cf-korea.sh pages project create ssam-img --production-branch main
 bash tools/cf-korea.sh pages deploy "$D" --project-name ssam-img --branch main --commit-dirty=true 2>&1 | grep -E "Deployment complete|rror" || true
-# 확인: 아무 썸네일 하나가 새 문에서 200
-f=$(cd out && ls images/portfolio/*.thumb.webp | head -1)
-for i in $(seq 1 20); do c=$(curl -s -o /dev/null -w '%{http_code}' "https://ssam-img.pages.dev/$f"); [ "$c" = 200 ] && { echo "✅ 그림 문 200 ($f)"; exit 0; }; sleep 3; done
-echo "❌ 그림 문이 $f 를 못 준다($c)"; exit 1
+# 확인: 그림 전부가 새 문에서 200·같은 크기(200 만 보면 없는 파일에도 속는다)
+check() { local bad=0 f n; while read -r f; do n=$(curl -s -o /dev/null -w '%{http_code} %{size_download}' "https://ssam-img.pages.dev/$f"); [ "$n" = "200 $(stat -f %z "out/$f")" ] || bad=$((bad+1)); done < <(cd out && find images -type f | sort); echo $bad; }
+for i in $(seq 1 20); do b=$(check); [ "$b" = 0 ] && { echo "✅ 그림 문 전부 일치"; exit 0; }; sleep 6; done
+echo "❌ 그림 문에 없거나 다른 그림 $b 장"; exit 1
