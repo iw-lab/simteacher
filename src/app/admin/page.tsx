@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import { LogIn, LogOut, ShieldCheck } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { OWNER_UID, isOwnerSignedIn, onAuthChange, signInOwner, signOutOwner } from '@/lib/firebase'
+import { OWNER_UID, currentAccount, isOwnerSignedIn, onAuthChange, signInOwner, signInOwnerGoogle, signOutOwner } from '@/lib/firebase'
 
 export default function AdminPage() {
   const [email, setEmail] = useState('')
@@ -22,12 +22,26 @@ export default function AdminPage() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [signedIn, setSignedIn] = useState(false)
+  const [acct, setAcct] = useState<{ uid: string; email: string | null } | null>(null)
 
   useEffect(() => {
-    const off = onAuthChange(() => setSignedIn(isOwnerSignedIn()))
-    setSignedIn(isOwnerSignedIn())
+    const sync = () => { setSignedIn(isOwnerSignedIn()); setAcct(currentAccount()) }
+    const off = onAuthChange(sync)
+    sync()
     return off
   }, [])
+
+  async function handleGoogle() {
+    setBusy(true)
+    setError(null)
+    try {
+      await signInOwnerGoogle()
+    } catch {
+      setError('Google 로그인을 마치지 못했어요. 팝업이 막혔는지 확인해주세요.')
+    } finally {
+      setBusy(false)
+    }
+  }
 
   const notConfigured = OWNER_UID === 'OWNER_UID_NOT_SET'
 
@@ -80,6 +94,20 @@ export default function AdminPage() {
           </Button>
         </div>
       ) : (
+        <div className="space-y-6">
+          <Button onClick={handleGoogle} disabled={busy} className="w-full">
+            <LogIn className="mr-1 h-4 w-4" aria-hidden />
+            {busy ? '확인 중…' : 'Google 계정으로 로그인'}
+          </Button>
+          {acct && (
+            <p data-acct className="rounded-lg border border-line p-3 text-sm break-all">
+              로그인한 계정: {acct.email ?? '(이메일 없음)'}
+              <br />
+              UID: <code>{acct.uid}</code>
+              <br />
+              {notConfigured ? '아직 주인으로 정해지지 않았어요 — 이 UID 를 주인으로 넣으면 배지가 붙습니다.' : '이 계정은 주인이 아니에요.'}
+            </p>
+          )}
         <form onSubmit={handleSignIn} className="space-y-3">
           <Input
             type="email"
@@ -103,6 +131,7 @@ export default function AdminPage() {
             {busy ? '확인 중…' : '로그인'}
           </Button>
         </form>
+        </div>
       )}
     </div>
   )

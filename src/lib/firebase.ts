@@ -89,6 +89,20 @@ export async function signInOwner(email: string, password: string): Promise<void
   uidPromise = null // 익명 uid 캐시를 버린다
 }
 
+/** 주인 Google 로그인(2026-11-13 — 이메일/비밀번호 제공업체는 꺼져 있고 Google 이 켜져 있다). 누구나 로그인은 되지만 배지 권한은 규칙의 ownerUid() 만. */
+export async function signInOwnerGoogle(): Promise<void> {
+  const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
+  getDb()
+  await signInWithPopup(getAuthClient(), new GoogleAuthProvider())
+  uidPromise = null
+}
+
+/** 지금 로그인한 계정(주인 설정 전 uid 확인용) */
+export function currentAccount(): { uid: string; email: string | null } | null {
+  const u = getAuthClient().currentUser
+  return u && !u.isAnonymous ? { uid: u.uid, email: u.email } : null
+}
+
 export async function signOutOwner(): Promise<void> {
   const { signOut } = await import('firebase/auth')
   await signOut(getAuthClient())
