@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import { LogIn, LogOut, ShieldCheck } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { OWNER_UID, currentAccount, isOwnerSignedIn, onAuthChange, signInOwner, signInOwnerGoogle, signOutOwner } from '@/lib/firebase'
+import { OWNER_UID, currentAccount, isOwnerSignedIn, onAuthChange, signInOwner, signInOwnerGoogle, finishOwnerRedirect, signOutOwner } from '@/lib/firebase'
 
 export default function AdminPage() {
   const [email, setEmail] = useState('')
@@ -28,6 +28,7 @@ export default function AdminPage() {
     const sync = () => { setSignedIn(isOwnerSignedIn()); setAcct(currentAccount()) }
     const off = onAuthChange(sync)
     sync()
+    finishOwnerRedirect().then((code) => { if (code) setError(`Google 로그인 실패: ${code}`); sync() })
     return off
   }, [])
 
@@ -37,7 +38,7 @@ export default function AdminPage() {
     try {
       await signInOwnerGoogle()
     } catch {
-      setError('Google 로그인을 마치지 못했어요. 팝업이 막혔는지 확인해주세요.')
+      setError('Google 로그인 화면으로 가지 못했어요.')
     } finally {
       setBusy(false)
     }

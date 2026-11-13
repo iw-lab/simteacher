@@ -91,10 +91,23 @@ export async function signInOwner(email: string, password: string): Promise<void
 
 /** 주인 Google 로그인(2026-11-13 — 이메일/비밀번호 제공업체는 꺼져 있고 Google 이 켜져 있다). 누구나 로그인은 되지만 배지 권한은 규칙의 ownerUid() 만. */
 export async function signInOwnerGoogle(): Promise<void> {
-  const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth')
+  // 팝업은 창 사이 연결이 끊겨 «확인 중»에서 멈췄다(2026-11-13 실측 — 계정을 골라도 결과가 안 돌아옴) → 같은 탭 이동(redirect)
+  const { GoogleAuthProvider, signInWithRedirect } = await import('firebase/auth')
   getDb()
-  await signInWithPopup(getAuthClient(), new GoogleAuthProvider())
-  uidPromise = null
+  await signInWithRedirect(getAuthClient(), new GoogleAuthProvider())
+}
+
+/** redirect 로 돌아온 뒤 결과를 받는다 — 실패하면 오류 코드를 돌려준다(화면에 보여 원인을 바로 안다) */
+export async function finishOwnerRedirect(): Promise<string | null> {
+  const { getRedirectResult } = await import('firebase/auth')
+  getDb()
+  try {
+    const r = await getRedirectResult(getAuthClient())
+    if (r) uidPromise = null
+    return null
+  } catch (e) {
+    return (e as { code?: string })?.code ?? String(e)
+  }
 }
 
 /** 지금 로그인한 계정(주인 설정 전 uid 확인용) */
