@@ -5,7 +5,7 @@ service cloud.firestore {
     //    Firestore 규칙에는 전역 상수가 없다(교차검증 지적). 함수로 감싼다.
     //    이 값은 비밀이 아니다 — uid 는 식별자일 뿐이고, 계정의 힘은 비밀번호에서 온다.
     //    ⚠️ 아래가 자리표시자인 동안에는 «아무도» 배지를 달 수 없다(안전한 기본값).
-    function ownerUid() { return 'OWNER_UID_NOT_SET'; }
+    function ownerUid() { return 'HESfBwIQeeNXClAV1glwXEtJc433'; }
     function isOwner() { return request.auth != null && request.auth.uid == ownerUid(); }
     // Contacts — 비공개 문의함: 누구나 생성 가능(필드·크기 검증), 열람은 관리자(Firebase 콘솔)만
     // name/email/school 은 선택(빈 문자열 허용), title/message 만 필수. 읽기는 항상 차단.
@@ -93,7 +93,7 @@ service cloud.firestore {
         && (!('owner' in request.resource.data)
             || (request.resource.data.owner == true && isOwner()))
         // 주인이 아니면 「심쌤」을 사칭하는 이름을 쓸 수 없다(배지 옆에 같은 글자가 놓이면 구별이 안 된다)
-        && (('owner' in request.resource.data) || !request.resource.data.nickname.matches('.*심쌤.*'))
+        && (('owner' in request.resource.data) || !request.resource.data.nickname.matches('.*(심쌤|선행쌤).*'))   // 선행쌤도(2026-11-13 주인 로그인 생김)
         // 예약 slug: 방명록 칸에는 반드시 부모가 있다
         && (request.resource.data.slug != 'guestbook' || 'parentId' in request.resource.data)
         // 부모 검사 — 없으면 최상위 댓글, 있으면 «진짜 있는 최상위» 여야 한다

@@ -15,7 +15,7 @@ import {
 import { readFileSync } from 'node:fs'
 import { doc, setDoc, deleteDoc, serverTimestamp, writeBatch } from 'firebase/firestore'
 
-const OWNER = 'OWNER_UID_NOT_SET'   // 규칙의 ownerUid() 와 같은 값
+const OWNER = 'HESfBwIQeeNXClAV1glwXEtJc433'   // 규칙의 ownerUid() 와 같은 값
 let env: RulesTestEnvironment
 
 beforeAll(async () => {
@@ -41,7 +41,7 @@ describe('댓글 규칙', () => {
   it('🔴 여러 줄 댓글·답글도 쓸 수 있다(줄바꿈)', async () => {
     const db = env.authenticatedContext('aaa').firestore()
     await assertSucceeds(post(db, 'aaa', 'm1', { slug: 'hello-world', message: '첫 줄입니다.\n둘째 줄입니다.^^' }))
-    await assertSucceeds(post(db, 'aaa', 'm2', { slug: 'hello-world', message: '\n\n가운데만 글\n', nickname: '선행쌤' }))
+    await assertSucceeds(post(db, 'aaa', 'm2', { slug: 'hello-world', message: '\n\n가운데만 글\n', nickname: '담임쌤' }))
   })
   it('공백·줄바꿈만 있는 글은 여전히 거부', async () => {
     const db = env.authenticatedContext('aaa').firestore()
@@ -94,6 +94,7 @@ describe('댓글 규칙', () => {
   it('🔴 주인이 아니면 「심쌤」을 사칭하는 이름을 못 쓴다', async () => {
     const db = env.authenticatedContext('aaa').firestore()
     await assertFails(post(db, 'aaa', 'c5', { slug: 'hello-world', nickname: '심쌤' }))
+    await assertFails(post(db, 'aaa', 'c5b', { slug: 'hello-world', nickname: '선행쌤' }))
     await assertFails(post(db, 'aaa', 'c6', { slug: 'hello-world', nickname: '진짜 심쌤임' }))
   })
 
