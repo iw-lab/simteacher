@@ -1752,7 +1752,7 @@ export const learningSites: LearningSite[] = [
     target: '초등 1~6학년',
     tech: ['JavaScript', 'Vite', 'Canvas', 'd3-geo', 'Supertonic TTS', 'Cloudflare Pages · Workers · Durable Objects'],
     image: '/images/portfolio/semwangguk.webp',
-    url: 'https://sem-math.pages.dev/',
+    url: 'https://sem-kingdom.pages.dev/',
   },
   {
     slug: 'dajeong-postman',
