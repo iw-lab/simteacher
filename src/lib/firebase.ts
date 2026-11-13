@@ -2,9 +2,19 @@ import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { getAuth, signInAnonymously, type Auth } from 'firebase/auth';
 
+/** 주인 Google 로그인이 되는 주소(Firebase Hosting · 승인 도메인 등록됨) */
+export const OWNER_LOGIN_HOSTS = ['sunhaengssam.web.app']
+export const OWNER_LOGIN_URL = 'https://sunhaengssam.web.app/admin/'
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  // Google 로그인은 «앱 주소 = authDomain» 이어야 돈다(크롬 저장소 분할 — 2026-11-13 실측: firebaseapp.com 이면 팝업 멈춤·redirect null).
+  //   web.app(같은 Firebase 프로젝트의 Hosting)은 /__/auth/handler 를 스스로 내보낸다 → 그 주소면 자기 주소를 쓴다.
+  //   승인 도메인·OAuth redirect URI 에 https://sunhaengssam.web.app/__/auth/handler 등록(11-13).
+  authDomain:
+    typeof window !== 'undefined' && OWNER_LOGIN_HOSTS.includes(window.location.hostname)
+      ? window.location.hostname
+      : process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,

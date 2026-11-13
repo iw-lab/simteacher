@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 import { LogIn, LogOut, ShieldCheck } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { OWNER_UID, currentAccount, isOwnerSignedIn, onAuthChange, signInOwner, signInOwnerGoogle, finishOwnerRedirect, signOutOwner } from '@/lib/firebase'
+import { OWNER_UID, currentAccount, isOwnerSignedIn, onAuthChange, signInOwner, signInOwnerGoogle, finishOwnerRedirect, signOutOwner, OWNER_LOGIN_HOSTS, OWNER_LOGIN_URL } from '@/lib/firebase'
 
 export default function AdminPage() {
   const [email, setEmail] = useState('')
@@ -23,6 +23,8 @@ export default function AdminPage() {
   const [error, setError] = useState<string | null>(null)
   const [signedIn, setSignedIn] = useState(false)
   const [acct, setAcct] = useState<{ uid: string; email: string | null } | null>(null)
+  const [elsewhere, setElsewhere] = useState(false)
+  useEffect(() => setElsewhere(!OWNER_LOGIN_HOSTS.includes(window.location.hostname)), [])
 
   useEffect(() => {
     const sync = () => { setSignedIn(isOwnerSignedIn()); setAcct(currentAccount()) }
@@ -96,6 +98,12 @@ export default function AdminPage() {
         </div>
       ) : (
         <div className="space-y-6">
+          {elsewhere && (
+            <p data-login-elsewhere className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+              이 주소에서는 Google 로그인이 안 돼요. <a className="font-semibold underline" href={OWNER_LOGIN_URL}>{OWNER_LOGIN_URL}</a> 에서
+              로그인하고, 답글도 그 주소의 «문의»에서 달아주세요.
+            </p>
+          )}
           <Button onClick={handleGoogle} disabled={busy} className="w-full">
             <LogIn className="mr-1 h-4 w-4" aria-hidden />
             {busy ? '확인 중…' : 'Google 계정으로 로그인'}
