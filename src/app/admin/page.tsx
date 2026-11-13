@@ -30,7 +30,16 @@ export default function AdminPage() {
     const sync = () => { setSignedIn(isOwnerSignedIn()); setAcct(currentAccount()) }
     const off = onAuthChange(sync)
     sync()
-    finishOwnerRedirect().then((code) => { if (code) setError(`Google 로그인 실패: ${code}`); sync() })
+    finishOwnerRedirect().then((code) => {
+      if (code) setError(`Google 로그인 실패: ${code}`)
+      sync()
+      // ?go=1 = 열자마자 Google 계정 고르기로(주인이 링크 한 번으로 로그인 — 2026-11-13 «어디서 로그인해?»)
+      const q = new URLSearchParams(window.location.search)
+      if (!code && q.get('go') === '1' && !isOwnerSignedIn() && OWNER_LOGIN_HOSTS.includes(window.location.hostname)) {
+        window.history.replaceState(null, '', window.location.pathname)
+        signInOwnerGoogle().catch(() => setError('Google 로그인 화면으로 가지 못했어요.'))
+      }
+    })
     return off
   }, [])
 
@@ -86,6 +95,9 @@ export default function AdminPage() {
           <p className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm">
             심쌤으로 로그인되어 있어요. 이제 남기는 답글에 배지가 붙습니다.
           </p>
+          <a href="/contact/" className="block rounded-lg bg-primary-500 px-4 py-3 text-center font-semibold text-white">
+            문의 게시판으로 가서 답글 달기
+          </a>
           <Button
             onClick={async () => {
               await signOutOwner()
