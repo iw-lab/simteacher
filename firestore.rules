@@ -27,8 +27,14 @@ service cloud.firestore {
     match /guestbook/{entryId} {
       allow read: if true;
       allow create: if request.auth != null
-        && request.resource.data.keys().hasOnly(['nickname', 'message', 'color', 'uid', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['nickname', 'message', 'color', 'uid', 'createdAt', 'category', 'title'])
         && request.resource.data.uid == request.auth.uid
+        // 말머리·제목(2026-11-13 게시판 목록) — 둘 다 없어도 된다(옛 화면). 있으면 정해진 말머리 · 제목 1~60자
+        && (!('category' in request.resource.data) || request.resource.data.category in ['ask', 'request', 'bug', 'hello', 'etc'])
+        && (!('title' in request.resource.data)
+            || (request.resource.data.title is string
+                && request.resource.data.title.size() >= 1 && request.resource.data.title.size() <= 60
+                && request.resource.data.title.matches('(?s).*[^\\s].*')))   // 공백뿐인 제목 금지(교차검증 gemini)
         && request.resource.data.nickname is string
         && request.resource.data.nickname.size() >= 1 && request.resource.data.nickname.size() <= 20
         && request.resource.data.message is string

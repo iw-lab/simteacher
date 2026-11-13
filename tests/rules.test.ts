@@ -147,6 +147,27 @@ describe('답글 규칙', () => {
   })
 })
 
+describe('방명록 말머리·제목 규칙(2026-11-13 게시판 목록)', () => {
+  const note = (uid: string, extra: Record<string, unknown> = {}) =>
+    ({ nickname: '익명의 선생님', message: '안녕하세요', color: 'yellow', uid, createdAt: serverTimestamp(), ...extra })
+  it('말머리·제목 없이(옛 화면)도 · 있어도 쓸 수 있다', async () => {
+    const db = env.authenticatedContext('aaa').firestore()
+    await assertSucceeds(setDoc(doc(db, 'guestbook', 'n1'), note('aaa')))
+    await assertSucceeds(setDoc(doc(db, 'guestbook', 'n2'), note('aaa', { category: 'bug', title: 'A키가 안 눌려요' })))
+    await assertSucceeds(setDoc(doc(db, 'guestbook', 'n3'), note('aaa', { category: 'hello' })))
+  })
+  it('🔴 정해진 말머리만 · 제목은 1~60자 글자만 · 다른 칸은 못 싣는다', async () => {
+    const db = env.authenticatedContext('aaa').firestore()
+    await assertFails(setDoc(doc(db, 'guestbook', 'b1'), note('aaa', { category: 'notice' })))
+    await assertFails(setDoc(doc(db, 'guestbook', 'b2'), note('aaa', { category: 'ask', title: '' })))
+    await assertFails(setDoc(doc(db, 'guestbook', 'b3'), note('aaa', { category: 'ask', title: 'ㄱ'.repeat(61) })))
+    await assertFails(setDoc(doc(db, 'guestbook', 'b4'), note('aaa', { category: 'ask', title: 7 })))
+    await assertFails(setDoc(doc(db, 'guestbook', 'b7'), note('aaa', { category: 'ask', title: '   ' })))
+    await assertFails(setDoc(doc(db, 'guestbook', 'b5'), note('aaa', { category: 'ask', answered: true })))
+    await assertFails(setDoc(doc(db, 'guestbook', 'b6'), note('bbb', { category: 'ask' })))
+  })
+})
+
 describe('삭제 규칙', () => {
   it('본인 글만 지운다', async () => {
     const a = env.authenticatedContext('aaa').firestore()

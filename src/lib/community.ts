@@ -33,6 +33,10 @@ export interface GuestbookEntry {
   color: string
   uid: string
   createdAt: number | null
+  /** 말머리 — 옛 글(분류 없음)은 'hello'(후기·인사)로 읽는다 */
+  category: NoteCategory
+  /** 제목 — 비어 있으면 화면이 본문 첫 줄을 쓴다 */
+  title: string
 }
 
 export const NICKNAME_MAX = 20
@@ -40,6 +44,35 @@ export const MESSAGE_MAX = 500
 /** 포스트잇 색. 규칙에서도 이 목록만 허용한다. */
 export const NOTE_COLORS = ['yellow', 'mint', 'sky', 'pink', 'lilac'] as const
 export type NoteColor = (typeof NOTE_COLORS)[number]
+/** 말머리(2026-11-13 «게시판처럼 · 어떤 글이 있는지 분류»). 규칙에서도 이 목록만 허용한다. */
+export const NOTE_CATEGORIES = ['ask', 'request', 'bug', 'hello', 'etc'] as const
+export type NoteCategory = (typeof NOTE_CATEGORIES)[number]
+export const CATEGORY_LABEL: Record<NoteCategory, string> = {
+  ask: '질문',
+  request: '요청',
+  bug: '오류',
+  hello: '후기·인사',
+  etc: '기타',
+}
+export const TITLE_MAX = 60
+/** 말머리가 생기기 전 글(2026-11-13 이전 8개) — 내용을 읽고 나눈 값. 새 글은 쓸 때 고른다. */
+const LEGACY_CATEGORY: Record<string, NoteCategory> = {
+  gkOM1TBksLNrdDWcu6R8: 'request',
+  bsfMUftl0s67emkBm3AY: 'bug',
+  rko5ecrJhlOjTavjEu0f: 'bug',
+  EWkYWouQzae17B6Ly4vQ: 'bug',
+  QO0J0qv48yacTcuJf6nv: 'hello',
+  CsTECwSwRGsNpp5V05jh: 'ask',
+  '4nrZeLy9iYS8XsOswm7H': 'ask',
+  vuOBoE0kmA8mNbnZ4toz: 'request',
+}
+export const toCategory = (v: unknown): NoteCategory =>
+  (NOTE_CATEGORIES as readonly string[]).includes(v as string) ? (v as NoteCategory) : 'hello'
+/** 목록 한 줄 제목 — 제목이 없으면 본문 첫 줄 */
+export function noteTitle(e: Pick<GuestbookEntry, 'title' | 'message'>): string {
+  const t = e.title.trim() || e.message.trim().split('\n')[0].trim()
+  return t.length > TITLE_MAX ? t.slice(0, TITLE_MAX - 1) + '…' : t
+}
 
 const COOLDOWN_MS = 30_000
 const COOLDOWN_KEY = 'simteacher:guestbook:lastPost'
@@ -83,6 +116,8 @@ export function subscribeGuestbook(
             color: String(v.color ?? 'yellow'),
             uid: String(v.uid ?? ''),
             createdAt: ts instanceof Timestamp ? ts.toMillis() : null,
+            category: toCategory(v.category ?? LEGACY_CATEGORY[d.id]),
+            title: typeof v.title === 'string' ? v.title : '',
           }
         })
       )
@@ -95,8 +130,12 @@ export async function postGuestbook(input: {
   nickname: string
   message: string
   color: NoteColor
+  category: NoteCategory
+  title?: string
 }): Promise<string> {
   const nickname = input.nickname.trim().slice(0, NICKNAME_MAX)
+  const title = (input.title ?? '').trim().slice(0, TITLE_MAX)
+  if (!(NOTE_CATEGORIES as readonly string[]).includes(input.category)) throw new Error('말머리를 골라주세요.')
   const message = input.message.trim().slice(0, MESSAGE_MAX)
   if (!message) throw new Error('내용을 적어주세요.')
   if (cooldownLeftMs() > 0) throw new Error('조금 전에 남기셨어요. 30초 뒤에 다시 시도해주세요.')
@@ -106,6 +145,8 @@ export async function postGuestbook(input: {
     nickname: nickname || '익명의 선생님',
     message,
     color: input.color,
+    category: input.category,
+    ...(title ? { title } : {}),
     uid,
     createdAt: serverTimestamp(),
   })
@@ -426,6 +467,32 @@ export function subscribeReplies(
  * 쪽지에 답글이 하나라도 있는가 — 있으면 처음부터 펼쳐 둔다(2026-10-23 «문의에 내가 댓글을 달면 기본 펼치기»).
  * 쪽지마다 1건만 읽는다(limit 1). 답글 전체를 slug 한 칸으로 읽지 않는 이유는 subscribeReplies 위 주석과 같다.
  */
+const ANSWER_NAME_UNTIL = Date.parse('2026-11-14T00:00:00+09:00')
+/** 목록 한 줄에 붙일 답글 수·심쌤 답변 여부 — 화면에 보이는 줄만 읽는다(쪽지마다 답글 수만큼, 상한 50). */
+export async function fetchReplyMeta(parentId: string): Promise<{ count: number; answered: boolean }> {
+  const snap = await getDocs(
+    query(
+      collection(getDb(), 'comments'),
+      where('slug', '==', GUESTBOOK_SLUG),
+      where('parentId', '==', parentId),
+      orderBy('createdAt', 'asc'),
+      limit(50)
+    )
+  )
+  // 답변 = 주인 배지 답글(규칙이 지킨다) · 또는 «선행쌤» 이름 답글 중 ANSWER_NAME_UNTIL 이전 것.
+  //   주인 계정이 아직 없어 그때까지 사이트 주인이 이 이름으로 답했다(2026-11-13 실측 8개 글의 답글 전부).
+  //   🔴 이름은 아무나 쓸 수 있다 — 그 뒤에 달린 «선행쌤» 답글은 배지를 못 켠다(교차검증 4계열 «배지 위조»). createdAt 은 규칙이 서버 시각으로 강제.
+  return {
+    count: snap.size,
+    answered: snap.docs.some((d) => {
+      const v = d.data()
+      if (v.owner === true) return true
+      const at = v.createdAt instanceof Timestamp ? v.createdAt.toMillis() : Infinity
+      return String(v.nickname ?? '').trim() === '선행쌤' && at < ANSWER_NAME_UNTIL
+    }),
+  }
+}
+
 export async function hasReplies(slug: string, parentId: string): Promise<boolean> {
   const snap = await getDocs(
     query(
