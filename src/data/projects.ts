@@ -1624,7 +1624,7 @@ export const learningSites: LearningSite[] = [
   {
     slug: 'neokja',
     added: '2026-11-10T20:30',
-    name: '정령아, 내 친구가 되어 줘!',
+    name: '글빛 정령단',
     subject: '국어',
     category: '국어·통합',
     tags: ['국어', '한자', '키우기·경영', '학교 대항'],
