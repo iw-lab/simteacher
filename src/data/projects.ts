@@ -1996,6 +1996,29 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/snowballarena.webp',
     url: 'https://snowball-arena.simssijjang-korea.workers.dev/',
   },
+  {
+    slug: 'bbang-parking',
+    added: '2026-11-14T17:30',
+    name: '빵빵 주차탈출',
+    subject: '퍼즐',
+    category: '미술·놀이',
+    tags: ['퍼즐', '3D', '학교 대항'],
+    tagline: '꽉 막힌 주차장에서 노란 버스 빵빵이를 빼내라 — 차를 밀어 길을 여는 끝없는 3D 퍼즐',
+    description:
+      '차들이 꽉 들어찬 주차장에서 노란 버스 «빵빵이»를 출구까지 빼내는 밀기 퍼즐입니다. 차는 놓인 방향으로만 앞뒤로 움직이고, 어느 차를 먼저 밀지 거꾸로 생각해야 길이 열립니다. 판에 놓인 차는 모두 풀이에 꼭 필요한 차라 구경만 하는 차가 없고, 모든 판은 반드시 풀리며 화면의 «최소 수»가 실제 가장 짧은 풀이입니다. 동네마다 20판과 보스 판이 있고, 동네가 올라가면 주차장이 6칸에서 7칸, 8칸으로 넓어지며 차와 바위가 늘어납니다. 막히면 힌트가 차 → 방향 → 대신 두기 순서로 도와줍니다.',
+    features: [
+      '끝없는 단계 — 동네마다 20판 + 꽉막이 보스 · 주차장이 6칸 → 7칸 → 8칸으로 커진다',
+      '모든 차가 움직여야 풀린다 — 구경만 하는 차 0 · 모든 판이 풀리고 최소 수가 참',
+      '놀이 4가지 — 동네 길 · 60초 빵빵 · 한 번에 쭉(층마다 덤 고르기) · 오늘의 주차장(전국이 같은 판 3개)',
+      '끌어서 밀기 · 톡 고르고 톡 · 키보드 — 되돌리기 · 처음부터 · 3단계 힌트 · 위에서 보기',
+      '별 3개 도전(최소 수) · 끌끌이 키우기 · 오늘 할 일 · 도장판 · 학교 순위',
+      '계정·개인정보 없음 — 학교는 목록에서 고르기만, 순위에는 학교별 합계만 보인다',
+    ],
+    target: '초등 1~6학년',
+    tech: ['JavaScript', 'Vite', 'Three.js', 'Cloudflare Pages · Workers'],
+    image: '/images/portfolio/bbang-parking.webp',
+    url: 'https://bbang-parking.pages.dev/',
+  },
 ];
 
 // 🔴 썸네일 주소 = 파일 + 내용 해시(tools/img-versions.mjs). 이미지가 1년 immutable 캐시라
