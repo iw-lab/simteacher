@@ -23,7 +23,7 @@ import {
   type NoteCategory,
   type NoteColor,
 } from '@/lib/community'
-import { isOwnerSignedIn, onAuthChange } from '@/lib/firebase'
+import { isOwnerSignedIn, onAuthChange, OWNER_LOGIN_URL } from '@/lib/firebase'
 
 // 포스트잇 색 — 라이트/다크 모두에서 글자가 읽히는 조합만 골랐다.
 const COLOR_CLASS: Record<string, string> = {
@@ -236,6 +236,14 @@ export function Guestbook() {
           <span className="ml-auto text-xs text-muted-fg">
             로그인 없이, 익명으로
           </span>
+          {/* 주인이 답글 달러 올 때 /admin 을 외우지 않아도 되게 — 로그인하면 «관리자 화면» 링크로 바뀐다 */}
+          <a
+            href={OWNER_LOGIN_URL}
+            data-owner-login
+            className="text-xs text-muted-fg underline-offset-2 hover:text-fg hover:underline"
+          >
+            {ownerMode ? '관리자 화면' : '관리자 로그인'}
+          </a>
         </div>
 
         {ownerMode ? (
