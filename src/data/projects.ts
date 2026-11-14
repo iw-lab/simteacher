@@ -2019,6 +2019,30 @@ export const learningSites: LearningSite[] = [
     image: '/images/portfolio/bbang-parking.webp',
     url: 'https://bbang-parking.pages.dev/',
   },
+  {
+    slug: 'bansang-baduk',
+    added: '2026-11-14T22:30',
+    name: '반상의 별 바둑',
+    subject: '바둑',
+    category: '미술·놀이',
+    tags: ['보드·놀이', '3D', '학교 대항'],
+    tagline: '진짜 바둑판 앞에 앉은 듯한 3D 바둑 — 내 급수에 맞는 AI와 두고, 방 코드 하나로 친구와 둔다',
+    description:
+      '한옥 방의 3D 바둑판에서 두는 바둑 게임입니다. 바둑을 처음 보는 아이도 첫 판은 별 정령 «별이»가 이끄는 쉬운 상대와 끝까지 두어 보고, 그다음부터 30급에서 3단까지 33단계 AI 기사와 차례로 겨루며 급수를 올립니다. 판이 끝나면 죽은 돌을 자동으로 골라 집을 세어 주므로 계가를 몰라도 판을 마칠 수 있습니다. 친구와는 선행쌤에서 방을 만들고 다섯 글자 코드·링크·QR로 불러 9·13·19줄 판을 두며, 무르기 부탁·기권·한 판 더(색 바꿈)·구경이 됩니다. 보드게임이라 문제를 풀지 않아도 바로 둡니다.',
+    features: [
+      '아홉 별 이야기 — 별마다 기사 한 명(다람쥐·호랑이·곰 …) · 30급 → 3단 33단계 · 이기면 승급',
+      '놀이 6가지 — 아홉 별 이야기 · 정석 대국(판 크기·규칙·상대 고르기) · 번개 바둑(한 수 10초) · 따내기 바둑(먼저 3점) · 묘수 연속 · 오늘의 묘수',
+      '사활 묘수 문제 340개 · 힌트 · 복기와 기보 저장(SGF)',
+      '친구 대전 — 방 코드·링크·QR · 연결이 끊겨도 같은 자리로 돌아오기 · 무르기 부탁 · 한 판 더 · 구경',
+      '계가 도우미 — 죽은 돌 자동 표시 · 고칠 수 있음 · 둘 다 «좋아요»면 끝',
+      '별이 키우기 · 오늘 할 일 · 도장판 · 학교 순위',
+      '별명은 꾸밈말·동물을 골라 만듦 · 계정·채팅 없음 · 순위에는 학교별 합계만 보인다',
+    ],
+    target: '초등 3학년 ~ 어른',
+    tech: ['JavaScript', 'Vite', 'Three.js', 'TensorFlow.js', 'Cloudflare Pages · Workers · Durable Objects'],
+    image: '/images/portfolio/bansang-baduk.webp',
+    url: 'https://bansang-baduk.pages.dev/',
+  },
 ];
 
 // 🔴 썸네일 주소 = 파일 + 내용 해시(tools/img-versions.mjs). 이미지가 1년 immutable 캐시라
