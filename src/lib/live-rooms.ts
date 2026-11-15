@@ -66,7 +66,7 @@ export function safeWorlds(raw: unknown, listedUrl: (slug: string) => string | u
 export const BOARD_ALIAS: Record<string, string> = { mulpung: 'saekjongi-pang' }
 export const MAKE_ROOM_GAMES = [
   'kkeutjinhwa', 'gulp-planet', 'parabola-crew', 'reloadarena', 'racket-rush', 'schoolstars',
-  'blocknuri', 'dokkaebi-circuit', 'sullae', 'malkkori', 'kkeut-bomb', 'dawnlight', 'dalmajung', 'kongkong', 'golden-whistle', 'mulpung',
+  'blocknuri', 'dokkaebi-circuit', 'sullae', 'malkkori', 'kkeut-bomb', 'dawnlight', 'dalmajung', 'kongkong', 'golden-whistle', 'mulpung', 'bansang-baduk',
 ] as const
 
 /** 게임 주소 → 곧장 방을 만드는 주소(?make=1) */
