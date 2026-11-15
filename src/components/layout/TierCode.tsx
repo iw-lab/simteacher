@@ -47,11 +47,12 @@ export function TierCode() {
   const t = tierOf(me?.ok ? me.xp || 0 : 0)
   return (
     <div className="relative shrink-0">
-      <button type="button" data-testid="tier-code" onClick={() => setOpen((v) => !v)} className="inline-flex items-center gap-1.5 min-h-[44px] px-3 rounded-full border border-line bg-card/70 text-sm font-bold text-fg hover:bg-card">
-        <Award className="w-4 h-4" style={{ color: t.color }} />{code && me?.ok ? t.label : '내 티어'}
+      {/* 폰(좁은 줄)은 아이콘만 — 글자까지 넣으면 한 줄이 화면 밖으로 23px 넘쳤다(2026-11-15 390px 실측) */}
+      <button type="button" data-testid="tier-code" onClick={() => setOpen((v) => !v)} aria-label={code && me?.ok ? `내 티어 ${t.label}` : '내 티어'} className="inline-flex items-center justify-center gap-1.5 min-h-[44px] min-w-[44px] px-2 sm:px-3 rounded-full border border-line bg-card/70 text-sm font-bold text-fg hover:bg-card">
+        <Award className="w-5 h-5 sm:w-4 sm:h-4" style={{ color: t.color }} /><span className="hidden sm:inline">{code && me?.ok ? t.label : '내 티어'}</span>
       </button>
       {open && (
-        <div role="dialog" aria-label="내 티어 코드" className="absolute right-0 top-12 z-50 w-[300px] glass rounded-2xl p-4 text-left shadow-xl">
+        <div role="dialog" aria-label="내 티어 코드" className="absolute right-0 top-12 z-50 w-[min(300px,calc(100vw-24px))] glass rounded-2xl p-4 text-left shadow-xl">
           <div className="flex items-center gap-2"><b className="text-fg">내 게임 티어</b>
             <button type="button" onClick={() => setOpen(false)} aria-label="닫기" className="ml-auto p-1 rounded-lg text-muted-fg hover:text-fg"><X className="w-4 h-4" /></button></div>
           {code && me?.ok ? (
