@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync, existsSync } from 'node:fs'
 import { learningSites } from '../src/data/projects'
-import { MAKE_ROOM_GAMES, makeRoomUrl } from '../src/lib/live-rooms'
+import { BOARD_ALIAS, MAKE_ROOM_GAMES, makeRoomUrl } from '../src/lib/live-rooms'
 
 const BOARD = `${process.env.HOME}/Documents/dev/room-board/src/games.js`
 describe('방 게시판 ↔ 선행쌤 목록', () => {
@@ -12,6 +12,7 @@ describe('방 게시판 ↔ 선행쌤 목록', () => {
     const rows = [...src.matchAll(/'?([a-z-]+)'?: \{[^\n]*?join: '([^']+)'/g)].map((m) => [m[1], new URL(m[2]).host])
     expect(rows.length).toBeGreaterThan(5)
     const by = new Map(learningSites.map((s) => [s.slug, s.url && new URL(s.url).host]))
+    for (const [g, slug] of Object.entries(BOARD_ALIAS)) by.set(g, by.get(slug))
     expect(rows.filter(([g, h]) => by.get(g) !== h).map(([g]) => g)).toEqual([])
     // 🔴 선행쌤 «방 만들기»에도 전부 있어야 한다
     expect(rows.map(([g]) => g).filter((g) => !(MAKE_ROOM_GAMES as readonly string[]).includes(g))).toEqual([])

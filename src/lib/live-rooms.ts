@@ -62,9 +62,11 @@ export function safeWorlds(raw: unknown, listedUrl: (slug: string) => string | u
 /** 선행쌤에서 바로 방을 여는 게임 — 2026-11-04 사용자 «게임에 안 들어가고도 방을 만들 수 있게».
  *  방은 방장 화면이 살아 있는 동안만 유지되므로(게시판 TTL 2분) 눌러서 게임의 대기실로 곧장 간다.
  *  🔴 여기 넣기 전에 그 게임이 ?make=1 을 처리해야 한다 — tests/board-listed.test.ts 가 게시판 전체와 대조 */
+/** 방 게시판의 게임 이름 → 선행쌤 slug (이름이 바뀐 게임). 팡팡 운동회는 게시판 «mulpung», 등재 «saekjongi-pang» 이라 열린 방이 안 떴다(2026-11-15) */
+export const BOARD_ALIAS: Record<string, string> = { mulpung: 'saekjongi-pang' }
 export const MAKE_ROOM_GAMES = [
   'kkeutjinhwa', 'gulp-planet', 'parabola-crew', 'reloadarena', 'racket-rush', 'schoolstars',
-  'blocknuri', 'dokkaebi-circuit', 'sullae', 'malkkori', 'kkeut-bomb', 'dawnlight', 'dalmajung', 'kongkong', 'golden-whistle',
+  'blocknuri', 'dokkaebi-circuit', 'sullae', 'malkkori', 'kkeut-bomb', 'dawnlight', 'dalmajung', 'kongkong', 'golden-whistle', 'mulpung',
 ] as const
 
 /** 게임 주소 → 곧장 방을 만드는 주소(?make=1) */

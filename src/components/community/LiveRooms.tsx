@@ -6,9 +6,10 @@ import { Plus, Radio, Users } from 'lucide-react'
 import { recordClick } from '@/lib/community'
 import { learningSites } from '@/data/projects'
 import { viaSsam } from '@/lib/via-ssam'
-import { MAKE_ROOM_GAMES, makeRoomUrl, ROOM_BOARD, ROOMS_POLL_MS, roomStatus, safeRooms, safeWorlds, type LiveRoom, type LiveWorld } from '@/lib/live-rooms'
+import { BOARD_ALIAS, MAKE_ROOM_GAMES, makeRoomUrl, ROOM_BOARD, ROOMS_POLL_MS, roomStatus, safeRooms, safeWorlds, type LiveRoom, type LiveWorld } from '@/lib/live-rooms'
 
 const BY_SLUG = new Map(learningSites.map((s) => [s.slug, s]))
+for (const [g, slug] of Object.entries(BOARD_ALIAS)) { const s = BY_SLUG.get(slug); if (s) BY_SLUG.set(g, s) }   // 게시판 이름으로도 찾게
 const koName = (name: string) => name.split(' ').filter((w) => /[가-힣]/.test(w)).join(' ') || name
 const MAKE_SITES = MAKE_ROOM_GAMES.flatMap((g) => {
   const s = BY_SLUG.get(g)
