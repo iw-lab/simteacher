@@ -1854,7 +1854,7 @@ export const learningSites: LearningSite[] = [
   {
     slug: 'nyang-cafe',
     added: '2026-11-15T12:25',
-    name: '냥난장 카페',
+    name: '냥장난 카페',
     subject: '교과 대항전',
     category: '국어·통합',
     tags: ['여러 과목', '공부·연습', '액션', '학교 대항'],
