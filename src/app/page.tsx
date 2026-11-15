@@ -6,6 +6,7 @@ import { HomeShelves } from '@/components/home/HomeShelves'
 import { CTASection } from '@/components/home/CTASection'
 import { SectionTabs } from '@/components/home/SectionTabs'
 import { SchoolTop5 } from '@/components/home/SchoolLeague'
+import { TierCode } from '@/components/layout/TierCode'
 import type { Metadata } from 'next'
 import { SITE_URL } from '@/lib/siteUrl'
 import { HOME_TITLE, OG_BASE, HOME_ROBOTS } from '@/lib/siteMeta'
@@ -44,6 +45,7 @@ export default function Home() {
           {/* 제목과 띄움(2026-11-03 «사이트와 학교종합을 좀 띄우고») */}
           <SchoolTop5 className="hidden md:flex flex-1 md:ml-8" />
           <span className="flex-1 md:hidden" aria-hidden />
+          <TierCode />
           <Link href="/about" className="shrink-0 text-sm text-muted-fg hover:text-fg hover:underline">
             만든 사람 →
           </Link>
