@@ -119,6 +119,26 @@ export const teacherTools: TeacherTool[] = [
     altUrl: 'https://class-vote-box.pages.dev/',
     altLabel: '웹에서 바로 열기',
   },
+  {
+    slug: 'hamkkegeul',
+    name: '함께글',
+    platform: '웹 (설치 없음 · 크롬북·웨일북)',
+    tagline: '설치 없이 브라우저에서 HWP 문서를 열고 고쳐 다시 저장',
+    description:
+      '학교에서 오가는 HWP·HWPX 문서를 프로그램 설치 없이 브라우저에서 열어 고치고, 다시 HWP·HWPX 로 저장하는 편집기입니다. 워드·파워포인트·엑셀 파일도 열어 고친 뒤 원래 형식으로 저장합니다. 문서는 이 기기의 브라우저 안에서만 처리되고 서버로 보내지 않습니다.',
+    features: [
+      'HWP·HWPX 열기와 저장 — 글꼴·크기·굵게·색·정렬·줄 간격·들여쓰기·목록',
+      '표 넣기 · 줄·칸 넣고 빼기 · 칸 합치기와 나누기 · 칸 배경색',
+      '그림·수식·링크·각주·쪽 나눔 · 머리말·꼬리말·쪽 번호·용지와 여백',
+      '찾기·바꾸기 · 인쇄 · 실행 취소',
+      '워드·파워포인트·엑셀도 고쳐 원래 형식으로 저장 · PDF 는 읽고 HWP 로 바꾸기',
+      '가입·로그인 없음 · 문서를 서버로 보내지 않음 · 무료',
+    ],
+    tech: ['ProseMirror', 'Rust · WebAssembly', 'Cloudflare Pages'],
+    image: '/images/portfolio/hamkkegeul.webp',
+    url: 'https://hamkkegeul.pages.dev/',
+    urlLabel: '웹에서 바로 열기',
+  },
 ];
 
 export const learningSites: LearningSite[] = [
