@@ -143,6 +143,29 @@ export const teacherTools: TeacherTool[] = [
 
 export const learningSites: LearningSite[] = [
   {
+    slug: 'bansang-alkkagi',
+    added: '2026-11-17T12:00',
+    name: '반상의 별 알까기',
+    subject: '바둑',
+    category: '미술·놀이',
+    tags: ['보드·놀이', '3D', '학교 대항'],
+    tagline: '3D 바둑판 위 바둑알을 손가락으로 당겨 튕겨 친구 알을 판 밖으로 떨어뜨리는 알까기 — 방 코드 하나로 친구와 한 판',
+    description:
+      '진짜 바둑판 앞에 앉은 듯한 3D 알까기입니다. 내 알을 손가락으로 당기면 당긴 만큼 세게 나가고, 부딪힌 알은 물리대로 밀려 판 끝에서 «툭» 떨어집니다. 놓는 순간 알 둘레 고리가 딱 붙어 있어야 겨눈 대로 가는 타이밍이 있어 운보다 솜씨가 판을 가릅니다. 혼자서는 아홉 마당의 기사와 3판 2선승으로 겨루며 흑운 결승까지 가고, 친구와는 방 코드·링크·QR로 불러 두거나 전자칠판·태블릿 하나로 번갈아 둡니다. 온라인 판은 서버가 판정해서 내 화면과 상대 화면이 같습니다.',
+    features: [
+      '놀이 7가지 — 아홉 마당 이야기 · 모르는 친구와(빠른 대전) · 한 기기 둘이서 · 한 방 미션 · 오늘의 미션 · 번개 알까기 · 자유 대국',
+      '아홉 마당 — 기사 9명과 흑운 결승 · 마당이 오를수록 AI가 정확해지고 타이밍 고리가 빨라짐',
+      '한 방 미션 60문제 — 정해진 배치에서 한 번에 목표 · 별 3개',
+      '친구 방 — 방 코드·링크·QR · 구경 · 한 판 더 · 끊겨도 같은 자리로 돌아오기',
+      '별이 키우기 · 오늘 할 일 · 도장판 · 학교 순위',
+      '별명은 낱말을 골라 만듦 · 계정·채팅 없음',
+    ],
+    target: '초등 1학년 ~ 어른',
+    tech: ['JavaScript', 'Vite', 'Three.js', 'Cloudflare Pages · Workers · Durable Objects'],
+    image: '/images/portfolio/bansang-alkkagi.webp',
+    url: 'https://bansang-alkkagi.pages.dev/',
+  },
+  {
     slug: 'chosung-bolt',
     added: '2026-11-13T15:00',
     name: '번쩍! 초성 번개',
