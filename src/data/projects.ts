@@ -123,7 +123,7 @@ export const teacherTools: TeacherTool[] = [
     slug: 'hamkkegeul',
     name: '함께글',
     platform: '웹 (설치 없음 · 크롬북·웨일북)',
-    tagline: '설치 없이 브라우저에서 HWP 문서를 열고 고쳐 다시 저장',
+    tagline: '한글(HWP)·워드·엑셀·파워포인트 파일을 설치 없이 브라우저에서 열고 고쳐 원래 형식으로 저장',
     description:
       '학교에서 오가는 HWP·HWPX 문서를 프로그램 설치 없이 브라우저에서 열어 고치고, 다시 HWP·HWPX 로 저장하는 편집기입니다. 워드·파워포인트·엑셀 파일도 열어 고친 뒤 원래 형식으로 저장합니다. 문서는 이 기기의 브라우저 안에서만 처리되고 서버로 보내지 않습니다.',
     features: [
