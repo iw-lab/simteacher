@@ -34,3 +34,15 @@ export function deviceId(store: Pick<Storage, 'getItem' | 'setItem'>, rand: () =
   store.setItem(k, id)
   return id
 }
+
+/** 관리자 신고 목록(아트온 /api/showcase/flags) — 정해진 칸(id·수·때)만 · 50줄까지 (2026-11-17) */
+export interface ShowFlag { id: string; n: number; at: number }
+
+export function safeFlags(raw: unknown): ShowFlag[] {
+  const list = (raw as { flags?: unknown } | null)?.flags
+  if (!Array.isArray(list)) return []
+  return list
+    .filter((f): f is ShowFlag => !!f && typeof f.id === 'string' && /^[A-Za-z0-9_-]{6,64}$/.test(f.id))
+    .slice(0, 50)
+    .map((f) => ({ id: f.id, n: Math.max(1, Number(f.n) || 1), at: Number(f.at) || 0 }))
+}

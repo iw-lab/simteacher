@@ -6,6 +6,7 @@ import { recordClick } from '@/lib/community'
 import { learningSites } from '@/data/projects'
 import { ARTON_ORIGIN, deviceId, replayUrl, safeWorks, type ShowWork } from '@/lib/art-showcase'
 import { useAutoRail } from '@/lib/use-auto-rail'
+import { OwnerShowcaseFlags } from './OwnerShowcaseFlags'
 
 const ARTON = learningSites.find((s) => s.slug === 'arton')
 /** 새로 건 작품을 다시 읽는 간격 — 화면이 보일 때만(서버비: 15초 미만 폴링 금지 · 전시관 대답은 엣지 캐시) */
@@ -82,11 +83,10 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
       else if (j.error === 'cap') setNote('오늘은 하트를 많이 눌렀어요 — 내일 또 눌러 주세요')
     } catch {}
   }
-  /** «이름이 보여요 · 숨겨 주세요» — 한 번이면 바로 내려가고 그 반 선생님께 알려진다 */
+  /** «이름·학교가 보여요» — 바로 내리지 않고 그림을 건 선생님(과 선행쌤 관리자)께 알린다(2026-11-17 — 장난 신고 한 번에 문제없는 그림이 내려갔다) */
   const report = async (w: ShowWork) => {
     setBig(null)
-    setWorks((ws) => ws?.filter((x) => x.id !== w.id) ?? ws)
-    setNote('알려 줘서 고마워요 — 바로 내렸고 선생님께 알렸어요')
+    setNote('알려 줘서 고마워요 — 그림을 건 선생님께 전했어요')
     try { await fetch(`${ARTON_ORIGIN}/api/showcase/${w.id}/report`, { method: 'POST' }) } catch {}
   }
   useEffect(() => { if (!note) return; const t = window.setTimeout(() => setNote(''), 3500); return () => window.clearTimeout(t) }, [note])
@@ -106,6 +106,7 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
           아트온에서 그리기 <ArrowRight className="ml-1 w-4 h-4" />
         </a>
       </div>
+      <OwnerShowcaseFlags onOpen={(id) => { pause(); setBig(works.find((x) => x.id === id) ?? { id, at: 0, likes: 0, wk: 0, fresh: false, r: '', v: false }) }} />
       {works.length ? (
         <div className="relative">
           <button type="button" onClick={() => page(-1)} data-testid="art-prev" aria-label="앞 작품 보기" className="inline-flex absolute -left-3 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-line bg-card shadow-md items-center justify-center text-muted-fg hover:text-fg hover:border-pink-400/50">
@@ -193,7 +194,7 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
               </a>
             </div>
             <button type="button" onClick={() => report(big)} data-art-report className="mt-2 w-full inline-flex items-center justify-center gap-1 min-h-10 rounded-xl text-xs font-semibold text-muted-fg hover:text-red-600 hover:bg-red-500/10">
-              <EyeOff className="w-3.5 h-3.5" /> 그림에 이름·학교가 보여요 · 숨겨 주세요
+              <EyeOff className="w-3.5 h-3.5" /> 그림에 이름·학교가 보여요 · 선생님께 알리기
             </button>
           </div>
         </div>

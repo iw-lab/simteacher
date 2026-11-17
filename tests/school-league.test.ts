@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { findSchools, leader, mySpots, readMySchool, safeBoard, type Board, type GameBoard } from '../src/lib/school-league'
-import { safeWorks, deviceId, replayUrl, SHOWCASE_MAX } from '../src/lib/art-showcase'
+import { safeWorks, deviceId, replayUrl, safeFlags, SHOWCASE_MAX } from '../src/lib/art-showcase'
 import { readFileSync } from 'node:fs'
 
 const row = (c: string, n: string, s: number, r = '전북') => ({ c, n, r, s })
@@ -59,6 +59,16 @@ describe('친구들의 작품', () => {
     expect(safeWorks({ works: [{ id: 'abcdef12', r: '전북' }] })![0].r).toBe('전북')
     expect(safeWorks({ works: [{ id: 'abcdef12', r: '김제중앙초' }] })![0].r).toBe('')
     expect(safeWorks({ works: [{ id: 'abcdef12', r: '전북 김제' }] })![0].r).toBe('')
+  })
+  it('관리자 신고 목록 — id 모양이 틀린 줄은 버리고 id·수·때만 남긴다(2026-11-17)', () => {
+    expect(safeFlags({ flags: [{ id: 'abcdef12', n: 2, at: 5, nick: '철수' }, { id: '../x', n: 1 }, null] })).toEqual([{ id: 'abcdef12', n: 2, at: 5 }])
+    expect(safeFlags(null)).toEqual([])
+  })
+  it('신고 = 바로 내리지 않는다 — 목록에서 빼지 않고 «선생님께 알리기»(2026-11-17)', () => {
+    const src = readFileSync('src/components/home/ArtShowcase.tsx', 'utf8')
+    const body = src.slice(src.indexOf('const report = async'), src.indexOf('useEffect(() => { if (!note)'))
+    expect(body).not.toMatch(/setWorks\(/)
+    expect(src).toContain('선생님께 알리기')
   })
   it('«그리는 과정»(v)은 true 일 때만 — 문자열·숫자로 와도 그림 한 장(2026-11-17)', () => {
     expect(safeWorks({ works: [{ id: 'abcdef12', v: true }] })![0].v).toBe(true)

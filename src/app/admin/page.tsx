@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react'
 import { LogIn, LogOut, ShieldCheck } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
+import { OwnerShowcaseFlags } from '@/components/home/OwnerShowcaseFlags'
+import { ARTON_ORIGIN } from '@/lib/art-showcase'
 import { OWNER_UID, currentAccount, isOwnerSignedIn, onAuthChange, signInOwner, signInOwnerGoogle, finishOwnerRedirect, signOutOwner, OWNER_LOGIN_HOSTS, OWNER_LOGIN_URL } from '@/lib/firebase'
 
 export default function AdminPage() {
@@ -95,6 +97,8 @@ export default function AdminPage() {
           <p className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm">
             심쌤으로 로그인되어 있어요. 이제 남기는 답글에 배지가 붙습니다.
           </p>
+          {/* 전시관 신고 알림(2026-11-17 «선행쌤 관리자인 나에게도 알림이») — 그림은 첫 화면 «학생 작품»에서 크게 볼 수 있다 */}
+          <OwnerShowcaseFlags onOpen={(id) => window.open(`${ARTON_ORIGIN}/api/showcase/${id}`, '_blank', 'noopener')} />
           <a href="/contact/" className="block rounded-lg bg-primary-500 px-4 py-3 text-center font-semibold text-white">
             문의 게시판으로 가서 답글 달기
           </a>
