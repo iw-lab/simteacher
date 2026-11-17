@@ -67,7 +67,14 @@ export const BOARD_ALIAS: Record<string, string> = { mulpung: 'saekjongi-pang' }
 export const MAKE_ROOM_GAMES = [
   'kkeutjinhwa', 'gulp-planet', 'parabola-crew', 'reloadarena', 'racket-rush', 'schoolstars',
   'blocknuri', 'dokkaebi-circuit', 'sullae', 'malkkori', 'kkeut-bomb', 'dawnlight', 'dalmajung', 'kongkong', 'golden-whistle', 'mulpung', 'bansang-baduk',
+  'bansang-alkkagi', 'chosung-bolt', 'snowballarena',   // 2026-11-17 — 게시판엔 있는데 방 만들기에 빠져 있었다(board-listed 시험이 배포에서 안 돌았다)
 ] as const
+
+/** 게시판엔 있지만 ?make=1(곧장 방 만들기)을 아직 못 받는 게임 — 열린 방은 뜨고, 방 만들기 단추만 없다. 게임이 ?make=1 을 받으면 위로 옮긴다 */
+export const NO_MAKE_ROOM: Record<string, string> = {
+  'kongkong-duo': '게임에 ?make=1 처리가 없다(2026-11-17 확인)',
+  'kongkong-piano': '게임에 ?make=1 처리가 없다(2026-11-17 확인)',
+}
 
 /** 게임 주소 → 곧장 방을 만드는 주소(?make=1) */
 export function makeRoomUrl(url: string): string {
