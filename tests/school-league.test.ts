@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { findSchools, leader, mySpots, readMySchool, safeBoard, type Board, type GameBoard } from '../src/lib/school-league'
-import { safeWorks, deviceId, SHOWCASE_MAX } from '../src/lib/art-showcase'
+import { safeWorks, deviceId, replayUrl, SHOWCASE_MAX } from '../src/lib/art-showcase'
 import { readFileSync } from 'node:fs'
 
 const row = (c: string, n: string, s: number, r = '전북') => ({ c, n, r, s })
@@ -51,7 +51,7 @@ describe('학교 대항전', () => {
 
 describe('친구들의 작품', () => {
   it('정해진 칸(id·at·likes·wk·fresh)만 남기고 이상한 id 는 버린다 — 이름 칸이 와도 안 그린다', () => {
-    expect(safeWorks({ works: [{ id: 'abcdef12', at: 5, likes: 2, nickname: '철수', title: '우리 집' }, { id: '../x' }, null] })).toEqual([{ id: 'abcdef12', at: 5, likes: 2, wk: 0, fresh: false, r: '' }])
+    expect(safeWorks({ works: [{ id: 'abcdef12', at: 5, likes: 2, nickname: '철수', title: '우리 집' }, { id: '../x' }, null] })).toEqual([{ id: 'abcdef12', at: 5, likes: 2, wk: 0, fresh: false, r: '', v: false }])
     expect(safeWorks(null)).toBeNull()
     expect(safeWorks({ works: [] })).toEqual([])
   })
@@ -59,6 +59,11 @@ describe('친구들의 작품', () => {
     expect(safeWorks({ works: [{ id: 'abcdef12', r: '전북' }] })![0].r).toBe('전북')
     expect(safeWorks({ works: [{ id: 'abcdef12', r: '김제중앙초' }] })![0].r).toBe('')
     expect(safeWorks({ works: [{ id: 'abcdef12', r: '전북 김제' }] })![0].r).toBe('')
+  })
+  it('«그리는 과정»(v)은 true 일 때만 — 문자열·숫자로 와도 그림 한 장(2026-11-17)', () => {
+    expect(safeWorks({ works: [{ id: 'abcdef12', v: true }] })![0].v).toBe(true)
+    expect(safeWorks({ works: [{ id: 'abcdef12', v: 'true' }, { id: 'abcdef13', v: 1 }] })!.map((w) => w.v)).toEqual([false, false])
+    expect(replayUrl('abc_def-12')).toBe('https://arton.simssijjang.workers.dev/showcase/play?id=abc_def-12')
   })
 })
 
@@ -69,7 +74,7 @@ describe('친구들의 작품 실시간', () => {
     const w = safeWorks(raw)!
     expect(w.length).toBe(SHOWCASE_MAX)
     expect(w[2].fresh).toBe(true); expect(w[0].wk).toBe(1)
-    expect(Object.keys(w[0]).sort().join()).toBe('at,fresh,id,likes,r,wk')
+    expect(Object.keys(w[0]).sort().join()).toBe('at,fresh,id,likes,r,v,wk')
   })
   it('기기 번호 — 무작위 32자 · 한 번 만들면 그대로 · 이상한 값은 새로', () => {
     const m = new Map<string, string>(); const st = { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v) }

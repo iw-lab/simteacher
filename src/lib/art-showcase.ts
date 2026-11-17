@@ -4,7 +4,8 @@
 export const ARTON_ORIGIN = 'https://arton.simssijjang.workers.dev'
 export const SHOWCASE_MAX = 50
 
-export interface ShowWork { id: string; at: number; likes: number; wk: number; fresh: boolean; r: string }
+/** v = «그리는 과정»도 걸린 샌드아트(2026-11-17) — 크게 보기에서 아트온 재생 화면이 끝없이 다시 그린다 */
+export interface ShowWork { id: string; at: number; likes: number; wk: number; fresh: boolean; r: string; v: boolean }
 
 /** 그림 옆에 붙는 시·도(2026-11-03 사용자 «학교 이름은 빼자, 도만 표시 — 전북 이 정도») — 이 17개 말고는 버린다(학교 이름이 새어 들어와도 안 보인다) */
 export const SIDO = ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '세종', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주']
@@ -16,7 +17,12 @@ export function safeWorks(raw: unknown): ShowWork[] | null {
   return list
     .filter((w): w is ShowWork => !!w && typeof w.id === 'string' && /^[A-Za-z0-9_-]{6,64}$/.test(w.id))
     .slice(0, SHOWCASE_MAX)
-    .map((w) => ({ id: w.id, at: Number(w.at) || 0, likes: Math.max(0, Number(w.likes) || 0), wk: Math.max(0, Number(w.wk) || 0), fresh: w.fresh === true, r: SIDO.includes(String(w.r)) ? String(w.r) : '' }))
+    .map((w) => ({ id: w.id, at: Number(w.at) || 0, likes: Math.max(0, Number(w.likes) || 0), wk: Math.max(0, Number(w.wk) || 0), fresh: w.fresh === true, r: SIDO.includes(String(w.r)) ? String(w.r) : '', v: w.v === true }))
+}
+
+/** «그리는 과정» 재생 화면 주소 — 아트온이 이 경로만 선행쌤 프레임을 허락한다(_headers) */
+export function replayUrl(id: string): string {
+  return `${ARTON_ORIGIN}/showcase/play?id=${encodeURIComponent(id)}`
 }
 
 /** 기기 번호 — 하트 중복 막기용 무작위 32자(사람 정보 0 · 서버는 해시만 남긴다) */

@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ArrowRight, ChevronLeft, ChevronRight, EyeOff, Heart, Palette, X } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, EyeOff, Heart, Palette, Play, X } from 'lucide-react'
 import { recordClick } from '@/lib/community'
 import { learningSites } from '@/data/projects'
-import { ARTON_ORIGIN, deviceId, safeWorks, type ShowWork } from '@/lib/art-showcase'
+import { ARTON_ORIGIN, deviceId, replayUrl, safeWorks, type ShowWork } from '@/lib/art-showcase'
 import { useAutoRail } from '@/lib/use-auto-rail'
 
 const ARTON = learningSites.find((s) => s.slug === 'arton')
@@ -26,6 +26,18 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
   const [big, setBig] = useState<ShowWork | null>(null)
   const [liked, setLiked] = useState<Set<string>>(() => (typeof window === 'undefined' ? new Set() : readLiked()))
   const [note, setNote] = useState('')
+  // «그리는 과정» 재생이 안 되면(기록 없음·내려감) 그림 한 장으로 — 아트온 재생 화면이 postMessage 로 알린다
+  const [replayBad, setReplayBad] = useState<string | null>(null)
+  useEffect(() => {
+    const on = (e: MessageEvent) => {
+      if (e.origin !== ARTON_ORIGIN) return
+      const d = e.data as { t?: unknown; ok?: unknown } | null
+      if (d?.t === 'arton-replay' && d.ok === false) setReplayBad((b) => b ?? 'x')
+    }
+    window.addEventListener('message', on)
+    return () => window.removeEventListener('message', on)
+  }, [])
+  useEffect(() => setReplayBad(null), [big?.id])
   const { rail, page, pause, bind } = useAutoRail<HTMLOListElement>(!!works && works.length > 0, SHOWCASE_ADVANCE_MS)
 
   useEffect(() => {
@@ -113,7 +125,10 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
                   <span data-art-rank className={`absolute top-1 left-1 min-w-6 h-6 px-1 rounded-full inline-flex items-center justify-center text-xs font-extrabold tabular-nums shadow ${i === 0 ? 'bg-amber-400 text-amber-950' : i === 1 ? 'bg-slate-300 text-slate-900' : i === 2 ? 'bg-orange-400 text-orange-950' : 'bg-black/60 text-white'}`}>
                     {i + 1}
                   </span>
-                  {w.fresh && <span data-art-new className="absolute top-1 right-1 rounded-full bg-pink-500 px-1.5 py-0.5 text-[10px] font-black text-white shadow">NEW</span>}
+                  <span className="absolute top-1 right-1 flex flex-col items-end gap-0.5 pointer-events-none">
+                    {w.fresh && <span data-art-new className="rounded-full bg-pink-500 px-1.5 py-0.5 text-[10px] font-black text-white shadow">NEW</span>}
+                    {w.v && <span data-art-replay title="누르면 그리는 과정을 볼 수 있어요" className="inline-flex items-center gap-0.5 rounded-full bg-amber-500 px-1.5 py-0.5 text-[10px] font-black text-amber-950 shadow"><Play className="w-2.5 h-2.5 fill-current" aria-hidden />과정</span>}
+                  </span>
                   <button
                     type="button"
                     onClick={() => toggleLike(w)}
@@ -158,8 +173,16 @@ export function ArtShowcase({ live = false }: { live?: boolean }) {
             <button type="button" onClick={() => setBig(null)} aria-label="닫기" className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-card border border-line shadow inline-flex items-center justify-center text-fg">
               <X className="w-5 h-5" />
             </button>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${ARTON_ORIGIN}/api/showcase/${big.id}`} alt="학생 작품" className="w-full rounded-2xl bg-white object-contain max-h-[65dvh]" />
+            {big.v && !replayBad ? (
+              /* 샌드아트 «그리는 과정» — 아트온 재생 화면이 그리고·잠깐 멈추고·처음부터, 창을 닫을 때까지 반복(2026-11-17) */
+              <div className="w-full rounded-2xl overflow-hidden bg-[#2b2118] aspect-[3/2] max-h-[65dvh]">
+                <iframe src={replayUrl(big.id)} title="그리는 과정" data-art-replay-frame loading="eager" referrerPolicy="no-referrer" sandbox="allow-scripts allow-same-origin" className="w-full h-full border-0" />
+              </div>
+            ) : (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img src={`${ARTON_ORIGIN}/api/showcase/${big.id}`} alt="학생 작품" className="w-full rounded-2xl bg-white object-contain max-h-[65dvh]" />
+            )}
+            {big.v && !replayBad && <p className="mt-1.5 text-center text-xs font-semibold text-muted-fg">모래로 그리는 과정 · 계속 다시 그려져요</p>}
             {big.r && <p data-art-big-sido className="mt-2 text-center text-sm font-semibold text-muted-fg">{big.r} 친구의 그림</p>}
             <div className="mt-3 flex gap-2">
               <button type="button" onClick={() => { const w = works.find((x) => x.id === big.id) ?? big; toggleLike(w) }} data-art-big-like className={`flex-1 inline-flex items-center justify-center gap-1.5 min-h-11 rounded-2xl font-bold ${liked.has(big.id) ? 'bg-pink-500 text-white' : 'bg-pink-500/15 text-pink-600 dark:text-pink-300 hover:bg-pink-500/25'}`}>
