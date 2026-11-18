@@ -192,11 +192,17 @@ export async function recordVisit(): Promise<void> {
     return // 저장이 안 되는 브라우저면 중복 집계를 막을 수 없으니 아예 세지 않는다
   }
 
-  const db = getDb()
-  await Promise.all([
-    setDoc(doc(db, 'stats', `d_${day}`), { count: increment(1) }, { merge: true }),
-    setDoc(doc(db, 'stats', 'total'), { count: increment(1) }, { merge: true }),
-  ])
+  // 일반 HTTPS(REST) 먼저 — Firestore 실시간 채널(WebChannel)이 막힌 망(학교 망·광고 차단기)에선 SDK 쓰기·읽기가 멈춰
+  // 머리글 «오늘·전체» 칸이 통째로 사라졌다(2026-11-18 사용자 «입장 수 어디로 감»). REST 가 안 되면 SDK 로 한 번 더.
+  try {
+    await restCommitVisit(day)
+  } catch {
+    const db = getDb()
+    await Promise.all([
+      setDoc(doc(db, 'stats', `d_${day}`), { count: increment(1) }, { merge: true }),
+      setDoc(doc(db, 'stats', 'total'), { count: increment(1) }, { merge: true }),
+    ])
+  }
 
   // 쓰기가 성공한 뒤에 표시한다. 먼저 표시해 버리면 규칙 거절·네트워크 실패로 못 센 방문이
   // "이미 셌다"로 남아 그날은 영영 재시도되지 않는다(배포 직전 방문에서 실제로 겪었다).
@@ -207,7 +213,32 @@ export async function recordVisit(): Promise<void> {
   }
 }
 
+const FS_DOCS = `https://firestore.googleapis.com/v1/projects/${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}/databases/(default)/documents`
+const FS_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? ''
+
+/** REST 로 문서 하나의 count — 없으면 0(그날 첫 방문 전). 규칙상 stats 는 누구나 읽는다. */
+async function restCount(id: string): Promise<number> {
+  const r = await fetch(`${FS_DOCS}/stats/${id}?key=${FS_KEY}`, { cache: 'no-store', signal: AbortSignal.timeout(6000) })
+  if (r.status === 404) return 0
+  if (!r.ok) throw new Error(`stats ${id} ${r.status}`)
+  const j = (await r.json()) as { fields?: { count?: { integerValue?: string; doubleValue?: number } } }
+  return Number(j.fields?.count?.integerValue ?? j.fields?.count?.doubleValue ?? 0)
+}
+
+/** REST 로 오늘·전체 +1(서버 increment — 규칙: count 가 정확히 1 늘어야 통과) */
+async function restCommitVisit(day: string): Promise<void> {
+  const inc = (id: string) => ({ transform: { document: `${FS_DOCS.replace('https://firestore.googleapis.com/v1/', '')}/stats/${id}`, fieldTransforms: [{ fieldPath: 'count', increment: { integerValue: '1' } }] } })
+  const r = await fetch(`${FS_DOCS}:commit?key=${FS_KEY}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ writes: [inc(`d_${day}`), inc('total')] }), signal: AbortSignal.timeout(6000) })
+  if (!r.ok) throw new Error(`visit commit ${r.status}`)
+}
+
 export async function fetchVisitCounts(): Promise<VisitCounts> {
+  try {
+    const [today, total] = await Promise.all([restCount(`d_${todayKey()}`), restCount('total')])
+    return { today, total }
+  } catch {
+    /* REST 가 막힌 망이면 SDK 로 */
+  }
   const db = getDb()
   const [t, all] = await Promise.all([
     getDoc(doc(db, 'stats', `d_${todayKey()}`)),
