@@ -143,6 +143,28 @@ export const teacherTools: TeacherTool[] = [
 
 export const learningSites: LearningSite[] = [
   {
+    slug: 'semtle-exam',
+    added: '2026-11-21T17:50',
+    name: '셈틀 시험지',
+    subject: '수학',
+    category: '수학',
+    tags: ['수학', '공부·연습', '수업 보조 도구'],
+    tagline: '초등 1~6학년 수학 단원을 고르면 원하는 문항 수로 매번 다른 시험지를 바로 만들어 주는 출제 도구',
+    description:
+      '단원과 문항 수를 고르면 840가지 문제 유형에서 숫자·상황·그림을 새로 뽑아 시험지 한 벌을 만듭니다. 답은 엔진이 직접 계산해 맞는지 확인하고, 정답지·풀이지와 A·B·C형이 함께 나옵니다. 인쇄·PDF·워드·한글 파일로 바로 씁니다.',
+    features: [
+      '840가지 유형 — 2022 개정 교육과정 1~6학년 71개 단원 · 성취기준 121개를 모두 다룸',
+      '문항 수 자유 — 10·20·25·30문항 또는 원하는 수, 난이도 곡선(고르게·계단·수능형)과 선다·단답·서술 비율 조절',
+      '정답지·풀이지·A/B/C형 — 같은 범위 다른 숫자, 문제마다 «다른 숫자로»·«다른 유형으로» 바꾸기',
+      '인쇄·PDF·워드·한글(hwpx) 내보내기 — 그림까지 그대로',
+      '가입·로그인 없음 — 시험지 번호만 있으면 같은 시험지를 다시 엽니다',
+    ],
+    target: '초등학교 1~6학년 담임·수학 선생님',
+    tech: ['TypeScript', 'React', 'Cloudflare Pages'],
+    image: '/images/portfolio/semtle-exam.webp',
+    url: 'https://semtle-exam.pages.dev/',
+  },
+  {
     slug: 'bandi-camp',
     added: '2026-11-18T03:30',
     name: '반딧불 캠프',
