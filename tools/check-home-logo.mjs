@@ -42,6 +42,17 @@ async function serve(root) {
   return { srv, url: `http://127.0.0.1:${srv.address().port}` };
 }
 
+/** 머리말 «선행쌤»을 10초까지 기다려 찾는다 — 배포 사슬(빌드 직후·load 4.7)에선 세 검사가 한꺼번에 «못 찾았다»였고
+ *  같은 out/ 을 혼자 재면 초록이었다(2026-11-21). 없는 빌드는 10초 뒤에도 없으니 그대로 빨강. */
+async function waitLogo(page, fn) {
+  for (let t = 0; t < 50; t++) {
+    const v = await page.evaluate(fn);
+    if (v) return v;
+    await new Promise((r) => setTimeout(r, 200));
+  }
+  return null;
+}
+
 /** 홈에서 상태를 흐트러뜨린 뒤 로고를 눌러 «첫 화면»으로 돌아오는지 본다. */
 async function checkHome(page, base) {
   await page.goto(base + '/', { waitUntil: 'networkidle2', timeout: 120000 });
@@ -61,7 +72,7 @@ async function checkHome(page, base) {
   await page.evaluate(() => window.scrollTo(0, 1200));
   await new Promise((r) => setTimeout(r, 300));
 
-  const logo = await page.evaluate(() => {
+  const logo = await waitLogo(page, () => {
     const a = [...document.querySelectorAll('a')].find((x) => /선행\s*쌤/.test(x.textContent || '') && x.getBoundingClientRect().top < 140);
     if (!a) return null;
     const r = a.getBoundingClientRect();
@@ -102,7 +113,7 @@ async function checkTapFeedback(page, base) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await new Promise((r) => setTimeout(r, 300));
 
-  const logo = await page.evaluate(() => {
+  const logo = await waitLogo(page, () => {
     const a = [...document.querySelectorAll('a')].find((x) => /선행\s*쌤/.test(x.textContent || '') && x.getBoundingClientRect().top < 140);
     if (!a) return null;
     const r = a.getBoundingClientRect();
@@ -144,7 +155,7 @@ async function checkTapFeedback(page, base) {
 async function checkSub(page, base, path) {
   await page.goto(base + path, { waitUntil: 'networkidle2', timeout: 120000 });
   await new Promise((r) => setTimeout(r, 700));
-  const logo = await page.evaluate(() => {
+  const logo = await waitLogo(page, () => {
     const a = [...document.querySelectorAll('a')].find((x) => /선행\s*쌤/.test(x.textContent || '') && x.getBoundingClientRect().top < 140);
     if (!a) return null;
     const r = a.getBoundingClientRect();
@@ -164,6 +175,8 @@ async function run(base) {
   // --throttle N = CPU N배 느리게(배포 직후 빌드 열기에서 4번 내리 거짓 빨강 — 2026-11-10 재현용) · --selftest-noreact = 반응을 뗀 빌드 흉내(빨강이어야)
   { const t = process.argv.indexOf('--throttle'); if (t >= 0) { const c = await page.target().createCDPSession(); await c.send('Emulation.setCPUThrottlingRate', { rate: +process.argv[t + 1] || 20 }); } }
   if (process.argv.includes('--selftest-noreact')) await page.evaluateOnNewDocument(() => { addEventListener('DOMContentLoaded', () => { const st = document.createElement('style'); st.textContent = '.brand-tap{animation:none!important;transform:none!important;filter:none!important}'; document.head.append(st); }); });
+  // --selftest-nologo = 머리말 «선행쌤»이 아예 없는 빌드 흉내 — 기다림(waitLogo)을 늘려도 빨강이어야
+  if (process.argv.includes('--selftest-nologo')) await page.evaluateOnNewDocument(() => { setInterval(() => { for (const x of document.querySelectorAll('a')) if (/선행\s*쌤/.test(x.textContent || '')) x.remove(); }, 50); });
   const bad = [
     ...(await checkHome(page, base)),
     ...(await checkTapFeedback(page, base)),
