@@ -1,6 +1,6 @@
 // 세 문 확인 — 선행쌤은 ssamzip.kr(본) · ssamzip.com(옛 주소) · sunhaengssam.web.app(학교 와이파이가 막을 때) 세 곳이다.
 // 2026-11-10 사용자 «바다끝도감 선행샘에 올렸어?? 안보이는데 · 항상 셋다 올리도록해 · 전역 코드에 박아» — .kr 만 올리고 끝냈다.
-// 가장 최근 등재(added 최신 3개)의 주소가 세 문 첫 화면에 모두 있어야 통과. 이 망이 ssamzip 을 막으면(DNS 127.0.0.1) 바깥 읽기(r.jina.ai)로 잰다.
+// 가장 최근 등재(added 최신 3개)의 주소가 세 문 첫 화면(또는 /tools — 도구만인 등재)에 모두 있어야 통과. 이 망이 ssamzip 을 막으면(DNS 127.0.0.1) 바깥 읽기(r.jina.ai)로 잰다.
 //   node tools/check-three-doors.mjs [--slug <slug>]
 import fs from 'node:fs';
 const DOORS = ['https://ssamzip.kr/', 'https://ssamzip.com/', 'https://sunhaengssam.web.app/'];
@@ -19,6 +19,8 @@ let bad = 0;
 for (const d of DOORS) {
   let p; for (let k = 0; k < 3; k++) { try { p = await page(d); if (p.html.length > 2000) break; } catch { /* 다시 */ } await new Promise((r) => setTimeout(r, 5000)); }
   if (!p) { console.log(`✖ ${d} 못 읽음`); bad++; continue; }
+  // 수업 보조 도구만인 등재(isToolOnly)는 첫 화면이 아니라 /tools 에만 나온다 — 11-21 셈틀 시험지가 세 문 모두 «없음»으로 거짓 빨강
+  try { const t = await page(d + 'tools/'); if (t?.html) p = { how: p.how, html: p.html + t.html }; } catch { /* 도구 쪽을 못 읽으면 첫 화면만으로 잰다 */ }
   for (const w of want) {
     const host = new URL(w.url).host;
     const ok = p.html.includes(host);
