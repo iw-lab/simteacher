@@ -139,6 +139,26 @@ export const teacherTools: TeacherTool[] = [
     url: 'https://hamkkegeul.pages.dev/',
     urlLabel: '웹에서 바로 열기',
   },
+  {
+    slug: 'suhaeng-eval',
+    name: '수행평가지 뚝딱',
+    platform: '웹 (설치 없음 · 크롬북·웨일북)',
+    tagline: '2022 개정 성취기준을 고르면 수행평가지와 채점 기준안이 한 번에 — 인쇄도, 온라인 응시도',
+    description:
+      '초등 성취기준을 고르면 학생 활동지·채점 기준안·예시 답안·피드백 문구까지 한 묶음으로 나오는 선생님 도구입니다. 그대로 인쇄하거나 한글(HWPX)·워드 파일로 내려받아 고쳐 쓰고, 방 번호나 QR 로 학생 웨일북에 나누어 풀게 한 뒤 제출·채점까지 이어집니다. 과제는 AI 가 초안을 쓰고 글쓴이와 다른 두 계열 AI 의 교차 심사를 모두 통과한 것만 싣고, 새 과제를 계속 더하고 있습니다.',
+    features: [
+      '성취기준 → 평가지 + 성취수준 + 채점 기준표 + 예시 답안 + 생활기록부 참고 문구',
+      '인쇄 · 한글(HWPX) · 워드로 저장, 배점과 수준 단계(3단·4단) 바꾸기',
+      '방 번호 · QR · 링크로 학생 응시, 이름 없이 번호만 · 끊겨도 이어 풀기',
+      '객관식·단답은 바로 채점, 서술·관찰은 선생님이 기준표로 채점',
+      '학급 한눈표 · 엑셀 저장 · 답안 자동 삭제',
+      '가입·로그인 없음 · 무료',
+    ],
+    tech: ['React', 'TypeScript', 'Cloudflare Pages · D1'],
+    image: '/images/portfolio/suhaeng-eval.webp',
+    url: 'https://suhaeng-eval.pages.dev/',
+    urlLabel: '웹에서 바로 열기',
+  },
 ];
 
 export const learningSites: LearningSite[] = [
