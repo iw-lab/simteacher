@@ -12,6 +12,9 @@ describe('listing host', () => {
   it('projects.ts 에 vercel.app 주소 0', () => {
     expect(vercelHits(readFileSync('src/data/projects.ts', 'utf8'))).toEqual([])
   })
+  it('preview.ts(출시 전)에도 vercel.app 주소 0', () => {
+    expect(vercelHits(readFileSync('src/data/preview.ts', 'utf8'))).toEqual([])
+  })
   it('검사기가 vercel 주소를 잡는다(빨강 시험)', () => {
     expect(vercelHits("    url: 'https://vocaworm-defense.vercel.app/',")).toHaveLength(1)
     expect(vercelHits("    url: 'https://vocaworm-defense.pages.dev/',")).toHaveLength(0)

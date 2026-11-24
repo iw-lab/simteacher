@@ -4,9 +4,10 @@
  *   잡는 것: /tools 에 빠진 도구 · 홈 게임 칸에 남은 도구뿐인 곳/책상 프로그램 · 갈래 단추 없음 · 사이트맵 누락
  */
 import { describe, expect, it } from 'vitest'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { classToolSites, gameSites, isToolOnly } from '../src/lib/catalog'
 import { learningSites, teacherTools } from '../src/data/projects'
+import { PREVIEW_GROUPS, previewSites } from '../src/data/preview'
 
 const OUT = process.env.OUT_DIR || 'out'
 const html = (p: string) => readFileSync(`${OUT}/${p}`, 'utf8')
@@ -30,6 +31,30 @@ describe('빌드 HTML — 게임 ↔ 수업 도구', () => {
     expect(teacher).toMatch(/data-testid="tab-teacher"[^>]*aria-current="page"|aria-current="page"[^>]*data-testid="tab-teacher"/)
     const site = (process.env.NEXT_PUBLIC_SITE_URL || 'https://ssamzip.kr').replace(/\/$/, '')
     if (site === 'https://ssamzip.kr') expect(html('sitemap.xml')).toContain(`${site}/teacher/`)
+  })
+  // 2026-11-24 사용자 «탭 하나 추가해서.. 출시전?? 거기에 다 넣어줘봐»
+  it('/preview 에 출시 전 앱이 전부 · 네 쪽 모두 탭 순서 끝에 출시 전 · 검색에는 안 나간다', () => {
+    const preview = html('preview/index.html')
+    expect([...new Set(slugsIn(preview))].sort()).toEqual(previewSites.map((s) => s.slug).sort())
+    for (const h of [home, tools, teacher, preview]) {
+      const c = h.indexOf('data-testid="tab-teacher"'), d = h.indexOf('data-testid="tab-preview"')
+      expect(c).toBeGreaterThan(-1); expect(d).toBeGreaterThan(c)
+    }
+    expect(preview).toMatch(/data-testid="tab-preview"[^>]*aria-current="page"|aria-current="page"[^>]*data-testid="tab-preview"/)
+    expect(preview).toMatch(/<meta name="robots" content="noindex/)
+    expect(html('sitemap.xml')).not.toContain('/preview/')
+  })
+  it('출시 전 목록 — 정식 목록과 주소·이름표가 겹치지 않고, 그림 파일이 있고, 갈래가 빠짐없다', () => {
+    const host = (u?: string) => u && new URL(u).host
+    const listed = new Set([...learningSites.map((s) => s.slug), ...teacherTools.map((s) => s.slug)])
+    const hosts = new Set([...learningSites, ...teacherTools].map((s) => host(s.url)))
+    expect(previewSites.filter((s) => listed.has(s.slug) || hosts.has(host(s.url))).map((s) => s.slug)).toEqual([])
+    expect(new Set(previewSites.map((s) => s.slug)).size).toBe(previewSites.length)
+    expect(new Set(previewSites.map((s) => host(s.url))).size).toBe(previewSites.length)
+    expect(previewSites.filter((s) => !existsSync(`public${s.image.split('?')[0]}`)).map((s) => s.slug)).toEqual([])
+    const kinds = new Set(PREVIEW_GROUPS.map((g) => g.kind))
+    expect(previewSites.filter((s) => !kinds.has(s.kind)).map((s) => s.slug)).toEqual([])
+    expect(previewSites.filter((s) => new URL(s.url!).searchParams.get('via') !== 'ssam').map((s) => s.slug)).toEqual([])
   })
   it('홈 카드 = 게임 쪽 전부, 도구뿐인 곳·책상 프로그램은 없다', () => {
     const got = new Set(slugsIn(home))

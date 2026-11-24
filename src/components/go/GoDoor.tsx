@@ -1,13 +1,17 @@
 'use client'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { previewSites } from '@/data/preview'
 import { learningSites } from '@/data/projects'
 import { safeGoTarget } from '@/lib/via-ssam'
 
+// 출시 전 칸의 앱도 방 문(/go)으로 들어온다(문제 사냥의 방)
+const LISTED = [...learningSites, ...previewSites]
+
 export function GoDoor() {
   const raw = useSearchParams().get('u')
-  const target = safeGoTarget(raw, learningSites.map((s) => s.url))
-  const site = target ? learningSites.find((s) => s.url && new URL(s.url).host === new URL(target).host) : undefined
+  const target = safeGoTarget(raw, LISTED.map((s) => s.url))
+  const site = target ? LISTED.find((s) => s.url && new URL(s.url).host === new URL(target).host) : undefined
 
   if (!target) {
     return (
