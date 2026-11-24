@@ -165,7 +165,7 @@ export const learningSites: LearningSite[] = [
   {
     slug: 'sebeoteun',
     added: '2026-11-25T05:10',
-    name: '세 버튼 번개 미니게임',
+    name: '세 버튼 번개 놀이',
     subject: '여러 과목',
     category: '미술·놀이',
     tags: ['여러 과목', '액션', '리듬', '학교 대항'],
