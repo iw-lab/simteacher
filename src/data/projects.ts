@@ -180,7 +180,7 @@ export const learningSites: LearningSite[] = [
       '순위·벌 없음 — 자리잡은 낱말 수와 내 기억률만',
       '가입·이름 입력 없음 · 기록은 그 기기에만(백업 파일) · 인터넷이 끊겨도 이어짐',
     ],
-    target: '초등 4학년 ~ 중학생, 영어를 다시 시작하는 어른',
+    target: '초등 4학년 ~ 성인',
     tech: ['TypeScript', 'React', 'FSRS', 'IndexedDB', 'Cloudflare Pages'],
     image: '/images/portfolio/doemut-voca.webp',
     url: 'https://doemut-voca.pages.dev/',
