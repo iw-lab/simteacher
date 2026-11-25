@@ -68,8 +68,6 @@ const ROWS: Row[] = [
     tagline: '매판 새 사건을 만들어 주는 추리 보드 놀이 — 단서 카드를 인쇄해 2~6명이 함께' },
   { slug: 'gonu-madang', name: '고누마당', kind: 'play', subject: '사회', target: '초등', url: 'https://gonu-madang.pages.dev/',
     tagline: '땅에 선을 긋고 두던 우리 놀이 고누 세 가지 — 규칙은 세 줄이면 끝나요' },
-  { slug: 'wijang', name: '위장의 달인', kind: 'play', subject: '과학', target: '초등', url: 'https://wijang.pages.dev/',
-    tagline: '배경을 잘 보고 카멜레온 몸에 색을 칠해 숨는 보호색 놀이' },
   { slug: 'kingseeker', name: '킹시커', kind: 'play', subject: '여러 과목', target: '초등 3~6학년', url: 'https://iwkingseeker.pages.dev/',
     tagline: '두 팀으로 나눠 문제를 풀며 상대 팀의 숨은 왕을 찾는 교실 퀴즈' },
   { slug: 'jeongdap-squad', name: '정답 스쿼드', kind: 'play', subject: '수학', target: '초등', url: 'https://iwgun.pages.dev/',
