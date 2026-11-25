@@ -163,6 +163,29 @@ export const teacherTools: TeacherTool[] = [
 
 export const learningSites: LearningSite[] = [
   {
+    slug: 'doemut-voca',
+    added: '2026-11-25T17:10',
+    name: '되묻는 영단어',
+    subject: '영어',
+    category: '영어',
+    tags: ['영어', '공부·연습', '수업 보조 도구'],
+    tagline: '낱말을 보여 주고 끝내지 않고 되물어서, 잊을 만할 때 다시 묻는 초등·중등 영어 낱말 학습',
+    description:
+      '영어 낱말을 소리와 함께 한 번 흘려 본 뒤 바로 되묻고, 며칠·몇 주 뒤 잊을 만할 때 다시 묻습니다. 처음에는 뜻을 고르고, 시간이 지난 뒤에도 맞히면 소리만 듣고 뜻 고르기 → 뜻을 보고 철자 쓰기 → 새 예문 빈칸으로 물음이 어려워집니다. 30일 넘게 지난 뒤 철자 쓰기와 듣기를 둘 다 통과해야 «익힘»으로 셉니다. 예고 없는 점검으로 정말 남아 있는지 다시 재고, 그 숫자를 그대로 보여 줍니다. 소리는 AI 음성이고 발음 점수는 매기지 않습니다.',
+    features: [
+      '낱말 1,000개(CEFR-J A1 855 · A2 145) · 예문 2,000개 · 낱말 소리 3목소리',
+      '3분 진단으로 아는 낱말은 건너뛰고 시작 · 하루 새 낱말 5~20개',
+      '물음 네 가지 — 뜻 고르기 · 듣고 고르기 · 철자 쓰기 · 예문 빈칸',
+      '소리 훈련 8쌍(r 과 l, f 와 p 등) · 내 목소리 녹음해 번갈아 듣기(녹음은 기기 밖으로 나가지 않음)',
+      '순위·벌 없음 — 자리잡은 낱말 수와 내 기억률만',
+      '가입·이름 입력 없음 · 기록은 그 기기에만(백업 파일) · 인터넷이 끊겨도 이어짐',
+    ],
+    target: '초등 4학년 ~ 중학생, 영어를 다시 시작하는 어른',
+    tech: ['TypeScript', 'React', 'FSRS', 'IndexedDB', 'Cloudflare Pages'],
+    image: '/images/portfolio/doemut-voca.webp',
+    url: 'https://doemut-voca.pages.dev/',
+  },
+  {
     slug: 'sebeoteun',
     added: '2026-11-25T05:10',
     name: '세 버튼 번개 놀이',
