@@ -42,10 +42,10 @@ async function serve(root) {
   return { srv, url: `http://127.0.0.1:${srv.address().port}` };
 }
 
-/** 머리말 «선행쌤»을 10초까지 기다려 찾는다 — 배포 사슬(빌드 직후·load 4.7)에선 세 검사가 한꺼번에 «못 찾았다»였고
- *  같은 out/ 을 혼자 재면 초록이었다(2026-11-21). 없는 빌드는 10초 뒤에도 없으니 그대로 빨강. */
+/** 머리말 «선행쌤»을 30초까지 기다려 찾는다(10초는 11-26 빌드 직후 load 15 에서 또 거짓 빨강) — 배포 사슬(빌드 직후·load 4.7)에선 세 검사가 한꺼번에 «못 찾았다»였고
+ *  같은 out/ 을 혼자 재면 초록이었다(2026-11-21). 없는 빌드는 30초 뒤에도 없으니 그대로 빨강. */
 async function waitLogo(page, fn) {
-  for (let t = 0; t < 50; t++) {
+  for (let t = 0; t < 150; t++) {
     const v = await page.evaluate(fn);
     if (v) return v;
     await new Promise((r) => setTimeout(r, 200));
