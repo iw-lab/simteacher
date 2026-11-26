@@ -76,6 +76,8 @@ const ROWS: Row[] = [
     tagline: '심박과 목소리로 재 보는 재미용 거짓말 탐지기 — 진짜 판정이 아니에요' },
   { slug: 'spot-the-difference', name: '틀린그림찾기', kind: 'play', subject: '놀이', target: '초등 전 학년', url: 'https://spot-the-difference-kr.pages.dev/',
     tagline: '두 그림에서 다른 곳을 찾아 장난꾼 꾸깃이를 쫓아요 — 이야기 108판·놀이 방식 10가지·내가 낸 문제를 친구에게' },
+  { slug: 'hidden-picture-find', name: '내가 내는 숨은그림찾기', kind: 'play', subject: '과학', target: '초등 전 학년', url: 'https://hidden-picture-find.pages.dev/',
+    tagline: '숲·사막·갯벌·극지·교실 그림 속에 숨은 동물과 물건을 찾고, 왜 안 보였는지 맞혀요 — 친구에게 내가 숨긴 문제 내기' },
 
   // ── 선생님 책상
   { slug: 'semtle-exam', name: '셈틀 시험지', kind: 'teacher', subject: '수학', target: '초등 선생님', url: 'https://semtle-exam.pages.dev/',
