@@ -5,7 +5,7 @@ import { fetchTotalCountsOnce } from '@/lib/community'
 import { SiteCard } from '@/components/home/Cards'
 import { PREVIEW_GROUPS, previewSites } from '@/data/preview'
 
-// 출시 전 카드판 — 갈래마다 data/preview.ts 에 적힌 순서 그대로.
+// 출시 전 카드판 — 갈래마다 최근 올린 것이 맨 위(정렬은 data/preview.ts 의 previewSites).
 export function PreviewBoard() {
   const [totals, setTotals] = useState<Record<string, number> | null>(null)
   useEffect(() => {

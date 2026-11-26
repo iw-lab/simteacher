@@ -12,10 +12,14 @@ import type { LearningSite } from './projects';
 export type PreviewKind = 'play' | 'learn' | 'teacher';
 export interface PreviewSite extends LearningSite { kind: PreviewKind }
 
-type Row = { slug: string; name: string; kind: PreviewKind; subject: string; target: string; tagline: string; url: string };
+// added = 이 칸에 올린 때. 없으면 처음 33개를 올린 때(eed5935). 갈래마다 최근 것이 맨 위(2026-11-26 사용자 «출시전도 최근걸 맨 위로»).
+type Row = { slug: string; name: string; kind: PreviewKind; subject: string; target: string; tagline: string; url: string; added?: string };
+const FIRST_BATCH = '2026-11-25T00:30';
 
 const ROWS: Row[] = [
   // ── 배우고 만들기
+  { slug: 'englishstep', name: '영어 말하기 스텝', kind: 'learn', subject: '영어', target: '초3~성인', url: 'https://english-speaking-step.pages.dev/',
+    tagline: '왕초보가 첫날부터 입으로 말하는 영어 — 기기 안 인식기가 듣고, 대화 장면 6곳에서 볼일을 끝내요', added: '2026-11-27T02:44' },
   { slug: 'sonkkeut', name: '손끝공방', kind: 'learn', subject: '실과', target: '초1~중3', url: 'https://sonkkeut-enq.pages.dev/',
     tagline: '톱질·바느질·찰흙·로봇·요리를 실제 순서대로 해 보는 실과 공방 — 이름 없이 만들고 전시관에 자랑해요' },
   { slug: 'gyokwaseo-hanguksa', name: '교과서 한국사', kind: 'learn', subject: '사회', target: '초등 5~6학년', url: 'https://gyokwaseo-hanguksa.pages.dev/',
@@ -75,9 +79,9 @@ const ROWS: Row[] = [
   { slug: 'deultong', name: '들통', kind: 'play', subject: '놀이', target: '초등 고학년~', url: 'https://deultong.pages.dev/',
     tagline: '심박과 목소리로 재 보는 재미용 거짓말 탐지기 — 진짜 판정이 아니에요' },
   { slug: 'spot-the-difference', name: '틀린그림찾기', kind: 'play', subject: '놀이', target: '초등 전 학년', url: 'https://spot-the-difference-kr.pages.dev/',
-    tagline: '두 그림에서 다른 곳을 찾아 장난꾼 꾸깃이를 쫓아요 — 이야기 108판·놀이 방식 10가지·내가 낸 문제를 친구에게' },
+    tagline: '두 그림에서 다른 곳을 찾아 장난꾼 꾸깃이를 쫓아요 — 이야기 108판·놀이 방식 10가지·내가 낸 문제를 친구에게', added: '2026-11-26T00:30' },
   { slug: 'hidden-picture-find', name: '내가 내는 숨은그림찾기', kind: 'play', subject: '과학', target: '초등 전 학년', url: 'https://hidden-picture-find.pages.dev/',
-    tagline: '숲·사막·갯벌·극지·교실 그림 속에 숨은 동물과 물건을 찾고, 왜 안 보였는지 맞혀요 — 친구에게 내가 숨긴 문제 내기' },
+    tagline: '숲·사막·갯벌·극지·교실 그림 속에 숨은 동물과 물건을 찾고, 왜 안 보였는지 맞혀요 — 친구에게 내가 숨긴 문제 내기', added: '2026-11-26T23:00' },
 
   // ── 선생님 책상
   { slug: 'semtle-exam', name: '셈틀 시험지', kind: 'teacher', subject: '수학', target: '초등 선생님', url: 'https://semtle-exam.pages.dev/',
@@ -91,12 +95,13 @@ const ROWS: Row[] = [
 const versions: Record<string, string> = imageVersions;
 const withVersion = (p: string) => (versions[p] ? `${p}?v=${versions[p]}` : p);
 
-export const previewSites: PreviewSite[] = ROWS.map((r) => {
+// 최근 올린 것이 앞 — 같은 때면 적힌 순서 그대로(Array.prototype.sort 는 안정 정렬)
+export const previewSites: PreviewSite[] = ROWS.map((r): PreviewSite => {
   const image = `/images/portfolio/${r.slug}.webp`;
   const thumb = `/images/portfolio/${r.slug}.thumb.webp`;
   return {
     ...r,
-    added: '2026-11-25T00:30',
+    added: r.added ?? FIRST_BATCH,
     category: '국어·통합',
     tags: [],
     description: r.tagline,
@@ -106,7 +111,7 @@ export const previewSites: PreviewSite[] = ROWS.map((r) => {
     thumb: versions[thumb] ? withVersion(thumb) : withVersion(image),
     url: viaSsam(r.url),
   };
-});
+}).sort((a, b) => b.added.localeCompare(a.added));
 
 export const PREVIEW_GROUPS: { kind: PreviewKind; title: string; note: string }[] = [
   { kind: 'learn', title: '배우고 만들기', note: '공방·교과·두뇌 퍼즐 — 혼자서도 끝까지 해 볼 수 있어요.' },
