@@ -72,8 +72,6 @@ const ROWS: Row[] = [
     tagline: '두 팀으로 나눠 문제를 풀며 상대 팀의 숨은 왕을 찾는 교실 퀴즈' },
   { slug: 'jeongdap-squad', name: '정답 스쿼드', kind: 'play', subject: '수학', target: '초등', url: 'https://iwgun.pages.dev/',
     tagline: '화면을 보고 다 같이 손가락으로 정답을 가리키는 교실 놀이' },
-  { slug: 'gwisin-dungeon', name: '귀신 던전', kind: 'play', subject: '놀이', target: '초등', url: 'https://gwisin-dungeon.pages.dev/',
-    tagline: '유령을 물리치고 마을의 무기를 되찾으러 끝없이 내려가는 던전 탐험' },
   { slug: 'deultong', name: '들통', kind: 'play', subject: '놀이', target: '초등 고학년~', url: 'https://deultong.pages.dev/',
     tagline: '심박과 목소리로 재 보는 재미용 거짓말 탐지기 — 진짜 판정이 아니에요' },
   { slug: 'spot-the-difference', name: '틀린그림찾기', kind: 'play', subject: '놀이', target: '초등 전 학년', url: 'https://spot-the-difference-kr.pages.dev/',

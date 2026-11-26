@@ -163,6 +163,29 @@ export const teacherTools: TeacherTool[] = [
 
 export const learningSites: LearningSite[] = [
   {
+    slug: 'gwisin-dungeon',
+    added: '2026-11-26T13:30',
+    name: '귀신 던전',
+    subject: '여러 과목',
+    category: '미술·놀이',
+    tags: ['여러 과목', '액션', '학교 대항'],
+    tagline: '유령에게 빼앗긴 마을의 무기를 되찾으러 12층 던전을 내려가는 픽셀 탐험 — 혼자서도, 친구와 둘이서도',
+    description:
+      '마을 로비를 걸어 다니다 던전 문으로 들어가 방마다 몰려오는 귀신을 물리치고 아래층으로 내려갑니다. 층마다 끝에 보스가 있고 열두 보스를 모두 잡으면 클리어입니다. 무기는 일반부터 희귀·고유·신화까지 등급이 있어 상자와 귀신에게서 얻고 두 개를 쥐고 바꿔 가며 싸웁니다. 레벨이 오르면 재능을 하나 고르고, 모은 보석으로 로비 대장간에서 강화합니다. 던전에 들어갈 때 학년에 맞는 문제를 풀어 이용권을 받습니다(하루 첫 판은 문제 없이). 방 코드로 친구와 각자 기기에서 둘이 같은 던전에 들어갈 수 있습니다.',
+    features: [
+      '12층 · 층 보스 12 · 귀신 59종 — 모두 픽셀 그림',
+      '무기 81가지(일반·희귀·고유·신화·유물) · 무기 도감 · 보스 도감',
+      '걸어 다니는 로비 — 던전 문 · 대장간 강화 · 책장 · 수정 구슬',
+      '레벨 업 재능 고르기 · 이어하기 · 판이 끝나면 «거의 다 왔어요»',
+      '친구랑 둘이서 — 방 코드로 각자 기기에서 같은 던전',
+      '키보드(한글 자판 상태에서도) · 터치 조이스틱 · 오늘 할 일 · 도장판 · 학교 순위 · 가입 없음',
+    ],
+    target: '초등 3학년 이상',
+    tech: ['JavaScript', 'Phaser', 'Vite', 'Cloudflare Pages · Workers · Durable Objects'],
+    image: '/images/portfolio/gwisin-dungeon.webp',
+    url: 'https://gwisin-dungeon-ssam.pages.dev/',
+  },
+  {
     slug: 'doemut-voca',
     added: '2026-11-25T17:10',
     name: '되묻는 영단어',
