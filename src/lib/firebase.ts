@@ -60,10 +60,14 @@ export function getAuthClient(): Auth {
  *    상태가 된다 — 배지도 안 붙고 소유권도 어긋난다(2026-09-18).
  *    그래서 «지금 로그인된 사람»을 매번 확인하고, 아무도 없을 때만 익명 로그인을 붙잡아 둔다.
  */
-export function ensureUid(): Promise<string> {
+export async function ensureUid(): Promise<string> {
   getDb() // env 검증 + app 초기화
   const a = getAuthClient()
-  if (a.currentUser) return Promise.resolve(a.currentUser.uid)
+  /* 🔴 저장된 로그인 복원을 먼저 기다린다(2026-11-27 «구글로 로그인해도 댓글 달려고 하면 관리자가 풀려버림»):
+     문의 탭이 열리자마자 부르면 복원 전이라 currentUser 가 비어 익명 로그인을 하는데, SDK 는 그때 구글 사용자를
+     새 익명 사용자로 갈아끼운다 → 주인 로그인이 풀린다. 🔒 tests/owner-session.test.ts */
+  await a.authStateReady()
+  if (a.currentUser) return a.currentUser.uid
   if (!uidPromise) {
     uidPromise = signInAnonymously(a)
       .then((cred) => cred.user.uid)
